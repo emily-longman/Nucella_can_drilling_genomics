@@ -8,7 +8,7 @@
 #SBATCH --job-name=fltlong 
 
 # Specify partition
-#SBATCH --partion bluemoon
+#SBATCH --partition=bluemoon
 
 # Request nodes
 #SBATCH --cpus-per-task=40 
