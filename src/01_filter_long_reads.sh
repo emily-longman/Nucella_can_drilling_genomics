@@ -1,15 +1,32 @@
 #!/usr/bin/env bash
-#
-#SBATCH -J fltlong
-#SBATCH -c 40
-#SBATCH -N 1 # on one node
-#SBATCH -t 24:00:00 #<= this may depend on your resources
-#SBATCH --mem 80G #<= this may depend on your resources
-#SBATCH -o ./slurmOutput/fltlong.%A_%a.out # Standard output
-#SBATCH -p bluemoon
-#SBATCH --array=2-4
 
-filtlong=/gpfs1/home/j/c/jcnunez/software/Filtlong/bin/filtlong
+# In the command line, run the following command: sbatch path/to/this/file.sh
+
+# Request cluster resources ----------------------------------------------------
+
+# Name this job
+#SBATCH --job-name=fltlong 
+
+# Specify partition
+#SBATCH --partion bluemoon
+
+# Request nodes
+#SBATCH --cpus-per-task=40 
+#SBATCH --nodes=1 # on one node
+
+# Reserve walltime -- hh:mm:ss --30 hrs max
+#SBATCH --time=24:00:00 #<= this may depend on your resources
+
+# Request memory for the entire job -- you can request --mem OR --mem-per-cpu
+#SBATCH --mem=80G #<= this may depend on your resources
+
+# Submit job array
+#SBATCH --array=1-4
+
+# Name output of this job using %x=job-name and %j=job-id
+#SBATCH --output=./slurmOutput/fltlong.%A_%a.out # Standard output
+
+filtlong=/gpfs1/home/e/l/elongman/software/Filtlong/bin/filtlong
 input=./FC_all.ONT.nuc.fastq.gz
 
 arr=(1000 2000 3500 5000)
