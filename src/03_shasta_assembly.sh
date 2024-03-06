@@ -23,8 +23,11 @@
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/shasta.%A_%a.out # Standard output
 
+# Move to the directory where the output files will be saved
+cd /netfiles02/pespenilab_share/Nucella/processed/Base_Genome/
+
 #executable
-shasta=/pgfs1/home/e/l/elongman/software/shasta/shasta-Linux-0.10.0
+shasta=/gpfs1/home/e/l/elongman/software/shasta/shasta-Linux-0.10.0
 
 #input
 infa=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/Nuc.3500.fltlong.fastq
