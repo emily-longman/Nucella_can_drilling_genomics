@@ -27,15 +27,14 @@
 cd /netfiles02/pespenilab_share/Nucella/processed/Base_Genome/
 
 # ---------------------------
-# NEED TO FINISH UPDATING BELOW - ALSO NEED TO GET miniCONDA
+#  miniCONDA is not working/ might not be installed correctly
 
-### UPDATE!
-source /gpfs1/home/j/c/jcnunez/miniconda3/etc/profile.d/conda.sh
+source /gpfs1/home/e/l/elongman/miniconda3/etc/profile.d/conda.sh
 
 conda activate ntlink
 
 link_pool=/netfiles/pespenilab_share/Nucella/processed/FC_all.ONT.nuc.fastq.gz
-asm=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Assembly.fasta
+asm=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Assembly.fasta # Don't have this assembly complete yet
 
 cp $asm ./
 
