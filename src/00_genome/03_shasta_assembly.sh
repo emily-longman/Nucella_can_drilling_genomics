@@ -23,6 +23,9 @@
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/shasta.%A_%a.out # Standard output
 
+# Receive emails when job begins and ends or fails
+#SBATCH --mail-type=ALL
+
 # Move to the directory where the output files will be saved
 cd /netfiles02/pespenilab_share/Nucella/processed/Base_Genome/
 

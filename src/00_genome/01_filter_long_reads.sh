@@ -26,6 +26,9 @@
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/fltlong.%A_%a.out # Standard output
 
+# Receive emails when job begins and ends or fails
+#SBATCH --mail-type=ALL
+
 filtlong=/gpfs1/home/e/l/elongman/software/Filtlong/bin/filtlong
 input=./FC_all.ONT.nuc.fastq.gz
 
