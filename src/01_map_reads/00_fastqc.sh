@@ -11,8 +11,7 @@
 #SBATCH --partition=bluemoon
 
 # Request nodes
-#SBATCH --cpus-per-task=40 
-#SBATCH --nodes=1 # on one node
+#SBATCH --cpus-per-task=2 
 #SBATCH --ntasks-per-node=5 # this is number of CPUs you want to use for parallel computing [also referred to as threads] - note not all programs will allow for parallelism, but if they do then its good to use as it helps your jobs run faster
 
 # Reserve walltime -- hh:mm:ss --30 hrs max
