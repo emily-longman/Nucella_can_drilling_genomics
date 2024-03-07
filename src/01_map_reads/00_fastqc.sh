@@ -31,16 +31,13 @@
 set -e
 set -x #useful for debugging your script. It causes each command in the file to be printed to the log file as it is executed, with a + in front of it
 
-# Move to the directory where the output files will be saved
-cd /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastqc/
-
 # Call fastp package (you would change this to just say 'module load [fastQC version], as I imagine you won't need to install with conda )
 module load fastqc-0.11.7-gcc-7.3.0-vcaesw7
 #module load anaconda3
 #conda activate fastQC ## DELETE this line if fastQC is available with module load
 
 #Set up directory
-RUN_PATH="/ocean/projects/deb200006p/enielsen/LGwork/01_rawdata" # change to your file path for raw data 
+RUN_PATH="/netfiles/pespenilab_share/Nucella/raw/Shortreads/082123-XP-fc1-L7-I8I8-18048-181-396223829/082123-XP-fc1-L7-I8I8-18048-181-688416898/082123-XP-fc1-ds.0852b8f70cc6420995dc0100cb059460/082123-XP-fc1-L7-18048-181-08232023"
 cd $RUN_PATH
 
 # create loop to run fastQC on each input file
