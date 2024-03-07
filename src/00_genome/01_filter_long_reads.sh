@@ -28,6 +28,8 @@
 
 # Receive emails when job begins and ends or fails
 #SBATCH --mail-type=ALL
+#SBATCH --mail-user=emily.longman@uvm.edu # where to email updates to
+
 
 filtlong=/gpfs1/home/e/l/elongman/software/Filtlong/bin/filtlong
 input=./FC_all.ONT.nuc.fastq.gz
