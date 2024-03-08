@@ -21,7 +21,7 @@
 #SBATCH --mem=80G #<= this may depend on your resources
 
 # Submit job array
-#SBATCH --array=1-4
+#  #SBATCH --array=1-4
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/fltlong.%A_%a.out # Standard output
@@ -35,10 +35,15 @@ filtlong=/gpfs1/home/e/l/elongman/software/Filtlong/bin/filtlong
 input=/netfiles/pespenilab_share/Nucella/raw/ONT/FC_all.ONT.nuc.fastq.gz
 #input=./FC_all.ONT.nuc.fastq.gz
 
-arr=(1000 2000 3500 5000)
-L="${arr[$SLURM_ARRAY_TASK_ID]}"
-echo $L
+#arr=(1000 2000 3500 5000)
+#L="${arr[$SLURM_ARRAY_TASK_ID]}"
+#echo $L
 
-$filtlong \
---min_length $L \
-$input | gzip > Nuc.$L.fltlong.fastq.gz
+$filtlong --min_length 1000 input | gzip > Nuc.1000.fltlong.fastq.gz
+
+# Code from Filtlong github
+# filtlong --min_length 1000 --keep_percent 90 --target_bases 500000000 input.fastq.gz | gzip > output.fastq.gz
+
+# $filtlong \
+# --min_length $L \
+# $input | gzip > Nuc.$L.fltlong.fastq.gz
