@@ -1,0 +1,19 @@
++ module load fastqc-0.11.7-gcc-7.3.0-vcaesw7
+++ /usr/bin/modulecmd bash load fastqc-0.11.7-gcc-7.3.0-vcaesw7
++ eval CMAKE_PREFIX_PATH=/gpfs1/arch/spack-0.14.2/opt/spack/linux-rhel7-westmere/gcc-7.3.0/fastqc-0.11.7-vcaesw7rynaqil36ki3he7onz6pwdkru/ ';export' 'CMAKE_PREFIX_PATH;LD_LIBRARY_PATH=/gpfs1/arch/spack-0.14.2/opt/spack/linux-rhel7-westmere/gcc-7.3.0/fastqc-0.11.7-vcaesw7rynaqil36ki3he7onz6pwdkru/lib' ';export' 'LD_LIBRARY_PATH;LIBRARY_PATH=/gpfs1/arch/spack-0.14.2/opt/spack/linux-rhel7-westmere/gcc-7.3.0/fastqc-0.11.7-vcaesw7rynaqil36ki3he7onz6pwdkru/lib' ';export' 'LIBRARY_PATH;LOADEDMODULES=switcher/1.0.15:fastqc-0.11.7-gcc-7.3.0-vcaesw7' ';export' 'LOADEDMODULES;PATH=/gpfs1/arch/spack-0.14.2/opt/spack/linux-rhel7-westmere/gcc-7.3.0/openjdk-11.0.2-4tsd4suy3m562bywkutoj6xfhmtdrhzy/bin:/gpfs1/arch/spack-0.14.2/opt/spack/linux-rhel7-westmere/gcc-7.3.0/fastqc-0.11.7-vcaesw7rynaqil36ki3he7onz6pwdkru/bin:/gpfs1/arch/spack-0.14.2/bin:/gpfs1/sw/x86_64/rh7/pkgs/slurm-usertools/bin:/usr/local/bin:/usr/bin:/var/cfengine/bin:/usr/lpp/mmfs/bin:/opt/env-switcher/bin:/usr/local/sbin:/usr/sbin:/users/e/l/elongman/.local/bin:/users/e/l/elongman/bin' ';export' 'PATH;_LMFILES_=/opt/modules/oscar-modulefiles//switcher/1.0.15:/gpfs1/arch/spack-0.14.2/share/spack/modules/linux-rhel7-westmere/fastqc-0.11.7-gcc-7.3.0-vcaesw7' ';export' '_LMFILES_;'
+++ CMAKE_PREFIX_PATH=/gpfs1/arch/spack-0.14.2/opt/spack/linux-rhel7-westmere/gcc-7.3.0/fastqc-0.11.7-vcaesw7rynaqil36ki3he7onz6pwdkru/
+++ export CMAKE_PREFIX_PATH
+++ LD_LIBRARY_PATH=/gpfs1/arch/spack-0.14.2/opt/spack/linux-rhel7-westmere/gcc-7.3.0/fastqc-0.11.7-vcaesw7rynaqil36ki3he7onz6pwdkru/lib
+++ export LD_LIBRARY_PATH
+++ LIBRARY_PATH=/gpfs1/arch/spack-0.14.2/opt/spack/linux-rhel7-westmere/gcc-7.3.0/fastqc-0.11.7-vcaesw7rynaqil36ki3he7onz6pwdkru/lib
+++ export LIBRARY_PATH
+++ LOADEDMODULES=switcher/1.0.15:fastqc-0.11.7-gcc-7.3.0-vcaesw7
+++ export LOADEDMODULES
+++ PATH=/gpfs1/arch/spack-0.14.2/opt/spack/linux-rhel7-westmere/gcc-7.3.0/openjdk-11.0.2-4tsd4suy3m562bywkutoj6xfhmtdrhzy/bin:/gpfs1/arch/spack-0.14.2/opt/spack/linux-rhel7-westmere/gcc-7.3.0/fastqc-0.11.7-vcaesw7rynaqil36ki3he7onz6pwdkru/bin:/gpfs1/arch/spack-0.14.2/bin:/gpfs1/sw/x86_64/rh7/pkgs/slurm-usertools/bin:/usr/local/bin:/usr/bin:/var/cfengine/bin:/usr/lpp/mmfs/bin:/opt/env-switcher/bin:/usr/local/sbin:/usr/sbin:/users/e/l/elongman/.local/bin:/users/e/l/elongman/bin
+++ export PATH
+++ _LMFILES_=/opt/modules/oscar-modulefiles//switcher/1.0.15:/gpfs1/arch/spack-0.14.2/share/spack/modules/linux-rhel7-westmere/fastqc-0.11.7-gcc-7.3.0-vcaesw7
+++ export _LMFILES_
++ RUN_PATH=/netfiles/pespenilab_share/Nucella/raw/Shortreads/082123-XP-fc1-L7-I8I8-18048-181-396223829/082123-XP-fc1-L7-I8I8-18048-181-688416898/082123-XP-fc1-ds.0852b8f70cc6420995dc0100cb059460/082123-XP-fc1-L7-18048-181-08232023
++ cd /netfiles/pespenilab_share/Nucella/raw/Shortreads/082123-XP-fc1-L7-I8I8-18048-181-396223829/082123-XP-fc1-L7-I8I8-18048-181-688416898/082123-XP-fc1-ds.0852b8f70cc6420995dc0100cb059460/082123-XP-fc1-L7-18048-181-08232023
+++ ls -1 '_*.gz'
+ls: cannot access _*.gz: No such file or directory
