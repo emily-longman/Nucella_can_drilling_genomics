@@ -29,7 +29,7 @@
 set -e
 set -x #useful for debugging your script. It causes each command in the file to be printed to the log file as it is executed, with a + in front of it
 
-# Call fastp package (you would change this to just say 'module load [fastQC version], as I imagine you won't need to install with conda )
+# Call fastp package 
 module load fastqc-0.11.7-gcc-7.3.0-vcaesw7
 
 #Set up directory
