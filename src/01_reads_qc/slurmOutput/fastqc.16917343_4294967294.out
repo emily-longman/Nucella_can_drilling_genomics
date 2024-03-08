@@ -749,3 +749,549 @@ Approx 60% complete for FB2-3_S107_L007_R2_001.fastq.gz
 Approx 65% complete for FB2-3_S107_L007_R2_001.fastq.gz
 Approx 70% complete for FB2-3_S107_L007_R2_001.fastq.gz
 Approx 75% complete for FB2-3_S107_L007_R2_001.fastq.gz
+Approx 80% complete for FB2-3_S107_L007_R2_001.fastq.gz
+Approx 85% complete for FB2-3_S107_L007_R2_001.fastq.gz
+Approx 90% complete for FB2-3_S107_L007_R2_001.fastq.gz
+Approx 95% complete for FB2-3_S107_L007_R2_001.fastq.gz
+Analysis complete for FB2-3_S107_L007_R2_001.fastq.gz
++ for file in '$(ls -1 *.gz)'
+++ basename FB2-4_S100_L007_R1_001.fastq.gz
++ SAMPLE=FB2-4_S100_L007_R1_001.fastq.gz
++ fastqc -t 5 FB2-4_S100_L007_R1_001.fastq.gz -o /gpfs1/home/e/l/elongman/scratch/Nucella_can_drilling_genomics/data/processed/fastqc
+Started analysis of FB2-4_S100_L007_R1_001.fastq.gz
+Approx 5% complete for FB2-4_S100_L007_R1_001.fastq.gz
+Approx 10% complete for FB2-4_S100_L007_R1_001.fastq.gz
+Approx 15% complete for FB2-4_S100_L007_R1_001.fastq.gz
+Approx 20% complete for FB2-4_S100_L007_R1_001.fastq.gz
+Approx 25% complete for FB2-4_S100_L007_R1_001.fastq.gz
+Approx 30% complete for FB2-4_S100_L007_R1_001.fastq.gz
+Approx 35% complete for FB2-4_S100_L007_R1_001.fastq.gz
+Approx 40% complete for FB2-4_S100_L007_R1_001.fastq.gz
+Approx 45% complete for FB2-4_S100_L007_R1_001.fastq.gz
+Approx 50% complete for FB2-4_S100_L007_R1_001.fastq.gz
+Approx 55% complete for FB2-4_S100_L007_R1_001.fastq.gz
+Approx 60% complete for FB2-4_S100_L007_R1_001.fastq.gz
+Approx 65% complete for FB2-4_S100_L007_R1_001.fastq.gz
+Approx 70% complete for FB2-4_S100_L007_R1_001.fastq.gz
+Approx 75% complete for FB2-4_S100_L007_R1_001.fastq.gz
+Approx 80% complete for FB2-4_S100_L007_R1_001.fastq.gz
+Approx 85% complete for FB2-4_S100_L007_R1_001.fastq.gz
+Approx 90% complete for FB2-4_S100_L007_R1_001.fastq.gz
+Approx 95% complete for FB2-4_S100_L007_R1_001.fastq.gz
+Analysis complete for FB2-4_S100_L007_R1_001.fastq.gz
++ for file in '$(ls -1 *.gz)'
+++ basename FB2-4_S100_L007_R2_001.fastq.gz
++ SAMPLE=FB2-4_S100_L007_R2_001.fastq.gz
++ fastqc -t 5 FB2-4_S100_L007_R2_001.fastq.gz -o /gpfs1/home/e/l/elongman/scratch/Nucella_can_drilling_genomics/data/processed/fastqc
+Started analysis of FB2-4_S100_L007_R2_001.fastq.gz
+Approx 5% complete for FB2-4_S100_L007_R2_001.fastq.gz
+Approx 10% complete for FB2-4_S100_L007_R2_001.fastq.gz
+Approx 15% complete for FB2-4_S100_L007_R2_001.fastq.gz
+Approx 20% complete for FB2-4_S100_L007_R2_001.fastq.gz
+Approx 25% complete for FB2-4_S100_L007_R2_001.fastq.gz
+Approx 30% complete for FB2-4_S100_L007_R2_001.fastq.gz
+Approx 35% complete for FB2-4_S100_L007_R2_001.fastq.gz
+Approx 40% complete for FB2-4_S100_L007_R2_001.fastq.gz
+Approx 45% complete for FB2-4_S100_L007_R2_001.fastq.gz
+Approx 50% complete for FB2-4_S100_L007_R2_001.fastq.gz
+Approx 55% complete for FB2-4_S100_L007_R2_001.fastq.gz
+Approx 60% complete for FB2-4_S100_L007_R2_001.fastq.gz
+Approx 65% complete for FB2-4_S100_L007_R2_001.fastq.gz
+Approx 70% complete for FB2-4_S100_L007_R2_001.fastq.gz
+Approx 75% complete for FB2-4_S100_L007_R2_001.fastq.gz
+Approx 80% complete for FB2-4_S100_L007_R2_001.fastq.gz
+Approx 85% complete for FB2-4_S100_L007_R2_001.fastq.gz
+Approx 90% complete for FB2-4_S100_L007_R2_001.fastq.gz
+Approx 95% complete for FB2-4_S100_L007_R2_001.fastq.gz
+Analysis complete for FB2-4_S100_L007_R2_001.fastq.gz
++ for file in '$(ls -1 *.gz)'
+++ basename FB2-5_S65_L007_R1_001.fastq.gz
++ SAMPLE=FB2-5_S65_L007_R1_001.fastq.gz
++ fastqc -t 5 FB2-5_S65_L007_R1_001.fastq.gz -o /gpfs1/home/e/l/elongman/scratch/Nucella_can_drilling_genomics/data/processed/fastqc
+Started analysis of FB2-5_S65_L007_R1_001.fastq.gz
+Approx 5% complete for FB2-5_S65_L007_R1_001.fastq.gz
+Approx 10% complete for FB2-5_S65_L007_R1_001.fastq.gz
+Approx 15% complete for FB2-5_S65_L007_R1_001.fastq.gz
+Approx 20% complete for FB2-5_S65_L007_R1_001.fastq.gz
+Approx 25% complete for FB2-5_S65_L007_R1_001.fastq.gz
+Approx 30% complete for FB2-5_S65_L007_R1_001.fastq.gz
+Approx 35% complete for FB2-5_S65_L007_R1_001.fastq.gz
+Approx 40% complete for FB2-5_S65_L007_R1_001.fastq.gz
+Approx 45% complete for FB2-5_S65_L007_R1_001.fastq.gz
+Approx 50% complete for FB2-5_S65_L007_R1_001.fastq.gz
+Approx 55% complete for FB2-5_S65_L007_R1_001.fastq.gz
+Approx 60% complete for FB2-5_S65_L007_R1_001.fastq.gz
+Approx 65% complete for FB2-5_S65_L007_R1_001.fastq.gz
+Approx 70% complete for FB2-5_S65_L007_R1_001.fastq.gz
+Approx 75% complete for FB2-5_S65_L007_R1_001.fastq.gz
+Approx 80% complete for FB2-5_S65_L007_R1_001.fastq.gz
+Approx 85% complete for FB2-5_S65_L007_R1_001.fastq.gz
+Approx 90% complete for FB2-5_S65_L007_R1_001.fastq.gz
+Approx 95% complete for FB2-5_S65_L007_R1_001.fastq.gz
+Analysis complete for FB2-5_S65_L007_R1_001.fastq.gz
++ for file in '$(ls -1 *.gz)'
+++ basename FB2-5_S65_L007_R2_001.fastq.gz
++ SAMPLE=FB2-5_S65_L007_R2_001.fastq.gz
++ fastqc -t 5 FB2-5_S65_L007_R2_001.fastq.gz -o /gpfs1/home/e/l/elongman/scratch/Nucella_can_drilling_genomics/data/processed/fastqc
+Started analysis of FB2-5_S65_L007_R2_001.fastq.gz
+Approx 5% complete for FB2-5_S65_L007_R2_001.fastq.gz
+Approx 10% complete for FB2-5_S65_L007_R2_001.fastq.gz
+Approx 15% complete for FB2-5_S65_L007_R2_001.fastq.gz
+Approx 20% complete for FB2-5_S65_L007_R2_001.fastq.gz
+Approx 25% complete for FB2-5_S65_L007_R2_001.fastq.gz
+Approx 30% complete for FB2-5_S65_L007_R2_001.fastq.gz
+Approx 35% complete for FB2-5_S65_L007_R2_001.fastq.gz
+Approx 40% complete for FB2-5_S65_L007_R2_001.fastq.gz
+Approx 45% complete for FB2-5_S65_L007_R2_001.fastq.gz
+Approx 50% complete for FB2-5_S65_L007_R2_001.fastq.gz
+Approx 55% complete for FB2-5_S65_L007_R2_001.fastq.gz
+Approx 60% complete for FB2-5_S65_L007_R2_001.fastq.gz
+Approx 65% complete for FB2-5_S65_L007_R2_001.fastq.gz
+Approx 70% complete for FB2-5_S65_L007_R2_001.fastq.gz
+Approx 75% complete for FB2-5_S65_L007_R2_001.fastq.gz
+Approx 80% complete for FB2-5_S65_L007_R2_001.fastq.gz
+Approx 85% complete for FB2-5_S65_L007_R2_001.fastq.gz
+Approx 90% complete for FB2-5_S65_L007_R2_001.fastq.gz
+Approx 95% complete for FB2-5_S65_L007_R2_001.fastq.gz
+Analysis complete for FB2-5_S65_L007_R2_001.fastq.gz
++ for file in '$(ls -1 *.gz)'
+++ basename FB2-6_S144_L007_R1_001.fastq.gz
++ SAMPLE=FB2-6_S144_L007_R1_001.fastq.gz
++ fastqc -t 5 FB2-6_S144_L007_R1_001.fastq.gz -o /gpfs1/home/e/l/elongman/scratch/Nucella_can_drilling_genomics/data/processed/fastqc
+Started analysis of FB2-6_S144_L007_R1_001.fastq.gz
+Approx 5% complete for FB2-6_S144_L007_R1_001.fastq.gz
+Approx 10% complete for FB2-6_S144_L007_R1_001.fastq.gz
+Approx 15% complete for FB2-6_S144_L007_R1_001.fastq.gz
+Approx 20% complete for FB2-6_S144_L007_R1_001.fastq.gz
+Approx 25% complete for FB2-6_S144_L007_R1_001.fastq.gz
+Approx 30% complete for FB2-6_S144_L007_R1_001.fastq.gz
+Approx 35% complete for FB2-6_S144_L007_R1_001.fastq.gz
+Approx 40% complete for FB2-6_S144_L007_R1_001.fastq.gz
+Approx 45% complete for FB2-6_S144_L007_R1_001.fastq.gz
+Approx 50% complete for FB2-6_S144_L007_R1_001.fastq.gz
+Approx 55% complete for FB2-6_S144_L007_R1_001.fastq.gz
+Approx 60% complete for FB2-6_S144_L007_R1_001.fastq.gz
+Approx 65% complete for FB2-6_S144_L007_R1_001.fastq.gz
+Approx 70% complete for FB2-6_S144_L007_R1_001.fastq.gz
+Approx 75% complete for FB2-6_S144_L007_R1_001.fastq.gz
+Approx 80% complete for FB2-6_S144_L007_R1_001.fastq.gz
+Approx 85% complete for FB2-6_S144_L007_R1_001.fastq.gz
+Approx 90% complete for FB2-6_S144_L007_R1_001.fastq.gz
+Approx 95% complete for FB2-6_S144_L007_R1_001.fastq.gz
+Analysis complete for FB2-6_S144_L007_R1_001.fastq.gz
++ for file in '$(ls -1 *.gz)'
+++ basename FB2-6_S144_L007_R2_001.fastq.gz
++ SAMPLE=FB2-6_S144_L007_R2_001.fastq.gz
++ fastqc -t 5 FB2-6_S144_L007_R2_001.fastq.gz -o /gpfs1/home/e/l/elongman/scratch/Nucella_can_drilling_genomics/data/processed/fastqc
+Started analysis of FB2-6_S144_L007_R2_001.fastq.gz
+Approx 5% complete for FB2-6_S144_L007_R2_001.fastq.gz
+Approx 10% complete for FB2-6_S144_L007_R2_001.fastq.gz
+Approx 15% complete for FB2-6_S144_L007_R2_001.fastq.gz
+Approx 20% complete for FB2-6_S144_L007_R2_001.fastq.gz
+Approx 25% complete for FB2-6_S144_L007_R2_001.fastq.gz
+Approx 30% complete for FB2-6_S144_L007_R2_001.fastq.gz
+Approx 35% complete for FB2-6_S144_L007_R2_001.fastq.gz
+Approx 40% complete for FB2-6_S144_L007_R2_001.fastq.gz
+Approx 45% complete for FB2-6_S144_L007_R2_001.fastq.gz
+Approx 50% complete for FB2-6_S144_L007_R2_001.fastq.gz
+Approx 55% complete for FB2-6_S144_L007_R2_001.fastq.gz
+Approx 60% complete for FB2-6_S144_L007_R2_001.fastq.gz
+Approx 65% complete for FB2-6_S144_L007_R2_001.fastq.gz
+Approx 70% complete for FB2-6_S144_L007_R2_001.fastq.gz
+Approx 75% complete for FB2-6_S144_L007_R2_001.fastq.gz
+Approx 80% complete for FB2-6_S144_L007_R2_001.fastq.gz
+Approx 85% complete for FB2-6_S144_L007_R2_001.fastq.gz
+Approx 90% complete for FB2-6_S144_L007_R2_001.fastq.gz
+Approx 95% complete for FB2-6_S144_L007_R2_001.fastq.gz
+Analysis complete for FB2-6_S144_L007_R2_001.fastq.gz
++ for file in '$(ls -1 *.gz)'
+++ basename FB2-8_S108_L007_R1_001.fastq.gz
++ SAMPLE=FB2-8_S108_L007_R1_001.fastq.gz
++ fastqc -t 5 FB2-8_S108_L007_R1_001.fastq.gz -o /gpfs1/home/e/l/elongman/scratch/Nucella_can_drilling_genomics/data/processed/fastqc
+Started analysis of FB2-8_S108_L007_R1_001.fastq.gz
+Approx 5% complete for FB2-8_S108_L007_R1_001.fastq.gz
+Approx 10% complete for FB2-8_S108_L007_R1_001.fastq.gz
+Approx 15% complete for FB2-8_S108_L007_R1_001.fastq.gz
+Approx 20% complete for FB2-8_S108_L007_R1_001.fastq.gz
+Approx 25% complete for FB2-8_S108_L007_R1_001.fastq.gz
+Approx 30% complete for FB2-8_S108_L007_R1_001.fastq.gz
+Approx 35% complete for FB2-8_S108_L007_R1_001.fastq.gz
+Approx 40% complete for FB2-8_S108_L007_R1_001.fastq.gz
+Approx 45% complete for FB2-8_S108_L007_R1_001.fastq.gz
+Approx 50% complete for FB2-8_S108_L007_R1_001.fastq.gz
+Approx 55% complete for FB2-8_S108_L007_R1_001.fastq.gz
+Approx 60% complete for FB2-8_S108_L007_R1_001.fastq.gz
+Approx 65% complete for FB2-8_S108_L007_R1_001.fastq.gz
+Approx 70% complete for FB2-8_S108_L007_R1_001.fastq.gz
+Approx 75% complete for FB2-8_S108_L007_R1_001.fastq.gz
+Approx 80% complete for FB2-8_S108_L007_R1_001.fastq.gz
+Approx 85% complete for FB2-8_S108_L007_R1_001.fastq.gz
+Approx 90% complete for FB2-8_S108_L007_R1_001.fastq.gz
+Approx 95% complete for FB2-8_S108_L007_R1_001.fastq.gz
+Analysis complete for FB2-8_S108_L007_R1_001.fastq.gz
++ for file in '$(ls -1 *.gz)'
+++ basename FB2-8_S108_L007_R2_001.fastq.gz
++ SAMPLE=FB2-8_S108_L007_R2_001.fastq.gz
++ fastqc -t 5 FB2-8_S108_L007_R2_001.fastq.gz -o /gpfs1/home/e/l/elongman/scratch/Nucella_can_drilling_genomics/data/processed/fastqc
+Started analysis of FB2-8_S108_L007_R2_001.fastq.gz
+Approx 5% complete for FB2-8_S108_L007_R2_001.fastq.gz
+Approx 10% complete for FB2-8_S108_L007_R2_001.fastq.gz
+Approx 15% complete for FB2-8_S108_L007_R2_001.fastq.gz
+Approx 20% complete for FB2-8_S108_L007_R2_001.fastq.gz
+Approx 25% complete for FB2-8_S108_L007_R2_001.fastq.gz
+Approx 30% complete for FB2-8_S108_L007_R2_001.fastq.gz
+Approx 35% complete for FB2-8_S108_L007_R2_001.fastq.gz
+Approx 40% complete for FB2-8_S108_L007_R2_001.fastq.gz
+Approx 45% complete for FB2-8_S108_L007_R2_001.fastq.gz
+Approx 50% complete for FB2-8_S108_L007_R2_001.fastq.gz
+Approx 55% complete for FB2-8_S108_L007_R2_001.fastq.gz
+Approx 60% complete for FB2-8_S108_L007_R2_001.fastq.gz
+Approx 65% complete for FB2-8_S108_L007_R2_001.fastq.gz
+Approx 70% complete for FB2-8_S108_L007_R2_001.fastq.gz
+Approx 75% complete for FB2-8_S108_L007_R2_001.fastq.gz
+Approx 80% complete for FB2-8_S108_L007_R2_001.fastq.gz
+Approx 85% complete for FB2-8_S108_L007_R2_001.fastq.gz
+Approx 90% complete for FB2-8_S108_L007_R2_001.fastq.gz
+Approx 95% complete for FB2-8_S108_L007_R2_001.fastq.gz
+Analysis complete for FB2-8_S108_L007_R2_001.fastq.gz
++ for file in '$(ls -1 *.gz)'
+++ basename FB3-3_S37_L007_R1_001.fastq.gz
++ SAMPLE=FB3-3_S37_L007_R1_001.fastq.gz
++ fastqc -t 5 FB3-3_S37_L007_R1_001.fastq.gz -o /gpfs1/home/e/l/elongman/scratch/Nucella_can_drilling_genomics/data/processed/fastqc
+Started analysis of FB3-3_S37_L007_R1_001.fastq.gz
+Approx 5% complete for FB3-3_S37_L007_R1_001.fastq.gz
+Approx 10% complete for FB3-3_S37_L007_R1_001.fastq.gz
+Approx 15% complete for FB3-3_S37_L007_R1_001.fastq.gz
+Approx 20% complete for FB3-3_S37_L007_R1_001.fastq.gz
+Approx 25% complete for FB3-3_S37_L007_R1_001.fastq.gz
+Approx 30% complete for FB3-3_S37_L007_R1_001.fastq.gz
+Approx 35% complete for FB3-3_S37_L007_R1_001.fastq.gz
+Approx 40% complete for FB3-3_S37_L007_R1_001.fastq.gz
+Approx 45% complete for FB3-3_S37_L007_R1_001.fastq.gz
+Approx 50% complete for FB3-3_S37_L007_R1_001.fastq.gz
+Approx 55% complete for FB3-3_S37_L007_R1_001.fastq.gz
+Approx 60% complete for FB3-3_S37_L007_R1_001.fastq.gz
+Approx 65% complete for FB3-3_S37_L007_R1_001.fastq.gz
+Approx 70% complete for FB3-3_S37_L007_R1_001.fastq.gz
+Approx 75% complete for FB3-3_S37_L007_R1_001.fastq.gz
+Approx 80% complete for FB3-3_S37_L007_R1_001.fastq.gz
+Approx 85% complete for FB3-3_S37_L007_R1_001.fastq.gz
+Approx 90% complete for FB3-3_S37_L007_R1_001.fastq.gz
+Approx 95% complete for FB3-3_S37_L007_R1_001.fastq.gz
+Analysis complete for FB3-3_S37_L007_R1_001.fastq.gz
++ for file in '$(ls -1 *.gz)'
+++ basename FB3-3_S37_L007_R2_001.fastq.gz
++ SAMPLE=FB3-3_S37_L007_R2_001.fastq.gz
++ fastqc -t 5 FB3-3_S37_L007_R2_001.fastq.gz -o /gpfs1/home/e/l/elongman/scratch/Nucella_can_drilling_genomics/data/processed/fastqc
+Started analysis of FB3-3_S37_L007_R2_001.fastq.gz
+Approx 5% complete for FB3-3_S37_L007_R2_001.fastq.gz
+Approx 10% complete for FB3-3_S37_L007_R2_001.fastq.gz
+Approx 15% complete for FB3-3_S37_L007_R2_001.fastq.gz
+Approx 20% complete for FB3-3_S37_L007_R2_001.fastq.gz
+Approx 25% complete for FB3-3_S37_L007_R2_001.fastq.gz
+Approx 30% complete for FB3-3_S37_L007_R2_001.fastq.gz
+Approx 35% complete for FB3-3_S37_L007_R2_001.fastq.gz
+Approx 40% complete for FB3-3_S37_L007_R2_001.fastq.gz
+Approx 45% complete for FB3-3_S37_L007_R2_001.fastq.gz
+Approx 50% complete for FB3-3_S37_L007_R2_001.fastq.gz
+Approx 55% complete for FB3-3_S37_L007_R2_001.fastq.gz
+Approx 60% complete for FB3-3_S37_L007_R2_001.fastq.gz
+Approx 65% complete for FB3-3_S37_L007_R2_001.fastq.gz
+Approx 70% complete for FB3-3_S37_L007_R2_001.fastq.gz
+Approx 75% complete for FB3-3_S37_L007_R2_001.fastq.gz
+Approx 80% complete for FB3-3_S37_L007_R2_001.fastq.gz
+Approx 85% complete for FB3-3_S37_L007_R2_001.fastq.gz
+Approx 90% complete for FB3-3_S37_L007_R2_001.fastq.gz
+Approx 95% complete for FB3-3_S37_L007_R2_001.fastq.gz
+Analysis complete for FB3-3_S37_L007_R2_001.fastq.gz
++ for file in '$(ls -1 *.gz)'
+++ basename FB3-5_S47_L007_R1_001.fastq.gz
++ SAMPLE=FB3-5_S47_L007_R1_001.fastq.gz
++ fastqc -t 5 FB3-5_S47_L007_R1_001.fastq.gz -o /gpfs1/home/e/l/elongman/scratch/Nucella_can_drilling_genomics/data/processed/fastqc
+Started analysis of FB3-5_S47_L007_R1_001.fastq.gz
+Approx 5% complete for FB3-5_S47_L007_R1_001.fastq.gz
+Approx 10% complete for FB3-5_S47_L007_R1_001.fastq.gz
+Approx 15% complete for FB3-5_S47_L007_R1_001.fastq.gz
+Approx 20% complete for FB3-5_S47_L007_R1_001.fastq.gz
+Approx 25% complete for FB3-5_S47_L007_R1_001.fastq.gz
+Approx 30% complete for FB3-5_S47_L007_R1_001.fastq.gz
+Approx 35% complete for FB3-5_S47_L007_R1_001.fastq.gz
+Approx 40% complete for FB3-5_S47_L007_R1_001.fastq.gz
+Approx 45% complete for FB3-5_S47_L007_R1_001.fastq.gz
+Approx 50% complete for FB3-5_S47_L007_R1_001.fastq.gz
+Approx 55% complete for FB3-5_S47_L007_R1_001.fastq.gz
+Approx 60% complete for FB3-5_S47_L007_R1_001.fastq.gz
+Approx 65% complete for FB3-5_S47_L007_R1_001.fastq.gz
+Approx 70% complete for FB3-5_S47_L007_R1_001.fastq.gz
+Approx 75% complete for FB3-5_S47_L007_R1_001.fastq.gz
+Approx 80% complete for FB3-5_S47_L007_R1_001.fastq.gz
+Approx 85% complete for FB3-5_S47_L007_R1_001.fastq.gz
+Approx 90% complete for FB3-5_S47_L007_R1_001.fastq.gz
+Approx 95% complete for FB3-5_S47_L007_R1_001.fastq.gz
+Analysis complete for FB3-5_S47_L007_R1_001.fastq.gz
++ for file in '$(ls -1 *.gz)'
+++ basename FB3-5_S47_L007_R2_001.fastq.gz
++ SAMPLE=FB3-5_S47_L007_R2_001.fastq.gz
++ fastqc -t 5 FB3-5_S47_L007_R2_001.fastq.gz -o /gpfs1/home/e/l/elongman/scratch/Nucella_can_drilling_genomics/data/processed/fastqc
+Started analysis of FB3-5_S47_L007_R2_001.fastq.gz
+Approx 5% complete for FB3-5_S47_L007_R2_001.fastq.gz
+Approx 10% complete for FB3-5_S47_L007_R2_001.fastq.gz
+Approx 15% complete for FB3-5_S47_L007_R2_001.fastq.gz
+Approx 20% complete for FB3-5_S47_L007_R2_001.fastq.gz
+Approx 25% complete for FB3-5_S47_L007_R2_001.fastq.gz
+Approx 30% complete for FB3-5_S47_L007_R2_001.fastq.gz
+Approx 35% complete for FB3-5_S47_L007_R2_001.fastq.gz
+Approx 40% complete for FB3-5_S47_L007_R2_001.fastq.gz
+Approx 45% complete for FB3-5_S47_L007_R2_001.fastq.gz
+Approx 50% complete for FB3-5_S47_L007_R2_001.fastq.gz
+Approx 55% complete for FB3-5_S47_L007_R2_001.fastq.gz
+Approx 60% complete for FB3-5_S47_L007_R2_001.fastq.gz
+Approx 65% complete for FB3-5_S47_L007_R2_001.fastq.gz
+Approx 70% complete for FB3-5_S47_L007_R2_001.fastq.gz
+Approx 75% complete for FB3-5_S47_L007_R2_001.fastq.gz
+Approx 80% complete for FB3-5_S47_L007_R2_001.fastq.gz
+Approx 85% complete for FB3-5_S47_L007_R2_001.fastq.gz
+Approx 90% complete for FB3-5_S47_L007_R2_001.fastq.gz
+Approx 95% complete for FB3-5_S47_L007_R2_001.fastq.gz
+Analysis complete for FB3-5_S47_L007_R2_001.fastq.gz
++ for file in '$(ls -1 *.gz)'
+++ basename FB3-6_S79_L007_R1_001.fastq.gz
++ SAMPLE=FB3-6_S79_L007_R1_001.fastq.gz
++ fastqc -t 5 FB3-6_S79_L007_R1_001.fastq.gz -o /gpfs1/home/e/l/elongman/scratch/Nucella_can_drilling_genomics/data/processed/fastqc
+Started analysis of FB3-6_S79_L007_R1_001.fastq.gz
+Approx 5% complete for FB3-6_S79_L007_R1_001.fastq.gz
+Approx 10% complete for FB3-6_S79_L007_R1_001.fastq.gz
+Approx 15% complete for FB3-6_S79_L007_R1_001.fastq.gz
+Approx 20% complete for FB3-6_S79_L007_R1_001.fastq.gz
+Approx 25% complete for FB3-6_S79_L007_R1_001.fastq.gz
+Approx 30% complete for FB3-6_S79_L007_R1_001.fastq.gz
+Approx 35% complete for FB3-6_S79_L007_R1_001.fastq.gz
+Approx 40% complete for FB3-6_S79_L007_R1_001.fastq.gz
+Approx 45% complete for FB3-6_S79_L007_R1_001.fastq.gz
+Approx 50% complete for FB3-6_S79_L007_R1_001.fastq.gz
+Approx 55% complete for FB3-6_S79_L007_R1_001.fastq.gz
+Approx 60% complete for FB3-6_S79_L007_R1_001.fastq.gz
+Approx 65% complete for FB3-6_S79_L007_R1_001.fastq.gz
+Approx 70% complete for FB3-6_S79_L007_R1_001.fastq.gz
+Approx 75% complete for FB3-6_S79_L007_R1_001.fastq.gz
+Approx 80% complete for FB3-6_S79_L007_R1_001.fastq.gz
+Approx 85% complete for FB3-6_S79_L007_R1_001.fastq.gz
+Approx 90% complete for FB3-6_S79_L007_R1_001.fastq.gz
+Approx 95% complete for FB3-6_S79_L007_R1_001.fastq.gz
+Analysis complete for FB3-6_S79_L007_R1_001.fastq.gz
++ for file in '$(ls -1 *.gz)'
+++ basename FB3-6_S79_L007_R2_001.fastq.gz
++ SAMPLE=FB3-6_S79_L007_R2_001.fastq.gz
++ fastqc -t 5 FB3-6_S79_L007_R2_001.fastq.gz -o /gpfs1/home/e/l/elongman/scratch/Nucella_can_drilling_genomics/data/processed/fastqc
+Started analysis of FB3-6_S79_L007_R2_001.fastq.gz
+Approx 5% complete for FB3-6_S79_L007_R2_001.fastq.gz
+Approx 10% complete for FB3-6_S79_L007_R2_001.fastq.gz
+Approx 15% complete for FB3-6_S79_L007_R2_001.fastq.gz
+Approx 20% complete for FB3-6_S79_L007_R2_001.fastq.gz
+Approx 25% complete for FB3-6_S79_L007_R2_001.fastq.gz
+Approx 30% complete for FB3-6_S79_L007_R2_001.fastq.gz
+Approx 35% complete for FB3-6_S79_L007_R2_001.fastq.gz
+Approx 40% complete for FB3-6_S79_L007_R2_001.fastq.gz
+Approx 45% complete for FB3-6_S79_L007_R2_001.fastq.gz
+Approx 50% complete for FB3-6_S79_L007_R2_001.fastq.gz
+Approx 55% complete for FB3-6_S79_L007_R2_001.fastq.gz
+Approx 60% complete for FB3-6_S79_L007_R2_001.fastq.gz
+Approx 65% complete for FB3-6_S79_L007_R2_001.fastq.gz
+Approx 70% complete for FB3-6_S79_L007_R2_001.fastq.gz
+Approx 75% complete for FB3-6_S79_L007_R2_001.fastq.gz
+Approx 80% complete for FB3-6_S79_L007_R2_001.fastq.gz
+Approx 85% complete for FB3-6_S79_L007_R2_001.fastq.gz
+Approx 90% complete for FB3-6_S79_L007_R2_001.fastq.gz
+Approx 95% complete for FB3-6_S79_L007_R2_001.fastq.gz
+Analysis complete for FB3-6_S79_L007_R2_001.fastq.gz
++ for file in '$(ls -1 *.gz)'
+++ basename FB3-7_S15_L007_R1_001.fastq.gz
++ SAMPLE=FB3-7_S15_L007_R1_001.fastq.gz
++ fastqc -t 5 FB3-7_S15_L007_R1_001.fastq.gz -o /gpfs1/home/e/l/elongman/scratch/Nucella_can_drilling_genomics/data/processed/fastqc
+Started analysis of FB3-7_S15_L007_R1_001.fastq.gz
+Approx 5% complete for FB3-7_S15_L007_R1_001.fastq.gz
+Approx 10% complete for FB3-7_S15_L007_R1_001.fastq.gz
+Approx 15% complete for FB3-7_S15_L007_R1_001.fastq.gz
+Approx 20% complete for FB3-7_S15_L007_R1_001.fastq.gz
+Approx 25% complete for FB3-7_S15_L007_R1_001.fastq.gz
+Approx 30% complete for FB3-7_S15_L007_R1_001.fastq.gz
+Approx 35% complete for FB3-7_S15_L007_R1_001.fastq.gz
+Approx 40% complete for FB3-7_S15_L007_R1_001.fastq.gz
+Approx 45% complete for FB3-7_S15_L007_R1_001.fastq.gz
+Approx 50% complete for FB3-7_S15_L007_R1_001.fastq.gz
+Approx 55% complete for FB3-7_S15_L007_R1_001.fastq.gz
+Approx 60% complete for FB3-7_S15_L007_R1_001.fastq.gz
+Approx 65% complete for FB3-7_S15_L007_R1_001.fastq.gz
+Approx 70% complete for FB3-7_S15_L007_R1_001.fastq.gz
+Approx 75% complete for FB3-7_S15_L007_R1_001.fastq.gz
+Approx 80% complete for FB3-7_S15_L007_R1_001.fastq.gz
+Approx 85% complete for FB3-7_S15_L007_R1_001.fastq.gz
+Approx 90% complete for FB3-7_S15_L007_R1_001.fastq.gz
+Approx 95% complete for FB3-7_S15_L007_R1_001.fastq.gz
+Analysis complete for FB3-7_S15_L007_R1_001.fastq.gz
++ for file in '$(ls -1 *.gz)'
+++ basename FB3-7_S15_L007_R2_001.fastq.gz
++ SAMPLE=FB3-7_S15_L007_R2_001.fastq.gz
++ fastqc -t 5 FB3-7_S15_L007_R2_001.fastq.gz -o /gpfs1/home/e/l/elongman/scratch/Nucella_can_drilling_genomics/data/processed/fastqc
+Started analysis of FB3-7_S15_L007_R2_001.fastq.gz
+Approx 5% complete for FB3-7_S15_L007_R2_001.fastq.gz
+Approx 10% complete for FB3-7_S15_L007_R2_001.fastq.gz
+Approx 15% complete for FB3-7_S15_L007_R2_001.fastq.gz
+Approx 20% complete for FB3-7_S15_L007_R2_001.fastq.gz
+Approx 25% complete for FB3-7_S15_L007_R2_001.fastq.gz
+Approx 30% complete for FB3-7_S15_L007_R2_001.fastq.gz
+Approx 35% complete for FB3-7_S15_L007_R2_001.fastq.gz
+Approx 40% complete for FB3-7_S15_L007_R2_001.fastq.gz
+Approx 45% complete for FB3-7_S15_L007_R2_001.fastq.gz
+Approx 50% complete for FB3-7_S15_L007_R2_001.fastq.gz
+Approx 55% complete for FB3-7_S15_L007_R2_001.fastq.gz
+Approx 60% complete for FB3-7_S15_L007_R2_001.fastq.gz
+Approx 65% complete for FB3-7_S15_L007_R2_001.fastq.gz
+Approx 70% complete for FB3-7_S15_L007_R2_001.fastq.gz
+Approx 75% complete for FB3-7_S15_L007_R2_001.fastq.gz
+Approx 80% complete for FB3-7_S15_L007_R2_001.fastq.gz
+Approx 85% complete for FB3-7_S15_L007_R2_001.fastq.gz
+Approx 90% complete for FB3-7_S15_L007_R2_001.fastq.gz
+Approx 95% complete for FB3-7_S15_L007_R2_001.fastq.gz
+Analysis complete for FB3-7_S15_L007_R2_001.fastq.gz
++ for file in '$(ls -1 *.gz)'
+++ basename FB3-8_S181_L007_R1_001.fastq.gz
++ SAMPLE=FB3-8_S181_L007_R1_001.fastq.gz
++ fastqc -t 5 FB3-8_S181_L007_R1_001.fastq.gz -o /gpfs1/home/e/l/elongman/scratch/Nucella_can_drilling_genomics/data/processed/fastqc
+Started analysis of FB3-8_S181_L007_R1_001.fastq.gz
+Approx 5% complete for FB3-8_S181_L007_R1_001.fastq.gz
+Approx 10% complete for FB3-8_S181_L007_R1_001.fastq.gz
+Approx 15% complete for FB3-8_S181_L007_R1_001.fastq.gz
+Approx 20% complete for FB3-8_S181_L007_R1_001.fastq.gz
+Approx 25% complete for FB3-8_S181_L007_R1_001.fastq.gz
+Approx 30% complete for FB3-8_S181_L007_R1_001.fastq.gz
+Approx 35% complete for FB3-8_S181_L007_R1_001.fastq.gz
+Approx 40% complete for FB3-8_S181_L007_R1_001.fastq.gz
+Approx 45% complete for FB3-8_S181_L007_R1_001.fastq.gz
+Approx 50% complete for FB3-8_S181_L007_R1_001.fastq.gz
+Approx 55% complete for FB3-8_S181_L007_R1_001.fastq.gz
+Approx 60% complete for FB3-8_S181_L007_R1_001.fastq.gz
+Approx 65% complete for FB3-8_S181_L007_R1_001.fastq.gz
+Approx 70% complete for FB3-8_S181_L007_R1_001.fastq.gz
+Approx 75% complete for FB3-8_S181_L007_R1_001.fastq.gz
+Approx 80% complete for FB3-8_S181_L007_R1_001.fastq.gz
+Approx 85% complete for FB3-8_S181_L007_R1_001.fastq.gz
+Approx 90% complete for FB3-8_S181_L007_R1_001.fastq.gz
+Approx 95% complete for FB3-8_S181_L007_R1_001.fastq.gz
+Analysis complete for FB3-8_S181_L007_R1_001.fastq.gz
++ for file in '$(ls -1 *.gz)'
+++ basename FB3-8_S181_L007_R2_001.fastq.gz
++ SAMPLE=FB3-8_S181_L007_R2_001.fastq.gz
++ fastqc -t 5 FB3-8_S181_L007_R2_001.fastq.gz -o /gpfs1/home/e/l/elongman/scratch/Nucella_can_drilling_genomics/data/processed/fastqc
+Started analysis of FB3-8_S181_L007_R2_001.fastq.gz
+Approx 5% complete for FB3-8_S181_L007_R2_001.fastq.gz
+Approx 10% complete for FB3-8_S181_L007_R2_001.fastq.gz
+Approx 15% complete for FB3-8_S181_L007_R2_001.fastq.gz
+Approx 20% complete for FB3-8_S181_L007_R2_001.fastq.gz
+Approx 25% complete for FB3-8_S181_L007_R2_001.fastq.gz
+Approx 30% complete for FB3-8_S181_L007_R2_001.fastq.gz
+Approx 35% complete for FB3-8_S181_L007_R2_001.fastq.gz
+Approx 40% complete for FB3-8_S181_L007_R2_001.fastq.gz
+Approx 45% complete for FB3-8_S181_L007_R2_001.fastq.gz
+Approx 50% complete for FB3-8_S181_L007_R2_001.fastq.gz
+Approx 55% complete for FB3-8_S181_L007_R2_001.fastq.gz
+Approx 60% complete for FB3-8_S181_L007_R2_001.fastq.gz
+Approx 65% complete for FB3-8_S181_L007_R2_001.fastq.gz
+Approx 70% complete for FB3-8_S181_L007_R2_001.fastq.gz
+Approx 75% complete for FB3-8_S181_L007_R2_001.fastq.gz
+Approx 80% complete for FB3-8_S181_L007_R2_001.fastq.gz
+Approx 85% complete for FB3-8_S181_L007_R2_001.fastq.gz
+Approx 90% complete for FB3-8_S181_L007_R2_001.fastq.gz
+Approx 95% complete for FB3-8_S181_L007_R2_001.fastq.gz
+Analysis complete for FB3-8_S181_L007_R2_001.fastq.gz
++ for file in '$(ls -1 *.gz)'
+++ basename FB4-2_S163_L007_R1_001.fastq.gz
++ SAMPLE=FB4-2_S163_L007_R1_001.fastq.gz
++ fastqc -t 5 FB4-2_S163_L007_R1_001.fastq.gz -o /gpfs1/home/e/l/elongman/scratch/Nucella_can_drilling_genomics/data/processed/fastqc
+Started analysis of FB4-2_S163_L007_R1_001.fastq.gz
+Approx 5% complete for FB4-2_S163_L007_R1_001.fastq.gz
+Approx 10% complete for FB4-2_S163_L007_R1_001.fastq.gz
+Approx 15% complete for FB4-2_S163_L007_R1_001.fastq.gz
+Approx 20% complete for FB4-2_S163_L007_R1_001.fastq.gz
+Approx 25% complete for FB4-2_S163_L007_R1_001.fastq.gz
+Approx 30% complete for FB4-2_S163_L007_R1_001.fastq.gz
+Approx 35% complete for FB4-2_S163_L007_R1_001.fastq.gz
+Approx 40% complete for FB4-2_S163_L007_R1_001.fastq.gz
+Approx 45% complete for FB4-2_S163_L007_R1_001.fastq.gz
+Approx 50% complete for FB4-2_S163_L007_R1_001.fastq.gz
+Approx 55% complete for FB4-2_S163_L007_R1_001.fastq.gz
+Approx 60% complete for FB4-2_S163_L007_R1_001.fastq.gz
+Approx 65% complete for FB4-2_S163_L007_R1_001.fastq.gz
+Approx 70% complete for FB4-2_S163_L007_R1_001.fastq.gz
+Approx 75% complete for FB4-2_S163_L007_R1_001.fastq.gz
+Approx 80% complete for FB4-2_S163_L007_R1_001.fastq.gz
+Approx 85% complete for FB4-2_S163_L007_R1_001.fastq.gz
+Approx 90% complete for FB4-2_S163_L007_R1_001.fastq.gz
+Approx 95% complete for FB4-2_S163_L007_R1_001.fastq.gz
+Analysis complete for FB4-2_S163_L007_R1_001.fastq.gz
++ for file in '$(ls -1 *.gz)'
+++ basename FB4-2_S163_L007_R2_001.fastq.gz
++ SAMPLE=FB4-2_S163_L007_R2_001.fastq.gz
++ fastqc -t 5 FB4-2_S163_L007_R2_001.fastq.gz -o /gpfs1/home/e/l/elongman/scratch/Nucella_can_drilling_genomics/data/processed/fastqc
+Started analysis of FB4-2_S163_L007_R2_001.fastq.gz
+Approx 5% complete for FB4-2_S163_L007_R2_001.fastq.gz
+Approx 10% complete for FB4-2_S163_L007_R2_001.fastq.gz
+Approx 15% complete for FB4-2_S163_L007_R2_001.fastq.gz
+Approx 20% complete for FB4-2_S163_L007_R2_001.fastq.gz
+Approx 25% complete for FB4-2_S163_L007_R2_001.fastq.gz
+Approx 30% complete for FB4-2_S163_L007_R2_001.fastq.gz
+Approx 35% complete for FB4-2_S163_L007_R2_001.fastq.gz
+Approx 40% complete for FB4-2_S163_L007_R2_001.fastq.gz
+Approx 45% complete for FB4-2_S163_L007_R2_001.fastq.gz
+Approx 50% complete for FB4-2_S163_L007_R2_001.fastq.gz
+Approx 55% complete for FB4-2_S163_L007_R2_001.fastq.gz
+Approx 60% complete for FB4-2_S163_L007_R2_001.fastq.gz
+Approx 65% complete for FB4-2_S163_L007_R2_001.fastq.gz
+Approx 70% complete for FB4-2_S163_L007_R2_001.fastq.gz
+Approx 75% complete for FB4-2_S163_L007_R2_001.fastq.gz
+Approx 80% complete for FB4-2_S163_L007_R2_001.fastq.gz
+Approx 85% complete for FB4-2_S163_L007_R2_001.fastq.gz
+Approx 90% complete for FB4-2_S163_L007_R2_001.fastq.gz
+Approx 95% complete for FB4-2_S163_L007_R2_001.fastq.gz
+Analysis complete for FB4-2_S163_L007_R2_001.fastq.gz
++ for file in '$(ls -1 *.gz)'
+++ basename FB4-4_S117_L007_R1_001.fastq.gz
++ SAMPLE=FB4-4_S117_L007_R1_001.fastq.gz
++ fastqc -t 5 FB4-4_S117_L007_R1_001.fastq.gz -o /gpfs1/home/e/l/elongman/scratch/Nucella_can_drilling_genomics/data/processed/fastqc
+Started analysis of FB4-4_S117_L007_R1_001.fastq.gz
+Approx 5% complete for FB4-4_S117_L007_R1_001.fastq.gz
+Approx 10% complete for FB4-4_S117_L007_R1_001.fastq.gz
+Approx 15% complete for FB4-4_S117_L007_R1_001.fastq.gz
+Approx 20% complete for FB4-4_S117_L007_R1_001.fastq.gz
+Approx 25% complete for FB4-4_S117_L007_R1_001.fastq.gz
+Approx 30% complete for FB4-4_S117_L007_R1_001.fastq.gz
+Approx 35% complete for FB4-4_S117_L007_R1_001.fastq.gz
+Approx 40% complete for FB4-4_S117_L007_R1_001.fastq.gz
+Approx 45% complete for FB4-4_S117_L007_R1_001.fastq.gz
+Approx 50% complete for FB4-4_S117_L007_R1_001.fastq.gz
+Approx 55% complete for FB4-4_S117_L007_R1_001.fastq.gz
+Approx 60% complete for FB4-4_S117_L007_R1_001.fastq.gz
+Approx 65% complete for FB4-4_S117_L007_R1_001.fastq.gz
+Approx 70% complete for FB4-4_S117_L007_R1_001.fastq.gz
+Approx 75% complete for FB4-4_S117_L007_R1_001.fastq.gz
+Approx 80% complete for FB4-4_S117_L007_R1_001.fastq.gz
+Approx 85% complete for FB4-4_S117_L007_R1_001.fastq.gz
+Approx 90% complete for FB4-4_S117_L007_R1_001.fastq.gz
+Approx 95% complete for FB4-4_S117_L007_R1_001.fastq.gz
+Analysis complete for FB4-4_S117_L007_R1_001.fastq.gz
++ for file in '$(ls -1 *.gz)'
+++ basename FB4-4_S117_L007_R2_001.fastq.gz
++ SAMPLE=FB4-4_S117_L007_R2_001.fastq.gz
++ fastqc -t 5 FB4-4_S117_L007_R2_001.fastq.gz -o /gpfs1/home/e/l/elongman/scratch/Nucella_can_drilling_genomics/data/processed/fastqc
+Started analysis of FB4-4_S117_L007_R2_001.fastq.gz
+Approx 5% complete for FB4-4_S117_L007_R2_001.fastq.gz
+Approx 10% complete for FB4-4_S117_L007_R2_001.fastq.gz
+Approx 15% complete for FB4-4_S117_L007_R2_001.fastq.gz
+Approx 20% complete for FB4-4_S117_L007_R2_001.fastq.gz
+Approx 25% complete for FB4-4_S117_L007_R2_001.fastq.gz
+Approx 30% complete for FB4-4_S117_L007_R2_001.fastq.gz
+Approx 35% complete for FB4-4_S117_L007_R2_001.fastq.gz
+Approx 40% complete for FB4-4_S117_L007_R2_001.fastq.gz
+Approx 45% complete for FB4-4_S117_L007_R2_001.fastq.gz
+Approx 50% complete for FB4-4_S117_L007_R2_001.fastq.gz
+Approx 55% complete for FB4-4_S117_L007_R2_001.fastq.gz
