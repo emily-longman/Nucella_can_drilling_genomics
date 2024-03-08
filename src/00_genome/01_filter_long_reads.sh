@@ -21,7 +21,7 @@
 #SBATCH --mem=80G #<= this may depend on your resources
 
 # Submit job array
-#SBATCH --array=1-4
+#SBATCH --array=0-3
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/fltlong.%A_%a.out # Standard output
