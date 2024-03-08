@@ -33,7 +33,8 @@ set -x #useful for debugging your script. It causes each command in the file to 
 module load fastqc-0.11.7-gcc-7.3.0-vcaesw7
 
 #Set up directory
-RUN_PATH="/netfiles/pespenilab_share/Nucella/raw/Shortreads/082123-XP-fc1-L7-I8I8-18048-181-396223829/082123-XP-fc1-L7-I8I8-18048-181-688416898/082123-XP-fc1-ds.0852b8f70cc6420995dc0100cb059460/082123-XP-fc1-L7-18048-181-08232023"
+#RUN_PATH="/netfiles/pespenilab_share/Nucella/raw/Shortreads/082123-XP-fc1-L7-I8I8-18048-181-396223829/082123-XP-fc1-L7-I8I8-18048-181-688416898/082123-XP-fc1-ds.0852b8f70cc6420995dc0100cb059460/082123-XP-fc1-L7-18048-181-08232023"
+RUN_PATH="/netfiles/pespenilab_share/Nucella/raw/Shortreads/082123-XP-fc1-L8-I8I8-18048-181-396225832/082123-XP-fc1-L8-I8I8-18048-181-688550906/082123-XP-fc1-ds.666cbe3e3df14e29a6313b5959b79319/082123-XP-fc1-L8-18048-181-08232023"
 cd $RUN_PATH
 
 # create loop to run fastQC on each input file
