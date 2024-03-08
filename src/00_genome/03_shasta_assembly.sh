@@ -27,13 +27,16 @@
 #SBATCH --mail-type=ALL
 
 # Move to the directory where the output files will be saved
-cd /netfiles02/pespenilab_share/Nucella/processed/Base_Genome/
+cd /netfiles/pespenilab_share/Nucella/processed/Base_Genome/
 
 #executable
-shasta=/gpfs1/home/e/l/elongman/software/shasta/shasta-Linux-0.10.0
+shasta=/gpfs1/home/e/l/elongman/software/shasta/shasta-Linux-0.11.1
+
+# If you haven't done it yet, unzip the files 
+#gunzip /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/ONT_fltlong/*fastq.gz
 
 #input
-infa=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/Nuc.3500.fltlong.fastq
+infa=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/ONT_fltlong/Nuc.3500.fltlong.fastq.gz
 
 #run shasta
 $shasta --input $infa --config Nanopore-May2022
