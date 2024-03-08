@@ -38,9 +38,8 @@ cd $RUN_PATH
 
 # create loop to run fastQC on each input file
 
-for file in $(ls -1 _*.gz) #this is listing all your raw data files (assuming they end in .gz)
+for file in $(ls -1 *.gz) #this is listing all your raw data files (assuming they end in .gz)
 do
     SAMPLE=`basename $file` #keep the same prefix naming 
     fastqc -t 5 ${SAMPLE} -o /gpfs1/home/e/l/elongman/scratch/Nucella_can_drilling_genomics/data/processed/fastqc #run fastQC, -t here refers to threads, and as we said 5 tasks per node above, we say 5 here, -o indicates output directory
 done
-
