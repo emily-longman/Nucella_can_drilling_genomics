@@ -40,6 +40,9 @@ input=/netfiles/pespenilab_share/Nucella/raw/ONT/FC_all.ONT.nuc.fastq.gz
 #echo $L
 
 $filtlong --min_length 1000 input | gzip > Nuc.1000.fltlong.fastq.gz
+$filtlong --min_length 2000 input | gzip > Nuc.2000.fltlong.fastq.gz
+$filtlong --min_length 3500 input | gzip > Nuc.3500.fltlong.fastq.gz
+$filtlong --min_length 5000 input | gzip > Nuc.5000.fltlong.fastq.gz
 
 # Code from Filtlong github
 # filtlong --min_length 1000 --keep_percent 90 --target_bases 500000000 input.fastq.gz | gzip > output.fastq.gz
