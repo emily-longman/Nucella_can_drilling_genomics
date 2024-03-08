@@ -32,7 +32,7 @@
 
 
 filtlong=/gpfs1/home/e/l/elongman/software/Filtlong/bin/filtlong
-input=./FC_all.ONT.nuc.fastq.gz
+input=/netfiles/pespenilab_share/Nucella/raw/ONT/FC_all.ONT.nuc.fastq.gz
 
 arr=(1000 2000 3500 5000)
 L="${arr[$SLURM_ARRAY_TASK_ID]}"
