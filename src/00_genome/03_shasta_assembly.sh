@@ -25,12 +25,13 @@
 
 # Receive emails when job begins and ends or fails
 #SBATCH --mail-type=ALL
+#SBATCH --mail-user=emily.longman@uvm.edu # where to email updates to
 
 # Move to the directory where the output files will be saved
 cd /netfiles/pespenilab_share/Nucella/processed/Base_Genome/
 
 #executable
-#shasta=/gpfs1/home/e/l/elongman/software/shasta/shasta-Linux-0.11.1 
+#shasta=/gpfs1/home/e/l/elongman/software/shasta/shasta-Linux-0.11.1 #get error "No such file or directory", but I followed the installation exactly
 shasta=/netfiles/nunezlab/Shared_Resources/Software/shasta/shasta-Linux-0.10.0
 
 # If you haven't done it yet, gunzip the files 
