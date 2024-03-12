@@ -34,17 +34,25 @@ cd /netfiles02/pespenilab_share/Nucella/processed/Base_Genome/
 
 # ---------------------------
 # Should be able to use conda without having installed it using the code below 
-module load python3.11-anaconda/2023.09-0
-source ${ANACONDA_ROOT}/etc/profile.d/conda.sh
+#module load python3.11-anaconda/2023.09-0
+#source ${ANACONDA_ROOT}/etc/profile.d/conda.sh
 
 # I did install Anaconda onto my home directory
 #source /gpfs1/home/e/l/elongman/anaconda3/etc/profile.d/conda.sh
 
-conda activate ntlink
 
 # Instead try to just install ntlink
 # curl -L --output ntLink-1.3.9.tar.gz https://github.com/bcgsc/ntLink/releases/download/v1.3.9/ntLink-1.3.9.tar.gz && tar xvzf ntLink-1.3.9.tar.gz 
 # This didn't work either
+
+# Call package (installed with conda)
+module load python3.11-anaconda/2023.09-0
+source ${ANACONDA_ROOT}/etc/profile.d/conda.sh
+conda create --name ntlink #create and name the environment
+source activate ntlink #activate the environment
+conda install -c bioconda ntlink # install the program
+conda activate ntlink
+
 
 link_pool=/netfiles/pespenilab_share/Nucella/raw/ONT/FC_all.ONT.nuc.fastq.gz
 asm=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/ShastaRun/Assembly.fasta 
