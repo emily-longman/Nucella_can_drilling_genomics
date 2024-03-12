@@ -31,7 +31,8 @@ cd /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastqc
 
 
 # Call package (installed with conda)
-module load conda
+module load python3.11-anaconda/2023.09-0
+source ${ANACONDA_ROOT}/etc/profile.d/conda.sh
 conda create --name multiqc #create and name the environment
 source activate multiqc #activate the environment
 conda install -c bioconda multiqc # install the program
