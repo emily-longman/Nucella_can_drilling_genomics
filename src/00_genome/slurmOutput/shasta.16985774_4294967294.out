@@ -1,0 +1,184 @@
+Shasta Release 0.10.0
+2024-Mar-10 11:18:01.687374 Assembly begins.
+Command line:
+/netfiles/nunezlab/Shared_Resources/Software/shasta/shasta-Linux-0.10.0 --input /netfiles/pespenilab_share/Nucella/processed/ONT_fltlong/Nuc.3500.fltlong.fastq --config Nanopore-May2022 
+For options in use for this assembly, see shasta.conf in the assembly directory.
+This run uses options "--memoryBacking 4K --memoryMode anonymous".
+This could result in performance degradation.
+For full performance, use "--memoryBacking 2M --memoryMode filesystem"
+(root privilege via sudo required).
+Therefore the results of this run should not be used
+for benchmarking purposes.
+This assembly will use 128 threads.
+Setting up consensus caller Bayesian:guppy-5.0.7-b
+Using predefined Bayesian consensus caller guppy-5.0.7-b
+Bayesian consensus caller configuration name is HG005_wg_guppy_5.0.7_with_10_pseudocount_4-6-2022
+Discarded read statistics for file /netfiles/pespenilab_share/Nucella/processed/ONT_fltlong/Nuc.3500.fltlong.fastq:
+    Discarded 0 reads containing invalid bases for a total 0 valid bases.
+    Discarded 3611265 reads shorter than 10000 bases for a total 20930105124 bases.
+    Discarded 2007 reads containing repeat counts 256 or more for a total 29078115 bases.
+Discarded read statistics for all input files:
+    Discarded 0 reads containing invalid bases for a total 0 valid bases.
+    Discarded 3611265 short reads for a total 20930105124 bases.
+    Discarded 2007 reads containing repeat counts 256 or more for a total 29078115 bases.
+Read statistics for reads that will be used in this assembly:
+    Total number of reads is 2026122.
+    Total number of raw bases is 29607496628.
+    Average read length is 14612.9 bases.
+    N50 for read length is 14690 bases.
+Total number of k-mers of length 14 is 268435456
+Number of RLE k-mers of length 14 is 6377292
+Of those, 638031 will be used as markers.
+Fraction of k-mers used as markers: requested 0.1, actual 0.100047.
+Flagged 16702 reads as palindromic out of 2026122 total.
+Palindromic fraction is 0.00824333
+LowHash0 algorithm will use 2^31 = 2147483648 buckets. 
+Alignment candidates after lowhash iteration 0: high frequency 7260655, total 30182616, capacity 30182616.
+Alignment candidates after lowhash iteration 1: high frequency 14050485, total 40162412, capacity 56221099.
+Alignment candidates after lowhash iteration 2: high frequency 17821022, total 47570655, capacity 67240243.
+Alignment candidates after lowhash iteration 3: high frequency 20326986, total 53942942, capacity 75498319.
+Alignment candidates after lowhash iteration 4: high frequency 22188165, total 59681669, capacity 82743882.
+Alignment candidates after lowhash iteration 5: high frequency 23651864, total 64933531, capacity 89499467.
+Alignment candidates after lowhash iteration 6: high frequency 24855422, total 69897291, capacity 95969950.
+Alignment candidates after lowhash iteration 7: high frequency 25880433, total 74590516, capacity 102176938.
+Alignment candidates after lowhash iteration 8: high frequency 26760876, total 79011752, capacity 108183598.
+Alignment candidates after lowhash iteration 9: high frequency 27548250, total 83337520, capacity 114101734.
+Found 27548250 alignment candidates.
+Average number of alignment candidates per oriented read is 13.5965.
+Number of alignment candidates before suppression is 27548250
+Suppressed 0 alignment candidates.
+Number of alignment candidates after suppression is 27548250
+Found and stored 22073629 good alignments.
+Automatically selected alignment criteria:
+	minAlignedFraction:	0.755
+	minAlignedMarkerCount:		85
+	maxDrift:		26
+	maxSkip:		34
+	maxTrim:		74
+Keeping 6541801 alignments of 22073629
+Of 4052244 vertices in the read graph, 34542 are within distance 6 of their reverse complement.
+Found 1245 strand jump regions.
+Marked 5298 read graph edges out of 13083602 total as cross-strand.
+Flagged 65751 reads as chimeric out of 2026122 total.
+Chimera rate is 0.0324516
+The read graph has 1020977 connected components.
+Unable to automatically select MarkerGraph.minCoverage. No significant cutoff found in disjoint sets size distribution. Observed peak has percent total area of 0.000257569
+minPercentArea is 0.08
+See DisjointSetsHistogram.csv.Using MarkerGraph.minCoverage = 5
+Kept 160917378 disjoint sets with coverage in the requested range.
+Found 5655856 disjoint sets with more than one marker on a single oriented read or with less than 0 supporting oriented reads on each strand.
+Found 206343028 edges for 155261522 vertices.
+The marker graph has 155261522 vertices and 206343028 edges.
+Flagged as weak 98844 edges with coverage 1 and marker skip greater than 100
+Flagged as weak 38815756 edges with coverage 1 out of 38981616 total.
+Flagged as weak 7346956 edges with coverage 2 out of 7385274 total.
+Flagged as weak 2122898 edges with coverage 3 out of 2193632 total.
+Flagged as weak 795850 edges with coverage 4 out of 1429670 total.
+Flagged as weak 338236 edges with coverage 5 out of 17542826 total.
+Flagged as weak 165622 edges with coverage 6 out of 13376916 total.
+Flagged as weak 96732 edges with coverage 7 out of 11320798 total.
+Flagged as weak 67928 edges with coverage 8 out of 9842722 total.
+Flagged as weak 52724 edges with coverage 9 out of 8804136 total.
+Flagged as weak 44752 edges with coverage 10 out of 7877360 total.
+Flagged as weak 40032 edges with coverage 11 out of 7196518 total.
+Flagged as weak 36168 edges with coverage 12 out of 6589856 total.
+Flagged as weak 32146 edges with coverage 13 out of 6059256 total.
+Flagged as weak 28920 edges with coverage 14 out of 5586764 total.
+Flagged as weak 26132 edges with coverage 15 out of 5175850 total.
+Flagged as weak 23180 edges with coverage 16 out of 4770464 total.
+Flagged as weak 20110 edges with coverage 17 out of 4434904 total.
+Flagged as weak 17350 edges with coverage 18 out of 4116036 total.
+Flagged as weak 15200 edges with coverage 19 out of 3823210 total.
+Flagged as weak 12344 edges with coverage 20 out of 3550066 total.
+Flagged as weak 10448 edges with coverage 21 out of 3292852 total.
+Flagged as weak 8240 edges with coverage 22 out of 3060430 total.
+Flagged as weak 6572 edges with coverage 23 out of 2842374 total.
+Flagged as weak 5268 edges with coverage 24 out of 2646226 total.
+Flagged as weak 4296 edges with coverage 25 out of 2461506 total.
+Flagged as weak 3252 edges with coverage 26 out of 2298846 total.
+Flagged as weak 2438 edges with coverage 27 out of 2150554 total.
+Flagged as weak 1914 edges with coverage 28 out of 2002406 total.
+Flagged as weak 1272 edges with coverage 29 out of 1874214 total.
+Flagged as weak 1036 edges with coverage 30 out of 1742500 total.
+Flagged as weak 770 edges with coverage 31 out of 1607138 total.
+Flagged as weak 554 edges with coverage 32 out of 1474350 total.
+Flagged as weak 398 edges with coverage 33 out of 1340682 total.
+Flagged as weak 330 edges with coverage 34 out of 1201544 total.
+Flagged as weak 238 edges with coverage 35 out of 1055314 total.
+Flagged as weak 196 edges with coverage 36 out of 921186 total.
+Flagged as weak 132 edges with coverage 37 out of 792564 total.
+Flagged as weak 126 edges with coverage 38 out of 673582 total.
+Flagged as weak 90 edges with coverage 39 out of 567248 total.
+Flagged as weak 88 edges with coverage 40 out of 465852 total.
+Flagged as weak 58 edges with coverage 41 out of 381400 total.
+Flagged as weak 34 edges with coverage 42 out of 305244 total.
+Flagged as weak 32 edges with coverage 43 out of 245310 total.
+Flagged as weak 30 edges with coverage 44 out of 192264 total.
+Flagged as weak 36 edges with coverage 45 out of 152350 total.
+Flagged as weak 24 edges with coverage 46 out of 118690 total.
+Flagged as weak 10 edges with coverage 47 out of 91010 total.
+Flagged as weak 16 edges with coverage 48 out of 71662 total.
+Flagged as weak 12 edges with coverage 49 out of 56794 total.
+Flagged as weak 4 edges with coverage 50 out of 44316 total.
+Flagged as weak 14 edges with coverage 51 out of 34836 total.
+Flagged as weak 6 edges with coverage 52 out of 27126 total.
+Flagged as weak 12 edges with coverage 53 out of 20676 total.
+Flagged as weak 8 edges with coverage 54 out of 15684 total.
+Flagged as weak 8 edges with coverage 55 out of 12250 total.
+Flagged as weak 2 edges with coverage 56 out of 9448 total.
+Flagged as weak 8 edges with coverage 57 out of 7026 total.
+Flagged as weak 2 edges with coverage 58 out of 5216 total.
+Flagged as weak 6 edges with coverage 59 out of 4224 total.
+Flagged as weak 4 edges with coverage 62 out of 2052 total.
+Flagged as weak 4 edges with coverage 63 out of 1530 total.
+Flagged as weak 4 edges with coverage 65 out of 1088 total.
+Flagged as weak 6 edges with coverage 67 out of 826 total.
+Flagged as weak 2 edges with coverage 79 out of 140 total.
+Flagged as weak 2 edges with coverage 82 out of 52 total.
+Transitive reduction removed 50245882 marker graph edges out of 206343028 total.
+The marker graph has 155261522 vertices and 156097146 strong edges.
+Pruned 199988 edges at prune iteration 0.
+Pruned 197616 edges at prune iteration 1.
+Pruned 190904 edges at prune iteration 2.
+Pruned 187378 edges at prune iteration 3.
+Pruned 182732 edges at prune iteration 4.
+Pruned 181742 edges at prune iteration 5.
+The original marker graph had 155261522 vertices and 206343028 edges.
+The number of surviving edges is 154956786.
+Begin simplifyMarkerGraph iteration 0 with maxLength = 10
+Before iteration 0 part 1, the assembly graph has 1923012 vertices and 2755892 edges.
+Before iteration 0 part 2, the assembly graph has 401510 vertices and 427774 edges.
+Begin simplifyMarkerGraph iteration 1 with maxLength = 100
+Before iteration 1 part 1, the assembly graph has 308514 vertices and 287174 edges.
+Before iteration 1 part 2, the assembly graph has 253884 vertices and 204068 edges.
+Begin simplifyMarkerGraph iteration 2 with maxLength = 1000
+Before iteration 2 part 1, the assembly graph has 228208 vertices and 169170 edges.
+Before iteration 2 part 2, the assembly graph has 201456 vertices and 128770 edges.
+Begin simplifyMarkerGraph iteration 3 with maxLength = 10000
+Before iteration 3 part 1, the assembly graph has 187920 vertices and 113736 edges.
+Before iteration 3 part 2, the assembly graph has 186846 vertices and 112124 edges.
+Found a self-complementary component with 12 vertices.
+Begin simplifyMarkerGraph iteration 4 with maxLength = 100000
+Before iteration 4 part 1, the assembly graph has 186846 vertices and 112124 edges.
+Before iteration 4 part 2, the assembly graph has 186846 vertices and 112124 edges.
+Found a self-complementary component with 12 vertices.
+Removed 2570 low coverage cross edges of the assembly graph and 2742 corresponding marker graph edges.
+Before detangling, the assembly graph has 181920 vertices and 104628 edges.
+Found 890 tangles.
+The detangled assembly graph has 181324 vertices.
+The detangled assembly graph has 103734 edges.
+Removed 8 low coverage cross edges of the assembly graph and 28 corresponding marker graph edges.
+Using 128 threads.
+Assembly begins for 104606 edges of the assembly graph.
+Assembled a total 1161882530 bases for 104606 assembly graph edges of which 52303 were assembled.
+The assembly graph has 181906 vertices and 104606 edges of which 52303 were assembled.
+Total length of assembled sequence is 1161882530
+N50 for assembly segments is 31739
+This run used options "--memoryBacking 4K --memoryMode anonymous".
+This could have resulted in performance degradation.
+For full performance, use "--memoryBacking 2M --memoryMode filesystem"
+(root privilege via sudo required).
+Therefore the results of this run should not be used
+for benchmarking purposes.
+Shasta Release 0.10.0
+2024-Mar-10 12:00:23.328369 Assembly ends.
