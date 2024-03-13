@@ -85,8 +85,11 @@ scp *L007* L007
 scp *L008* L008
 
 # Run multiqc on L002 
-multiqc L002/
+cd L002/
+multiqc .
 # Run multiqc on L007
-multiqc L007/
+cd L007/
+multiqc .
 # Run multiqc on L008 
-multiqc L008/
+cd L008/
+multiqc .
