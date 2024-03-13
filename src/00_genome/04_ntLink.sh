@@ -30,16 +30,9 @@
 # ---------------------------
 
 # Move to the directory where the output files will be saved
-cd /netfiles02/pespenilab_share/Nucella/processed/Base_Genome/
+cd /netfiles/pespenilab_share/Nucella/processed/Base_Genome/
 
 # ---------------------------
-# Should be able to use conda without having installed it using the code below 
-#module load python3.11-anaconda/2023.09-0
-#source ${ANACONDA_ROOT}/etc/profile.d/conda.sh
-
-# I did install Anaconda onto my home directory
-#source /gpfs1/home/e/l/elongman/anaconda3/etc/profile.d/conda.sh
-
 
 # Instead try to just install ntlink
 # curl -L --output ntLink-1.3.9.tar.gz https://github.com/bcgsc/ntLink/releases/download/v1.3.9/ntLink-1.3.9.tar.gz && tar xvzf ntLink-1.3.9.tar.gz 
@@ -48,20 +41,23 @@ cd /netfiles02/pespenilab_share/Nucella/processed/Base_Genome/
 # Call package (installed with conda)
 module load python3.11-anaconda/2023.09-0
 source ${ANACONDA_ROOT}/etc/profile.d/conda.sh
-conda create --name ntlink #create and name the environment
+conda create --name ntlink python=3.11.0 #create and name the environment
 source activate ntlink #activate the environment
 conda install -c bioconda ntlink # install the program
+conda install -c bioconda --file requirements.txt
 conda activate ntlink
 
 
 link_pool=/netfiles/pespenilab_share/Nucella/raw/ONT/FC_all.ONT.nuc.fastq.gz
 asm=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/ShastaRun/Assembly.fasta 
 
-#cp $asm ./ #what is the point of this?
-cp $asm /netfiles/pespenilab_share/Nucella/processed/Base_Genome/ #try this instead - move the assembly to the Base_genome file before scafolding
+# Move the assembly to the Base_genome file before scafolding
+cp $asm /netfiles/pespenilab_share/Nucella/processed/Base_Genome/ 
 
 ntLink_rounds run_rounds_gaps \
 target=Assembly.fasta \
 reads=$link_pool k=32 w=100 t=40 rounds=10
+
+conda deactivate
 
 echo "done"
