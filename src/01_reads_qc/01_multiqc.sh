@@ -26,10 +26,7 @@
 #SBATCH --mail-type=ALL # indicates if you want an email when the job starts, ends, or both
 #SBATCH --mail-user=emily.longman@uvm.edu # where to email updates to
 
-#Set up directory (make sure this is where the fastQC outputs are!)
-cd /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastqc
-
-
+#--------------------------------------------------------------------------------
 # Call package (installed with conda)
 module load python3.11-anaconda/2023.09-0
 source ${ANACONDA_ROOT}/etc/profile.d/conda.sh
@@ -38,5 +35,58 @@ source activate multiqc #activate the environment
 conda install -c bioconda multiqc # install the program
 conda activate multiqc 
 
+#--------------------------------------------------------------------------------
+
+#Set up directory (this is where the fastQC outputs are)
+cd /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastqc
+
+$WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastqc
+
 #run multiqc in the directory where all of the individual fastqc outputs are
 multiqc .
+
+# Make folders for each sequencing run
+if [ -d "L002" ]
+then
+	echo "Working fastqc folder exist"
+	echo "lets move on"
+	date
+else 
+	echo "Folder doesnt exist. lets fix that"
+	mkdir $WORKING_FOLDER/L002
+	date
+fi
+
+if [ -d "L007" ]
+then
+	echo "Working fastqc folder exist"
+	echo "lets move on"
+	date
+else 
+	echo "Folder doesnt exist. lets fix that"
+	mkdir $WORKING_FOLDER/L007
+	date
+fi
+
+if [ -d "L008" ]
+then
+	echo "Working fastqc folder exist"
+	echo "lets move on"
+	date
+else 
+	echo "Folder doesnt exist. lets fix that"
+	mkdir $WORKING_FOLDER/L008
+	date
+fi
+
+# Put a copy of each fastqc file in each folder
+scp *L002* L002
+scp *L007* L007
+scp *L008* L008
+
+# Run multiqc on L002 
+multiqc L002/
+# Run multiqc on L007
+multiqc L007/
+# Run multiqc on L008 
+multiqc L008/
