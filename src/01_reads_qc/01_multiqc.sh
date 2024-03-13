@@ -11,7 +11,7 @@
 #SBATCH --partition=bluemoon
 
 # Request nodes
-#SBATCH --ntasks-per-node=1 # this is number of CPUs you want to use for parallel computing [also referred to as threads] - note not all programs will allow for parallelism, but if they do then its good to use as it helps your jobs run faster
+#SBATCH --ntasks-per-node=1 # this is number of CPUs you want to use for parallel computing [also referred to as threads] 
 
 # Reserve walltime -- hh:mm:ss --30 hrs max
 #SBATCH --time=2:00:00 #<= this may depend on your resources
@@ -37,7 +37,7 @@ conda activate multiqc
 
 #--------------------------------------------------------------------------------
 
-#Set up directory (this is where the fastQC outputs are)
+#Set up directory 
 cd /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastqc
 
 $WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastqc
@@ -50,7 +50,7 @@ then
 	date
 else 
 	echo "Folder doesnt exist. lets fix that"
-	mkdir $WORKING_FOLDER/L002
+	mkdir L002
 	date
 fi
 
@@ -61,7 +61,7 @@ then
 	date
 else 
 	echo "Folder doesnt exist. lets fix that"
-	mkdir $WORKING_FOLDER/L007
+	mkdir L007
 	date
 fi
 
@@ -72,7 +72,7 @@ then
 	date
 else 
 	echo "Folder doesnt exist. lets fix that"
-	mkdir $WORKING_FOLDER/L008
+	mkdir L008
 	date
 fi
 
@@ -83,7 +83,7 @@ then
 	date
 else 
 	echo "Folder doesnt exist. lets fix that"
-	mkdir $WORKING_FOLDER/multiqc
+	mkdir multiqc
 	date
 fi
 
