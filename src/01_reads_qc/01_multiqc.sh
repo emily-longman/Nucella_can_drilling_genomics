@@ -40,7 +40,7 @@ conda activate multiqc
 #Set up directory 
 cd /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastqc
 
-$WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastqc
+#$WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastqc
 
 # Make folders for each sequencing run
 if [ -d "L002" ]
@@ -93,13 +93,13 @@ scp *L007* L007
 scp *L008* L008
 
 #run multiqc in the directory where all of the individual fastqc outputs are
-multiqc $WORKING_FOLDER -n multiqc_report_all.html -o $WORKING_FOLDER/multiqc
+multiqc . -n multiqc_report_all.html -o ./multiqc
 
 # Run multiqc on L002 
-multiqc $WORKING_FOLDER/L002/ -n multiqc_report_L002.html -o $WORKING_FOLDER/multiqc
+multiqc ./L002 -n multiqc_report_L002.html -o ./multiqc
 
 # Run multiqc on L007
-multiqc $WORKING_FOLDER/L007/ -n multiqc_report_L007.html -o $WORKING_FOLDER/multiqc
+multiqc ./L007 -n multiqc_report_L007.html -o ./multiqc
 
 # Run multiqc on L008 
-multiqc $WORKING_FOLDER/L008/ -n multiqc_report_L008.html -o $WORKING_FOLDER/multiqc 
+multiqc ./L008 -n multiqc_report_L008.html -o ./multiqc 
