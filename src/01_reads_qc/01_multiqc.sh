@@ -85,11 +85,13 @@ scp *L007* L007
 scp *L008* L008
 
 # Run multiqc on L002 
-cd L002/
+cd $WORKING_FOLDER/L002/
 multiqc .
+
 # Run multiqc on L007
-cd L007/
+cd $WORKING_FOLDER/L007/
 multiqc .
+
 # Run multiqc on L008 
-cd L008/
+cd $WORKING_FOLDER/L008/
 multiqc .
