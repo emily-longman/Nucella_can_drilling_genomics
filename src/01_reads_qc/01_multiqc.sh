@@ -42,9 +42,6 @@ cd /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastqc
 
 $WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastqc
 
-#run multiqc in the directory where all of the individual fastqc outputs are
-multiqc .
-
 # Make folders for each sequencing run
 if [ -d "L002" ]
 then
@@ -79,19 +76,30 @@ else
 	date
 fi
 
+if [ -d "multiqc" ]
+then
+	echo "Working fastqc folder exist"
+	echo "lets move on"
+	date
+else 
+	echo "Folder doesnt exist. lets fix that"
+	mkdir $WORKING_FOLDER/multiqc
+	date
+fi
+
 # Put a copy of each fastqc file in each folder
 scp *L002* L002
 scp *L007* L007
 scp *L008* L008
 
+#run multiqc in the directory where all of the individual fastqc outputs are
+multiqc $WORKING_FOLDER -n multiqc_report_all.html -o $WORKING_FOLDER/multiqc
+
 # Run multiqc on L002 
-cd $WORKING_FOLDER/L002/
-multiqc .
+multiqc $WORKING_FOLDER/L002/ -n multiqc_report_L002.html -o $WORKING_FOLDER/multiqc
 
 # Run multiqc on L007
-cd $WORKING_FOLDER/L007/
-multiqc .
+multiqc $WORKING_FOLDER/L007/ -n multiqc_report_L007.html -o $WORKING_FOLDER/multiqc
 
 # Run multiqc on L008 
-cd $WORKING_FOLDER/L008/
-multiqc .
+multiqc $WORKING_FOLDER/L008/ -n multiqc_report_L008.html -o $WORKING_FOLDER/multiqc 
