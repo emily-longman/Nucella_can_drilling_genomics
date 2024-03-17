@@ -28,7 +28,7 @@
 #SBATCH --mail-user=emily.longman@uvm.edu # where to email updates to
 
 # Move to the directory where the output files will be saved
-cd /netfiles/pespenilab_share/Nucella/processed/Base_Genome/
+cd /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/
 
 #executable
 shasta=/netfiles/nunezlab/Shared_Resources/Software/shasta/shasta-Linux-0.10.0
