@@ -1,0 +1,4 @@
+gzip: /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/ONT_fltlong/*fastq.gz: No such file or directory
+Shasta Release 0.10.0
+2024-Mar-19 09:53:24.877114 Assembly directory ShastaRun exists and is not empty.
+Empty it for reuse or use --assemblyDirectory to specify a different assembly directory.

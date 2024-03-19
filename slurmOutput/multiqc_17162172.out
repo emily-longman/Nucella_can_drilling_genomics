@@ -1,0 +1,73 @@
+WARNING: A conda environment already exists at '/users/e/l/elongman/.conda/envs/multiqc'
+Remove existing environment (y/[n])? 
+
+CondaSystemExit: Exiting.
+
+Collecting package metadata (current_repodata.json): ...working... done
+Solving environment: ...working... done
+
+
+==> WARNING: A newer version of conda exists. <==
+  current version: 23.7.4
+  latest version: 24.1.2
+
+Please update conda by running
+
+    $ conda update -n base -c defaults conda
+
+Or to minimize the number of packages updated during conda update use
+
+     conda install conda=24.1.2
+
+
+
+# All requested packages already installed.
+
+/var/spool/slurm/d/job17162172/slurm_script: line 43: =/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastqc: No such file or directory
+Working fastqc folder exist
+lets move on
+Wed Mar 13 13:53:38 EDT 2024
+Working fastqc folder exist
+lets move on
+Wed Mar 13 13:53:38 EDT 2024
+Working fastqc folder exist
+lets move on
+Wed Mar 13 13:53:38 EDT 2024
+Working fastqc folder exist
+lets move on
+Wed Mar 13 13:53:38 EDT 2024
+cp: omitting directory ‘L002’
+cp: omitting directory ‘L007’
+cp: omitting directory ‘L008’
+/users/e/l/elongman/.conda/envs/multiqc/lib/python2.7/site-packages/multiqc-1.0.dev0-py2.7.egg/multiqc/utils/config.py:44: YAMLLoadWarning: calling yaml.load() without Loader=... is deprecated, as the default Loader is unsafe. Please read https://msg.pyyaml.org/load for full details.
+  configs = yaml.load(f)
+/users/e/l/elongman/.conda/envs/multiqc/lib/python2.7/site-packages/multiqc-1.0.dev0-py2.7.egg/multiqc/utils/config.py:50: YAMLLoadWarning: calling yaml.load() without Loader=... is deprecated, as the default Loader is unsafe. Please read https://msg.pyyaml.org/load for full details.
+  sp = yaml.load(f)
+Usage: multiqc [OPTIONS] <analysis directory>
+Try 'multiqc -h' for help.
+
+Error: Missing argument '<analysis directory>'.
+/users/e/l/elongman/.conda/envs/multiqc/lib/python2.7/site-packages/multiqc-1.0.dev0-py2.7.egg/multiqc/utils/config.py:44: YAMLLoadWarning: calling yaml.load() without Loader=... is deprecated, as the default Loader is unsafe. Please read https://msg.pyyaml.org/load for full details.
+  configs = yaml.load(f)
+/users/e/l/elongman/.conda/envs/multiqc/lib/python2.7/site-packages/multiqc-1.0.dev0-py2.7.egg/multiqc/utils/config.py:50: YAMLLoadWarning: calling yaml.load() without Loader=... is deprecated, as the default Loader is unsafe. Please read https://msg.pyyaml.org/load for full details.
+  sp = yaml.load(f)
+Usage: multiqc [OPTIONS] <analysis directory>
+Try 'multiqc -h' for help.
+
+Error: Invalid value for '<analysis directory>': Path '/L002/' does not exist.
+/users/e/l/elongman/.conda/envs/multiqc/lib/python2.7/site-packages/multiqc-1.0.dev0-py2.7.egg/multiqc/utils/config.py:44: YAMLLoadWarning: calling yaml.load() without Loader=... is deprecated, as the default Loader is unsafe. Please read https://msg.pyyaml.org/load for full details.
+  configs = yaml.load(f)
+/users/e/l/elongman/.conda/envs/multiqc/lib/python2.7/site-packages/multiqc-1.0.dev0-py2.7.egg/multiqc/utils/config.py:50: YAMLLoadWarning: calling yaml.load() without Loader=... is deprecated, as the default Loader is unsafe. Please read https://msg.pyyaml.org/load for full details.
+  sp = yaml.load(f)
+Usage: multiqc [OPTIONS] <analysis directory>
+Try 'multiqc -h' for help.
+
+Error: Invalid value for '<analysis directory>': Path '/L007/' does not exist.
+/users/e/l/elongman/.conda/envs/multiqc/lib/python2.7/site-packages/multiqc-1.0.dev0-py2.7.egg/multiqc/utils/config.py:44: YAMLLoadWarning: calling yaml.load() without Loader=... is deprecated, as the default Loader is unsafe. Please read https://msg.pyyaml.org/load for full details.
+  configs = yaml.load(f)
+/users/e/l/elongman/.conda/envs/multiqc/lib/python2.7/site-packages/multiqc-1.0.dev0-py2.7.egg/multiqc/utils/config.py:50: YAMLLoadWarning: calling yaml.load() without Loader=... is deprecated, as the default Loader is unsafe. Please read https://msg.pyyaml.org/load for full details.
+  sp = yaml.load(f)
+Usage: multiqc [OPTIONS] <analysis directory>
+Try 'multiqc -h' for help.
+
+Error: Invalid value for '<analysis directory>': Path '/L008/' does not exist.
