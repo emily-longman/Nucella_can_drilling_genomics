@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=cat.reads
+#SBATCH --job-name=scp.reads
 
 # Specify partition
 #SBATCH --partition=bluemoon
