@@ -11868,3 +11868,553 @@ Approx 85% complete for HC2-4_S130_L008_R2_clean_001.fastq.gz
 Approx 90% complete for HC2-4_S130_L008_R2_clean_001.fastq.gz
 Approx 95% complete for HC2-4_S130_L008_R2_clean_001.fastq.gz
 Analysis complete for HC2-4_S130_L008_R2_clean_001.fastq.gz
++ for file in '$(ls -1 *.gz)'
+++ basename HC2-5_S21_L002_R1_clean_001.fastq.gz
++ SAMPLE=HC2-5_S21_L002_R1_clean_001.fastq.gz
++ fastqc -t 5 HC2-5_S21_L002_R1_clean_001.fastq.gz -o /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastqc_cleaned
+Started analysis of HC2-5_S21_L002_R1_clean_001.fastq.gz
+Approx 5% complete for HC2-5_S21_L002_R1_clean_001.fastq.gz
+Approx 10% complete for HC2-5_S21_L002_R1_clean_001.fastq.gz
+Approx 15% complete for HC2-5_S21_L002_R1_clean_001.fastq.gz
+Approx 20% complete for HC2-5_S21_L002_R1_clean_001.fastq.gz
+Approx 25% complete for HC2-5_S21_L002_R1_clean_001.fastq.gz
+Approx 30% complete for HC2-5_S21_L002_R1_clean_001.fastq.gz
+Approx 35% complete for HC2-5_S21_L002_R1_clean_001.fastq.gz
+Approx 40% complete for HC2-5_S21_L002_R1_clean_001.fastq.gz
+Approx 45% complete for HC2-5_S21_L002_R1_clean_001.fastq.gz
+Approx 50% complete for HC2-5_S21_L002_R1_clean_001.fastq.gz
+Approx 55% complete for HC2-5_S21_L002_R1_clean_001.fastq.gz
+Approx 60% complete for HC2-5_S21_L002_R1_clean_001.fastq.gz
+Approx 65% complete for HC2-5_S21_L002_R1_clean_001.fastq.gz
+Approx 70% complete for HC2-5_S21_L002_R1_clean_001.fastq.gz
+Approx 75% complete for HC2-5_S21_L002_R1_clean_001.fastq.gz
+Approx 80% complete for HC2-5_S21_L002_R1_clean_001.fastq.gz
+Approx 85% complete for HC2-5_S21_L002_R1_clean_001.fastq.gz
+Approx 90% complete for HC2-5_S21_L002_R1_clean_001.fastq.gz
+Approx 95% complete for HC2-5_S21_L002_R1_clean_001.fastq.gz
+Analysis complete for HC2-5_S21_L002_R1_clean_001.fastq.gz
++ for file in '$(ls -1 *.gz)'
+++ basename HC2-5_S21_L002_R2_clean_001.fastq.gz
++ SAMPLE=HC2-5_S21_L002_R2_clean_001.fastq.gz
++ fastqc -t 5 HC2-5_S21_L002_R2_clean_001.fastq.gz -o /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastqc_cleaned
+Started analysis of HC2-5_S21_L002_R2_clean_001.fastq.gz
+Approx 5% complete for HC2-5_S21_L002_R2_clean_001.fastq.gz
+Approx 10% complete for HC2-5_S21_L002_R2_clean_001.fastq.gz
+Approx 15% complete for HC2-5_S21_L002_R2_clean_001.fastq.gz
+Approx 20% complete for HC2-5_S21_L002_R2_clean_001.fastq.gz
+Approx 25% complete for HC2-5_S21_L002_R2_clean_001.fastq.gz
+Approx 30% complete for HC2-5_S21_L002_R2_clean_001.fastq.gz
+Approx 35% complete for HC2-5_S21_L002_R2_clean_001.fastq.gz
+Approx 40% complete for HC2-5_S21_L002_R2_clean_001.fastq.gz
+Approx 45% complete for HC2-5_S21_L002_R2_clean_001.fastq.gz
+Approx 50% complete for HC2-5_S21_L002_R2_clean_001.fastq.gz
+Approx 55% complete for HC2-5_S21_L002_R2_clean_001.fastq.gz
+Approx 60% complete for HC2-5_S21_L002_R2_clean_001.fastq.gz
+Approx 65% complete for HC2-5_S21_L002_R2_clean_001.fastq.gz
+Approx 70% complete for HC2-5_S21_L002_R2_clean_001.fastq.gz
+Approx 75% complete for HC2-5_S21_L002_R2_clean_001.fastq.gz
+Approx 80% complete for HC2-5_S21_L002_R2_clean_001.fastq.gz
+Approx 85% complete for HC2-5_S21_L002_R2_clean_001.fastq.gz
+Approx 90% complete for HC2-5_S21_L002_R2_clean_001.fastq.gz
+Approx 95% complete for HC2-5_S21_L002_R2_clean_001.fastq.gz
+Analysis complete for HC2-5_S21_L002_R2_clean_001.fastq.gz
++ for file in '$(ls -1 *.gz)'
+++ basename HC2-5_S21_L007_R1_clean_001.fastq.gz
++ SAMPLE=HC2-5_S21_L007_R1_clean_001.fastq.gz
++ fastqc -t 5 HC2-5_S21_L007_R1_clean_001.fastq.gz -o /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastqc_cleaned
+Started analysis of HC2-5_S21_L007_R1_clean_001.fastq.gz
+Approx 5% complete for HC2-5_S21_L007_R1_clean_001.fastq.gz
+Approx 10% complete for HC2-5_S21_L007_R1_clean_001.fastq.gz
+Approx 15% complete for HC2-5_S21_L007_R1_clean_001.fastq.gz
+Approx 20% complete for HC2-5_S21_L007_R1_clean_001.fastq.gz
+Approx 25% complete for HC2-5_S21_L007_R1_clean_001.fastq.gz
+Approx 30% complete for HC2-5_S21_L007_R1_clean_001.fastq.gz
+Approx 35% complete for HC2-5_S21_L007_R1_clean_001.fastq.gz
+Approx 40% complete for HC2-5_S21_L007_R1_clean_001.fastq.gz
+Approx 45% complete for HC2-5_S21_L007_R1_clean_001.fastq.gz
+Approx 50% complete for HC2-5_S21_L007_R1_clean_001.fastq.gz
+Approx 55% complete for HC2-5_S21_L007_R1_clean_001.fastq.gz
+Approx 60% complete for HC2-5_S21_L007_R1_clean_001.fastq.gz
+Approx 65% complete for HC2-5_S21_L007_R1_clean_001.fastq.gz
+Approx 70% complete for HC2-5_S21_L007_R1_clean_001.fastq.gz
+Approx 75% complete for HC2-5_S21_L007_R1_clean_001.fastq.gz
+Approx 80% complete for HC2-5_S21_L007_R1_clean_001.fastq.gz
+Approx 85% complete for HC2-5_S21_L007_R1_clean_001.fastq.gz
+Approx 90% complete for HC2-5_S21_L007_R1_clean_001.fastq.gz
+Approx 95% complete for HC2-5_S21_L007_R1_clean_001.fastq.gz
+Analysis complete for HC2-5_S21_L007_R1_clean_001.fastq.gz
++ for file in '$(ls -1 *.gz)'
+++ basename HC2-5_S21_L007_R2_clean_001.fastq.gz
++ SAMPLE=HC2-5_S21_L007_R2_clean_001.fastq.gz
++ fastqc -t 5 HC2-5_S21_L007_R2_clean_001.fastq.gz -o /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastqc_cleaned
+Started analysis of HC2-5_S21_L007_R2_clean_001.fastq.gz
+Approx 5% complete for HC2-5_S21_L007_R2_clean_001.fastq.gz
+Approx 10% complete for HC2-5_S21_L007_R2_clean_001.fastq.gz
+Approx 15% complete for HC2-5_S21_L007_R2_clean_001.fastq.gz
+Approx 20% complete for HC2-5_S21_L007_R2_clean_001.fastq.gz
+Approx 25% complete for HC2-5_S21_L007_R2_clean_001.fastq.gz
+Approx 30% complete for HC2-5_S21_L007_R2_clean_001.fastq.gz
+Approx 35% complete for HC2-5_S21_L007_R2_clean_001.fastq.gz
+Approx 40% complete for HC2-5_S21_L007_R2_clean_001.fastq.gz
+Approx 45% complete for HC2-5_S21_L007_R2_clean_001.fastq.gz
+Approx 50% complete for HC2-5_S21_L007_R2_clean_001.fastq.gz
+Approx 55% complete for HC2-5_S21_L007_R2_clean_001.fastq.gz
+Approx 60% complete for HC2-5_S21_L007_R2_clean_001.fastq.gz
+Approx 65% complete for HC2-5_S21_L007_R2_clean_001.fastq.gz
+Approx 70% complete for HC2-5_S21_L007_R2_clean_001.fastq.gz
+Approx 75% complete for HC2-5_S21_L007_R2_clean_001.fastq.gz
+Approx 80% complete for HC2-5_S21_L007_R2_clean_001.fastq.gz
+Approx 85% complete for HC2-5_S21_L007_R2_clean_001.fastq.gz
+Approx 90% complete for HC2-5_S21_L007_R2_clean_001.fastq.gz
+Approx 95% complete for HC2-5_S21_L007_R2_clean_001.fastq.gz
+Analysis complete for HC2-5_S21_L007_R2_clean_001.fastq.gz
++ for file in '$(ls -1 *.gz)'
+++ basename HC2-5_S21_L008_R1_clean_001.fastq.gz
++ SAMPLE=HC2-5_S21_L008_R1_clean_001.fastq.gz
++ fastqc -t 5 HC2-5_S21_L008_R1_clean_001.fastq.gz -o /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastqc_cleaned
+Started analysis of HC2-5_S21_L008_R1_clean_001.fastq.gz
+Approx 5% complete for HC2-5_S21_L008_R1_clean_001.fastq.gz
+Approx 10% complete for HC2-5_S21_L008_R1_clean_001.fastq.gz
+Approx 15% complete for HC2-5_S21_L008_R1_clean_001.fastq.gz
+Approx 20% complete for HC2-5_S21_L008_R1_clean_001.fastq.gz
+Approx 25% complete for HC2-5_S21_L008_R1_clean_001.fastq.gz
+Approx 30% complete for HC2-5_S21_L008_R1_clean_001.fastq.gz
+Approx 35% complete for HC2-5_S21_L008_R1_clean_001.fastq.gz
+Approx 40% complete for HC2-5_S21_L008_R1_clean_001.fastq.gz
+Approx 45% complete for HC2-5_S21_L008_R1_clean_001.fastq.gz
+Approx 50% complete for HC2-5_S21_L008_R1_clean_001.fastq.gz
+Approx 55% complete for HC2-5_S21_L008_R1_clean_001.fastq.gz
+Approx 60% complete for HC2-5_S21_L008_R1_clean_001.fastq.gz
+Approx 65% complete for HC2-5_S21_L008_R1_clean_001.fastq.gz
+Approx 70% complete for HC2-5_S21_L008_R1_clean_001.fastq.gz
+Approx 75% complete for HC2-5_S21_L008_R1_clean_001.fastq.gz
+Approx 80% complete for HC2-5_S21_L008_R1_clean_001.fastq.gz
+Approx 85% complete for HC2-5_S21_L008_R1_clean_001.fastq.gz
+Approx 90% complete for HC2-5_S21_L008_R1_clean_001.fastq.gz
+Approx 95% complete for HC2-5_S21_L008_R1_clean_001.fastq.gz
+Analysis complete for HC2-5_S21_L008_R1_clean_001.fastq.gz
++ for file in '$(ls -1 *.gz)'
+++ basename HC2-5_S21_L008_R2_clean_001.fastq.gz
++ SAMPLE=HC2-5_S21_L008_R2_clean_001.fastq.gz
++ fastqc -t 5 HC2-5_S21_L008_R2_clean_001.fastq.gz -o /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastqc_cleaned
+Started analysis of HC2-5_S21_L008_R2_clean_001.fastq.gz
+Approx 5% complete for HC2-5_S21_L008_R2_clean_001.fastq.gz
+Approx 10% complete for HC2-5_S21_L008_R2_clean_001.fastq.gz
+Approx 15% complete for HC2-5_S21_L008_R2_clean_001.fastq.gz
+Approx 20% complete for HC2-5_S21_L008_R2_clean_001.fastq.gz
+Approx 25% complete for HC2-5_S21_L008_R2_clean_001.fastq.gz
+Approx 30% complete for HC2-5_S21_L008_R2_clean_001.fastq.gz
+Approx 35% complete for HC2-5_S21_L008_R2_clean_001.fastq.gz
+Approx 40% complete for HC2-5_S21_L008_R2_clean_001.fastq.gz
+Approx 45% complete for HC2-5_S21_L008_R2_clean_001.fastq.gz
+Approx 50% complete for HC2-5_S21_L008_R2_clean_001.fastq.gz
+Approx 55% complete for HC2-5_S21_L008_R2_clean_001.fastq.gz
+Approx 60% complete for HC2-5_S21_L008_R2_clean_001.fastq.gz
+Approx 65% complete for HC2-5_S21_L008_R2_clean_001.fastq.gz
+Approx 70% complete for HC2-5_S21_L008_R2_clean_001.fastq.gz
+Approx 75% complete for HC2-5_S21_L008_R2_clean_001.fastq.gz
+Approx 80% complete for HC2-5_S21_L008_R2_clean_001.fastq.gz
+Approx 85% complete for HC2-5_S21_L008_R2_clean_001.fastq.gz
+Approx 90% complete for HC2-5_S21_L008_R2_clean_001.fastq.gz
+Approx 95% complete for HC2-5_S21_L008_R2_clean_001.fastq.gz
+Analysis complete for HC2-5_S21_L008_R2_clean_001.fastq.gz
++ for file in '$(ls -1 *.gz)'
+++ basename HC2-6_S174_L002_R1_clean_001.fastq.gz
++ SAMPLE=HC2-6_S174_L002_R1_clean_001.fastq.gz
++ fastqc -t 5 HC2-6_S174_L002_R1_clean_001.fastq.gz -o /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastqc_cleaned
+Started analysis of HC2-6_S174_L002_R1_clean_001.fastq.gz
+Approx 5% complete for HC2-6_S174_L002_R1_clean_001.fastq.gz
+Approx 10% complete for HC2-6_S174_L002_R1_clean_001.fastq.gz
+Approx 15% complete for HC2-6_S174_L002_R1_clean_001.fastq.gz
+Approx 20% complete for HC2-6_S174_L002_R1_clean_001.fastq.gz
+Approx 25% complete for HC2-6_S174_L002_R1_clean_001.fastq.gz
+Approx 30% complete for HC2-6_S174_L002_R1_clean_001.fastq.gz
+Approx 35% complete for HC2-6_S174_L002_R1_clean_001.fastq.gz
+Approx 40% complete for HC2-6_S174_L002_R1_clean_001.fastq.gz
+Approx 45% complete for HC2-6_S174_L002_R1_clean_001.fastq.gz
+Approx 50% complete for HC2-6_S174_L002_R1_clean_001.fastq.gz
+Approx 55% complete for HC2-6_S174_L002_R1_clean_001.fastq.gz
+Approx 60% complete for HC2-6_S174_L002_R1_clean_001.fastq.gz
+Approx 65% complete for HC2-6_S174_L002_R1_clean_001.fastq.gz
+Approx 70% complete for HC2-6_S174_L002_R1_clean_001.fastq.gz
+Approx 75% complete for HC2-6_S174_L002_R1_clean_001.fastq.gz
+Approx 80% complete for HC2-6_S174_L002_R1_clean_001.fastq.gz
+Approx 85% complete for HC2-6_S174_L002_R1_clean_001.fastq.gz
+Approx 90% complete for HC2-6_S174_L002_R1_clean_001.fastq.gz
+Approx 95% complete for HC2-6_S174_L002_R1_clean_001.fastq.gz
+Analysis complete for HC2-6_S174_L002_R1_clean_001.fastq.gz
++ for file in '$(ls -1 *.gz)'
+++ basename HC2-6_S174_L002_R2_clean_001.fastq.gz
++ SAMPLE=HC2-6_S174_L002_R2_clean_001.fastq.gz
++ fastqc -t 5 HC2-6_S174_L002_R2_clean_001.fastq.gz -o /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastqc_cleaned
+Started analysis of HC2-6_S174_L002_R2_clean_001.fastq.gz
+Approx 5% complete for HC2-6_S174_L002_R2_clean_001.fastq.gz
+Approx 10% complete for HC2-6_S174_L002_R2_clean_001.fastq.gz
+Approx 15% complete for HC2-6_S174_L002_R2_clean_001.fastq.gz
+Approx 20% complete for HC2-6_S174_L002_R2_clean_001.fastq.gz
+Approx 25% complete for HC2-6_S174_L002_R2_clean_001.fastq.gz
+Approx 30% complete for HC2-6_S174_L002_R2_clean_001.fastq.gz
+Approx 35% complete for HC2-6_S174_L002_R2_clean_001.fastq.gz
+Approx 40% complete for HC2-6_S174_L002_R2_clean_001.fastq.gz
+Approx 45% complete for HC2-6_S174_L002_R2_clean_001.fastq.gz
+Approx 50% complete for HC2-6_S174_L002_R2_clean_001.fastq.gz
+Approx 55% complete for HC2-6_S174_L002_R2_clean_001.fastq.gz
+Approx 60% complete for HC2-6_S174_L002_R2_clean_001.fastq.gz
+Approx 65% complete for HC2-6_S174_L002_R2_clean_001.fastq.gz
+Approx 70% complete for HC2-6_S174_L002_R2_clean_001.fastq.gz
+Approx 75% complete for HC2-6_S174_L002_R2_clean_001.fastq.gz
+Approx 80% complete for HC2-6_S174_L002_R2_clean_001.fastq.gz
+Approx 85% complete for HC2-6_S174_L002_R2_clean_001.fastq.gz
+Approx 90% complete for HC2-6_S174_L002_R2_clean_001.fastq.gz
+Approx 95% complete for HC2-6_S174_L002_R2_clean_001.fastq.gz
+Analysis complete for HC2-6_S174_L002_R2_clean_001.fastq.gz
++ for file in '$(ls -1 *.gz)'
+++ basename HC2-6_S174_L007_R1_clean_001.fastq.gz
++ SAMPLE=HC2-6_S174_L007_R1_clean_001.fastq.gz
++ fastqc -t 5 HC2-6_S174_L007_R1_clean_001.fastq.gz -o /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastqc_cleaned
+Started analysis of HC2-6_S174_L007_R1_clean_001.fastq.gz
+Approx 5% complete for HC2-6_S174_L007_R1_clean_001.fastq.gz
+Approx 10% complete for HC2-6_S174_L007_R1_clean_001.fastq.gz
+Approx 15% complete for HC2-6_S174_L007_R1_clean_001.fastq.gz
+Approx 20% complete for HC2-6_S174_L007_R1_clean_001.fastq.gz
+Approx 25% complete for HC2-6_S174_L007_R1_clean_001.fastq.gz
+Approx 30% complete for HC2-6_S174_L007_R1_clean_001.fastq.gz
+Approx 35% complete for HC2-6_S174_L007_R1_clean_001.fastq.gz
+Approx 40% complete for HC2-6_S174_L007_R1_clean_001.fastq.gz
+Approx 45% complete for HC2-6_S174_L007_R1_clean_001.fastq.gz
+Approx 50% complete for HC2-6_S174_L007_R1_clean_001.fastq.gz
+Approx 55% complete for HC2-6_S174_L007_R1_clean_001.fastq.gz
+Approx 60% complete for HC2-6_S174_L007_R1_clean_001.fastq.gz
+Approx 65% complete for HC2-6_S174_L007_R1_clean_001.fastq.gz
+Approx 70% complete for HC2-6_S174_L007_R1_clean_001.fastq.gz
+Approx 75% complete for HC2-6_S174_L007_R1_clean_001.fastq.gz
+Approx 80% complete for HC2-6_S174_L007_R1_clean_001.fastq.gz
+Approx 85% complete for HC2-6_S174_L007_R1_clean_001.fastq.gz
+Approx 90% complete for HC2-6_S174_L007_R1_clean_001.fastq.gz
+Approx 95% complete for HC2-6_S174_L007_R1_clean_001.fastq.gz
+Analysis complete for HC2-6_S174_L007_R1_clean_001.fastq.gz
++ for file in '$(ls -1 *.gz)'
+++ basename HC2-6_S174_L007_R2_clean_001.fastq.gz
++ SAMPLE=HC2-6_S174_L007_R2_clean_001.fastq.gz
++ fastqc -t 5 HC2-6_S174_L007_R2_clean_001.fastq.gz -o /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastqc_cleaned
+Started analysis of HC2-6_S174_L007_R2_clean_001.fastq.gz
+Approx 5% complete for HC2-6_S174_L007_R2_clean_001.fastq.gz
+Approx 10% complete for HC2-6_S174_L007_R2_clean_001.fastq.gz
+Approx 15% complete for HC2-6_S174_L007_R2_clean_001.fastq.gz
+Approx 20% complete for HC2-6_S174_L007_R2_clean_001.fastq.gz
+Approx 25% complete for HC2-6_S174_L007_R2_clean_001.fastq.gz
+Approx 30% complete for HC2-6_S174_L007_R2_clean_001.fastq.gz
+Approx 35% complete for HC2-6_S174_L007_R2_clean_001.fastq.gz
+Approx 40% complete for HC2-6_S174_L007_R2_clean_001.fastq.gz
+Approx 45% complete for HC2-6_S174_L007_R2_clean_001.fastq.gz
+Approx 50% complete for HC2-6_S174_L007_R2_clean_001.fastq.gz
+Approx 55% complete for HC2-6_S174_L007_R2_clean_001.fastq.gz
+Approx 60% complete for HC2-6_S174_L007_R2_clean_001.fastq.gz
+Approx 65% complete for HC2-6_S174_L007_R2_clean_001.fastq.gz
+Approx 70% complete for HC2-6_S174_L007_R2_clean_001.fastq.gz
+Approx 75% complete for HC2-6_S174_L007_R2_clean_001.fastq.gz
+Approx 80% complete for HC2-6_S174_L007_R2_clean_001.fastq.gz
+Approx 85% complete for HC2-6_S174_L007_R2_clean_001.fastq.gz
+Approx 90% complete for HC2-6_S174_L007_R2_clean_001.fastq.gz
+Approx 95% complete for HC2-6_S174_L007_R2_clean_001.fastq.gz
+Analysis complete for HC2-6_S174_L007_R2_clean_001.fastq.gz
++ for file in '$(ls -1 *.gz)'
+++ basename HC2-6_S174_L008_R1_clean_001.fastq.gz
++ SAMPLE=HC2-6_S174_L008_R1_clean_001.fastq.gz
++ fastqc -t 5 HC2-6_S174_L008_R1_clean_001.fastq.gz -o /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastqc_cleaned
+Started analysis of HC2-6_S174_L008_R1_clean_001.fastq.gz
+Approx 5% complete for HC2-6_S174_L008_R1_clean_001.fastq.gz
+Approx 10% complete for HC2-6_S174_L008_R1_clean_001.fastq.gz
+Approx 15% complete for HC2-6_S174_L008_R1_clean_001.fastq.gz
+Approx 20% complete for HC2-6_S174_L008_R1_clean_001.fastq.gz
+Approx 25% complete for HC2-6_S174_L008_R1_clean_001.fastq.gz
+Approx 30% complete for HC2-6_S174_L008_R1_clean_001.fastq.gz
+Approx 35% complete for HC2-6_S174_L008_R1_clean_001.fastq.gz
+Approx 40% complete for HC2-6_S174_L008_R1_clean_001.fastq.gz
+Approx 45% complete for HC2-6_S174_L008_R1_clean_001.fastq.gz
+Approx 50% complete for HC2-6_S174_L008_R1_clean_001.fastq.gz
+Approx 55% complete for HC2-6_S174_L008_R1_clean_001.fastq.gz
+Approx 60% complete for HC2-6_S174_L008_R1_clean_001.fastq.gz
+Approx 65% complete for HC2-6_S174_L008_R1_clean_001.fastq.gz
+Approx 70% complete for HC2-6_S174_L008_R1_clean_001.fastq.gz
+Approx 75% complete for HC2-6_S174_L008_R1_clean_001.fastq.gz
+Approx 80% complete for HC2-6_S174_L008_R1_clean_001.fastq.gz
+Approx 85% complete for HC2-6_S174_L008_R1_clean_001.fastq.gz
+Approx 90% complete for HC2-6_S174_L008_R1_clean_001.fastq.gz
+Approx 95% complete for HC2-6_S174_L008_R1_clean_001.fastq.gz
+Analysis complete for HC2-6_S174_L008_R1_clean_001.fastq.gz
++ for file in '$(ls -1 *.gz)'
+++ basename HC2-6_S174_L008_R2_clean_001.fastq.gz
++ SAMPLE=HC2-6_S174_L008_R2_clean_001.fastq.gz
++ fastqc -t 5 HC2-6_S174_L008_R2_clean_001.fastq.gz -o /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastqc_cleaned
+Started analysis of HC2-6_S174_L008_R2_clean_001.fastq.gz
+Approx 5% complete for HC2-6_S174_L008_R2_clean_001.fastq.gz
+Approx 10% complete for HC2-6_S174_L008_R2_clean_001.fastq.gz
+Approx 15% complete for HC2-6_S174_L008_R2_clean_001.fastq.gz
+Approx 20% complete for HC2-6_S174_L008_R2_clean_001.fastq.gz
+Approx 25% complete for HC2-6_S174_L008_R2_clean_001.fastq.gz
+Approx 30% complete for HC2-6_S174_L008_R2_clean_001.fastq.gz
+Approx 35% complete for HC2-6_S174_L008_R2_clean_001.fastq.gz
+Approx 40% complete for HC2-6_S174_L008_R2_clean_001.fastq.gz
+Approx 45% complete for HC2-6_S174_L008_R2_clean_001.fastq.gz
+Approx 50% complete for HC2-6_S174_L008_R2_clean_001.fastq.gz
+Approx 55% complete for HC2-6_S174_L008_R2_clean_001.fastq.gz
+Approx 60% complete for HC2-6_S174_L008_R2_clean_001.fastq.gz
+Approx 65% complete for HC2-6_S174_L008_R2_clean_001.fastq.gz
+Approx 70% complete for HC2-6_S174_L008_R2_clean_001.fastq.gz
+Approx 75% complete for HC2-6_S174_L008_R2_clean_001.fastq.gz
+Approx 80% complete for HC2-6_S174_L008_R2_clean_001.fastq.gz
+Approx 85% complete for HC2-6_S174_L008_R2_clean_001.fastq.gz
+Approx 90% complete for HC2-6_S174_L008_R2_clean_001.fastq.gz
+Approx 95% complete for HC2-6_S174_L008_R2_clean_001.fastq.gz
+Analysis complete for HC2-6_S174_L008_R2_clean_001.fastq.gz
++ for file in '$(ls -1 *.gz)'
+++ basename HC2-8_S157_L002_R1_clean_001.fastq.gz
++ SAMPLE=HC2-8_S157_L002_R1_clean_001.fastq.gz
++ fastqc -t 5 HC2-8_S157_L002_R1_clean_001.fastq.gz -o /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastqc_cleaned
+Started analysis of HC2-8_S157_L002_R1_clean_001.fastq.gz
+Approx 5% complete for HC2-8_S157_L002_R1_clean_001.fastq.gz
+Approx 10% complete for HC2-8_S157_L002_R1_clean_001.fastq.gz
+Approx 15% complete for HC2-8_S157_L002_R1_clean_001.fastq.gz
+Approx 20% complete for HC2-8_S157_L002_R1_clean_001.fastq.gz
+Approx 25% complete for HC2-8_S157_L002_R1_clean_001.fastq.gz
+Approx 30% complete for HC2-8_S157_L002_R1_clean_001.fastq.gz
+Approx 35% complete for HC2-8_S157_L002_R1_clean_001.fastq.gz
+Approx 40% complete for HC2-8_S157_L002_R1_clean_001.fastq.gz
+Approx 45% complete for HC2-8_S157_L002_R1_clean_001.fastq.gz
+Approx 50% complete for HC2-8_S157_L002_R1_clean_001.fastq.gz
+Approx 55% complete for HC2-8_S157_L002_R1_clean_001.fastq.gz
+Approx 60% complete for HC2-8_S157_L002_R1_clean_001.fastq.gz
+Approx 65% complete for HC2-8_S157_L002_R1_clean_001.fastq.gz
+Approx 70% complete for HC2-8_S157_L002_R1_clean_001.fastq.gz
+Approx 75% complete for HC2-8_S157_L002_R1_clean_001.fastq.gz
+Approx 80% complete for HC2-8_S157_L002_R1_clean_001.fastq.gz
+Approx 85% complete for HC2-8_S157_L002_R1_clean_001.fastq.gz
+Approx 90% complete for HC2-8_S157_L002_R1_clean_001.fastq.gz
+Approx 95% complete for HC2-8_S157_L002_R1_clean_001.fastq.gz
+Analysis complete for HC2-8_S157_L002_R1_clean_001.fastq.gz
++ for file in '$(ls -1 *.gz)'
+++ basename HC2-8_S157_L002_R2_clean_001.fastq.gz
++ SAMPLE=HC2-8_S157_L002_R2_clean_001.fastq.gz
++ fastqc -t 5 HC2-8_S157_L002_R2_clean_001.fastq.gz -o /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastqc_cleaned
+Started analysis of HC2-8_S157_L002_R2_clean_001.fastq.gz
+Approx 5% complete for HC2-8_S157_L002_R2_clean_001.fastq.gz
+Approx 10% complete for HC2-8_S157_L002_R2_clean_001.fastq.gz
+Approx 15% complete for HC2-8_S157_L002_R2_clean_001.fastq.gz
+Approx 20% complete for HC2-8_S157_L002_R2_clean_001.fastq.gz
+Approx 25% complete for HC2-8_S157_L002_R2_clean_001.fastq.gz
+Approx 30% complete for HC2-8_S157_L002_R2_clean_001.fastq.gz
+Approx 35% complete for HC2-8_S157_L002_R2_clean_001.fastq.gz
+Approx 40% complete for HC2-8_S157_L002_R2_clean_001.fastq.gz
+Approx 45% complete for HC2-8_S157_L002_R2_clean_001.fastq.gz
+Approx 50% complete for HC2-8_S157_L002_R2_clean_001.fastq.gz
+Approx 55% complete for HC2-8_S157_L002_R2_clean_001.fastq.gz
+Approx 60% complete for HC2-8_S157_L002_R2_clean_001.fastq.gz
+Approx 65% complete for HC2-8_S157_L002_R2_clean_001.fastq.gz
+Approx 70% complete for HC2-8_S157_L002_R2_clean_001.fastq.gz
+Approx 75% complete for HC2-8_S157_L002_R2_clean_001.fastq.gz
+Approx 80% complete for HC2-8_S157_L002_R2_clean_001.fastq.gz
+Approx 85% complete for HC2-8_S157_L002_R2_clean_001.fastq.gz
+Approx 90% complete for HC2-8_S157_L002_R2_clean_001.fastq.gz
+Approx 95% complete for HC2-8_S157_L002_R2_clean_001.fastq.gz
+Analysis complete for HC2-8_S157_L002_R2_clean_001.fastq.gz
++ for file in '$(ls -1 *.gz)'
+++ basename HC2-8_S157_L007_R1_clean_001.fastq.gz
++ SAMPLE=HC2-8_S157_L007_R1_clean_001.fastq.gz
++ fastqc -t 5 HC2-8_S157_L007_R1_clean_001.fastq.gz -o /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastqc_cleaned
+Started analysis of HC2-8_S157_L007_R1_clean_001.fastq.gz
+Approx 5% complete for HC2-8_S157_L007_R1_clean_001.fastq.gz
+Approx 10% complete for HC2-8_S157_L007_R1_clean_001.fastq.gz
+Approx 15% complete for HC2-8_S157_L007_R1_clean_001.fastq.gz
+Approx 20% complete for HC2-8_S157_L007_R1_clean_001.fastq.gz
+Approx 25% complete for HC2-8_S157_L007_R1_clean_001.fastq.gz
+Approx 30% complete for HC2-8_S157_L007_R1_clean_001.fastq.gz
+Approx 35% complete for HC2-8_S157_L007_R1_clean_001.fastq.gz
+Approx 40% complete for HC2-8_S157_L007_R1_clean_001.fastq.gz
+Approx 45% complete for HC2-8_S157_L007_R1_clean_001.fastq.gz
+Approx 50% complete for HC2-8_S157_L007_R1_clean_001.fastq.gz
+Approx 55% complete for HC2-8_S157_L007_R1_clean_001.fastq.gz
+Approx 60% complete for HC2-8_S157_L007_R1_clean_001.fastq.gz
+Approx 65% complete for HC2-8_S157_L007_R1_clean_001.fastq.gz
+Approx 70% complete for HC2-8_S157_L007_R1_clean_001.fastq.gz
+Approx 75% complete for HC2-8_S157_L007_R1_clean_001.fastq.gz
+Approx 80% complete for HC2-8_S157_L007_R1_clean_001.fastq.gz
+Approx 85% complete for HC2-8_S157_L007_R1_clean_001.fastq.gz
+Approx 90% complete for HC2-8_S157_L007_R1_clean_001.fastq.gz
+Approx 95% complete for HC2-8_S157_L007_R1_clean_001.fastq.gz
+Analysis complete for HC2-8_S157_L007_R1_clean_001.fastq.gz
++ for file in '$(ls -1 *.gz)'
+++ basename HC2-8_S157_L007_R2_clean_001.fastq.gz
++ SAMPLE=HC2-8_S157_L007_R2_clean_001.fastq.gz
++ fastqc -t 5 HC2-8_S157_L007_R2_clean_001.fastq.gz -o /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastqc_cleaned
+Started analysis of HC2-8_S157_L007_R2_clean_001.fastq.gz
+Approx 5% complete for HC2-8_S157_L007_R2_clean_001.fastq.gz
+Approx 10% complete for HC2-8_S157_L007_R2_clean_001.fastq.gz
+Approx 15% complete for HC2-8_S157_L007_R2_clean_001.fastq.gz
+Approx 20% complete for HC2-8_S157_L007_R2_clean_001.fastq.gz
+Approx 25% complete for HC2-8_S157_L007_R2_clean_001.fastq.gz
+Approx 30% complete for HC2-8_S157_L007_R2_clean_001.fastq.gz
+Approx 35% complete for HC2-8_S157_L007_R2_clean_001.fastq.gz
+Approx 40% complete for HC2-8_S157_L007_R2_clean_001.fastq.gz
+Approx 45% complete for HC2-8_S157_L007_R2_clean_001.fastq.gz
+Approx 50% complete for HC2-8_S157_L007_R2_clean_001.fastq.gz
+Approx 55% complete for HC2-8_S157_L007_R2_clean_001.fastq.gz
+Approx 60% complete for HC2-8_S157_L007_R2_clean_001.fastq.gz
+Approx 65% complete for HC2-8_S157_L007_R2_clean_001.fastq.gz
+Approx 70% complete for HC2-8_S157_L007_R2_clean_001.fastq.gz
+Approx 75% complete for HC2-8_S157_L007_R2_clean_001.fastq.gz
+Approx 80% complete for HC2-8_S157_L007_R2_clean_001.fastq.gz
+Approx 85% complete for HC2-8_S157_L007_R2_clean_001.fastq.gz
+Approx 90% complete for HC2-8_S157_L007_R2_clean_001.fastq.gz
+Approx 95% complete for HC2-8_S157_L007_R2_clean_001.fastq.gz
+Analysis complete for HC2-8_S157_L007_R2_clean_001.fastq.gz
++ for file in '$(ls -1 *.gz)'
+++ basename HC2-8_S157_L008_R1_clean_001.fastq.gz
++ SAMPLE=HC2-8_S157_L008_R1_clean_001.fastq.gz
++ fastqc -t 5 HC2-8_S157_L008_R1_clean_001.fastq.gz -o /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastqc_cleaned
+Started analysis of HC2-8_S157_L008_R1_clean_001.fastq.gz
+Approx 5% complete for HC2-8_S157_L008_R1_clean_001.fastq.gz
+Approx 10% complete for HC2-8_S157_L008_R1_clean_001.fastq.gz
+Approx 15% complete for HC2-8_S157_L008_R1_clean_001.fastq.gz
+Approx 20% complete for HC2-8_S157_L008_R1_clean_001.fastq.gz
+Approx 25% complete for HC2-8_S157_L008_R1_clean_001.fastq.gz
+Approx 30% complete for HC2-8_S157_L008_R1_clean_001.fastq.gz
+Approx 35% complete for HC2-8_S157_L008_R1_clean_001.fastq.gz
+Approx 40% complete for HC2-8_S157_L008_R1_clean_001.fastq.gz
+Approx 45% complete for HC2-8_S157_L008_R1_clean_001.fastq.gz
+Approx 50% complete for HC2-8_S157_L008_R1_clean_001.fastq.gz
+Approx 55% complete for HC2-8_S157_L008_R1_clean_001.fastq.gz
+Approx 60% complete for HC2-8_S157_L008_R1_clean_001.fastq.gz
+Approx 65% complete for HC2-8_S157_L008_R1_clean_001.fastq.gz
+Approx 70% complete for HC2-8_S157_L008_R1_clean_001.fastq.gz
+Approx 75% complete for HC2-8_S157_L008_R1_clean_001.fastq.gz
+Approx 80% complete for HC2-8_S157_L008_R1_clean_001.fastq.gz
+Approx 85% complete for HC2-8_S157_L008_R1_clean_001.fastq.gz
+Approx 90% complete for HC2-8_S157_L008_R1_clean_001.fastq.gz
+Approx 95% complete for HC2-8_S157_L008_R1_clean_001.fastq.gz
+Analysis complete for HC2-8_S157_L008_R1_clean_001.fastq.gz
++ for file in '$(ls -1 *.gz)'
+++ basename HC2-8_S157_L008_R2_clean_001.fastq.gz
++ SAMPLE=HC2-8_S157_L008_R2_clean_001.fastq.gz
++ fastqc -t 5 HC2-8_S157_L008_R2_clean_001.fastq.gz -o /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastqc_cleaned
+Started analysis of HC2-8_S157_L008_R2_clean_001.fastq.gz
+Approx 5% complete for HC2-8_S157_L008_R2_clean_001.fastq.gz
+Approx 10% complete for HC2-8_S157_L008_R2_clean_001.fastq.gz
+Approx 15% complete for HC2-8_S157_L008_R2_clean_001.fastq.gz
+Approx 20% complete for HC2-8_S157_L008_R2_clean_001.fastq.gz
+Approx 25% complete for HC2-8_S157_L008_R2_clean_001.fastq.gz
+Approx 30% complete for HC2-8_S157_L008_R2_clean_001.fastq.gz
+Approx 35% complete for HC2-8_S157_L008_R2_clean_001.fastq.gz
+Approx 40% complete for HC2-8_S157_L008_R2_clean_001.fastq.gz
+Approx 45% complete for HC2-8_S157_L008_R2_clean_001.fastq.gz
+Approx 50% complete for HC2-8_S157_L008_R2_clean_001.fastq.gz
+Approx 55% complete for HC2-8_S157_L008_R2_clean_001.fastq.gz
+Approx 60% complete for HC2-8_S157_L008_R2_clean_001.fastq.gz
+Approx 65% complete for HC2-8_S157_L008_R2_clean_001.fastq.gz
+Approx 70% complete for HC2-8_S157_L008_R2_clean_001.fastq.gz
+Approx 75% complete for HC2-8_S157_L008_R2_clean_001.fastq.gz
+Approx 80% complete for HC2-8_S157_L008_R2_clean_001.fastq.gz
+Approx 85% complete for HC2-8_S157_L008_R2_clean_001.fastq.gz
+Approx 90% complete for HC2-8_S157_L008_R2_clean_001.fastq.gz
+Approx 95% complete for HC2-8_S157_L008_R2_clean_001.fastq.gz
+Analysis complete for HC2-8_S157_L008_R2_clean_001.fastq.gz
++ for file in '$(ls -1 *.gz)'
+++ basename HC3-10_S156_L002_R1_clean_001.fastq.gz
++ SAMPLE=HC3-10_S156_L002_R1_clean_001.fastq.gz
++ fastqc -t 5 HC3-10_S156_L002_R1_clean_001.fastq.gz -o /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastqc_cleaned
+Started analysis of HC3-10_S156_L002_R1_clean_001.fastq.gz
+Approx 5% complete for HC3-10_S156_L002_R1_clean_001.fastq.gz
+Approx 10% complete for HC3-10_S156_L002_R1_clean_001.fastq.gz
+Approx 15% complete for HC3-10_S156_L002_R1_clean_001.fastq.gz
+Approx 20% complete for HC3-10_S156_L002_R1_clean_001.fastq.gz
+Approx 25% complete for HC3-10_S156_L002_R1_clean_001.fastq.gz
+Approx 30% complete for HC3-10_S156_L002_R1_clean_001.fastq.gz
+Approx 35% complete for HC3-10_S156_L002_R1_clean_001.fastq.gz
+Approx 40% complete for HC3-10_S156_L002_R1_clean_001.fastq.gz
+Approx 45% complete for HC3-10_S156_L002_R1_clean_001.fastq.gz
+Approx 50% complete for HC3-10_S156_L002_R1_clean_001.fastq.gz
+Approx 55% complete for HC3-10_S156_L002_R1_clean_001.fastq.gz
+Approx 60% complete for HC3-10_S156_L002_R1_clean_001.fastq.gz
+Approx 65% complete for HC3-10_S156_L002_R1_clean_001.fastq.gz
+Approx 70% complete for HC3-10_S156_L002_R1_clean_001.fastq.gz
+Approx 75% complete for HC3-10_S156_L002_R1_clean_001.fastq.gz
+Approx 80% complete for HC3-10_S156_L002_R1_clean_001.fastq.gz
+Approx 85% complete for HC3-10_S156_L002_R1_clean_001.fastq.gz
+Approx 90% complete for HC3-10_S156_L002_R1_clean_001.fastq.gz
+Approx 95% complete for HC3-10_S156_L002_R1_clean_001.fastq.gz
+Analysis complete for HC3-10_S156_L002_R1_clean_001.fastq.gz
++ for file in '$(ls -1 *.gz)'
+++ basename HC3-10_S156_L002_R2_clean_001.fastq.gz
++ SAMPLE=HC3-10_S156_L002_R2_clean_001.fastq.gz
++ fastqc -t 5 HC3-10_S156_L002_R2_clean_001.fastq.gz -o /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastqc_cleaned
+Started analysis of HC3-10_S156_L002_R2_clean_001.fastq.gz
+Approx 5% complete for HC3-10_S156_L002_R2_clean_001.fastq.gz
+Approx 10% complete for HC3-10_S156_L002_R2_clean_001.fastq.gz
+Approx 15% complete for HC3-10_S156_L002_R2_clean_001.fastq.gz
+Approx 20% complete for HC3-10_S156_L002_R2_clean_001.fastq.gz
+Approx 25% complete for HC3-10_S156_L002_R2_clean_001.fastq.gz
+Approx 30% complete for HC3-10_S156_L002_R2_clean_001.fastq.gz
+Approx 35% complete for HC3-10_S156_L002_R2_clean_001.fastq.gz
+Approx 40% complete for HC3-10_S156_L002_R2_clean_001.fastq.gz
+Approx 45% complete for HC3-10_S156_L002_R2_clean_001.fastq.gz
+Approx 50% complete for HC3-10_S156_L002_R2_clean_001.fastq.gz
+Approx 55% complete for HC3-10_S156_L002_R2_clean_001.fastq.gz
+Approx 60% complete for HC3-10_S156_L002_R2_clean_001.fastq.gz
+Approx 65% complete for HC3-10_S156_L002_R2_clean_001.fastq.gz
+Approx 70% complete for HC3-10_S156_L002_R2_clean_001.fastq.gz
+Approx 75% complete for HC3-10_S156_L002_R2_clean_001.fastq.gz
+Approx 80% complete for HC3-10_S156_L002_R2_clean_001.fastq.gz
+Approx 85% complete for HC3-10_S156_L002_R2_clean_001.fastq.gz
+Approx 90% complete for HC3-10_S156_L002_R2_clean_001.fastq.gz
+Approx 95% complete for HC3-10_S156_L002_R2_clean_001.fastq.gz
+Analysis complete for HC3-10_S156_L002_R2_clean_001.fastq.gz
++ for file in '$(ls -1 *.gz)'
+++ basename HC3-10_S156_L007_R1_clean_001.fastq.gz
++ SAMPLE=HC3-10_S156_L007_R1_clean_001.fastq.gz
++ fastqc -t 5 HC3-10_S156_L007_R1_clean_001.fastq.gz -o /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastqc_cleaned
+Started analysis of HC3-10_S156_L007_R1_clean_001.fastq.gz
+Approx 5% complete for HC3-10_S156_L007_R1_clean_001.fastq.gz
+Approx 10% complete for HC3-10_S156_L007_R1_clean_001.fastq.gz
+Approx 15% complete for HC3-10_S156_L007_R1_clean_001.fastq.gz
+Approx 20% complete for HC3-10_S156_L007_R1_clean_001.fastq.gz
+Approx 25% complete for HC3-10_S156_L007_R1_clean_001.fastq.gz
+Approx 30% complete for HC3-10_S156_L007_R1_clean_001.fastq.gz
+Approx 35% complete for HC3-10_S156_L007_R1_clean_001.fastq.gz
+Approx 40% complete for HC3-10_S156_L007_R1_clean_001.fastq.gz
+Approx 45% complete for HC3-10_S156_L007_R1_clean_001.fastq.gz
+Approx 50% complete for HC3-10_S156_L007_R1_clean_001.fastq.gz
+Approx 55% complete for HC3-10_S156_L007_R1_clean_001.fastq.gz
+Approx 60% complete for HC3-10_S156_L007_R1_clean_001.fastq.gz
+Approx 65% complete for HC3-10_S156_L007_R1_clean_001.fastq.gz
+Approx 70% complete for HC3-10_S156_L007_R1_clean_001.fastq.gz
+Approx 75% complete for HC3-10_S156_L007_R1_clean_001.fastq.gz
+Approx 80% complete for HC3-10_S156_L007_R1_clean_001.fastq.gz
+Approx 85% complete for HC3-10_S156_L007_R1_clean_001.fastq.gz
+Approx 90% complete for HC3-10_S156_L007_R1_clean_001.fastq.gz
+Approx 95% complete for HC3-10_S156_L007_R1_clean_001.fastq.gz
+Analysis complete for HC3-10_S156_L007_R1_clean_001.fastq.gz
++ for file in '$(ls -1 *.gz)'
+++ basename HC3-10_S156_L007_R2_clean_001.fastq.gz
++ SAMPLE=HC3-10_S156_L007_R2_clean_001.fastq.gz
++ fastqc -t 5 HC3-10_S156_L007_R2_clean_001.fastq.gz -o /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastqc_cleaned
+Started analysis of HC3-10_S156_L007_R2_clean_001.fastq.gz
+Approx 5% complete for HC3-10_S156_L007_R2_clean_001.fastq.gz
+Approx 10% complete for HC3-10_S156_L007_R2_clean_001.fastq.gz
+Approx 15% complete for HC3-10_S156_L007_R2_clean_001.fastq.gz
+Approx 20% complete for HC3-10_S156_L007_R2_clean_001.fastq.gz
+Approx 25% complete for HC3-10_S156_L007_R2_clean_001.fastq.gz
+Approx 30% complete for HC3-10_S156_L007_R2_clean_001.fastq.gz
+Approx 35% complete for HC3-10_S156_L007_R2_clean_001.fastq.gz
+Approx 40% complete for HC3-10_S156_L007_R2_clean_001.fastq.gz
+Approx 45% complete for HC3-10_S156_L007_R2_clean_001.fastq.gz
+Approx 50% complete for HC3-10_S156_L007_R2_clean_001.fastq.gz
+Approx 55% complete for HC3-10_S156_L007_R2_clean_001.fastq.gz
+Approx 60% complete for HC3-10_S156_L007_R2_clean_001.fastq.gz
+Approx 65% complete for HC3-10_S156_L007_R2_clean_001.fastq.gz
+Approx 70% complete for HC3-10_S156_L007_R2_clean_001.fastq.gz
+Approx 75% complete for HC3-10_S156_L007_R2_clean_001.fastq.gz
+Approx 80% complete for HC3-10_S156_L007_R2_clean_001.fastq.gz
+Approx 85% complete for HC3-10_S156_L007_R2_clean_001.fastq.gz
+Approx 90% complete for HC3-10_S156_L007_R2_clean_001.fastq.gz
+Approx 95% complete for HC3-10_S156_L007_R2_clean_001.fastq.gz
+Analysis complete for HC3-10_S156_L007_R2_clean_001.fastq.gz
