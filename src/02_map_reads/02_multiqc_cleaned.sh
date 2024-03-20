@@ -45,10 +45,10 @@ cd /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastqc_c
 multiqc . -n multiqc_report_cleaned_all.html -o /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/multiqc_cleaned
 
 # Run multiqc on L002 
-multiqc ./L002 -n multiqc_report_cleaned_L002.html --ignore "*L007*" --ignore "*L008*" -o /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/multiqc_cleaned
+multiqc . -n multiqc_report_cleaned_L002.html --ignore "*L007*" --ignore "*L008*" -o /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/multiqc_cleaned
 
 # Run multiqc on L007
-multiqc ./L007 -n multiqc_report_cleaned_L007.html --ignore "*L002*" --ignore "*L008*" -o /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/multiqc_cleaned
+multiqc . -n multiqc_report_cleaned_L007.html --ignore "*L002*" --ignore "*L008*" -o /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/multiqc_cleaned
 
 # Run multiqc on L008 
-multiqc ./L008 -n multiqc_report_cleaned_L008.html --ignore "*L002*" --ignore "*L007*" -o /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/multiqc_cleaned 
+multiqc . -n multiqc_report_cleaned_L008.html --ignore "*L002*" --ignore "*L007*" -o /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/multiqc_cleaned 
