@@ -14,7 +14,7 @@
 #SBATCH --ntasks-per-node=1 # this is number of CPUs you want to use for parallel computing [also referred to as threads] 
 
 # Reserve walltime -- hh:mm:ss --30 hrs max
-#SBATCH --time=2:00:00 #<= this may depend on your resources
+#SBATCH --time=6:00:00 #<= this may depend on your resources
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
 #SBATCH --mem=20G #<= this may depend on your resources
@@ -42,13 +42,13 @@ cd /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastqc_c
 
 
 #run multiqc in the directory where all of the individual fastqc outputs are
-multiqc . -n multiqc_report_all.html -o /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/multiqc_cleaned
+multiqc . -n multiqc_report_cleaned_all.html -o /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/multiqc_cleaned
 
 # Run multiqc on L002 
-multiqc ./L002 -n multiqc_report_L002.html --ignore "*L007*" --ignore "*L008*" -o /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/multiqc_cleaned
+multiqc ./L002 -n multiqc_report_cleaned_L002.html --ignore "*L007*" --ignore "*L008*" -o /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/multiqc_cleaned
 
 # Run multiqc on L007
-multiqc ./L007 -n multiqc_report_L007.html --ignore "*L002*" --ignore "*L008*" -o /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/multiqc_cleaned
+multiqc ./L007 -n multiqc_report_cleaned_L007.html --ignore "*L002*" --ignore "*L008*" -o /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/multiqc_cleaned
 
 # Run multiqc on L008 
-multiqc ./L008 -n multiqc_report_L008.html --ignore "*L002*" --ignore "*L007*" -o /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/multiqc_cleaned 
+multiqc ./L008 -n multiqc_report_cleaned_L008.html --ignore "*L002*" --ignore "*L007*" -o /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/multiqc_cleaned 
