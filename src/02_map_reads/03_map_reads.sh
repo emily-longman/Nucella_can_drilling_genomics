@@ -35,11 +35,28 @@ module load bwa-0.7.17-gcc-7.3.0-terdbma
 
 #Define important file locations
 
+# Working folder
+WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed
+
 #READS indicates the folder where the  reads are stored.
 READS=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/clean_Shortreads
 
 #This is the location where the reference genome and all its indexes are stored.
 REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Assembly.fasta
+
+#--------------------------------------------------------------------------------
+
+# Generate the output folders used in the script
+if [ -d "mapped_reads" ]
+then
+	echo "Working mapped_reads folder exist"
+	echo "lets move on"
+	date
+else 
+	echo "folder doesnt exist. lets fix that"
+	mkdir $WORKING_FOLDER/mapped_reads
+	date
+fi
 
 #--------------------------------------------------------------------------------
 
@@ -52,7 +69,7 @@ bwa index -p ref -a bwtsw $REFERENCE
 #--------------------------------------------------------------------------------
 
 
-MyLeftReads=`find $READS -maxdepth 1 -name "*_R1*.fastq.gz"`
+MyLeftReads=`find $WORKING_FOLDER/clean_Shortreads -maxdepth 1 -name "*_R1*.fastq.gz"`
 
 #Making absolutely sure that reads are in the correct order:
 for myLeft in $MyLeftReads
@@ -66,8 +83,8 @@ do
          bwa mem \
          -t 5 \
          $REFERENCE \
-         $READS/$myLeft \
-         $READS/$myRight \
-         > $READS/$myName.sam 
+         $WORKING_FOLDER/clean_Shortreads/$myLeft \
+         $WORKING_FOLDER/clean_Shortreads/$myRight \
+         > $WORKING_FOLDER/mapped_reads/$myName.sam 
     fi
 done
