@@ -15,7 +15,7 @@
 #SBATCH --nodes=1 # on one node
 
 # Reserve walltime -- hh:mm:ss --30 hrs max
-#SBATCH --time=90:00:00 #<= this may depend on your resources
+#SBATCH --time=24:00:00 #<= this may depend on your resources
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
 #SBATCH --mem=600G #<= this may depend on your resources
