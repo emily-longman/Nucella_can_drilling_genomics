@@ -12,16 +12,16 @@
 
 # Request nodes
 #SBATCH --cpus-per-task=40 
-#SBATCH --nodes=4 # on one node
+#SBATCH --nodes=1 # on on3 nodes
 
 # Reserve walltime -- hh:mm:ss --30 hrs max
-#SBATCH --time=24:00:00 #<= this may depend on your resources
+#SBATCH --time=30:00:00 #<= this may depend on your resources
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
 #SBATCH --mem=200G #<= this may depend on your resources
 
 # Name output of this job using %x=job-name and %j=job-id
-#SBATCH --output=./slurmOutput/shasta.%A_%a.out # Standard output
+#SBATCH --output=./slurmOutput/shasta.%x_%j.out # Standard output
 
 # Receive emails when job begins and ends or fails
 #SBATCH --mail-type=ALL
