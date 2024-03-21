@@ -34,7 +34,7 @@ cd /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/
 shasta=/netfiles/nunezlab/Shared_Resources/Software/shasta/shasta-Linux-0.10.0
 
 # If you haven't done it yet, gunzip the files 
-gunzip /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/ONT_fltlong/*fastq.gz
+# gunzip /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/ONT_fltlong/*fastq.gz
 
 #input
 infa=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/ONT_fltlong/Nuc.3500.fltlong.fastq
