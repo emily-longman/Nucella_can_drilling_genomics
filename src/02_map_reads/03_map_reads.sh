@@ -11,7 +11,7 @@
 #SBATCH --partition=bluemoon
 
 # Request nodes
-#SBATCH --ntasks-per-node=1 # this is number of CPUs you want to use for parallel computing [also referred to as threads] 
+#SBATCH --ntasks-per-node=1 
 
 # Reserve walltime -- hh:mm:ss --30 hrs max
 #SBATCH --time=24:00:00 #<= this may depend on your resources
@@ -27,3 +27,24 @@
 #SBATCH --mail-user=emily.longman@uvm.edu # where to email updates to
 
 #--------------------------------------------------------------------------------
+
+# Call the bwa package
+module load bwa-0.7.17-gcc-7.3.0-terdbma
+
+#--------------------------------------------------------------------------------
+
+#Define important file locations
+
+#READS indicates the folder where the  reads are stored.
+READS=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/clean_Shortreads
+
+#This is the location where the reference genome and all its indexes are stored.
+REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/ShastaRun
+
+
+#--------------------------------------------------------------------------------
+
+
+# This indexing step only needs to be done once for the reference file.
+bwa index -p ref -a is $REFERENCE/Assembly.fasta
+
