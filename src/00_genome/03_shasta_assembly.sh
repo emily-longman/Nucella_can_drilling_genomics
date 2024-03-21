@@ -12,7 +12,7 @@
 
 # Request nodes
 #SBATCH --cpus-per-task=1 
-#SBATCH --nodes=1 # on four nodes
+#SBATCH --nodes=1 # on one node
 
 # Reserve walltime -- hh:mm:ss --30 hrs max
 #SBATCH --time=90:00:00 #<= this may depend on your resources
