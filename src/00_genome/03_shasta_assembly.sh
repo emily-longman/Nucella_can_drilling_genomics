@@ -47,5 +47,5 @@ echo $L
 infa=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/ONT_fltlong
 
 #run shasta
-$shasta --input $infa/Nuc.$L.fltlong.fastq --config Nanopore-May2022
+$shasta --input $infa/Nuc.$L.fltlong.fastq --config Nanopore-May2022 --assemblyDirectory ShastaRun$L
 
