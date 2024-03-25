@@ -13,7 +13,7 @@
 # Request nodes
 #SBATCH --ntasks-per-node=1 # this is number of CPUs you want to use for parallel computing [also referred to as threads] 
 
-# Reserve walltime -- hh:mm:ss --30 hrs max
+# Reserve walltime -- hh:mm:ss
 #SBATCH --time=5:00:00 #<= this may depend on your resources
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu

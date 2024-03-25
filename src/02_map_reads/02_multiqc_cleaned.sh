@@ -52,3 +52,5 @@ multiqc . -n multiqc_report_cleaned_L007.html --ignore "*L002*" --ignore "*L008*
 
 # Run multiqc on L008 
 multiqc . -n multiqc_report_cleaned_L008.html --ignore "*L002*" --ignore "*L007*" -o /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/multiqc_cleaned 
+
+conda deactivate
