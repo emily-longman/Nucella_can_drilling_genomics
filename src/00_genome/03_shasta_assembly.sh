@@ -18,13 +18,13 @@
 #SBATCH --time=24:00:00 #<= this may depend on your resources
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
-#SBATCH --mem=600G #<= this may depend on your resources
+#SBATCH --mem=900G #<= this may depend on your resources
 
 # Submit job array
 #SBATCH --array=0-4
 
 # Name output of this job using %x=job-name and %j=job-id
-#SBATCH --output=./slurmOutput/shasta.%x_%j.out # Standard output
+#SBATCH --output=./slurmOutput/shasta.%A_%a.out # Standard output
 
 # Receive emails when job begins and ends or fails
 #SBATCH --mail-type=ALL
