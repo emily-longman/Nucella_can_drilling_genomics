@@ -103,3 +103,5 @@ multiqc ./L007 -n multiqc_report_L007.html -o ./multiqc
 
 # Run multiqc on L008 
 multiqc ./L008 -n multiqc_report_L008.html -o ./multiqc 
+
+conda deactivate
