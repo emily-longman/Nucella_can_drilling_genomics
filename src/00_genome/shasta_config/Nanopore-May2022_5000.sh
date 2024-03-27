@@ -1,7 +1,4 @@
-
-
 # This is known to work at least under the following conditions:
-# - Phased assembly.
 # - Oxford Nanopore Ultra-Long reads.
 # - Human genomes.
 # - Guppy 5 base caller or newer with "super" accuracy.
@@ -9,24 +6,21 @@
 #   adjust --Reads.minReadLength or --Reads.desiredCoverage
 #   to bring coverage down to this range.
 
+# Under the above conditions, this should give an assembly with
+# N50 in the tens of Mb.
 
 
 [Reads]
-# Read length. Adjust as necessary,
-# or use desiredCoverage option to get coverage 
-# around 40x to 80x.
 minReadLength = 5000
-
 noCache = True
 
-
+[Kmers]
+k = 14
 
 [MinHash]
 minBucketSize = 5
 maxBucketSize = 30
 minFrequency = 5
-
-
 
 [Align]
 alignMethod = 3
@@ -34,41 +28,27 @@ downsamplingFactor = 0.05
 matchScore = 6
 sameChannelReadAlignment.suppressDeltaThreshold = 30
 
-# Permissive alignment criteria as required for read graph creation method 2.
+# The following Align parameters are set to very permissive values to allow the majority of alignments
+# to be assessed during the initial stage of automatic alignment parameter selection
+# (ReadGraph.creationMethod 2).
 maxSkip = 100
 maxDrift = 100
 maxTrim = 100
 minAlignedMarkerCount = 10
 minAlignedFraction = 0.1
 
-
-
 [ReadGraph]
-
-# Automatic adjustment of alignment criteria.
+# This uses the observed distribution of alignment statistics to choose thresholds for
+# maxSkip, maxDrift, maxTrim, minAlignedMarkerCount, and minAlignedFraction
 creationMethod = 2
 
-# Strict strand separation is required for Mode 2 (phased) assembly.
-strandSeparationMethod = 2
-
-maxAlignmentCount = 6
-
-
-
 [MarkerGraph]
-minCoverage = 6
-minCoveragePerStrand = 1
-minEdgeCoverage = 6
-minEdgeCoveragePerStrand = 1
+simplifyMaxLength = 10,100,1000,10000,100000
+crossEdgeCoverageThreshold = 3
 
-
+# Adaptive estimation of coverage threshold to generate marker graph vertices.
+minCoverage = 0
 
 [Assembly]
-mode = 2
 consensusCaller = Bayesian:guppy-5.0.7-b
-pruneLength = 100
-mode2.bubbleRemoval.minConcordantReadCount = 2
-
-
-
-
+detangleMethod = 2
