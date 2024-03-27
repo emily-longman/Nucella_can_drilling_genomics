@@ -8,7 +8,7 @@
 #SBATCH --job-name=raven 
 
 # Specify partition
-#SBATCH --partition=bluemoon
+#SBATCH --partition=bigmemwk
 
 # Request nodes
 #SBATCH --cpus-per-task=1 
