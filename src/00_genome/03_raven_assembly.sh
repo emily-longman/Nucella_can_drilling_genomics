@@ -35,9 +35,8 @@
 module load python3.11-anaconda/2023.09-0
 source ${ANACONDA_ROOT}/etc/profile.d/conda.sh
 conda create --name raven #create and name the environment
-source activate raven #activate the environment
-conda install -c bioconda raven # install the program
-conda activate raven 
+conda activate raven #activate the environment
+conda install -c bioconda raven-assembler # install the program
 
 #--------------------------------------------------------------------------------
 
