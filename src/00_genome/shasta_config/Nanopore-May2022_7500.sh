@@ -11,7 +11,7 @@
 
 
 [Reads]
-minReadLength = 3500
+minReadLength = 7500
 noCache = True
 
 [Kmers]
