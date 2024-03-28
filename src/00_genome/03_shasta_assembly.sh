@@ -21,7 +21,7 @@
 #SBATCH --mem=900G #<= this may depend on your resources
 
 # Submit job array
-#SBATCH --array=0-4
+#SBATCH --array=0-5
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/shasta.%A_%a.out # Standard output
@@ -38,12 +38,12 @@ cd /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/Shasta_a
 #executable
 shasta=/netfiles/nunezlab/Shared_Resources/Software/shasta/shasta-Linux-0.10.0
 
-arr=(1000 2000 3500 5000 10000)
+arr=(1000 2000 3500 5000 7500 10000)
 L="${arr[$SLURM_ARRAY_TASK_ID]}"
 echo $L
 
 # If you haven't done it yet, gunzip the files 
-#gunzip /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/ONT_fltlong/*fastq.gz
+gunzip /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/ONT_fltlong/*fastq.gz
 
 #input
 infa=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/ONT_fltlong
