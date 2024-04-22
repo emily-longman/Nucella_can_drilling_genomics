@@ -43,8 +43,9 @@ module load python3.11-anaconda/2023.09-0
 source ${ANACONDA_ROOT}/etc/profile.d/conda.sh
 conda create --name ntlink python=3.11.0 #create and name the environment
 source activate ntlink #activate the environment
-conda install -c bioconda ntlink # install the program
-conda install -c bioconda --file requirements.txt
+#conda install -c bioconda ntlink # install the program
+conda install -c bioconda -c conda-forge ntlink
+#conda install -c bioconda --file requirements.txt
 conda activate ntlink
 
 
