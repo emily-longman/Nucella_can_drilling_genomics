@@ -17,6 +17,9 @@
 # Reserve walltime -- hh:mm:ss --30 hrs max
 #SBATCH --time=8:00:00 
 
+# Submit job array
+#SBATCH --array=0-1151
+
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
 #SBATCH --mem=20G 
 
@@ -128,7 +131,7 @@ fi
 cd $WORKING_FOLDER
 
 #--------------------------------------------------------------------------------
-# Generate Folders and files
+# Generate Folders and Files
 
 # This part of the script will check and generate, if necessary, all of the output folders used in the script
 
