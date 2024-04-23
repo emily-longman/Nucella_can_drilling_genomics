@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=ntLinkNu 
+#SBATCH --job-name=ntLinkNu.2000 
 
 # Specify partition
 #SBATCH --partition=bluemoon
@@ -21,7 +21,7 @@
 #SBATCH --mem=95G #<= this may depend on your resources
 
 # Name output of this job using %x=job-name and %j=job-id
-#SBATCH --output=./slurmOutput/ntLinkNu.%A_%a.out # Standard output
+#SBATCH --output=./slurmOutput/ntLinkNu.2000.%A_%a.out # Standard output
 
 # Receive emails when job begins and ends or fails
 #SBATCH --mail-type=ALL
