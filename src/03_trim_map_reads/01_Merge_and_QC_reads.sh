@@ -223,7 +223,7 @@ fastqc $WORKING_FOLDER/merged_reads/${i}/${i}.merged.reads.strict.fq \
 #--------------------------------------------------------------------------------
 # Inform that sample is done
 
-# This part of the pipeline will produce a notification of completion. 
+# This part of the pipeline will produce a notification stating the completion of the script. 
 
 echo ${i} " completed" >> $WORKING_FOLDER/${PIPELINE}.completion.log
 
