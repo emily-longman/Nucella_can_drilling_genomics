@@ -43,7 +43,7 @@ module load bwa-0.7.17-gcc-7.3.0-terdbma
 module load fastqc-0.11.7-gcc-7.3.0-vcaesw7
 module load samtools-1.10-gcc-7.3.0-pdbkohx
 
-bbmap=/gpfs1/home/e/l/elongman/software/bbmap/bbmap.sh #executable
+bbmerge=/gpfs1/home/e/l/elongman/software/bbmap/bbmerge.sh #executable
 
 #Define important file locations
 #RAW READS indicates the folder where the raw reads are stored.
@@ -181,7 +181,7 @@ fi
 	
 	echo "now merging reads for" ${i}
 	
-	bbmerge.sh \
+	$bbmerge \
 	in1=${RAW_READS}/$read1 in2=${RAW_READS}/$read2 \
 	out=$WORKING_FOLDER/merged_reads/${i}/${i}.merged.reads.strict.fq \
 	outu1=$WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.1.fq \
@@ -210,16 +210,16 @@ fi
 	echo ${i} "Pair 2 reads is empty! check the script, debug, and rerun" >> $WORKING_FOLDER/${PIPELINE}.warnings.log
 	fi	
 
-############## Now lest do some QC on the reads
+#--------------------------------------------------------------------------------
+# Now lest do some QC on the reads
 
-	fastqc $WORKING_FOLDER/merged_reads/${i}/${i}.merged.reads.strict.fq \
+fastqc $WORKING_FOLDER/merged_reads/${i}/${i}.merged.reads.strict.fq \
 	--outdir $WORKING_FOLDER/fastqc_merged
 
-###########################################################################
-###########################################################################
+
+#--------------------------------------------------------------------------------
 # Inform that sample is done
-###########################################################################
-###########################################################################
+
 # This part of the pipeline will produce a notification of completion. 
 
 echo ${i} " completed" >> $WORKING_FOLDER/${PIPELINE}.completion.log
