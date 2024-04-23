@@ -46,7 +46,6 @@ source activate ntlink #activate the environment
 #conda install -c bioconda ntlink # install the program
 conda install -c bioconda -c conda-forge ntlink
 #conda install -c bioconda --file requirements.txt
-conda activate ntlink
 
 
 link_pool=/netfiles/pespenilab_share/Nucella/raw/ONT/FC_all.ONT.nuc.fastq.gz
@@ -55,9 +54,13 @@ asm=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/ShastaRun/Assembly.
 # Move the assembly to the Base_genome file before scafolding
 cp $asm /netfiles/pespenilab_share/Nucella/processed/Base_Genome/ 
 
-ntLink_rounds run_rounds_gaps \
-target=Assembly.fasta \
-reads=$link_pool k=32 w=100 t=40 rounds=10
+#Command from online#
+ntLink scaffold target=Assembly.fasta reads=$link_pool k=32 w=250
+
+#Code from Joaquin
+#ntLink_rounds run_rounds_gaps \
+#target=Assembly.fasta \
+#reads=$link_pool k=32 w=100 t=40 rounds=10
 
 conda deactivate
 
