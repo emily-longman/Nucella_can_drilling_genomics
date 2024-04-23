@@ -30,6 +30,8 @@
 
 #--------------------------------------------------------------------------------
 
+#This script was because I realized I skipped one of them in my array.
+
 # Move to the directory where the output files will be saved
 cd /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/Shasta_assemblies/
 

@@ -43,8 +43,6 @@ module load bwa-0.7.17-gcc-7.3.0-terdbma
 module load bbmap #Need to get
 module load fastqc-0.11.7-gcc-7.3.0-vcaesw7
 module load samtools-1.10-gcc-7.3.0-pdbkohx
-module load qualimap #Need to get
-module load picard #Need to get
 
 #Define important file locations
 #RAW READS indicates the folder where the raw reads are stored.
@@ -73,7 +71,7 @@ JAVAMEM=18g # Java memory
 ## PREPARE GUIDE FILES
 ## Read guide files
 # This is a file with the name all the samples to be processed. one sample name per line with all the infor
-SAMPLE_FILE=/scratch/yey2sn/Alyssa_single_inds/fastq_to_VCF/Alyssa_ind_reads_guideFile.txt
+SAMPLE_FILE=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_VCF/GuideFile.txt
 
 #Example: -- the headers are just for descriptive purposes. The actual file has no headers.
 ##               File1                             File2              Snail_ID  Sample#  Lane#    Merged_name
@@ -127,15 +125,13 @@ fi
 # Move to working directory
 cd $WORKING_FOLDER
 
-###########################################################################
-###########################################################################
+#--------------------------------------------------------------------------------
 # Generate Folders and files
-###########################################################################
-###########################################################################
-# this part of the script will check and generate, if necessary, all of the output folders used in the script
 
-#Generating new folders 
-echo "have you checked if the folders where already built with mkdir?"
+# This part of the script will check and generate, if necessary, all of the output folders used in the script
+
+# Generating new folders 
+echo "have you checked if the folders were already built with mkdir?"
 if [[ -d "merged_reads" ]]
 then
 	echo "Working merged_reads folder exist"
@@ -169,12 +165,11 @@ else
 	date
 fi
 
-###########################################################################
-###########################################################################
+#--------------------------------------------------------------------------------
 # Trim and merge reads
-###########################################################################
-###########################################################################
-# This part of the pipeline will trim and merge the reads. It is very likely that the reads will be split into merged and unmerged. Both reads will be mapped. This loop operates using a while-read-do-done structure. the while loop is feed a file "SAMPLE_FILE" where  all sample names are stored, one name per line. This can be leveraged for parallelization.
+
+# This part of the pipeline will trim and merge the reads. It is very likely that the reads will be split into merged and unmerged. 
+# Both reads will be mapped. This loop operates using a while-read-do-done structure. the while loop is feed a file "SAMPLE_FILE" where  all sample names are stored, one name per line. This can be leveraged for parallelization.
 
 	echo ${i} "is now processing"
 	date
