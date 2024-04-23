@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=merge_and_QC 
+#SBATCH --job-name=Merge_and_QC_reads
 
 # Specify partition
 #SBATCH --partition=bluemoon
@@ -40,9 +40,10 @@
 #Load modules 
 module load gcc/10.5.0
 module load bwa-0.7.17-gcc-7.3.0-terdbma
-module load bbmap #Need to get
 module load fastqc-0.11.7-gcc-7.3.0-vcaesw7
 module load samtools-1.10-gcc-7.3.0-pdbkohx
+
+bbmap=/gpfs1/home/e/l/elongman/software/bbmap/bbmap.sh #executable
 
 #Define important file locations
 #RAW READS indicates the folder where the raw reads are stored.
@@ -52,7 +53,7 @@ RAW_READS=/netfiles/pespenilab_share/Nucella/raw/Shortreads/All_shortreads
 WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_VCF
 
 #This is the location where the reference genome and all its indexes are stored.
-REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Assembly.fasta
+REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/FL_2000/Assembly.fasta
 
 #This is a unique number id which identifies this run
 unique_run_id=`date +%N`
@@ -66,6 +67,7 @@ CPU=$SLURM_CPUS_ON_NODE
 echo "using #CPUs ==" $SLURM_CPUS_ON_NODE
 QUAL=40 # Quality threshold for samtools
 JAVAMEM=18g # Java memory
+
 #--------------------------------------------------------------------------------
 
 ## PREPARE GUIDE FILES
