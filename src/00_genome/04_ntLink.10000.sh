@@ -30,7 +30,7 @@
 # ---------------------------
 
 # Move to the directory where the output files will be saved
-cd /netfiles/pespenilab_share/Nucella/processed/Base_Genome/
+cd /netfiles/pespenilab_share/Nucella/processed/Base_Genome/FL_10000
 
 # ---------------------------
 
@@ -49,10 +49,10 @@ conda install -c bioconda -c conda-forge ntlink
 
 
 link_pool=/netfiles/pespenilab_share/Nucella/raw/ONT/FC_all.ONT.nuc.fastq.gz
-asm=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/ShastaRun/Assembly.fasta 
+asm=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/Shasta_assemblies/ShastaRun10000/Assembly.fasta 
 
 # Move the assembly to the Base_genome file before scafolding
-cp $asm /netfiles/pespenilab_share/Nucella/processed/Base_Genome/ 
+cp $asm /netfiles/pespenilab_share/Nucella/processed/Base_Genome/FL_10000/ 
 
 #Command from online#
 ntLink scaffold target=Assembly.fasta reads=$link_pool k=32 w=250
