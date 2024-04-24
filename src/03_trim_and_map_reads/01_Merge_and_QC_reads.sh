@@ -165,7 +165,7 @@ else
 fi
 
 #--------------------------------------------------------------------------------
-# Trim and merge reads
+#  Merge and QC reads
 
 # This part of the pipeline will merge the reads. It is very likely that the reads will be split into merged and unmerged. 
 # Both reads will be mapped. This loop operates using a while-read-do-done structure. The while loop is feed a file "SAMPLE_FILE", 
