@@ -100,32 +100,29 @@ read2=`awk -F "\t" '{print $2}' $SAMPLE_FILE | sed -n ${SLURM_ARRAY_TASK_ID}p`
 #This part of the pipeline will generate log files to record warnings and completion status
 
 # Welcome message
-echo "your unique run id is" $unique_run_id
+echo "Your unique run id is:" $unique_run_id
 
 if [[ -e "${PIPELINE}.warnings.log" ]]
 then
 	echo "Warning log exist"
-	echo "lets move on"
+	echo "Lets move on"
 	date
 else 
-	echo "Log doesnt exist. lets fix that"
+	echo "Warning log doesnt exist. Lets fix that"
 	touch $WORKING_FOLDER/${PIPELINE}.warnings.log
 	date
 fi
 
 if [[ -e "${PIPELINE}.completion.log" ]]
 then
-	echo "Warning log exist"
-	echo "lets move on"
+	echo "Completion log exist"
+	echo "Lets move on"
 	date
 else 
-	echo "Log doesnt exist. lets fix that"
+	echo "Completion log doesnt exist. Lets fix that"
 	touch $WORKING_FOLDER/${PIPELINE}.completion.log
 	date
 fi
-
-# Move to working directory
-cd $WORKING_FOLDER
 
 #--------------------------------------------------------------------------------
 # Generate Folders and Files
@@ -137,10 +134,10 @@ echo "have you checked if the folders were already built with mkdir?"
 if [[ -d "merged_reads" ]]
 then
 	echo "Working merged_reads folder exist"
-	echo "lets move on"
+	echo "Lets move on"
 	date
 else 
-	echo "folder doesnt exist. lets fix that"
+	echo "Working merged_reads folder doesnt exist. Lets fix that"
 	mkdir $WORKING_FOLDER/merged_reads
 	date
 fi
@@ -148,21 +145,21 @@ fi
 if [ -d "unmerged_reads" ]
 then
 	echo "Working unmerged_reads folder exist"
-	echo "lets move on"
+	echo "Lets move on"
 	date
 else 
-	echo "folder doesnt exist. lets fix that"
+	echo "Working unmerged_reads folder doesnt exist. Lets fix that"
 	mkdir $WORKING_FOLDER/unmerged_reads
 	date
 fi
 
 if [ -d "fastqc_merged" ]
 then
-	echo "Working unmerged_reads folder exist"
-	echo "lets move on"
+	echo "Working fastqc_merged folder exist"
+	echo "Lets move on"
 	date
 else 
-	echo "folder doesnt exist. lets fix that"
+	echo "Working fastqc_merged folder doesnt exist. Lets fix that"
 	mkdir $WORKING_FOLDER/fastqc_merged
 	date
 fi
@@ -170,8 +167,12 @@ fi
 #--------------------------------------------------------------------------------
 # Trim and merge reads
 
-# This part of the pipeline will trim and merge the reads. It is very likely that the reads will be split into merged and unmerged. 
-# Both reads will be mapped. This loop operates using a while-read-do-done structure. the while loop is feed a file "SAMPLE_FILE" where  all sample names are stored, one name per line. This can be leveraged for parallelization.
+# This part of the pipeline will merge the reads. It is very likely that the reads will be split into merged and unmerged. 
+# Both reads will be mapped. This loop operates using a while-read-do-done structure. The while loop is feed a file "SAMPLE_FILE", 
+# where  all sample names are stored, one name per line. This can be leveraged for parallelization.
+
+# Move to working directory
+cd $WORKING_FOLDER
 
 	echo ${i} "is now processing"
 	date
@@ -181,3 +182,47 @@ fi
 	
 	echo "now merging reads for" ${i}
 	
+	$bbmerge \
+	in1=${RAW_READS}/$read1 in2=${RAW_READS}/$read2 \
+	out=$WORKING_FOLDER/merged_reads/${i}/${i}.merged.reads.strict.fq \
+	outu1=$WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.1.fq \
+	outu2=$WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.2.fq \
+	-strict
+	
+		#Sanity checks	
+	if [ -s $WORKING_FOLDER/merged_reads/${i}/${i}.merged.reads.strict.fq ]; then
+	echo ${i} "merged reads file is not empty... thats good"
+	else
+	echo "File is empty -- WARNING ISSUED!"
+	echo ${i} "Merged reads is empty! check the script, debug, and rerun" >> $WORKING_FOLDER/${PIPELINE}.warnings.log
+	fi
+	
+	if [ -s $WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.1.fq ]; then
+	echo ${i} "Pair 1 reads file is not empty... thats good"
+	else
+	echo "File is empty -- WARNING ISSUED!"
+	echo ${i} "Pair 1 reads is empty! check the script, debug, and rerun" >> $WORKING_FOLDER/${PIPELINE}.warnings.log
+	fi
+	
+	if [ -s $WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.2.fq ]; then
+	echo ${i} "Pair 2 reads file is not empty... thats good"
+	else
+	echo "File is empty -- WARNING ISSUED!"
+	echo ${i} "Pair 2 reads is empty! check the script, debug, and rerun" >> $WORKING_FOLDER/${PIPELINE}.warnings.log
+	fi	
+
+#--------------------------------------------------------------------------------
+# Now lest do some QC on the reads
+
+	fastqc $WORKING_FOLDER/merged_reads/${i}/${i}.merged.reads.strict.fq \
+	--outdir $WORKING_FOLDER/fastqc_merged
+
+
+#--------------------------------------------------------------------------------
+# Inform that sample is done
+
+# This part of the pipeline will produce a notification stating the completion of the script. 
+
+echo ${i} " completed" >> $WORKING_FOLDER/${PIPELINE}.completion.log
+
+echo "pipeline" ${PIPELINE} $(date)
