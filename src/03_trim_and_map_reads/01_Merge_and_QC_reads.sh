@@ -88,13 +88,12 @@ SAMPLE_FILE=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed
 ## MP9-10_S26_L007_R1_001.fastq.gz   MP9-10_S26_L007_R2_001.fastq.gz   MP9-10    S26    L007    MP9-10_S26_L007
 ## MP9-10_S26_L008_R1_001.fastq.gz   MP9-10_S26_L008_R2_001.fastq.gz   MP9-10    S26    L008    MP9-10_S26_L008
 
-
 #--------------------------------------------------------------------------------
 
 # Determine sample to process, "i" and read files
-i=`awk -F "\t" '{print $6}' $SAMPLE_FILE | sed "${SLURM_ARRAY_TASK_ID}q;d"`
-read1=`awk -F "\t" '{print $1}' $SAMPLE_FILE | sed "${SLURM_ARRAY_TASK_ID}q;d"`
-read2=`awk -F "\t" '{print $2}' $SAMPLE_FILE | sed "${SLURM_ARRAY_TASK_ID}q;d"`
+i=`awk -F "\t" '{print $6}' $SAMPLE_FILE | sed "{$SLURM_ARRAY_TASK_ID}q;d"`
+read1=`awk -F "\t" '{print $1}' $SAMPLE_FILE | sed "{$SLURM_ARRAY_TASK_ID}q;d"`
+read2=`awk -F "\t" '{print $2}' $SAMPLE_FILE | sed "{$SLURM_ARRAY_TASK_ID}q;d"`
 
 #--------------------------------------------------------------------------------
 # Begin Pipeline
