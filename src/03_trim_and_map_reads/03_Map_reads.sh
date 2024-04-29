@@ -44,6 +44,7 @@ bbduk=/gpfs1/home/e/l/elongman/software/bbmap/bbduk.sh #executable
 
 # Still need for script!!!!!!!!!!!!!!
 #module load qualimap
+#module load picard
 
 
 #Define important file locations
@@ -93,123 +94,18 @@ i=`awk -F "\t" '{print $6}' $SAMPLE_FILE | sed "${SLURM_ARRAY_TASK_ID}q;d"`
 
 #--------------------------------------------------------------------------------
 
-# Begin Pipeline
+# This indexing step only needs to be done once for the reference file.
+bwa index -p ref -a bwtsw $REFERENCE 
+# -p is the preix of the output databse 
+# -a is the algorithm for constructing BWT index ('is' - linear-time algorithm for constructing suffix array; bwtsw 
 
-#This part of the pipeline will generate log files to record warnings and completion status
-
-# Welcome message
-echo "Your unique run id is" $unique_run_id
-
-if [[ -e "${PIPELINE}.warnings.log" ]]
-then
-	echo "Warning log exist"
-	echo "Let's move on"
-	date
-else 
-	echo "Warning log doesnt exist. Let's fix that"
-	touch $WORKING_FOLDER/${PIPELINE}.warnings.log
-	date
-fi
-
-if [[ -e "${PIPELINE}.completion.log" ]]
-then
-	echo "Completion log exist"
-	echo "Let's move on"
-	date
-else 
-	echo "Completion log doesnt exist. Let's fix that"
-	touch $WORKING_FOLDER/${PIPELINE}.completion.log
-	date
-fi
-
-# Move to working directory
-cd $WORKING_FOLDER
 
 #--------------------------------------------------------------------------------
 
-# Generate Folders and files
-
-# This part of the script will check and generate, if necessary, all of the output folders used in the script
-
-if [ -d "mapping_stats" ]
-then
-	echo "Working mapping_stats folder exist"
-	echo "Let's move on"
-	date
-else 
-	echo "Working mapping_stats folder doesnt exist. Let's fix that"
-	mkdir $WORKING_FOLDER/mapping_stats
-	date
-fi
-
-if [ -d "read_stats" ]
-then
-	echo "Working read_stats folder exist"
-	echo "Let's move on"
-	date
-else 
-	echo "Working read_stats folder doesnt exist. Let's fix that"
-	mkdir $WORKING_FOLDER/read_stats
-	date
-fi
-
-if [ -d "joint_bams" ]
-then
-	echo "Working joint_bams folder exist"
-	echo "Let's move on"
-	date
-else 
-	echo "Working joint_bams folder doesnt exist. Let's fix that"
-	mkdir $WORKING_FOLDER/joint_bams
-	date
-fi
-
-if [ -d "joint_bams_qualimap" ]
-then
-	echo "Working joint_bams_qualimap folder exist"
-	echo "Let's move on"
-	date
-else 
-	echo "Working joint_bams_qualimap folder doesnt exist. Let's fix that"
-	mkdir $WORKING_FOLDER/joint_bams_qualimap
-	date
-fi
-
-#--------------------------------------------------------------------------------
-# Start pipeline
-# Lets do some light trimming of the reads
-
-
-### Work on merged reads
-### Decide on the trimming parameters based on fastQC step done before this script.
-
-	echo ${i} "Trimming merged reads"
-
-	$bbduk \
-	in=`echo $WORKING_FOLDER/merged_reads/${i}/${i}.merged.reads.strict.fq` \
-	out=$WORKING_FOLDER/merged_reads/${i}/${i}.merged.reads.strict.trim.fq \
-	ftl=15 ftr=285 qtrim=w trimq=20
-
-	rm  $WORKING_FOLDER/merged_reads/${i}/${i}.merged.reads.strict.fq
-
-### Work on unmerged reads
-	echo ${i} "Trimming unmerged reads"
-	
-	$bbduk \
-	in=`echo $WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.1.fq` \
-	in2=`echo $WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.2.fq` \
-	out=$WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.trim.1.fq \
-	out2=$WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.trim.2.fq \
-	ftl=15 qtrim=w trimq=20
-	
-	rm $WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.1.fq
-	rm $WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.2.fq
-
-#--------------------------------------------------------------------------------
 # Map reads to a reference
 
 # This part will map reads to the reference genome. Because the reads are likely split into two groups, 
-# this script will loop over both types of reads. After reads have been mapped, they will be compressed into bam files, 
+# This script will loop over both types of reads. After reads have been mapped, they will be compressed into bam files, 
 # sorted, and duplicates will be removed. I will also conduct an intermediary QC step with Qualimap. 
 # Because there are inherent QC steps here, I have avoided adding extra "warnings" in the log. 
 # Remember to take a look at the qualimap and the flagstat outputs to check for inconsistencies.  

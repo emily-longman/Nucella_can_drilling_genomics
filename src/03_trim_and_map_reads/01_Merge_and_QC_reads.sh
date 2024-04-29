@@ -21,7 +21,7 @@
 #SBATCH --mem=20G 
 
 # Submit job array
-#SBATCH --array=1-576%2
+#SBATCH --array=1-576%20
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/%x_%j.out # Standard output
@@ -75,7 +75,7 @@ JAVAMEM=18g # Java memory
 
 ## PREPARE GUIDE FILES
 ## Read guide files
-# This is a file with the name all the samples to be processed. one sample name per line with all the infor
+# This is a file with the name all the samples to be processed. One sample name per line with all the info.
 SAMPLE_FILE=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_VCF/GuideFile.txt
 
 #Example: -- the headers are just for descriptive purposes. The actual file has no headers.
@@ -106,10 +106,10 @@ echo "Your unique run id is:" $unique_run_id
 if [[ -e "${PIPELINE}.warnings.log" ]]
 then
 	echo "Warning log exist"
-	echo "Lets move on"
+	echo "Let's move on"
 	date
 else 
-	echo "Warning log doesnt exist. Lets fix that"
+	echo "Warning log doesnt exist. Let's fix that"
 	touch $WORKING_FOLDER/${PIPELINE}.warnings.log
 	date
 fi
@@ -117,10 +117,10 @@ fi
 if [[ -e "${PIPELINE}.completion.log" ]]
 then
 	echo "Completion log exist"
-	echo "Lets move on"
+	echo "Let's move on"
 	date
 else 
-	echo "Completion log doesnt exist. Lets fix that"
+	echo "Completion log doesnt exist. Let's fix that"
 	touch $WORKING_FOLDER/${PIPELINE}.completion.log
 	date
 fi
@@ -135,10 +135,10 @@ echo "have you checked if the folders were already built with mkdir?"
 if [[ -d "merged_reads" ]]
 then
 	echo "Working merged_reads folder exist"
-	echo "Lets move on"
+	echo "Let's move on"
 	date
 else 
-	echo "Working merged_reads folder doesnt exist. Lets fix that"
+	echo "Working merged_reads folder doesnt exist. Let's fix that"
 	mkdir $WORKING_FOLDER/merged_reads
 	date
 fi
@@ -146,10 +146,10 @@ fi
 if [ -d "unmerged_reads" ]
 then
 	echo "Working unmerged_reads folder exist"
-	echo "Lets move on"
+	echo "Let's move on"
 	date
 else 
-	echo "Working unmerged_reads folder doesnt exist. Lets fix that"
+	echo "Working unmerged_reads folder doesnt exist. Let's fix that"
 	mkdir $WORKING_FOLDER/unmerged_reads
 	date
 fi
@@ -157,10 +157,10 @@ fi
 if [ -d "fastqc_merged" ]
 then
 	echo "Working fastqc_merged folder exist"
-	echo "Lets move on"
+	echo "Let's move on"
 	date
 else 
-	echo "Working fastqc_merged folder doesnt exist. Lets fix that"
+	echo "Working fastqc_merged folder doesnt exist. Let's fix that"
 	mkdir $WORKING_FOLDER/fastqc_merged
 	date
 fi
