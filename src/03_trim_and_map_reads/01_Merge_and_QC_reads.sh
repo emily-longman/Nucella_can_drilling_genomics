@@ -94,7 +94,7 @@ SAMPLE_FILE=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed
 i=`awk -F "\t" '{print $6}' $SAMPLE_FILE | sed "${SLURM_ARRAY_TASK_ID}q;d"`
 read1=`awk -F "\t" '{print $1}' $SAMPLE_FILE | sed "${SLURM_ARRAY_TASK_ID}q;d"`
 read2=`awk -F "\t" '{print $2}' $SAMPLE_FILE | sed "${SLURM_ARRAY_TASK_ID}q;d"`
-
+echo $i "+" $read1 "+" $read2
 #--------------------------------------------------------------------------------
 # Begin Pipeline
 
@@ -103,26 +103,22 @@ read2=`awk -F "\t" '{print $2}' $SAMPLE_FILE | sed "${SLURM_ARRAY_TASK_ID}q;d"`
 # Welcome message
 echo "Your unique run id is:" $unique_run_id
 
+echo $PIPELINE
+echo $WORKING_FOLDER
+
 if [[ -e "${PIPELINE}.warnings.log" ]]
-then
-	echo "Warning log exist"
-	echo "Let's move on"
-	date
-else 
-	echo "Warning log doesnt exist. Let's fix that"
-	touch $WORKING_FOLDER/${PIPELINE}.warnings.log
-	date
+then echo "hi"
+else echo "he"
+fi
+
+if [[ -e "${PIPELINE}.warnings.log" ]]
+then echo "Warning log exist"; echo "Let's move on"; date;
+else echo "Warning log doesnt exist. Let's fix that"; touch $WORKING_FOLDER/${PIPELINE}.warnings.log; date;
 fi
 
 if [[ -e "${PIPELINE}.completion.log" ]]
-then
-	echo "Completion log exist"
-	echo "Let's move on"
-	date
-else 
-	echo "Completion log doesnt exist. Let's fix that"
-	touch $WORKING_FOLDER/${PIPELINE}.completion.log
-	date
+then echo "Completion log exist"; echo "Let's move on"; date
+else echo "Completion log doesnt exist. Let's fix that"; touch $WORKING_FOLDER/${PIPELINE}.completion.log; date
 fi
 
 #--------------------------------------------------------------------------------
@@ -133,36 +129,18 @@ fi
 # Generating new folders 
 echo "have you checked if the folders were already built with mkdir?"
 if [[ -d "merged_reads" ]]
-then
-	echo "Working merged_reads folder exist"
-	echo "Let's move on"
-	date
-else 
-	echo "Working merged_reads folder doesnt exist. Let's fix that"
-	mkdir $WORKING_FOLDER/merged_reads
-	date
+then echo "Working merged_reads folder exist"; echo "Let's move on"; date
+else echo "Working merged_reads folder doesnt exist. Let's fix that"; mkdir $WORKING_FOLDER/merged_reads; date
 fi
 
 if [ -d "unmerged_reads" ]
-then
-	echo "Working unmerged_reads folder exist"
-	echo "Let's move on"
-	date
-else 
-	echo "Working unmerged_reads folder doesnt exist. Let's fix that"
-	mkdir $WORKING_FOLDER/unmerged_reads
-	date
+then echo "Working unmerged_reads folder exist"; echo "Let's move on"; date
+else echo "Working unmerged_reads folder doesnt exist. Let's fix that"; mkdir $WORKING_FOLDER/unmerged_reads; date
 fi
 
 if [ -d "fastqc_merged" ]
-then
-	echo "Working fastqc_merged folder exist"
-	echo "Let's move on"
-	date
-else 
-	echo "Working fastqc_merged folder doesnt exist. Let's fix that"
-	mkdir $WORKING_FOLDER/fastqc_merged
-	date
+then echo "Working fastqc_merged folder exist"; echo "Let's move on"; date
+else echo "Working fastqc_merged folder doesnt exist. Let's fix that"; mkdir $WORKING_FOLDER/fastqc_merged; date
 fi
 
 #--------------------------------------------------------------------------------
@@ -175,49 +153,41 @@ fi
 # Move to working directory
 cd $WORKING_FOLDER
 
-	echo ${i} "is now processing"
-	date
+echo -e $i "is now processing"
+date
 
-	mkdir $WORKING_FOLDER/merged_reads/${i}
-	mkdir $WORKING_FOLDER/unmerged_reads/${i}
+mkdir $WORKING_FOLDER/merged_reads/${i}
+mkdir $WORKING_FOLDER/unmerged_reads/${i}
 	
-	echo "now merging reads for" ${i}
+echo "now merging reads for" ${i}
 	
-	$bbmerge \
-	in1=${RAW_READS}/$read1 in2=${RAW_READS}/$read2 \
-	out=$WORKING_FOLDER/merged_reads/${i}/${i}.merged.reads.strict.fq \
-	outu1=$WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.1.fq \
-	outu2=$WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.2.fq \
-	-strict
+$bbmerge \
+in1=${RAW_READS}/$read1 in2=${RAW_READS}/$read2 \
+out=$WORKING_FOLDER/merged_reads/${i}/${i}.merged.reads.strict.fq \
+outu1=$WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.1.fq \
+outu2=$WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.2.fq \
+-strict
 	
-		#Sanity checks	
-	if [ -s $WORKING_FOLDER/merged_reads/${i}/${i}.merged.reads.strict.fq ]; then
-	echo ${i} "merged reads file is not empty... thats good"
-	else
-	echo "File is empty -- WARNING ISSUED!"
-	echo ${i} "Merged reads is empty! check the script, debug, and rerun" >> $WORKING_FOLDER/${PIPELINE}.warnings.log
-	fi
+#Sanity checks	
+if [ -s $WORKING_FOLDER/merged_reads/${i}/${i}.merged.reads.strict.fq ]; 
+then echo ${i} "merged reads file is not empty... thats good"
+else echo "File is empty -- WARNING ISSUED!"; echo ${i} "Merged reads is empty! check the script, debug, and rerun" >> $WORKING_FOLDER/${PIPELINE}.warnings.log
+fi
 	
-	if [ -s $WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.1.fq ]; then
-	echo ${i} "Pair 1 reads file is not empty... thats good"
-	else
-	echo "File is empty -- WARNING ISSUED!"
-	echo ${i} "Pair 1 reads is empty! check the script, debug, and rerun" >> $WORKING_FOLDER/${PIPELINE}.warnings.log
-	fi
+if [ -s $WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.1.fq ]; 
+then echo ${i} "Pair 1 reads file is not empty... thats good"
+else echo "File is empty -- WARNING ISSUED!" ; echo ${i} "Pair 1 reads is empty! check the script, debug, and rerun" >> $WORKING_FOLDER/${PIPELINE}.warnings.log
+fi
 	
-	if [ -s $WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.2.fq ]; then
-	echo ${i} "Pair 2 reads file is not empty... thats good"
-	else
-	echo "File is empty -- WARNING ISSUED!"
-	echo ${i} "Pair 2 reads is empty! check the script, debug, and rerun" >> $WORKING_FOLDER/${PIPELINE}.warnings.log
-	fi	
+if [ -s $WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.2.fq ]; 
+then echo ${i} "Pair 2 reads file is not empty... thats good"
+else echo "File is empty -- WARNING ISSUED!"; echo ${i} "Pair 2 reads is empty! check the script, debug, and rerun" >> $WORKING_FOLDER/${PIPELINE}.warnings.log
+fi	
 
 #--------------------------------------------------------------------------------
 # Now lest do some QC on the reads
 
-	fastqc $WORKING_FOLDER/merged_reads/${i}/${i}.merged.reads.strict.fq \
-	--outdir $WORKING_FOLDER/fastqc_merged
-
+fastqc $WORKING_FOLDER/merged_reads/${i}/${i}.merged.reads.strict.fq --outdir $WORKING_FOLDER/fastqc_merged
 
 #--------------------------------------------------------------------------------
 # Inform that sample is done
