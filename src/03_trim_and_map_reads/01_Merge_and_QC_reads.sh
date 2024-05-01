@@ -107,11 +107,6 @@ echo $PIPELINE
 echo $WORKING_FOLDER
 
 if [[ -e "${PIPELINE}.warnings.log" ]]
-then echo "hi"
-else echo "he"
-fi
-
-if [[ -e "${PIPELINE}.warnings.log" ]]
 then echo "Warning log exist"; echo "Let's move on"; date;
 else echo "Warning log doesnt exist. Let's fix that"; touch $WORKING_FOLDER/${PIPELINE}.warnings.log; date;
 fi
