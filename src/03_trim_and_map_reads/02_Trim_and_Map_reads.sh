@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=Merge_and_QC_reads
+#SBATCH --job-name=Trim_and_Map
 
 # Specify partition
 #SBATCH --partition=bluemoon
@@ -40,11 +40,9 @@ module load bwa-0.7.17-gcc-7.3.0-terdbma
 module load fastqc-0.11.7-gcc-7.3.0-vcaesw7
 module load samtools-1.10-gcc-7.3.0-pdbkohx
 
-bbduk=/gpfs1/home/e/l/elongman/software/bbmap/bbduk.sh #executable
-
-# Still need for script!!!!!!!!!!!!!!
-#module load qualimap
-
+bbduk=/gpfs1/home/e/l/elongman/software/bbmap/bbduk.sh 
+qualimap=/gpfs1/home/e/l/elongman/software/qualimap_v2.3/qualimap
+PICARD=/gpfs1/home/e/l/elongman/software/picard.jar
 
 #Define important file locations
 #RAW READS indicates the folder where the raw reads are stored.
@@ -54,13 +52,14 @@ RAW_READS=/netfiles/pespenilab_share/Nucella/raw/Shortreads/All_shortreads
 WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_VCF
 
 #This is the location where the reference genome and all its indexes are stored.
-REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/FL_2000/Assembly.fasta
+#cp /netfiles/pespenilab_share/Nucella/processed/Base_Genome/ShastaRun10000/Assembly.fasta $WORKING_FOLDER
+REFERENCE=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_VCF/Assembly.fasta
 
 #This is a unique number id which identifies this run
 unique_run_id=`date +%N`
 
 #Name of pipeline
-PIPELINE=Trim_reads
+PIPELINE=Trim_and_Map
 
 #--------------------------------------------------------------------------------
 #Define parameters
@@ -95,6 +94,9 @@ echo $i
 
 #--------------------------------------------------------------------------------
 
+# Move to working directory
+cd $WORKING_FOLDER
+
 # Begin Pipeline
 
 #This part of the pipeline will generate log files to record warnings and completion status
@@ -114,9 +116,6 @@ if [[ -e "${PIPELINE}.completion.log" ]]
 then echo "Completion log exist"; echo "Let's move on"; date
 else echo "Completion log doesnt exist. Let's fix that"; touch $WORKING_FOLDER/${PIPELINE}.completion.log; date
 fi
-
-# Move to working directory
-cd $WORKING_FOLDER
 
 #--------------------------------------------------------------------------------
 
@@ -157,7 +156,7 @@ echo ${i} "Trimming merged reads"
 $bbduk \
 in=`echo $WORKING_FOLDER/merged_reads/${i}/${i}.merged.reads.strict.fq` \
 out=$WORKING_FOLDER/merged_reads/${i}/${i}.merged.reads.strict.trim.fq \
-ftl=15 ftr=285 qtrim=w trimq=20
+ftl=12 ftr=288 qtrim=w trimq=20
 
 rm  $WORKING_FOLDER/merged_reads/${i}/${i}.merged.reads.strict.fq
 
@@ -169,10 +168,19 @@ in=`echo $WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.1.fq` \
 in2=`echo $WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.2.fq` \
 out=$WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.trim.1.fq \
 out2=$WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.trim.2.fq \
-ftl=15 qtrim=w trimq=20
+ftl=12 qtrim=w trimq=20
 	
 rm $WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.1.fq
 rm $WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.2.fq
+
+#--------------------------------------------------------------------------------
+# Index reference (this step only needs to be done once)
+
+# This indexing step only needs to be done once for the reference file.
+bwa index -p ref -a bwtsw $REFERENCE 
+# -p is the preix of the output databse 
+# -a is the algorithm for constructing BWT index ('is' - linear-time algorithm for constructing suffix array; bwtsw 
+
 
 #--------------------------------------------------------------------------------
 # Map reads to a reference
@@ -194,45 +202,38 @@ echo "I will first map ${j} reads of" ${i}
 	
 if [[ ${j} == "merged" ]]; 
 then echo "seems this is merged data, lets map it"; 
-bwa mem \ 
--M \ 
--t $CPU \ 
+bwa mem -M -t $CPU \ 
 $REFERENCE \
 $WORKING_FOLDER/${j}_reads/${i}/${i}.${j}.reads.strict.trim.fq \
 > $WORKING_FOLDER/${j}_reads/${i}/${i}.${j}.sam
 		
 elif [[ ${j} == "unmerged" ]]; 
-then echo "seems this is unmerged data, lets map it using a 1-2 approach"
-bwa mem \
--M \
--t $CPU \ 
+then echo "seems this is unmerged data, lets map it using a 1-2 approach"; 
+bwa mem -M -t $CPU \ 
 $REFERENCE \ 
 $WORKING_FOLDER/unmerged_reads/${i}/${i}.${j}.reads.trim.1.fq \
 $WORKING_FOLDER/unmerged_reads/${i}/${i}.${j}.reads.trim.2.fq \
 > $WORKING_FOLDER/unmerged_reads/${i}/${i}.${j}.sam
 	
-else echo "I cant tell what type of data is this -- WARNING!"; echo ${i} "Something is wrong at the mapping stage" $(date) \ 
+else echo "I cant tell what type of data this is -- WARNING!"; echo ${i} "Something is wrong at the mapping stage" $(date) \ 
 $Project_name.warnings.$unique_run_id.log
 fi
 
+done # End loop of j
+
 #J loop#	#I will now extract some summary stats
-samtools flagstat \ 
---threads $CPU \ 
+samtools flagstat --threads $CPU \ 
 $WORKING_FOLDER/${j}_reads/${i}/${i}.${j}.sam \
 > $WORKING_FOLDER/${j}_reads/${i}/${i}.flagstats_raw_${j}.sam.txt
 
 #J loop#	#build bam files
-samtools view \
--b \
--q $QUAL \
---threads $CPU  \ 
+samtools view -b -q $QUAL --threads $CPU  \ 
 $WORKING_FOLDER/${j}_reads/${i}/${i}.${j}.sam \
 > $WORKING_FOLDER/${j}_reads/${i}/${i}.${j}.bam
 
 #J loop#	# Sort with picard
 # Notice that once a file has been sorted it is added the "srt" suffix
-java -Xmx$JAVAMEM \
--jar $PICARD SortSam \ 
+java -Xmx$JAVAMEM -jar $PICARD SortSam \ 
 I=$WORKING_FOLDER/${j}_reads/${i}/${i}.${j}.bam \
 O=$WORKING_FOLDER/${j}_reads/${i}/${i}.${j}.srt.bam \
 SO=coordinate \
@@ -240,17 +241,14 @@ VALIDATION_STRINGENCY=SILENT
 
 #J loop# Remove duplicates with picard
 	# Notice that once a file has been sorted it is added the "rmdp" suffix
-java -Xmx$JAVAMEM \
--jar $PICARD MarkDuplicates \ 
+java -Xmx$JAVAMEM -jar $PICARD MarkDuplicates \ 
 I=$WORKING_FOLDER/${j}_reads/${i}/${i}.${j}.srt.bam \
 O=$WORKING_FOLDER/${j}_reads/${i}/${i}.${j}.srt.rmdp.bam \
 M=$WORKING_FOLDER/${j}_reads/${i}/${i}.${j}.dupstat.txt \
 VALIDATION_STRINGENCY=SILENT REMOVE_DUPLICATES=true
 
 #J loop# Lets do QC on the bam file
-qualimap bamqc \ 
--bam $WORKING_FOLDER/${j}_reads/${i}/${i}.${j}.srt.rmdp.bam  \ 
--outdir $WORKING_FOLDER/mapping_stats/Qualimap_${i} \ 
+qualimap bamqc -bam $WORKING_FOLDER/${j}_reads/${i}/${i}.${j}.srt.rmdp.bam -outdir $WORKING_FOLDER/mapping_stats/Qualimap_${i} \ 
 --java-mem-size=$JAVAMEM
 
 #J loop#	# Clean intermediate files
@@ -280,22 +278,20 @@ done # End loop of j
 # Subsequently, I will once again sort and remove duplicated, before performing the final QC on the aligment.
 
 # Merge bams
-java -Xmx$JAVAMEM \ 
--jar $PICARD MergeSamFiles \ 
+java -Xmx$JAVAMEM -jar $PICARD MergeSamFiles \ 
 I=$WORKING_FOLDER/merged_reads/${i}/${i}.merged.srt.rmdp.bam  \ 
 I=$WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.srt.rmdp.bam  \ 
 O=$WORKING_FOLDER/joint_bams/${i}.joint.bam
 
 # Sort merge bams
-java -Xmx$JAVAMEM \ -jar $PICARD SortSam \ 
+java -Xmx$JAVAMEM -jar $PICARD SortSam \ 
 I=$WORKING_FOLDER/joint_bams/${i}.joint.bam \ 
 O=$WORKING_FOLDER/joint_bams/${i}.joint.srt.bam \ 
 SO=coordinate \ 
 VALIDATION_STRINGENCY=SILENT
 
 # Remove duplicates of final file
-java -Xmx$JAVAMEM \ 
--jar $PICARD MarkDuplicates \ 
+java -Xmx$JAVAMEM -jar $PICARD MarkDuplicates \ 
 I=$WORKING_FOLDER/joint_bams/${i}.joint.srt.bam \ 
 O=$WORKING_FOLDER/joint_bams/${i}.joint.srt.rmdp.bam  \ 
 M=$WORKING_FOLDER/mapping_stats/${i}.joint.dupstat.txt \ 
@@ -303,9 +299,7 @@ VALIDATION_STRINGENCY=SILENT \
 REMOVE_DUPLICATES=true
 
 # Assess quality of final file
-qualimap bamqc \ 
--bam $WORKING_FOLDER/joint_bams/${i}.joint.srt.rmdp.bam   \ 
--outdir $WORKING_FOLDER/joint_bams_qualimap/Qualimap_JointBam_${i} \ 
+qualimap bamqc -bam $WORKING_FOLDER/joint_bams/${i}.joint.srt.rmdp.bam  -outdir $WORKING_FOLDER/joint_bams_qualimap/Qualimap_JointBam_${i} \ 
 --java-mem-size=$JAVAMEM
  
 # Remove intermediary files
@@ -317,7 +311,7 @@ rm $WORKING_FOLDER/joint_bams/${i}.joint.srt.bam
 # Inform that sample is done
 ###########################################################################
 ###########################################################################
-# This part of the pipeline will produce a notification of completion. 
+# This part of the pipeline will notify the completion of run i. 
 
 echo ${i} " completed" >> $WORKING_FOLDER/${PIPELINE}.completion.log
 
