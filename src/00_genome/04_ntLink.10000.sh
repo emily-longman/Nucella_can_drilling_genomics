@@ -30,7 +30,7 @@
 # ---------------------------
 
 # Move to the directory where the output files will be saved
-cd /netfiles/pespenilab_share/Nucella/processed/Base_Genome/FL_10000
+cd /netfiles/pespenilab_share/Nucella/processed/Base_Genome/ntlink#
 
 # ---------------------------
 
@@ -39,19 +39,19 @@ cd /netfiles/pespenilab_share/Nucella/processed/Base_Genome/FL_10000
 # This didn't work either
 
 # Call package (installed with conda)
-module load python3.11-anaconda/2023.09-0
-source ${ANACONDA_ROOT}/etc/profile.d/conda.sh
+#module load python3.11-anaconda/2023.09-0
+#source ${ANACONDA_ROOT}/etc/profile.d/conda.sh
 #conda create --name ntlink python=3.11.0 #create and name the environment
 #source activate ntlink #activate the environment
 #conda install -c bioconda ntlink # install the program
 #conda install -c bioconda -c conda-forge ntlink
 #conda install -c bioconda --file requirements.txt
 
-conda activate
+#conda activate
 #conda install -c bioconda --file requirements.txt  #only need to do once
 
-#ntlink_r=/gpfs1/home/e/l/elongman/scratch/Nucella_can_drilling_genomics/ntlink_t/ntLink-1.3.10/ntLink_rounds
-export PATH=$PATH:/gpfs1/home/e/l/elongman/scratch/Nucella_can_drilling_genomics/ntlink_t/ntLink-1.3.10
+ntlink_r=/gpfs1/home/e/l/elongman/scratch/Nucella_can_drilling_genomics/ntlink_t/ntLink-1.3.10/ntLink_rounds
+#export PATH=$PATH:/gpfs1/home/e/l/elongman/scratch/Nucella_can_drilling_genomics/ntlink_t/ntLink-1.3.10
 
 link_pool=/netfiles/pespenilab_share/Nucella/raw/ONT/FC_all.ONT.nuc.fastq.gz
 asm=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/Shasta_assemblies/ShastaRun10000/Assembly.fasta 
@@ -63,10 +63,10 @@ cp $asm .
 #ntLink scaffold target=Assembly.fasta reads=$link_pool k=32 w=250
 
 #Code from Joaquin
-ntLink_rounds run_rounds_gaps \
+$ntlink_r run_rounds_gaps \
 target=Assembly.fasta \
 reads=$link_pool k=32 w=100 t=40 rounds=8
 
-conda deactivate
+#conda deactivate
 
 echo "done"
