@@ -47,7 +47,7 @@ L="${arr[$SLURM_ARRAY_TASK_ID]}"
 echo $L
 
 #input
-ont=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/ONT_fltlong/Nuc.$L.fltlong.fastq.gz
+ont=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/ONT_fltlong/Nuc.$L.fltlong.fastq
 echo $ont
 
 ## out folder
