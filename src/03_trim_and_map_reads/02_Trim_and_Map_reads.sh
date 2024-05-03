@@ -203,12 +203,12 @@ echo "I will first map ${j} reads of" ${i}
 
 if [[ ${j} == "merged" ]]; 
 then echo "seems this is merged data, lets map it"; 
-bwa mem -M $REFERENCE \ 
+bwa mem -M -t 5 $REFERENCE \ 
 $WORKING_FOLDER/merged_reads/${i}/${i}.${j}.reads.strict.trim.fq > $WORKING_FOLDER/merged_reads/${i}/${i}.${j}.sam
 
 elif [[ ${j} == "unmerged" ]]; 
 then echo "seems this is unmerged data, lets map it using a 1-2 approach"; 
-bwa mem -M $REFERENCE \ 
+bwa mem -M -t 5 $REFERENCE \ 
 $WORKING_FOLDER/unmerged_reads/${i}/${i}.${j}.reads.trim.1.fq \
 $WORKING_FOLDER/unmerged_reads/${i}/${i}.${j}.reads.trim.2.fq \
 > $WORKING_FOLDER/unmerged_reads/${i}/${i}.${j}.sam
