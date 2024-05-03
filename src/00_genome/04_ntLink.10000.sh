@@ -30,7 +30,7 @@
 # ---------------------------
 
 # Move to the directory where the output files will be saved
-cd /netfiles/pespenilab_share/Nucella/processed/Base_Genome/ntlink#
+cd /netfiles/pespenilab_share/Nucella/processed/Base_Genome/ntlink
 
 # ---------------------------
 
