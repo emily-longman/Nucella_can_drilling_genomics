@@ -52,7 +52,6 @@ RAW_READS=/netfiles/pespenilab_share/Nucella/raw/Shortreads/All_shortreads
 WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_VCF
 
 #This is the location where the reference genome and all its indexes are stored.
-#cp /netfiles/pespenilab_share/Nucella/processed/Base_Genome/ShastaRun10000/Assembly.fasta $WORKING_FOLDER
 REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_May2024/Assembly.fasta.k24.w150.z1000.ntLink.8rounds.fa
 
 #This is a unique number id which identifies this run
@@ -91,6 +90,16 @@ SAMPLE_FILE=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed
 # Determine sample to process, "i" and read files
 i=`awk -F "\t" '{print $6}' $SAMPLE_FILE | sed "${SLURM_ARRAY_TASK_ID}q;d"`
 echo $i
+
+#--------------------------------------------------------------------------------
+
+# Index reference (this step only needs to be done once)
+
+# This indexing step only needs to be done once for the reference file.
+#cd /netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_May2024
+#bwa index $REFERENCE 
+# -p is the preix of the output databse 
+# -a is the algorithm for constructing BWT index ('is' - linear-time algorithm for constructing suffix array; bwtsw 
 
 #--------------------------------------------------------------------------------
 
@@ -173,14 +182,6 @@ ftl=12 qtrim=w trimq=20
 rm $WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.1.fq
 rm $WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.2.fq
 
-#--------------------------------------------------------------------------------
-# Index reference (this step only needs to be done once)
-
-# This indexing step only needs to be done once for the reference file.
-bwa index -p ref -a bwtsw $REFERENCE 
-# -p is the preix of the output databse 
-# -a is the algorithm for constructing BWT index ('is' - linear-time algorithm for constructing suffix array; bwtsw 
-
 
 #--------------------------------------------------------------------------------
 # Map reads to a reference
@@ -193,33 +194,30 @@ bwa index -p ref -a bwtsw $REFERENCE
 
 for j in merged unmerged
 do # Begin loop of j
-	
+
 ########################################
 #J loop#	# Starting mapping
 echo "I will first map ${j} reads of" ${i}
 	
-#J loop#	# I will conduct the mapping with BWA-MEM
-	
+#J loop#	# I will conduct the mapping with BWA-MEM	
+
 if [[ ${j} == "merged" ]]; 
 then echo "seems this is merged data, lets map it"; 
-bwa mem -M -t $CPU \ 
-$REFERENCE \
-$WORKING_FOLDER/${j}_reads/${i}/${i}.${j}.reads.strict.trim.fq \
-> $WORKING_FOLDER/${j}_reads/${i}/${i}.${j}.sam
-		
+bwa mem -M -t $CPU $REFERENCE \ 
+$WORKING_FOLDER/merged_reads/${i}/${i}.${j}.reads.strict.trim.fq > $WORKING_FOLDER/merged_reads/${i}/${i}.${j}.sam
+
 elif [[ ${j} == "unmerged" ]]; 
 then echo "seems this is unmerged data, lets map it using a 1-2 approach"; 
-bwa mem -M -t $CPU \ 
-$REFERENCE \ 
+bwa mem -M -t $CPU $REFERENCE \ 
 $WORKING_FOLDER/unmerged_reads/${i}/${i}.${j}.reads.trim.1.fq \
 $WORKING_FOLDER/unmerged_reads/${i}/${i}.${j}.reads.trim.2.fq \
 > $WORKING_FOLDER/unmerged_reads/${i}/${i}.${j}.sam
-	
+
+$WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.trim.1.fq
+
 else echo "I cant tell what type of data this is -- WARNING!"; echo ${i} "Something is wrong at the mapping stage" $(date) \ 
 $Project_name.warnings.$unique_run_id.log
 fi
-
-done # End loop of j
 
 #J loop#	#I will now extract some summary stats
 samtools flagstat --threads $CPU \ 
@@ -231,83 +229,8 @@ samtools view -b -q $QUAL --threads $CPU  \
 $WORKING_FOLDER/${j}_reads/${i}/${i}.${j}.sam \
 > $WORKING_FOLDER/${j}_reads/${i}/${i}.${j}.bam
 
-#J loop#	# Sort with picard
-# Notice that once a file has been sorted it is added the "srt" suffix
-java -Xmx$JAVAMEM -jar $PICARD SortSam \ 
-I=$WORKING_FOLDER/${j}_reads/${i}/${i}.${j}.bam \
-O=$WORKING_FOLDER/${j}_reads/${i}/${i}.${j}.srt.bam \
-SO=coordinate \
-VALIDATION_STRINGENCY=SILENT
-
-#J loop# Remove duplicates with picard
-	# Notice that once a file has been sorted it is added the "rmdp" suffix
-java -Xmx$JAVAMEM -jar $PICARD MarkDuplicates \ 
-I=$WORKING_FOLDER/${j}_reads/${i}/${i}.${j}.srt.bam \
-O=$WORKING_FOLDER/${j}_reads/${i}/${i}.${j}.srt.rmdp.bam \
-M=$WORKING_FOLDER/${j}_reads/${i}/${i}.${j}.dupstat.txt \
-VALIDATION_STRINGENCY=SILENT REMOVE_DUPLICATES=true
-
-#J loop# Lets do QC on the bam file
-qualimap bamqc -bam $WORKING_FOLDER/${j}_reads/${i}/${i}.${j}.srt.rmdp.bam -outdir $WORKING_FOLDER/mapping_stats/Qualimap_${i} \ 
---java-mem-size=$JAVAMEM
-
-#J loop#	# Clean intermediate files
-rm $WORKING_FOLDER/${j}_reads/${i}/${i}.${j}.sam
-rm $WORKING_FOLDER/${j}_reads/${i}/${i}.${j}.bam
-rm $WORKING_FOLDER/${j}_reads/${i}/${i}.${j}.srt.bam
-
-#J loop#	# Housekeeping
-mv $WORKING_FOLDER/${j}_reads/${i}/${i}.flagstats_raw_${j}.sam.txt \ 
-$WORKING_FOLDER/mapping_stats
-mv $WORKING_FOLDER/${j}_reads/${i}/${i}.${j}.dupstat.txt \ 
-$WORKING_FOLDER/mapping_stats
-
-mv $WORKING_FOLDER/${j}_reads/${i}/${i}.${j}.reads.strict.trim_fastqc.html \ 
-$WORKING_FOLDER/read_stats
-mv $WORKING_FOLDER/${j}_reads/${i}/${i}.${j}.reads.strict.trim_fastqc.zip \ 
-$WORKING_FOLDER/read_stats
-
-#J loop#	
 done # End loop of j
 
-#--------------------------------------------------------------------------------
-
-# Merge and assess the final file
-
-# Here I will merge the bam outputs from the merge and unmerged portions of the pipeline. 
-# Subsequently, I will once again sort and remove duplicated, before performing the final QC on the aligment.
-
-# Merge bams
-java -Xmx$JAVAMEM -jar $PICARD MergeSamFiles \ 
-I=$WORKING_FOLDER/merged_reads/${i}/${i}.merged.srt.rmdp.bam  \ 
-I=$WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.srt.rmdp.bam  \ 
-O=$WORKING_FOLDER/joint_bams/${i}.joint.bam
-
-# Sort merge bams
-java -Xmx$JAVAMEM -jar $PICARD SortSam \ 
-I=$WORKING_FOLDER/joint_bams/${i}.joint.bam \ 
-O=$WORKING_FOLDER/joint_bams/${i}.joint.srt.bam \ 
-SO=coordinate \ 
-VALIDATION_STRINGENCY=SILENT
-
-# Remove duplicates of final file
-java -Xmx$JAVAMEM -jar $PICARD MarkDuplicates \ 
-I=$WORKING_FOLDER/joint_bams/${i}.joint.srt.bam \ 
-O=$WORKING_FOLDER/joint_bams/${i}.joint.srt.rmdp.bam  \ 
-M=$WORKING_FOLDER/mapping_stats/${i}.joint.dupstat.txt \ 
-VALIDATION_STRINGENCY=SILENT \ 
-REMOVE_DUPLICATES=true
-
-# Assess quality of final file
-qualimap bamqc -bam $WORKING_FOLDER/joint_bams/${i}.joint.srt.rmdp.bam  -outdir $WORKING_FOLDER/joint_bams_qualimap/Qualimap_JointBam_${i} \ 
---java-mem-size=$JAVAMEM
- 
-# Remove intermediary files
-rm $WORKING_FOLDER/joint_bams/${i}.joint.bam
-rm $WORKING_FOLDER/joint_bams/${i}.joint.srt.bam
-
-###########################################################################
-###########################################################################
 # Inform that sample is done
 ###########################################################################
 ###########################################################################
