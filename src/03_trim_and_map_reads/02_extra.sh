@@ -1,3 +1,13 @@
+#J loop#	#I will now extract some summary stats
+samtools flagstat --threads $CPU \ 
+$WORKING_FOLDER/${j}_reads/${i}/${i}.${j}.sam \
+> $WORKING_FOLDER/${j}_reads/${i}/${i}.flagstats_raw_${j}.sam.txt
+
+#J loop#	#build bam files
+samtools view -b -q $QUAL --threads $CPU  \ 
+$WORKING_FOLDER/${j}_reads/${i}/${i}.${j}.sam \
+> $WORKING_FOLDER/${j}_reads/${i}/${i}.${j}.bam
+
 #J loop#	# Sort with picard
 # Notice that once a file has been sorted it is added the "srt" suffix
 java -Xmx$JAVAMEM -jar $PICARD SortSam \ 

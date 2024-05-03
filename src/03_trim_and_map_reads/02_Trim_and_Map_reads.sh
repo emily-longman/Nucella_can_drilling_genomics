@@ -167,7 +167,7 @@ in=`echo $WORKING_FOLDER/merged_reads/${i}/${i}.merged.reads.strict.fq` \
 out=$WORKING_FOLDER/merged_reads/${i}/${i}.merged.reads.strict.trim.fq \
 ftl=12 ftr=288 qtrim=w trimq=20
 
-rm  $WORKING_FOLDER/merged_reads/${i}/${i}.merged.reads.strict.fq
+#rm  $WORKING_FOLDER/merged_reads/${i}/${i}.merged.reads.strict.fq
 
 ### Work on unmerged reads
 echo ${i} "Trimming unmerged reads"
@@ -179,8 +179,8 @@ out=$WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.trim.1.fq \
 out2=$WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.trim.2.fq \
 ftl=12 qtrim=w trimq=20
 	
-rm $WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.1.fq
-rm $WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.2.fq
+#rm $WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.1.fq
+#rm $WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.2.fq
 
 
 #--------------------------------------------------------------------------------
@@ -203,12 +203,12 @@ echo "I will first map ${j} reads of" ${i}
 
 if [[ ${j} == "merged" ]]; 
 then echo "seems this is merged data, lets map it"; 
-bwa mem -M -t $CPU $REFERENCE \ 
+bwa mem -M $REFERENCE \ 
 $WORKING_FOLDER/merged_reads/${i}/${i}.${j}.reads.strict.trim.fq > $WORKING_FOLDER/merged_reads/${i}/${i}.${j}.sam
 
 elif [[ ${j} == "unmerged" ]]; 
 then echo "seems this is unmerged data, lets map it using a 1-2 approach"; 
-bwa mem -M -t $CPU $REFERENCE \ 
+bwa mem -M $REFERENCE \ 
 $WORKING_FOLDER/unmerged_reads/${i}/${i}.${j}.reads.trim.1.fq \
 $WORKING_FOLDER/unmerged_reads/${i}/${i}.${j}.reads.trim.2.fq \
 > $WORKING_FOLDER/unmerged_reads/${i}/${i}.${j}.sam
@@ -218,16 +218,6 @@ $WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.trim.1.fq
 else echo "I cant tell what type of data this is -- WARNING!"; echo ${i} "Something is wrong at the mapping stage" $(date) \ 
 $Project_name.warnings.$unique_run_id.log
 fi
-
-#J loop#	#I will now extract some summary stats
-samtools flagstat --threads $CPU \ 
-$WORKING_FOLDER/${j}_reads/${i}/${i}.${j}.sam \
-> $WORKING_FOLDER/${j}_reads/${i}/${i}.flagstats_raw_${j}.sam.txt
-
-#J loop#	#build bam files
-samtools view -b -q $QUAL --threads $CPU  \ 
-$WORKING_FOLDER/${j}_reads/${i}/${i}.${j}.sam \
-> $WORKING_FOLDER/${j}_reads/${i}/${i}.${j}.bam
 
 done # End loop of j
 
