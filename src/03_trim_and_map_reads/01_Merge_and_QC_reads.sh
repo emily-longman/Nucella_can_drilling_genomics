@@ -62,7 +62,7 @@ REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_M
 unique_run_id=`date +%N`
 
 #Name of pipeline
-PIPELINE=Merge_and_Trim
+PIPELINE=Merge_and_QC
 
 #--------------------------------------------------------------------------------
 #Define parameters
