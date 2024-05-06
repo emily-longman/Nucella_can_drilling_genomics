@@ -233,9 +233,11 @@ samtools view -b -q $QUAL --threads $CPU  \
 
 done # End loop of j
 
+
+
+#--------------------------------------------------------------------------------
 # Inform that sample is done
-###########################################################################
-###########################################################################
+
 # This part of the pipeline will notify the completion of run i. 
 
 echo ${i} " completed" >> $WORKING_FOLDER/${PIPELINE}.completion.log
