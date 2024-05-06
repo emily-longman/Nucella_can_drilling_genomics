@@ -98,6 +98,7 @@ echo $i
 # This indexing step only needs to be done once for the reference file.
 #cd /netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_May2024
 #bwa index $REFERENCE 
+#chmod +x *
 # -p is the preix of the output databse 
 # -a is the algorithm for constructing BWT index ('is' - linear-time algorithm for constructing suffix array; bwtsw 
 
@@ -117,13 +118,13 @@ echo $PIPELINE
 echo $WORKING_FOLDER
 
 if [[ -e "${PIPELINE}.warnings.log" ]]
-then echo "Warning log exist"; echo "Let's move on"; date
-else echo "Warning log doesnt exist. Let's fix that"; touch $WORKING_FOLDER/${PIPELINE}.warnings.log; date
+then echo "Warning log exist"; echo "Let's move on."; date
+else echo "Warning log doesnt exist. Let's fix that."; touch $WORKING_FOLDER/${PIPELINE}.warnings.log; date
 fi
 
 if [[ -e "${PIPELINE}.completion.log" ]]
-then echo "Completion log exist"; echo "Let's move on"; date
-else echo "Completion log doesnt exist. Let's fix that"; touch $WORKING_FOLDER/${PIPELINE}.completion.log; date
+then echo "Completion log exist"; echo "Let's move on."; date
+else echo "Completion log doesnt exist. Let's fix that."; touch $WORKING_FOLDER/${PIPELINE}.completion.log; date
 fi
 
 #--------------------------------------------------------------------------------
@@ -133,23 +134,23 @@ fi
 # This part of the script will check and generate, if necessary, all of the output folders used in the script
 
 if [ -d "mapping_stats" ]
-then echo "Working mapping_stats folder exist"; echo "Let's move on"; date
-else echo "Working mapping_stats folder doesnt exist. Let's fix that"; mkdir $WORKING_FOLDER/mapping_stats; date
+then echo "Working mapping_stats folder exist"; echo "Let's move on."; date
+else echo "Working mapping_stats folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/mapping_stats; date
 fi
 
 if [ -d "read_stats" ]
-then echo "Working read_stats folder exist"; echo "Let's move on"; date
-else echo "Working read_stats folder doesnt exist. Let's fix that"; mkdir $WORKING_FOLDER/read_stats; date
+then echo "Working read_stats folder exist"; echo "Let's move on."; date
+else echo "Working read_stats folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/read_stats; date
 fi
 
 if [ -d "joint_bams" ]
-then echo "Working joint_bams folder exist"; echo "Let's move on"; date
-else echo "Working joint_bams folder doesnt exist. Let's fix that"; mkdir $WORKING_FOLDER/joint_bams; date
+then echo "Working joint_bams folder exist"; echo "Let's move on."; date
+else echo "Working joint_bams folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/joint_bams; date
 fi
 
 if [ -d "joint_bams_qualimap" ]
-then echo "Working joint_bams_qualimap folder exist"; echo "Let's move on"; date
-else echo "Working joint_bams_qualimap folder doesnt exist. Let's fix that"; mkdir $WORKING_FOLDER/joint_bams_qualimap; date
+then echo "Working joint_bams_qualimap folder exist"; echo "Let's move on."; date
+else echo "Working joint_bams_qualimap folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/joint_bams_qualimap; date
 fi
 
 #--------------------------------------------------------------------------------
@@ -163,9 +164,9 @@ fi
 echo ${i} "Trimming merged reads"
 
 $bbduk \
-in=`echo $WORKING_FOLDER/merged_reads/${i}/${i}.merged.reads.strict.fq` \
-out=$WORKING_FOLDER/merged_reads/${i}/${i}.merged.reads.strict.trim.fq \
-ftl=12 ftr=288 qtrim=w trimq=20
+    in=`echo $WORKING_FOLDER/merged_reads/${i}/${i}.merged.reads.strict.fq` \
+    out=$WORKING_FOLDER/merged_reads/${i}/${i}.merged.reads.strict.trim.fq \
+    ftl=12 ftr=288 qtrim=w trimq=20
 
 #rm  $WORKING_FOLDER/merged_reads/${i}/${i}.merged.reads.strict.fq
 
@@ -173,12 +174,12 @@ ftl=12 ftr=288 qtrim=w trimq=20
 echo ${i} "Trimming unmerged reads"
 	
 $bbduk \
-in=`echo $WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.1.fq` \
-in2=`echo $WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.2.fq` \
-out=$WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.trim.1.fq \
-out2=$WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.trim.2.fq \
-ftl=12 qtrim=w trimq=20
-	
+    in=`echo $WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.1.fq` \
+    in2=`echo $WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.2.fq` \
+    out=$WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.trim.1.fq \
+    out2=$WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.trim.2.fq \
+    ftl=12 qtrim=w trimq=20
+
 #rm $WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.1.fq
 #rm $WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.2.fq
 
@@ -202,22 +203,33 @@ echo "I will first map ${j} reads of" ${i}
 #J loop#	# I will conduct the mapping with BWA-MEM	
 
 if [[ ${j} == "merged" ]]; 
-then echo "seems this is merged data, lets map it"; 
-bwa mem -M -t 5 $REFERENCE \ 
-$WORKING_FOLDER/merged_reads/${i}/${i}.${j}.reads.strict.trim.fq > $WORKING_FOLDER/merged_reads/${i}/${i}.${j}.sam
+then echo "Seems this is merged data, lets map it"; 
+bwa mem -M -t $CPU $REFERENCE \
+    $WORKING_FOLDER/merged_reads/${i}/${i}.${j}.reads.strict.trim.fq \
+    > $WORKING_FOLDER/merged_reads/${i}/${i}.${j}.sam
 
 elif [[ ${j} == "unmerged" ]]; 
-then echo "seems this is unmerged data, lets map it using a 1-2 approach"; 
-bwa mem -M -t 5 $REFERENCE \ 
-$WORKING_FOLDER/unmerged_reads/${i}/${i}.${j}.reads.trim.1.fq \
-$WORKING_FOLDER/unmerged_reads/${i}/${i}.${j}.reads.trim.2.fq \
-> $WORKING_FOLDER/unmerged_reads/${i}/${i}.${j}.sam
+then echo "Seems this is unmerged data, lets map it using a 1-2 approach"; 
+bwa mem -M -t $CPU $REFERENCE \
+    $WORKING_FOLDER/unmerged_reads/${i}/${i}.${j}.reads.trim.1.fq \
+    $WORKING_FOLDER/unmerged_reads/${i}/${i}.${j}.reads.trim.2.fq \
+    > $WORKING_FOLDER/unmerged_reads/${i}/${i}.${j}.sam
 
-$WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.trim.1.fq
-
-else echo "I cant tell what type of data this is -- WARNING!"; echo ${i} "Something is wrong at the mapping stage" $(date) \ 
-$Project_name.warnings.$unique_run_id.log
+else 
+    echo "I cant tell what type of data this is -- WARNING!"; 
+    echo ${i} "Something is wrong at the mapping stage"; $(date) \
+    $Project_name.warnings.$unique_run_id.log
 fi
+
+#J loop#	#I will now extract some summary stats
+samtools flagstat --threads $CPU \
+    $WORKING_FOLDER/${j}_reads/${i}/${i}.${j}.sam \
+    > $WORKING_FOLDER/${j}_reads/${i}/${i}.flagstats_raw_${j}.sam.txt
+
+#J loop#	#build bam files
+samtools view -b -q $QUAL --threads $CPU  \
+    $WORKING_FOLDER/${j}_reads/${i}/${i}.${j}.sam \
+    > $WORKING_FOLDER/${j}_reads/${i}/${i}.${j}.bam
 
 done # End loop of j
 
