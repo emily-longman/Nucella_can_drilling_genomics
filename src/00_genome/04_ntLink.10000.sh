@@ -40,11 +40,14 @@ cd /netfiles/pespenilab_share/Nucella/processed/Base_Genome/ntlink
 
 # Call package (installed with conda)
 #module load python3.11-anaconda/2023.09-0
+
+#module load python3.10-anaconda/2023.09-0 #this will load an older version of conda and then it should work
 #source ${ANACONDA_ROOT}/etc/profile.d/conda.sh
-#conda create --name ntlink python=3.11.0 #create and name the environment
+#conda create --name ntlink #create and name the environment
 #source activate ntlink #activate the environment
-#conda install -c bioconda ntlink # install the program
 #conda install -c bioconda -c conda-forge ntlink
+# Bennet helped me install ntlink with conda then created a symbolic link so now I can just run it since it is in my bin folder
+
 #conda install -c bioconda --file requirements.txt
 
 #conda activate
