@@ -97,17 +97,6 @@ echo $i
 
 #--------------------------------------------------------------------------------
 
-# Index reference (this step only needs to be done once)
-
-# This indexing step only needs to be done once for the reference file.
-#cd /netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_May2024
-#bwa index $REFERENCE 
-#chmod +x *
-# -p is the preix of the output databse 
-# -a is the algorithm for constructing BWT index ('is' - linear-time algorithm for constructing suffix array; bwtsw 
-
-#--------------------------------------------------------------------------------
-
 # Move to working directory
 cd $WORKING_FOLDER
 
@@ -168,9 +157,9 @@ fi
 echo ${i} "Trimming merged reads"
 
 $bbduk \
-    in=`echo $WORKING_FOLDER/merged_reads/${i}/${i}.merged.reads.strict.fq` \
-    out=$WORKING_FOLDER/merged_reads/${i}/${i}.merged.reads.strict.trim.fq \
-    ftl=12 ftr=288 qtrim=w trimq=20
+in=`echo $WORKING_FOLDER/merged_reads/${i}/${i}.merged.reads.strict.fq` \
+out=$WORKING_FOLDER/merged_reads/${i}/${i}.merged.reads.strict.trim.fq \
+ftl=12 ftr=288 qtrim=w trimq=20
 
 #rm  $WORKING_FOLDER/merged_reads/${i}/${i}.merged.reads.strict.fq
 
@@ -178,11 +167,11 @@ $bbduk \
 echo ${i} "Trimming unmerged reads"
 	
 $bbduk \
-    in=`echo $WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.1.fq` \
-    in2=`echo $WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.2.fq` \
-    out=$WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.trim.1.fq \
-    out2=$WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.trim.2.fq \
-    ftl=12 qtrim=w trimq=20
+in=`echo $WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.1.fq` \
+in2=`echo $WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.2.fq` \
+out=$WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.trim.1.fq \
+out2=$WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.trim.2.fq \
+ftl=12 qtrim=w trimq=20
 
 #rm $WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.1.fq
 #rm $WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.reads.2.fq
@@ -204,7 +193,7 @@ do # Begin loop of j
 #J loop#	# Starting mapping
 echo "I will first map ${j} reads of" ${i}
 	
-#J loop#	# I will conduct the mapping with BWA-MEM	
+#J loop#	# I will conduct the mapping with BWA-MEM 2	
 
 if [[ ${j} == "merged" ]]; 
 then echo "Seems this is merged data, lets map it"; 
@@ -224,6 +213,11 @@ echo "I cant tell what type of data this is -- WARNING!";
 echo ${i} "Something is wrong at the mapping stage"; $(date) \
 $Project_name.warnings.$unique_run_id.log
 fi
+
+
+#J loop#	
+done # End loop of j
+
 
 #J loop#	#I will now extract some summary stats
 samtools flagstat --threads $CPU \
