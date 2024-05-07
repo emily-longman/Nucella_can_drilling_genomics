@@ -214,11 +214,6 @@ echo ${i} "Something is wrong at the mapping stage"; $(date) \
 $Project_name.warnings.$unique_run_id.log
 fi
 
-
-#J loop#	
-done # End loop of j
-
-
 #J loop#	#I will now extract some summary stats
 samtools flagstat --threads $CPU \
 $WORKING_FOLDER/${j}_reads/${i}/${i}.${j}.sam \
