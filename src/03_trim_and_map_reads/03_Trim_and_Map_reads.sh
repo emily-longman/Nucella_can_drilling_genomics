@@ -34,7 +34,7 @@
 
 # This script is the second step in the trim and map pipeline
 
-#Load modules 
+# Load modules 
 module load gcc/10.5.0
 module load fastqc-0.11.7-gcc-7.3.0-vcaesw7
 module load samtools-1.10-gcc-7.3.0-pdbkohx
@@ -44,7 +44,7 @@ bwa=/netfiles/nunezlab/Shared_Resources/Software/bwa-mem2-2.2.1_x64-linux/bwa-me
 PICARD=/netfiles/nunezlab/Shared_Resources/Software/picard/build/libs/picard.jar
 qualimap=/netfiles/nunezlab/Shared_Resources/Software/qualimap_v2.2.1/qualimap
 
-#Define important file locations
+# Define important file locations
 #RAW READS indicates the folder where the raw reads are stored.
 RAW_READS=/netfiles/pespenilab_share/Nucella/raw/Shortreads/All_shortreads
 
@@ -61,7 +61,7 @@ unique_run_id=`date +%N`
 PIPELINE=Trim_and_Map
 
 #--------------------------------------------------------------------------------
-#Define parameters
+# Define parameters
 CPU=$SLURM_CPUS_ON_NODE
 echo "using #CPUs ==" $SLURM_CPUS_ON_NODE
 QUAL=40 # Quality threshold for samtools
