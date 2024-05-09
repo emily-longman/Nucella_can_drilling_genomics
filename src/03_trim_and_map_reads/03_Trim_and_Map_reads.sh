@@ -132,6 +132,15 @@ then echo "Working read_stats folder exist"; echo "Let's move on."; date
 else echo "Working read_stats folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/read_stats; date
 fi
 
+if [ -d "joint_bams" ]
+then echo "Working joint_bams folder exist"; echo "Let's move on."; date
+else echo "Working joint_bams folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/joint_bams; date
+fi
+
+if [ -d "joint_bams_qualimap" ]
+then echo "Working joint_bams_qualimap folder exist"; echo "Let's move on."; date
+else echo "Working joint_bams_qualimap folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/joint_bams_qualimap; date
+fi
 
 #--------------------------------------------------------------------------------
 # Start pipeline
@@ -252,6 +261,41 @@ $WORKING_FOLDER/read_stats
 #J loop#	
 done # End loop of j
 
+#--------------------------------------------------------------------------------
+
+# Here I will merge the bam outputs from the merge and unmerged portions of the pipeline. These will be named 'joint bams'
+# Subsequently, I will once again sort and remove duplicated, before performing the final QC on the aligment.
+
+# Merge bams
+java -Xmx$JAVAMEM -jar $PICARD MergeSamFiles \
+I=$WORKING_FOLDER/merged_reads/${i}/${i}.merged.srt.rmdp.bam \
+I=$WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.srt.rmdp.bam \
+O=$WORKING_FOLDER/joint_bams/${i}.joint.bam
+
+# Sort merge bams
+java -Xmx$JAVAMEM -jar $PICARD SortSam \
+I=$WORKING_FOLDER/joint_bams/${i}.joint.bam \
+O=$WORKING_FOLDER/joint_bams/${i}.joint.srt.bam \
+SO=coordinate \
+VALIDATION_STRINGENCY=SILENT
+
+# Remove duplicates of final file
+java -Xmx$JAVAMEM -jar $PICARD MarkDuplicates \
+I=$WORKING_FOLDER/joint_bams/${i}.joint.srt.bam \
+O=$WORKING_FOLDER/joint_bams/${i}.joint.srt.rmdp.bam  \
+M=$WORKING_FOLDER/mapping_stats/${i}.joint.dupstat.txt \
+VALIDATION_STRINGENCY=SILENT \
+REMOVE_DUPLICATES=true
+
+# Assess quality of final file
+$qualimap bamqc \
+-bam $WORKING_FOLDER/joint_bams/${i}.joint.srt.rmdp.bam  \
+-outdir $WORKING_FOLDER/joint_bams_qualimap/Qualimap_JointBam_${i} \
+--java-mem-size=$JAVAMEM
+ 
+# Remove intermediary files
+rm $WORKING_FOLDER/joint_bams/${i}.joint.bam
+rm $WORKING_FOLDER/joint_bams/${i}.joint.srt.bam
 
 #--------------------------------------------------------------------------------
 # Inform that sample is done

@@ -45,7 +45,7 @@ qualimap=/netfiles/nunezlab/Shared_Resources/Software/qualimap_v2.2.1/qualimap
 WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_VCF
 
 #Folder for joint bams
-JOINT_BAMS=/gpfs2/scratch/elongman/scratch/Nucella_can_drilling_genomics/data/processed/fastq_to_VCF/joint_bams
+JOINT_BAMS=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_VCF/joint_bams
 
 #This is a unique number id which identifies this run
 unique_run_id=`date +%N`
@@ -66,22 +66,21 @@ JAVAMEM=18G # Java memory
 ## Read guide files
 # This is a file with the name all the samples to be processed. One sample name per line with all the info.
 
-SAMPLE_FILE=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_VCF/GuideFile.txt
+SAMPLE_FILE=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_VCF/GuideFileMerged.txt
 
 #Example: -- the headers are just for descriptive purposes. The actual file has no headers.
-##               File1                             File2              Snail_ID  Sample#  Lane#    Merged_name    Merged_bam_name
-## FB1-1_S84_L002_R1_001.fastq.gz    FB1-1_S84_L002_R2_001.fastq.gz    FB1-1     S84     L002    FB1-1_S84_L002    FB1-1_S84
-## FB1-1_S84_L007_R1_001.fastq.gz    FB1-1_S84_L007_R2_001.fastq.gz    FB1-1     S84     L007    FB1-1_S84_L007    FB1-1_S84
-## FB1-1_S84_L008_R1_001.fastq.gz    FB1-1_S84_L008_R2_001.fastq.gz    FB1-1     S84     L008    FB1-1_S84_L008    FB1-1_S84
-## FB1-2_S173_L002_R1_001.fastq.gz   FB1-2_S173_L002_R2_001.fastq.gz   FB1-2     S173    L002    FB1-2_S173_L002   FB1-2_S173
-## ...
-## MP9-10_S26_L007_R1_001.fastq.gz   MP9-10_S26_L007_R2_001.fastq.gz   MP9-10    S26     L007    MP9-10_S26_L007   MP9-10_S26
-## MP9-10_S26_L008_R1_001.fastq.gz   MP9-10_S26_L008_R2_001.fastq.gz   MP9-10    S26     L008    MP9-10_S26_L008   MP9-10_S26
+## Snail_ID  Sample#   Merged_name 1    Merged_name 2    Merged_name 3   Merged_bam_name
+##  FB1-1     S84     FB1-1_S84_L002   FB1-1_S84_L007   FB1-1_S84_L008     FB1-1_S84
+##  FB1-2     S173    FB1-2_S173_L002  FB1-2_S173_L007  FB1-2_S173_L008    FB1-2_S173
+##  FB1-5     S109    FB1-5_S109_L002  FB1-5_S109_L007  FB1-5_S109_L008    FB1-5_S109
+##  ...
+##  MP9-9     S191    MP9-9_S191_L002  MP9-9_S191_L007  MP9-9_S191_L008    MP9-9_S191
+##  MP9-10    S26     MP9-10_S26_L002  MP9-10_S26_L007  MP9-10_S26_L008    MP9-10_S26
 
 #--------------------------------------------------------------------------------
 
 # Determine sample to process, "i" and read files
-i=`awk -F "\t" '{print $6}' $SAMPLE_FILE | sed "${SLURM_ARRAY_TASK_ID}q;d"`
+i=`awk -F "\t" '{print $3}' $SAMPLE_FILE | sed "${SLURM_ARRAY_TASK_ID}q;d"`
 echo $i
 
 #--------------------------------------------------------------------------------
@@ -135,50 +134,15 @@ else echo "Working Merged_Bams_qualimap folder doesnt exist. Let's fix that."; m
 fi
 
 #--------------------------------------------------------------------------------
+
 # Start pipeline
-
-# Here I will merge the bam outputs from the merge and unmerged portions of the pipeline. These will be named 'joint bams'
-# Subsequently, I will once again sort and remove duplicated, before performing the final QC on the aligment.
-
-# Merge bams
-java -Xmx$JAVAMEM -jar $PICARD MergeSamFiles \
-I=$WORKING_FOLDER/merged_reads/${i}/${i}.merged.srt.rmdp.bam \
-I=$WORKING_FOLDER/unmerged_reads/${i}/${i}.unmerged.srt.rmdp.bam \
-O=$WORKING_FOLDER/joint_bams/${i}.joint.bam
-
-# Sort merge bams
-java -Xmx$JAVAMEM -jar $PICARD SortSam \
-I=$WORKING_FOLDER/joint_bams/${i}.joint.bam \
-O=$WORKING_FOLDER/joint_bams/${i}.joint.srt.bam \
-SO=coordinate \
-VALIDATION_STRINGENCY=SILENT
-
-# Remove duplicates of final file
-java -Xmx$JAVAMEM -jar $PICARD MarkDuplicates \
-I=$WORKING_FOLDER/joint_bams/${i}.joint.srt.bam \
-O=$WORKING_FOLDER/joint_bams/${i}.joint.srt.rmdp.bam  \
-M=$WORKING_FOLDER/mapping_stats/${i}.joint.dupstat.txt \
-VALIDATION_STRINGENCY=SILENT \
-REMOVE_DUPLICATES=true
-
-# Assess quality of final file
-$qualimap bamqc \
--bam $WORKING_FOLDER/joint_bams/${i}.joint.srt.rmdp.bam  \
--outdir $WORKING_FOLDER/joint_bams_qualimap/Qualimap_JointBam_${i} \
---java-mem-size=$JAVAMEM
- 
-# Remove intermediary files
-rm $WORKING_FOLDER/joint_bams/${i}.joint.bam
-rm $WORKING_FOLDER/joint_bams/${i}.joint.srt.bam
-
-#--------------------------------------------------------------------------------
 
 # Here I will merge the joint bam outputs for the multiple lanes of sequencing. These will be named 'Lanes merged'
 
 echo "I will merge these files" $JOINT_BAMS/${i}_*.joint.srt.rmdp.bam
 
 #Make temporary linefile with list of input BAM files
-ls $JOINT_BAMS/${i}_*.joint.srt.rmdp.bam > ${i}.guide.txt
+ls $JOINT_BAMS | grep ${i}_*.joint.srt.rmdp.bam > ${i}.guide.txt
 
 samtools merge \
 -b ${i}.guide.txt \
@@ -190,7 +154,7 @@ rm ${i}.guide.txt
 # Assess quality of final file
 $qualimap bamqc \
 -bam $WORKING_FOLDER/Merged_Bams/${i}.Lanes_merged.bam \
--outdir $WORKING_FOLDER/Merged_Bams_qualimap/Qualimap_LaneMerged_${i} \
+-outdir $WORKING_FOLDER/Merged_Bams_qualimap/Qualimap_LaneMerged_${k} \
 --java-mem-size=$JAVAMEM
 
 #--------------------------------------------------------------------------------
