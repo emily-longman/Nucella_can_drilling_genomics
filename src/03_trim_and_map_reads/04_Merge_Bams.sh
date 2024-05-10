@@ -130,12 +130,10 @@ fi
 
 # Here I will merge the joint bam outputs for the multiple lanes of sequencing. These will be named 'Lanes merged'
 
-FILENAMES=$JOINT_BAMS/${i}_*.joint.srt.rmdp.bam
-
 echo "I will merge these files" $JOINT_BAMS/${i}_*.joint.srt.rmdp.bam
 
 #Make temporary linefile with list of input BAM files
-ls $JOINT_BAMS | grep ${i}* >> ${i}.guide.txt
+ls $JOINT_BAMS/${i}_*.joint.srt.rmdp.bam > ${i}.guide.txt
 
 samtools merge \
 -b ${i}.guide.txt \
