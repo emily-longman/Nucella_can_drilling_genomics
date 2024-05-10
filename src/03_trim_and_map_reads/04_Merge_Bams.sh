@@ -80,7 +80,7 @@ SAMPLE_FILE=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed
 #--------------------------------------------------------------------------------
 
 # Determine sample to process, "i" and read files
-i=`awk -F "\t" '{print $3}' $SAMPLE_FILE | sed "${SLURM_ARRAY_TASK_ID}q;d"`
+i=`awk -F "\t" '{print $6}' $SAMPLE_FILE | sed "${SLURM_ARRAY_TASK_ID}q;d"`
 echo $i
 
 #--------------------------------------------------------------------------------
@@ -113,15 +113,6 @@ fi
 # Generate Folders and files
 
 # This part of the script will check and generate, if necessary, all of the output folders used in the script
-if [ -d "joint_bams" ]
-then echo "Working joint_bams folder exist"; echo "Let's move on."; date
-else echo "Working joint_bams folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/joint_bams; date
-fi
-
-if [ -d "joint_bams_qualimap" ]
-then echo "Working joint_bams_qualimap folder exist"; echo "Let's move on."; date
-else echo "Working joint_bams_qualimap folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/joint_bams_qualimap; date
-fi
 
 if [ -d "Merged_Bams" ]
 then echo "Working Merged_Bams folder exist"; echo "Let's move on."; date
@@ -139,10 +130,12 @@ fi
 
 # Here I will merge the joint bam outputs for the multiple lanes of sequencing. These will be named 'Lanes merged'
 
+FILENAMES=$JOINT_BAMS/${i}_*.joint.srt.rmdp.bam
+
 echo "I will merge these files" $JOINT_BAMS/${i}_*.joint.srt.rmdp.bam
 
 #Make temporary linefile with list of input BAM files
-ls $JOINT_BAMS | grep ${i}_*.joint.srt.rmdp.bam > ${i}.guide.txt
+ls $JOINT_BAMS | grep ${i}* >> ${i}.guide.txt
 
 samtools merge \
 -b ${i}.guide.txt \
