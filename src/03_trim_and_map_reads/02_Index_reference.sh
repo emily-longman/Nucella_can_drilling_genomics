@@ -33,8 +33,10 @@
 
 # Note: this step only needs to be done once
 
-# Make bwa-mem 2 executable
+#Load modules 
 bwa=/netfiles/nunezlab/Shared_Resources/Software/bwa-mem2-2.2.1_x64-linux/bwa-mem2.avx2
+PICARD=/netfiles/nunezlab/Shared_Resources/Software/picard/build/libs/picard.jar
+module load samtools-1.10-gcc-7.3.0-pdbkohx
 
 #Define file location
 REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_May2024/Assembly.fasta.k24.w150.z1000.ntLink.8rounds.fa
@@ -42,4 +44,12 @@ REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_M
 # Move to the directory that the index is stored
 cd /netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_May2024
 
+# Index database sequences in the FASTA format 
 $bwa index $REFERENCE 
+
+# Generate the FASTA sequence dictionary file
+java -jar $PICARD CreateSequenceDictionary \
+R=$REFERENCE
+
+# Generate the fasta index file for the reference
+samtools faidx $REFERENCE
