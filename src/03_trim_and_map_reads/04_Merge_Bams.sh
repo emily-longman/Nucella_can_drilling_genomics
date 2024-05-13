@@ -145,7 +145,7 @@ rm ${i}.guide.txt
 # Assess quality of final file
 $qualimap bamqc \
 -bam $WORKING_FOLDER/Merged_Bams/${i}.Lanes_merged.bam \
--outdir $WORKING_FOLDER/Merged_Bams_qualimap/Qualimap_LaneMerged_${k} \
+-outdir $WORKING_FOLDER/Merged_Bams_qualimap/Qualimap_LaneMerged_${i} \
 --java-mem-size=$JAVAMEM
 
 #--------------------------------------------------------------------------------
