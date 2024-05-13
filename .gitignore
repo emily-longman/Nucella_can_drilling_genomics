@@ -10,6 +10,7 @@ scratch/*
 data/raw/*
 data/processed/*
 output/*
+slurmOutput/*
 
 # Specific files extensions to ignore
 *.out
