@@ -159,7 +159,7 @@ I=$WORKING_FOLDER/RGSM_final_bams/${i}.RG.bam
 
 # Haplotype Calling
 
-# Need .dict and .fai index files generated from Picard and samtools (in 'Index reference' step)
+# Need .dict and .fai index files generated from Picard and samtools (in '02_Index_reference' step)
 
 # Call haplotypes with GATK
 
