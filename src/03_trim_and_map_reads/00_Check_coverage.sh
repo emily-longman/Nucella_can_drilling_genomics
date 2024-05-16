@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=Merge_and_QC_reads
+#SBATCH --job-name=Check_Coverage #Accidentally still had "Merge & QC"
 
 # Specify partition
 #SBATCH --partition=bluemoon
