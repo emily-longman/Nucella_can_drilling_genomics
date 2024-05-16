@@ -39,6 +39,7 @@ PICARD=/netfiles/nunezlab/Shared_Resources/Software/picard/build/libs/picard.jar
 #gatk=/gpfs1/home/e/l/elongman/software/gatk-4.5.0.0/gatk # VACC's verion of java isn't up to date enough to be compatible
 gatk=/gpfs1/home/e/l/elongman/software/gatk-4.2.6.0/gatk
 module load htslib-1.10.2-gcc-7.3.0-tn65hc6 #tabix
+module load samtools-1.10-gcc-7.3.0-pdbkohx
 
 # Define important file locations
 
@@ -155,6 +156,8 @@ RGSM=${i}
 java -jar $PICARD BuildBamIndex \
 I=$WORKING_FOLDER/RGSM_final_bams/${i}.RG.bam
 
+samtools index $WORKING_FOLDER/RGSM_final_bams/${i}.RG.bam
+
 #--------------------------------------------------------------------------------
 
 # Haplotype Calling
@@ -169,8 +172,6 @@ $gatk --java-options "-Xmx${JAVAMEM}" HaplotypeCaller \
 -O $WORKING_FOLDER/haplotype_calling/${i}.raw.g.vcf \
 --heterozygosity $HET \
 -ERC GVCF
-
-#Currently have problems with the step above
 
 #--------------------------------------------------------------------------------
 
