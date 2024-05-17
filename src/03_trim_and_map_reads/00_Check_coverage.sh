@@ -37,7 +37,9 @@ module load gcc/10.5.0
 module load bwa-0.7.17-gcc-7.3.0-terdbma
 module load fastqc-0.11.7-gcc-7.3.0-vcaesw7
 module load samtools-1.10-gcc-7.3.0-pdbkohx
-bbmerge=/gpfs1/home/e/l/elongman/software/bbmap/bbmerge.sh #executable
+bbmerge=/gpfs1/home/e/l/elongman/software/bbmap/bbmerge.sh 
+PICARD=/netfiles/nunezlab/Shared_Resources/Software/picard/build/libs/picard.jar
+qualimap=/netfiles/nunezlab/Shared_Resources/Software/qualimap_v2.2.1/qualimap
 
 #Define important file locations
 #RAW READS indicates the folder where the raw reads are stored.
