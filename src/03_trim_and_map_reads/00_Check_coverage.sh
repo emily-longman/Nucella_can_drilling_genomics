@@ -18,7 +18,7 @@
 #SBATCH --time=8:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
-#SBATCH --mem=20G 
+#SBATCH --mem=80G 
 
 # Submit job array
 #SBATCH --array=1-576%20
@@ -37,7 +37,8 @@ module load gcc/10.5.0
 module load bwa-0.7.17-gcc-7.3.0-terdbma
 module load fastqc-0.11.7-gcc-7.3.0-vcaesw7
 module load samtools-1.10-gcc-7.3.0-pdbkohx
-bbmerge=/gpfs1/home/e/l/elongman/software/bbmap/bbmerge.sh 
+bbduk=/gpfs1/home/e/l/elongman/software/bbmap/bbduk.sh 
+bwa=/netfiles/nunezlab/Shared_Resources/Software/bwa-mem2-2.2.1_x64-linux/bwa-mem2.avx2
 PICARD=/netfiles/nunezlab/Shared_Resources/Software/picard/build/libs/picard.jar
 qualimap=/netfiles/nunezlab/Shared_Resources/Software/qualimap_v2.2.1/qualimap
 
