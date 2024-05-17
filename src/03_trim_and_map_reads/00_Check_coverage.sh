@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=Check_Coverage #Accidentally still had "Merge & QC"
+#SBATCH --job-name=Check_Coverage
 
 # Specify partition
 #SBATCH --partition=bluemoon
@@ -49,16 +49,22 @@ RAW_READS=/netfiles/pespenilab_share/Nucella/raw/Shortreads/All_shortreads
 #This is the location where the reference genome and all its indexes are stored.
 REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_May2024/Assembly.fasta.k24.w150.z1000.ntLink.8rounds.fa
 
+#Working folder for pipeline
+WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/Check_Coverage
+
+
 #--------------------------------------------------------------------------------
 #Define parameters
-CPU=$SLURM_CPUS_ON_NODE
-echo "using #CPUs ==" $SLURM_CPUS_ON_NODE
+
+JAVAMEM=59G
+CPU=5
+
 QUAL=40 # Quality threshold for samtools
-JAVAMEM=18g # Java memory
 
 #--------------------------------------------------------------------------------
 
-WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/Check_Coverage
+# Move to working folder
+cd $WORKING_FOLDER
 
 # Cat all reads
 
@@ -71,26 +77,26 @@ $WORKING_FOLDER/all.illumina.fastq.gz \
 > $WORKING_FOLDER/all.illumina.sam
 
 # Summary stats
-samtools flagstat --threads $CPU \
-$WORKING_FOLDER/all.illumina.sam \
-> $WORKING_FOLDER/flagstats.all.illumina.txt
+#samtools flagstat --threads $CPU \
+#$WORKING_FOLDER/all.illumina.sam \
+#> $WORKING_FOLDER/flagstats.all.illumina.txt
 
 # Build bam files
-samtools view -b --threads $CPU  \
-$WORKING_FOLDER/all.illumina.sam \
-> $WORKING_FOLDER/all.illumina.bam
+#samtools view -b --threads $CPU  \
+#$WORKING_FOLDER/all.illumina.sam \
+#> $WORKING_FOLDER/all.illumina.bam
 
 
 # Sort with picard
 # Notice that once a file has been sorted it is added the "srt" suffix
-java -Xmx$JAVAMEM -jar $PICARD SortSam \
-I=$WORKING_FOLDER/all.illumina.bam \
-O=$WORKING_FOLDER/all.illumina.srt.bam \
-SO=coordinate \
-VALIDATION_STRINGENCY=SILENT
+#java -Xmx$JAVAMEM -jar $PICARD SortSam \
+#I=$WORKING_FOLDER/all.illumina.bam \
+#O=$WORKING_FOLDER/all.illumina.srt.bam \
+#SO=coordinate \
+#VALIDATION_STRINGENCY=SILENT
 
 # Lets do QC on the bam file
-$qualimap bamqc \
--bam $WORKING_FOLDER/all.illumina.srt.bam \
--outdir $WORKING_FOLDER/Qualimap.all.illumina.srt \
---java-mem-size=$JAVAMEM
+#$qualimap bamqc \
+#-bam $WORKING_FOLDER/all.illumina.srt.bam \
+#-outdir $WORKING_FOLDER/Qualimap.all.illumina.srt \
+#--java-mem-size=$JAVAMEM
