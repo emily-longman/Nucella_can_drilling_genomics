@@ -50,6 +50,14 @@ REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_M
 
 REFERENCE_FAI=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_May2024/Assembly.fasta.k24.w150.z1000.ntLink.8rounds.fa.fai
 
+#--------------------------------------------------------------------------------
+# Define parameters
+
+# Java parameters
+CPU=$SLURM_CPUS_ON_NODE
+echo "using #CPUs ==" $SLURM_CPUS_ON_NODE
+QUAL=40 # Quality threshold for samtools
+JAVAMEM=18G # Java memory
 
 #--------------------------------------------------------------------------------
 
@@ -76,19 +84,59 @@ else echo "Working genotype_likelihoods folder doesnt exist. Let's fix that."; m
 fi
 
 
-# Alternative way to create list
-#ls $BAMS_FOLDER/*.bam > $genotype_likelihoods/Nucella_bam.list
+
 
 #--------------------------------------------------------------------------------
 
+
+
+
 # Calculate genotype likelihoods
-angsd -b $SAMPLE_FILE -ref $REFERENCE -out $WORKING_FOLDER/genotype_likelihoods/Nucella \
--uniqueOnly 1 -remove_bads 1 -only_proper_pairs 1 -trim 0 -C 50 -baq 1 \
--GL 2 -doGlf 4 \
--nThreads 10
+#angsd -b $SAMPLE_FILE -ref $REFERENCE -out $WORKING_FOLDER/genotype_likelihoods/Nucella \
+#-uniqueOnly 1 -remove_bads 1 -only_proper_pairs 1 -trim 0 -C 50 -baq 1 \
+#-GL 2 -doGlf 4 \
+#-nThreads 10
 # Filter to retain only uniquely mapping reads, not tagged as bad, considering only proper pairs, wihtout trimming, and adjusting for inde/mapping
 # -C 50 reduces the effect of reads with excessive mismatches, while -baq 1 computes base alignment quality
 # -GL 2: genotype likelihood model as in GATK; -doGlf 4: output in text format
 
 
 
+# File suffix to distinguish analysis choices
+SUFFIX=""
+
+
+OUTPUT=$WORKING_FOLDER/genotype_likelihoods
+
+# Alternative way to create list
+ls $BAMS_FOLDER > $OUTPUT/Nucella_bam.list
+
+# Estimating GL's and allele frequencies for all sites with ANGSD
+
+
+######################
+
+angsd -b ${OUTPUT}/Nucella_bam.list \
+-ref ${REFERENCE} -anc ${REFERENCE} \
+-out ${OUTPUT}/Nucella_${SUFFIX} \
+-nThreads $CPU \
+-remove_bads 1 \
+-C 50 \
+-baq 1 \
+-minMapQ 20 \
+-minQ 20 \
+-GL 1 \
+-doSaf 1
+
+##### below filters require `do-Counts`
+#-doCounts 1 \
+#-minInd 4 \
+#-setMinDepthInd 1 \
+#-setMaxDepthInd 40 \
+#-setMinDepth 10 \
+#-skipTriallelic 1 \
+#-doMajorMinor 1 \
+##### below filters require `doMaf`
+#-doMaf 1 \
+#-SNP_pval 1e-6 \
+#-minMaf 0.01
