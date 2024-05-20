@@ -154,9 +154,10 @@ RGSM=${i}
 # Index Bam files
 
 java -jar $PICARD BuildBamIndex \
-I=$WORKING_FOLDER/RGSM_final_bams/${i}.RG.bam
+I=$WORKING_FOLDER/RGSM_final_bams/${i}.RG.bam \
+O=$WORKING_FOLDER/RGSM_final_bams/${i}.RG.bam.bai
 
-samtools index $WORKING_FOLDER/RGSM_final_bams/${i}.RG.bam
+#samtools index $WORKING_FOLDER/RGSM_final_bams/${i}.RG.bam
 
 #--------------------------------------------------------------------------------
 

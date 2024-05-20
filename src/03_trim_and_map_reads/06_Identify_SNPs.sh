@@ -59,6 +59,8 @@ REFERENCE_FAI=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Geno
 
 SAMPLE_FILE=$WORKING_FOLDER/ALL_bams.txt
 
+
+
 #--------------------------------------------------------------------------------
 
 # Move to working directory
@@ -73,6 +75,10 @@ then echo "Working genotype_likelihoods folder exist"; echo "Let's move on."; da
 else echo "Working genotype_likelihoods folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/genotype_likelihoods; date
 fi
 
+
+# Alternative way to create list
+#ls $BAMS_FOLDER/*.bam > $genotype_likelihoods/Nucella_bam.list
+
 #--------------------------------------------------------------------------------
 
 # Calculate genotype likelihoods
@@ -85,7 +91,4 @@ angsd -b $SAMPLE_FILE -ref $REFERENCE -out $WORKING_FOLDER/genotype_likelihoods/
 # -GL 2: genotype likelihood model as in GATK; -doGlf 4: output in text format
 
 
-# Genotype calling
-angsd -glf $WORKING_FOLDER/genotype_likelihoods/Nucella.glf.gz -fai $REFERENCE_FAI -nInd 15 -out $WORKING_FOLDER/genotype_likelihoods/Nucella \
--doMajorMinor 1 -doGeno 3 -doPost 2 -doMaf 1
 
