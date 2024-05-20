@@ -84,11 +84,7 @@ else echo "Working genotype_likelihoods folder doesnt exist. Let's fix that."; m
 fi
 
 
-
-
 #--------------------------------------------------------------------------------
-
-
 
 
 # Calculate genotype likelihoods
@@ -100,11 +96,11 @@ fi
 # -C 50 reduces the effect of reads with excessive mismatches, while -baq 1 computes base alignment quality
 # -GL 2: genotype likelihood model as in GATK; -doGlf 4: output in text format
 
+#--------------------------------------------------------------------------------
 
 
 # File suffix to distinguish analysis choices
 SUFFIX=""
-
 
 OUTPUT=$WORKING_FOLDER/genotype_likelihoods
 
@@ -113,8 +109,6 @@ ls $BAMS_FOLDER > $OUTPUT/Nucella_bam.list
 
 # Estimating GL's and allele frequencies for all sites with ANGSD
 
-
-######################
 
 angsd -b ${OUTPUT}/Nucella_bam.list \
 -ref ${REFERENCE} -anc ${REFERENCE} \
