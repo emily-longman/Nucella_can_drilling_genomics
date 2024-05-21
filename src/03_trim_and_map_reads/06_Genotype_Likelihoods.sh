@@ -78,7 +78,6 @@ OUTPUT=$WORKING_FOLDER/genotype_likelihoods
 cd $BAMS_FOLDER
 ls -d "$PWD/"* > $OUTPUT/Nucella_bam.list 
 
-
 #--------------------------------------------------------------------------------
 
 # Estimating Genotype Likelihoods's and allele frequencies for all sites with ANGSD
