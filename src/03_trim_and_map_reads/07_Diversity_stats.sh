@@ -45,6 +45,7 @@ REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_M
 INPUT=$WORKING_FOLDER/genotype_likelihoods
 
 #--------------------------------------------------------------------------------
+
 # Define parameters
 CPU=$SLURM_CPUS_ON_NODE
 echo "using #CPUs ==" $SLURM_CPUS_ON_NODE
@@ -65,19 +66,18 @@ fi
 
 #Output folder
 OUTPUT=$WORKING_FOLDER/site_frequency_spectrum
+
 #--------------------------------------------------------------------------------
 
 # Estimating the Site Frequency Spectrum (SFS)
-
-# File suffix to distinguish analysis choices
-SUFFIX="SFS"
 
 #Estimation of the SFS for all sites using the FOLDED SFS
 realSFS ${INPUT}/Nucella_GL.saf.idx \
 -maxIter 1000 \
 -tole 1e-6 \
 -P 1 \
-> ${OUTPUT}/Nucella_${SUFFIX}.sfs
+-fold 1 \
+> ${OUTPUT}/Nucella.sfs
 
 #--------------------------------------------------------------------------------
 
