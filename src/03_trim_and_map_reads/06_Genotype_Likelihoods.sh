@@ -47,13 +47,6 @@ REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_M
 
 REFERENCE_FAI=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_May2024/Assembly.fasta.k24.w150.z1000.ntLink.8rounds.fa.fai
 
-
-#Input
-INPUT=$WORKING_FOLDER/
-
-#Output folder
-OUTPUT=$WORKING_FOLDER/genotype_likelihoods
-
 #--------------------------------------------------------------------------------
 # Define parameters
 
@@ -61,14 +54,6 @@ OUTPUT=$WORKING_FOLDER/genotype_likelihoods
 CPU=$SLURM_CPUS_ON_NODE
 echo "using #CPUs ==" $SLURM_CPUS_ON_NODE
 JAVAMEM=18G # Java memory
-
-#--------------------------------------------------------------------------------
-
-## PREPARE bamlist
-# This is a file with the name and full path of all the bam files to be processed.
-
-cd $BAMS_FOLDER
-ls -d "$PWD/"* > $OUTPUT/Nucella_bam.list 
 
 #--------------------------------------------------------------------------------
 
@@ -84,6 +69,18 @@ then echo "Working genotype_likelihoods folder exist"; echo "Let's move on."; da
 else echo "Working genotype_likelihoods folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/genotype_likelihoods; date
 fi
 
+#Output folder
+OUTPUT=$WORKING_FOLDER/genotype_likelihoods
+
+#--------------------------------------------------------------------------------
+
+## PREPARE bamlist
+# This is a file with the name and full path of all the bam files to be processed.
+
+cd $BAMS_FOLDER
+ls -d "$PWD/"* > $OUTPUT/Nucella_bam.list 
+
+
 #--------------------------------------------------------------------------------
 
 # Estimating Genotype Likelihoods's and allele frequencies for all sites with ANGSD
@@ -94,6 +91,7 @@ SUFFIX_1="GL"
 # Generate GL's
 angsd -b ${OUTPUT}/Nucella_bam.list \
 -ref ${REFERENCE} \
+-anc ${REFERENCE} \
 -out ${OUTPUT}/Nucella_${SUFFIX_1} \
 -nThreads $CPU \
 -remove_bads 1 \
@@ -127,6 +125,7 @@ SUFFIX_2="SNPs"
 # Generate GL's for polymorphic sites
 angsd -b ${OUTPUT}/Nucella_bam.list \
 -ref ${REFERENCE} \
+-anc ${REFERENCE} \
 -out ${OUTPUT}/Nucella_${SUFFIX_2} \
 -nThreads $CPU \
 -remove_bads 1 \
