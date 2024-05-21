@@ -93,6 +93,9 @@ ls -d "$PWD/"${L}* > $OUTPUT/${L}_bam.list
 
 # Estimating Genotype Likelihoods's and allele frequencies for all sites with ANGSD
 
+# Move to working directory
+cd $WORKING_FOLDER
+
 # File suffix to distinguish analysis choices
 SUFFIX_1="GL"
 
