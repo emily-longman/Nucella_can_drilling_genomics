@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=Genotype_likelihoods
+#SBATCH --job-name=SFS
 
 # Specify partition
 #SBATCH --partition=bluemoon
@@ -28,7 +28,6 @@
 #SBATCH --mail-user=emily.longman@uvm.edu 
 
 #--------------------------------------------------------------------------------
-
 
 #Load modules 
 module load angsd-0.933-gcc-7.3.0-4wsdzjw
