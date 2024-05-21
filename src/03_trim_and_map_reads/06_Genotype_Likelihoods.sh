@@ -75,8 +75,16 @@ OUTPUT=$WORKING_FOLDER/genotype_likelihoods
 ## PREPARE bamlist
 # This is a file with the name and full path of all the bam files to be processed.
 
+# Move to bams folder
 cd $BAMS_FOLDER
+
+# Create bamlist for all Nucella samples
 ls -d "$PWD/"* > $OUTPUT/Nucella_bam.list 
+
+# Create a bamlist for each collection location
+ls -d "$PWD/"FB* > $OUTPUT/FB_bam.list 
+ls -d "$PWD/"HC* > $OUTPUT/HC_bam.list 
+ls -d "$PWD/"MP* > $OUTPUT/MP_bam.list 
 
 #--------------------------------------------------------------------------------
 
@@ -85,7 +93,7 @@ ls -d "$PWD/"* > $OUTPUT/Nucella_bam.list
 # File suffix to distinguish analysis choices
 SUFFIX_1="GL"
 
-# Generate GL's
+# Generate GL's for all Nucella samples
 angsd -b ${OUTPUT}/Nucella_bam.list \
 -ref ${REFERENCE} \
 -anc ${REFERENCE} \
@@ -107,10 +115,48 @@ angsd -b ${OUTPUT}/Nucella_bam.list \
 #-setMinDepth 10 \
 #-skipTriallelic 1 \
 #-doMajorMinor 1 \
-##### below filters require `doMaf`
-#-doMaf 1 \
-#-SNP_pval 1e-6 \
-#-minMaf 0.01
+
+# Generate GL's for FB samples
+angsd -b ${OUTPUT}/FB_bam.list \
+-ref ${REFERENCE} \
+-anc ${REFERENCE} \
+-out ${OUTPUT}/FB_${SUFFIX_1} \
+-nThreads $CPU \
+-remove_bads 1 \
+-C 50 \
+-baq 1 \
+-minMapQ 20 \
+-minQ 20 \
+-GL 1 \
+-doSaf 1
+
+# Generate GL's for HC samples
+angsd -b ${OUTPUT}/HC_bam.list \
+-ref ${REFERENCE} \
+-anc ${REFERENCE} \
+-out ${OUTPUT}/HC_${SUFFIX_1} \
+-nThreads $CPU \
+-remove_bads 1 \
+-C 50 \
+-baq 1 \
+-minMapQ 20 \
+-minQ 20 \
+-GL 1 \
+-doSaf 1
+
+# Generate GL's for MP samples
+angsd -b ${OUTPUT}/MP_bam.list \
+-ref ${REFERENCE} \
+-anc ${REFERENCE} \
+-out ${OUTPUT}/MP_${SUFFIX_1} \
+-nThreads $CPU \
+-remove_bads 1 \
+-C 50 \
+-baq 1 \
+-minMapQ 20 \
+-minQ 20 \
+-GL 1 \
+-doSaf 1
 
 #--------------------------------------------------------------------------------
 
@@ -119,7 +165,7 @@ angsd -b ${OUTPUT}/Nucella_bam.list \
 # File suffix to distinguish analysis choices
 SUFFIX_2="SNPs"
 
-# Generate GL's for polymorphic sites
+# Generate GL's for polymorphic sites for all Nucella samples
 angsd -b ${OUTPUT}/Nucella_bam.list \
 -ref ${REFERENCE} \
 -anc ${REFERENCE} \
@@ -131,5 +177,54 @@ angsd -b ${OUTPUT}/Nucella_bam.list \
 -minMapQ 20 \
 -minQ 20 \
 -GL 1 \
--doSaf 1 \
--SNP_pval 1e-6
+-doMaf 1 \
+-SNP_pval 1e-6 \
+-minMaf 0.01
+
+# Generate GL's for polymorphic sites for FB samples
+angsd -b ${OUTPUT}/FB_bam.list \
+-ref ${REFERENCE} \
+-anc ${REFERENCE} \
+-out ${OUTPUT}/FB_${SUFFIX_2} \
+-nThreads $CPU \
+-remove_bads 1 \
+-C 50 \
+-baq 1 \
+-minMapQ 20 \
+-minQ 20 \
+-GL 1 \
+-doMaf 1 \
+-SNP_pval 1e-6 \
+-minMaf 0.01
+
+# Generate GL's for polymorphic sites for HC samples
+angsd -b ${OUTPUT}/HC_bam.list \
+-ref ${REFERENCE} \
+-anc ${REFERENCE} \
+-out ${OUTPUT}/HC_${SUFFIX_2} \
+-nThreads $CPU \
+-remove_bads 1 \
+-C 50 \
+-baq 1 \
+-minMapQ 20 \
+-minQ 20 \
+-GL 1 \
+-doMaf 1 \
+-SNP_pval 1e-6 \
+-minMaf 0.01
+
+# Generate GL's for polymorphic sites for MP samples
+angsd -b ${OUTPUT}/MP_bam.list \
+-ref ${REFERENCE} \
+-anc ${REFERENCE} \
+-out ${OUTPUT}/MP_${SUFFIX_2} \
+-nThreads $CPU \
+-remove_bads 1 \
+-C 50 \
+-baq 1 \
+-minMapQ 20 \
+-minQ 20 \
+-GL 1 \
+-doMaf 1 \
+-SNP_pval 1e-6 \
+-minMaf 0.01
