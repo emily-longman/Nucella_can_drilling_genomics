@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=Identify_SNPs
+#SBATCH --job-name=Genotype_likelihoods
 
 # Specify partition
 #SBATCH --partition=bluemoon
@@ -15,7 +15,7 @@
 #SBATCH --ntasks-per-node=1
 
 # Reserve walltime -- hh:mm:ss --30 hrs max
-#SBATCH --time=8:00:00 
+#SBATCH --time=10:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
 #SBATCH --mem=20G 
@@ -50,24 +50,28 @@ REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_M
 
 REFERENCE_FAI=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_May2024/Assembly.fasta.k24.w150.z1000.ntLink.8rounds.fa.fai
 
+
+#Input
+INPUT=$WORKING_FOLDER/
+
+#Output folder
+OUTPUT=$WORKING_FOLDER/genotype_likelihoods
+
 #--------------------------------------------------------------------------------
 # Define parameters
 
 # Java parameters
 CPU=$SLURM_CPUS_ON_NODE
 echo "using #CPUs ==" $SLURM_CPUS_ON_NODE
-QUAL=40 # Quality threshold for samtools
 JAVAMEM=18G # Java memory
 
 #--------------------------------------------------------------------------------
 
-## PREPARE GUIDE FILES
-## Read guide files
-# This is a file with the name of all the bam files to be processed.
+## PREPARE bamlist
+# This is a file with the name and full path of all the bam files to be processed.
 
-SAMPLE_FILE=$WORKING_FOLDER/ALL_bams.txt
-
-
+cd $BAMS_FOLDER
+ls -d "$PWD/"* > $OUTPUT/Nucella_bam.list 
 
 #--------------------------------------------------------------------------------
 
@@ -83,36 +87,17 @@ then echo "Working genotype_likelihoods folder exist"; echo "Let's move on."; da
 else echo "Working genotype_likelihoods folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/genotype_likelihoods; date
 fi
 
-
 #--------------------------------------------------------------------------------
 
-
-# Calculate genotype likelihoods
-#angsd -b $SAMPLE_FILE -ref $REFERENCE -out $WORKING_FOLDER/genotype_likelihoods/Nucella \
-#-uniqueOnly 1 -remove_bads 1 -only_proper_pairs 1 -trim 0 -C 50 -baq 1 \
-#-GL 2 -doGlf 4 \
-#-nThreads 10
-# Filter to retain only uniquely mapping reads, not tagged as bad, considering only proper pairs, wihtout trimming, and adjusting for inde/mapping
-# -C 50 reduces the effect of reads with excessive mismatches, while -baq 1 computes base alignment quality
-# -GL 2: genotype likelihood model as in GATK; -doGlf 4: output in text format
-
-#--------------------------------------------------------------------------------
-
+# Estimating Genotype Likelihoods's and allele frequencies for all sites with ANGSD
 
 # File suffix to distinguish analysis choices
-SUFFIX=""
+SUFFIX_1="GL"
 
-OUTPUT=$WORKING_FOLDER/genotype_likelihoods
-
-# Alternative way to create list
-ls $BAMS_FOLDER > $OUTPUT/Nucella_bam.list
-
-# Estimating GL's and allele frequencies for all sites with ANGSD
-
-
+# Generate GL's
 angsd -b ${OUTPUT}/Nucella_bam.list \
--ref ${REFERENCE} -anc ${REFERENCE} \
--out ${OUTPUT}/Nucella_${SUFFIX} \
+-ref ${REFERENCE} \
+-out ${OUTPUT}/Nucella_${SUFFIX_1} \
 -nThreads $CPU \
 -remove_bads 1 \
 -C 50 \
@@ -134,3 +119,24 @@ angsd -b ${OUTPUT}/Nucella_bam.list \
 #-doMaf 1 \
 #-SNP_pval 1e-6 \
 #-minMaf 0.01
+
+#--------------------------------------------------------------------------------
+
+# Estimate Genotype Likelihoods's and allele frequencies for only the polymorphic sites
+
+# File suffix to distinguish analysis choices
+SUFFIX_2="SNPs"
+
+# Generate GL's for polymorphic sites
+angsd -b ${OUTPUT}/Nucella_bam.list \
+-ref ${REFERENCE} \
+-out ${OUTPUT}/Nucella_${SUFFIX_2} \
+-nThreads $CPU \
+-remove_bads 1 \
+-C 50 \
+-baq 1 \
+-minMapQ 20 \
+-minQ 20 \
+-GL 1 \
+-doSaf 1 \
+-SNP_pval 1e-6
