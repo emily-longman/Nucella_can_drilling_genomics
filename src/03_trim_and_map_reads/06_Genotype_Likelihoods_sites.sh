@@ -42,11 +42,11 @@ module load samtools-1.10-gcc-7.3.0-pdbkohx
 #Working folder is core folder where this pipeline is being run.
 WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_VCF
 
+#Folder for joint bams
+BAMS_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_VCF/Merged_Bams
+
 #This is the location where the reference genome and all its indexes are stored.
 REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_May2024/Assembly.fasta.k24.w150.z1000.ntLink.8rounds.fa
-
-#Input folder is genotype likelihoods from ANGSD
-INPUT=$WORKING_FOLDER/genotype_likelihoods
 
 #--------------------------------------------------------------------------------
 # Define parameters
@@ -62,44 +62,74 @@ cd $WORKING_FOLDER
 
 # This part of the script will check and generate, if necessary, all of the output folders used in the script
 
-if [ -d "site_frequency_spectrum" ]
-then echo "Working site_frequency_spectrum folder exist"; echo "Let's move on."; date
-else echo "Working site_frequency_spectrum folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/site_frequency_spectrum; date
+if [ -d "genotype_likelihoods" ]
+then echo "Working genotype_likelihoods folder exist"; echo "Let's move on."; date
+else echo "Working genotype_likelihoods folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/genotype_likelihoods; date
 fi
 
 #Output folder
-OUTPUT=$WORKING_FOLDER/site_frequency_spectrum
+OUTPUT=$WORKING_FOLDER/genotype_likelihoods
+
 #--------------------------------------------------------------------------------
 
-# Estimating the Site Frequency Spectrum (SFS)
+# Establish array
+
+arr=("FB" "HC" "MP")
+L="${arr[$SLURM_ARRAY_TASK_ID]}"
+echo $L
+
+#--------------------------------------------------------------------------------
+
+## PREPARE bamlist
+# This is a file with the name and full path of all the bam files to be processed.
+
+# Move to bams folder
+cd $BAMS_FOLDER
+
+# Create a bamlist for each collection location
+ls -d "$PWD/"${L}* > $OUTPUT/${L}_bam.list 
+
+#--------------------------------------------------------------------------------
+
+# Estimating Genotype Likelihoods's and allele frequencies for all sites with ANGSD
 
 # File suffix to distinguish analysis choices
-SUFFIX="SFS"
+SUFFIX_1="GL"
 
-#Estimation of the SFS for all sites using the FOLDED SFS
-realSFS ${INPUT}/Nucella_GL.saf.idx \
--maxIter 1000 \
--tole 1e-6 \
--P 1 \
-> ${OUTPUT}/Nucella_${SUFFIX}.sfs
+# Generate GL's for each collection location
+angsd -b ${OUTPUT}/${L}_bam.list \
+-ref ${REFERENCE} \
+-anc ${REFERENCE} \
+-out ${OUTPUT}/${L}_${SUFFIX_1} \
+-nThreads $CPU \
+-remove_bads 1 \
+-C 50 \
+-baq 1 \
+-minMapQ 20 \
+-minQ 20 \
+-GL 1 \
+-doSaf 1
+
 
 #--------------------------------------------------------------------------------
 
-# Estimate theta diversity stats
+# Estimate Genotype Likelihoods's and allele frequencies for only the polymorphic sites
 
-# Estimate the thetas for each site
-realSFS saf2theta ${OUTPUT}/Nucella.saf.idx \
--sfs ${OUTPUT}/Nucella.sfs \
--outname ${OUTPUT}/Nucella
+# File suffix to distinguish analysis choices
+SUFFIX_2="SNPs"
 
-# Estimate thetas using the SFS
-thetaStat do_stat ${OUTPUT}/Nucella.thetas.idx
-
-# Estimate thetas using the SFS on a sliding window
-thetaStat do_stat ${OUTPUT}/Nucella.thetas.idx \
--win 50000 \
--step 10000 \
--outnames ${OUTPUT}/Nucella.thetasWindow.gz
-
-# Cut the first column becuase formatted a bit funny
-#cut -f2- ${OUTPUT}/Nucella.thetas.idx.pestPG > ${OUTPUT}/Nucella.thetas
+# Generate GL's for polymorphic sites for FB samples
+angsd -b ${OUTPUT}/${L}_bam.list \
+-ref ${REFERENCE} \
+-anc ${REFERENCE} \
+-out ${OUTPUT}/${L}_${SUFFIX_2} \
+-nThreads $CPU \
+-remove_bads 1 \
+-C 50 \
+-baq 1 \
+-minMapQ 20 \
+-minQ 20 \
+-GL 1 \
+-doMaf 1 \
+-SNP_pval 1e-6 \
+-minMaf 0.01
