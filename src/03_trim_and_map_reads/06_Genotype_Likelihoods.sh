@@ -15,7 +15,7 @@
 #SBATCH --ntasks-per-node=1
 
 # Reserve walltime -- hh:mm:ss --30 hrs max
-#SBATCH --time=10:00:00 
+#SBATCH --time=28:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
 #SBATCH --mem=80G 
@@ -110,26 +110,3 @@ angsd -b ${OUTPUT}/Nucella_bam.list \
 #-setMinDepth 10 \
 #-skipTriallelic 1 \
 #-doMajorMinor 1 \
-
-#--------------------------------------------------------------------------------
-
-# Estimate Genotype Likelihoods's and allele frequencies for only the polymorphic sites
-
-# File suffix to distinguish analysis choices
-SUFFIX_2="SNPs"
-
-# Generate GL's for polymorphic sites for all Nucella samples
-angsd -b ${OUTPUT}/Nucella_bam.list \
--ref ${REFERENCE} \
--anc ${REFERENCE} \
--out ${OUTPUT}/Nucella_${SUFFIX_2} \
--nThreads $CPU \
--remove_bads 1 \
--C 50 \
--baq 1 \
--minMapQ 20 \
--minQ 20 \
--GL 1 \
--doMaf 1 \
--SNP_pval 1e-6 \
--minMaf 0.01
