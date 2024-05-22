@@ -49,7 +49,7 @@ BAMS_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed
 REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_May2024/Assembly.fasta.k24.w150.z1000.ntLink.8rounds.fa
 
 #Name of pipeline
-PIPELINE=Genotype_Likelihoods_sites
+PIPELINE=Genotype_Likelihoods_SNPs_sites
 
 #--------------------------------------------------------------------------------
 
@@ -104,16 +104,6 @@ fi
 #Output folder
 OUTPUT=$WORKING_FOLDER/genotype_likelihoods
 
-#--------------------------------------------------------------------------------
-
-## Prepare bamlist
-# This is a file with the name and full path of all the bam files to be processed.
-
-# Move to bams folder
-cd $BAMS_FOLDER
-
-# Create a bamlist for each collection location
-ls -d "$PWD/"${L}* > $OUTPUT/${L}_bam.list 
 
 #--------------------------------------------------------------------------------
 
@@ -122,14 +112,16 @@ ls -d "$PWD/"${L}* > $OUTPUT/${L}_bam.list
 # Move back to working directory
 cd $WORKING_FOLDER
 
-# File suffix to distinguish analysis choices
-SUFFIX_1="GL"
+# Estimate Genotype Likelihoods's and allele frequencies for only the polymorphic sites
 
-# Generate GL's for each collection location
+# File suffix to distinguish analysis choices
+SUFFIX_2="SNPs"
+
+# Generate GL's for polymorphic sites for FB samples
 angsd -b ${OUTPUT}/${L}_bam.list \
 -ref ${REFERENCE} \
 -anc ${REFERENCE} \
--out ${OUTPUT}/${L}_${SUFFIX_1} \
+-out ${OUTPUT}/${L}_${SUFFIX_2} \
 -nThreads $CPU \
 -remove_bads 1 \
 -C 50 \
@@ -137,10 +129,11 @@ angsd -b ${OUTPUT}/${L}_bam.list \
 -minMapQ 20 \
 -minQ 20 \
 -GL 1 \
--doSaf 1
+-doMaf 1 \
+-SNP_pval 1e-6 \
+-minMaf 0.01
 
 #--------------------------------------------------------------------------------
-
 # Inform that sample is done
 
 # This part of the pipeline will notify the completion of run i. 
