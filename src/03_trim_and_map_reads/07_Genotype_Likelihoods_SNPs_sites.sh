@@ -96,14 +96,24 @@ fi
 
 # This part of the script will check and generate, if necessary, all of the output folders used in the script
 
-if [ -d "genotype_likelihoods" ]
-then echo "Working genotype_likelihoods folder exist"; echo "Let's move on."; date
-else echo "Working genotype_likelihoods folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/genotype_likelihoods; date
+if [ -d "genotype_likelihoods_SNPs" ]
+then echo "Working genotype_likelihoods_SNPs folder exist"; echo "Let's move on."; date
+else echo "Working genotype_likelihoods_SNPs folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/genotype_likelihoods_SNPs; date
 fi
 
 #Output folder
-OUTPUT=$WORKING_FOLDER/genotype_likelihoods
+OUTPUT=$WORKING_FOLDER/genotype_likelihoods_SNPs
 
+#--------------------------------------------------------------------------------
+
+## Prepare bamlist
+# This is a file with the name and full path of all the bam files to be processed.
+
+# Move to bams folder
+cd $BAMS_FOLDER
+
+# Create a bamlist for each collection location
+ls -d "$PWD/"${L}* > $OUTPUT/${L}_bam.list 
 
 #--------------------------------------------------------------------------------
 
