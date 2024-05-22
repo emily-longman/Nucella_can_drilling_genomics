@@ -151,6 +151,6 @@ angsd -b ${OUTPUT}/${L}_bam.list \
 
 # This part of the pipeline will notify the completion of run i. 
 
-echo ${i} " completed" >> $WORKING_FOLDER/${PIPELINE}.completion.log
+echo ${L} " completed" >> $WORKING_FOLDER/${PIPELINE}.completion.log
 
 echo "pipeline completed" $(date)
