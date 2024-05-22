@@ -139,6 +139,9 @@ angsd -b ${OUTPUT}/${L}_bam.list \
 -minMapQ 20 \
 -minQ 20 \
 -GL 1 \
+-doSaf 1 \
+-doCounts 1 \
+-doMajorMinor 1 \
 -doMaf 1 \
 -SNP_pval 1e-6 \
 -minMaf 0.01
