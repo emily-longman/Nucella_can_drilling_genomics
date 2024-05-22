@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=Genotype_likelihoods_sites
+#SBATCH --job-name=Genotype_likelihoods_SNPs_sites
 
 # Specify partition
 #SBATCH --partition=bluemoon
