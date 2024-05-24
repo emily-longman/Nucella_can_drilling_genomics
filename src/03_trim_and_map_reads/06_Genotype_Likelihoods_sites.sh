@@ -24,7 +24,7 @@
 #SBATCH --array=0-2
 
 # Name output of this job using %x=job-name and %j=job-id
-#SBATCH --output=./slurmOutput/%x_%j.out # Standard output
+#SBATCH --output=./slurmOutput/GL_sites.%A_%a.out # Standard output
 
 # Receive emails when job begins and ends or fails
 #SBATCH --mail-type=ALL
