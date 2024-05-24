@@ -15,7 +15,7 @@
 #SBATCH --ntasks-per-node=1
 
 # Reserve walltime -- hh:mm:ss --30 hrs max
-#SBATCH --time=10:00:00 
+#SBATCH --time=28:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
 #SBATCH --mem=80G 
@@ -24,7 +24,7 @@
 #SBATCH --array=0-2
 
 # Name output of this job using %x=job-name and %j=job-id
-#SBATCH --output=./slurmOutput/%x_%j.out # Standard output
+#SBATCH --output=./slurmOutput/Diversity_SNPS_sites.%A_%a.out # Standard output
 
 # Receive emails when job begins and ends or fails
 #SBATCH --mail-type=ALL
@@ -45,7 +45,7 @@ WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/proces
 REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_May2024/Assembly.fasta.k24.w150.z1000.ntLink.8rounds.fa
 
 #Input folder is genotype likelihoods from ANGSD
-INPUT=$WORKING_FOLDER/genotype_likelihoods
+INPUT=$WORKING_FOLDER/genotype_likelihoods_SNPs
 
 #Name of pipeline
 PIPELINE=Diversity_stats_sites
@@ -141,6 +141,6 @@ cut -f2- ${OUTPUT}/${L}.thetas.idx.pestPG > ${OUTPUT}/${L}.thetas
 
 # This part of the pipeline will notify the completion of run i. 
 
-echo ${i} " completed" >> $WORKING_FOLDER/${PIPELINE}.completion.log
+echo ${L} " completed" >> $WORKING_FOLDER/${PIPELINE}.completion.log
 
 echo "pipeline completed" $(date)
