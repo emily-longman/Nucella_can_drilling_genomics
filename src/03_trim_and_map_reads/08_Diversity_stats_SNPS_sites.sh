@@ -108,7 +108,7 @@ echo $L
 # Estimating the Site Frequency Spectrum (SFS)
 
 #Estimation of the SFS for all sites using the FOLDED SFS
-realSFS ${INPUT}/${L}_GL.saf.idx \
+realSFS ${INPUT}/${L}_SNPs.saf.idx \
 -maxIter 1000 \
 -tole 1e-6 \
 -P 1 \
@@ -120,7 +120,7 @@ realSFS ${INPUT}/${L}_GL.saf.idx \
 # Estimate theta diversity stats
 
 # Estimate the thetas for each site
-realSFS saf2theta ${OUTPUT}/${L}.saf.idx \
+realSFS saf2theta ${INPUT}/${L}_SNPs.saf.idx \
 -sfs ${OUTPUT}/${L}.sfs \
 -outname ${OUTPUT}/${L}
 
