@@ -70,7 +70,7 @@ echo $NAME1 $NAME2
 --cut_window_size 6 \
 --qualified_quality_phred 20 \
 --length_required 35 \
---html /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/output/fastp/${NAME1}.html \
---json /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/output/fastp/${NAME1}.json
+--html /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/processed/fastp/${NAME1}.html \
+--json /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/processed/fastp/${NAME1}.json
 
 done
