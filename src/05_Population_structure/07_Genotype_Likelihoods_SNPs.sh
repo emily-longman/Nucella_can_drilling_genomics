@@ -8,17 +8,17 @@
 #SBATCH --job-name=Genotype_likelihoods
 
 # Specify partition
-#SBATCH --partition=bluemoon
+#SBATCH --partition=bigmem
 
 # Request nodes
 #SBATCH --nodes=1 
 #SBATCH --ntasks-per-node=1
 
 # Reserve walltime -- hh:mm:ss --30 hrs max
-#SBATCH --time=28:00:00 
+#SBATCH --time=30:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
-#SBATCH --mem=80G 
+#SBATCH --mem=150G 
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/%x_%j.out # Standard output
@@ -131,6 +131,7 @@ angsd -b ${OUTPUT}/Nucella_bam.list \
 -doCounts 1 \
 -doMajorMinor 1 \
 -doMaf 1 \
+-doGlf 2 \
 -SNP_pval 1e-6 \
 -minMaf 0.01
 
@@ -141,3 +142,4 @@ angsd -b ${OUTPUT}/Nucella_bam.list \
 # -doMaf 1	calculate minor allele frequencies
 # -SNP_pval 1e-6	Keep only site highly likely to be polymorphic (SNPs)
 # -minMaf 0.01	Keep only sites with minor allele freq > some proportion.
+# -doGlf 2 gives us the Beagle format which will be used by pcangsd
