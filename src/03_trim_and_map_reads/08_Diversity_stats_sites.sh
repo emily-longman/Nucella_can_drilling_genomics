@@ -8,7 +8,7 @@
 #SBATCH --job-name=SFS_sites
 
 # Specify partition
-#SBATCH --partition=bluemoon
+#SBATCH --partition=bigmem
 
 # Request nodes
 #SBATCH --nodes=1 
@@ -18,7 +18,7 @@
 #SBATCH --time=28:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
-#SBATCH --mem=80G 
+#SBATCH --mem=150G 
 
 # Submit job array
 #SBATCH --array=0-2
