@@ -113,7 +113,7 @@ realSFS ${INPUT}/${L}_SNPs.saf.idx \
 -tole 1e-6 \
 -P 1 \
 -fold 1 \
-> ${OUTPUT}/${L}.sfs
+> ${OUTPUT}/${L}_SNPs.sfs
 
 #--------------------------------------------------------------------------------
 
@@ -121,20 +121,20 @@ realSFS ${INPUT}/${L}_SNPs.saf.idx \
 
 # Estimate the thetas for each site
 realSFS saf2theta ${INPUT}/${L}_SNPs.saf.idx \
--sfs ${OUTPUT}/${L}.sfs \
--outname ${OUTPUT}/${L}
+-sfs ${OUTPUT}/${L}_SNPs.sfs \
+-outname ${OUTPUT}/${L}_SNPs
 
 # Estimate thetas using the SFS
-thetaStat do_stat ${OUTPUT}/${L}.thetas.idx
+thetaStat do_stat ${OUTPUT}/${L}_SNPs.thetas.idx
 
 # Estimate thetas using the SFS on a sliding window
-thetaStat do_stat ${OUTPUT}/${L}.thetas.idx \
+thetaStat do_stat ${OUTPUT}/${L}_SNPs.thetas.idx \
 -win 50000 \
 -step 10000 \
--outnames ${OUTPUT}/${L}.thetasWindow.gz
+-outnames ${OUTPUT}/${L}_SNPs.thetasWindow.gz
 
 # Cut the first column becuase formatted a bit funny
-cut -f2- ${OUTPUT}/${L}.thetas.idx.pestPG > ${OUTPUT}/${L}.thetas
+cut -f2- ${OUTPUT}/${L}_SNPs.thetas.idx.pestPG > ${OUTPUT}/${L}_SNPs.thetas
 
 #--------------------------------------------------------------------------------
 # Inform that sample is done
