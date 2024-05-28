@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=SFS
+#SBATCH --job-name=SFS_SNPs_sites
 
 # Specify partition
 #SBATCH --partition=bluemoon
