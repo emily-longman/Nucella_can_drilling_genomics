@@ -39,8 +39,8 @@ sfs.FB<-sfs.FB/sum(sfs.FB)
 barplot(sfs.FB, xlab="Contigs",
         names=1:length(sfs.FB),
         ylab="Proportions",
-        main="Pop FB Site Frequency Spectrum",
-        col='blue')
+        main="FB Site Frequency Spectrum",
+        col= 'blue')
 
 # Put the nucleotide diversities, Tajima's D, and SFS into a 4-panel figure
 par(mfrow=c(2,2))
@@ -48,7 +48,6 @@ hist(theta.FB$tWsite, xlab="theta-W", main="Watterson's theta")
 hist(theta.FB$tPsite, xlab="theta-Pi", main="Pairwise Nucleotide Diversity")
 hist(theta.FB$Tajima, xlab="D", main="Tajima's D")
 barplot(sfs.FB,names=1:length(sfs.FB),main='Site Frequency Spectrum')
+dev.off() # To reset the panel plotting
 
 
-# To reset the panel plotting, execute the line below:
-dev.off()
