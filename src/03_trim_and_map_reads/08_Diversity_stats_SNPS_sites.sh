@@ -48,7 +48,7 @@ REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_M
 INPUT=$WORKING_FOLDER/genotype_likelihoods_SNPs
 
 #Name of pipeline
-PIPELINE=Diversity_stats_sites
+PIPELINE=Diversity_stats_SNPs_sites
 
 #--------------------------------------------------------------------------------
 
