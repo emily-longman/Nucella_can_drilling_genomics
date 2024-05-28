@@ -142,4 +142,5 @@ angsd -b ${OUTPUT}/Nucella_bam.list \
 # -doMaf 1	calculate minor allele frequencies
 # -SNP_pval 1e-6	Keep only site highly likely to be polymorphic (SNPs)
 # -minMaf 0.01	Keep only sites with minor allele freq > some proportion.
+
 # -doGlf 2 gives us the Beagle format which will be used by pcangsd
