@@ -18,7 +18,7 @@
 #SBATCH --time=28:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
-#SBATCH --mem=150G 
+#SBATCH --mem=500G 
 
 # Submit job array
 #SBATCH --array=0-2
@@ -128,10 +128,10 @@ realSFS saf2theta ${INPUT}/${L}_GL.saf.idx \
 thetaStat do_stat ${OUTPUT}/${L}.thetas.idx
 
 # Estimate thetas using the SFS on a sliding window
-thetaStat do_stat ${OUTPUT}/${L}.thetas.idx \
--win 50000 \
--step 10000 \
--outnames ${OUTPUT}/${L}.thetasWindow.gz
+#thetaStat do_stat ${OUTPUT}/${L}.thetas.idx \
+#-win 50000 \
+#-step 10000 \
+#-outnames ${OUTPUT}/${L}.thetasWindow.gz
 
 # Cut the first column becuase formatted a bit funny
 cut -f2- ${OUTPUT}/${L}.thetas.idx.pestPG > ${OUTPUT}/${L}.thetas
