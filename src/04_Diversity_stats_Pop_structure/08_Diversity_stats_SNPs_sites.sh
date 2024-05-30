@@ -109,8 +109,8 @@ echo $L
 # Estimate theta diversity stats
 
 # Estimate the thetas for each site
-realSFS saf2theta ${INPUT}/${L}_SNPs.saf.idx \
--sfs ${OUTPUT}/${L}_SNPs.sfs \
+realSFS saf2theta ${INPUT_GL}/${L}_SNPs.saf.idx \
+-sfs ${INPUT_SFS}/${L}_SNPs.sfs \
 -outname ${OUTPUT}/${L}_SNPs
 
 # Estimate thetas using the SFS
