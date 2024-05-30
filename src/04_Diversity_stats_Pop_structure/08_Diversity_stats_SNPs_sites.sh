@@ -5,10 +5,10 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=SFS_SNPs_sites
+#SBATCH --job-name=Diversity_stats_SNPs_sites
 
 # Specify partition
-#SBATCH --partition=bigmem
+#SBATCH --partition=bluemoon
 
 # Request nodes
 #SBATCH --nodes=1 
@@ -18,13 +18,13 @@
 #SBATCH --time=28:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
-#SBATCH --mem=200G 
+#SBATCH --mem=80G 
 
 # Submit job array
 #SBATCH --array=0-2
 
 # Name output of this job using %x=job-name and %j=job-id
-#SBATCH --output=./slurmOutput/SFS_SNPS_sites.%A_%a.out # Standard output
+#SBATCH --output=./slurmOutput/Diversity_SNPS_sites.%A_%a.out # Standard output
 
 # Receive emails when job begins and ends or fails
 #SBATCH --mail-type=ALL
@@ -44,11 +44,11 @@ WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/proces
 #This is the location where the reference genome and all its indexes are stored.
 REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_May2024/Assembly.fasta.k24.w150.z1000.ntLink.8rounds.fa
 
-#Input folder is genotype likelihoods from ANGSD
-INPUT=$WORKING_FOLDER/genotype_likelihoods_SNPs
+#Input folder is site frequency spectrums from ANGSD
+INPUT=$WORKING_FOLDER/site_frequency_spectrum
 
 #Name of pipeline
-PIPELINE=SFS_SNPs_sites
+PIPELINE=Diversity_stats_SNPs_sites
 
 #--------------------------------------------------------------------------------
 
@@ -87,13 +87,13 @@ fi
 
 # This part of the script will check and generate, if necessary, all of the output folders used in the script
 
-if [ -d "site_frequency_spectrum" ]
-then echo "Working site_frequency_spectrum folder exist"; echo "Let's move on."; date
-else echo "Working site_frequency_spectrum folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/site_frequency_spectrum; date
+if [ -d "diversity_stats" ]
+then echo "Working diversity_stats folder exist"; echo "Let's move on."; date
+else echo "Working diversity_stats folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/diversity_stats; date
 fi
 
 #Output folder
-OUTPUT=$WORKING_FOLDER/site_frequency_spectrum
+OUTPUT=$WORKING_FOLDER/diversity_stats
 
 #--------------------------------------------------------------------------------
 
@@ -114,6 +114,27 @@ realSFS ${INPUT}/${L}_SNPs.saf.idx \
 -P 1 \
 -fold 1 \
 > ${OUTPUT}/${L}_SNPs.sfs
+
+#--------------------------------------------------------------------------------
+
+# Estimate theta diversity stats
+
+# Estimate the thetas for each site
+realSFS saf2theta ${INPUT}/${L}_SNPs.saf.idx \
+-sfs ${OUTPUT}/${L}_SNPs.sfs \
+-outname ${OUTPUT}/${L}_SNPs
+
+# Estimate thetas using the SFS
+thetaStat do_stat ${OUTPUT}/${L}_SNPs.thetas.idx
+
+# Estimate thetas using the SFS on a sliding window
+thetaStat do_stat ${OUTPUT}/${L}_SNPs.thetas.idx \
+-win 50000 \
+-step 10000 \
+-outnames ${OUTPUT}/${L}_SNPs.thetasWindow.gz
+
+# Cut the first column becuase formatted a bit funny
+cut -f2- ${OUTPUT}/${L}_SNPs.thetas.idx.pestPG > ${OUTPUT}/${L}_SNPs.thetas
 
 #--------------------------------------------------------------------------------
 # Inform that sample is done
