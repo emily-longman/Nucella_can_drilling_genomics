@@ -60,5 +60,3 @@ echo $NAME1 $NAME2
 --length_required 35 \
 --html /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly/fastp/${NAME1}.html \
 --json /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly/fastp/${NAME1}.json
-
-done
