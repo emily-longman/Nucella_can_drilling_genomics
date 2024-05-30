@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=trim_reads 
+#SBATCH --job-name=trim_genome_short_reads 
 
 # Specify partition
 #SBATCH --partition=bluemoon

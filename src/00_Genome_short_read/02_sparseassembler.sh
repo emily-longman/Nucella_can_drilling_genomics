@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=sparseassembler
+#SBATCH --job-name=SparseAssembler
 
 # Specify partition
 #SBATCH --partition=bigmemwk
@@ -18,7 +18,7 @@
 #SBATCH --time=07-00:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
-#SBATCH --mem=500G
+#SBATCH --mem=300G
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/%x_%j.out # Standard output
@@ -32,9 +32,28 @@
 # Call package (installed with conda)
 module load python3.11-anaconda/2023.09-0
 source ${ANACONDA_ROOT}/etc/profile.d/conda.sh
-conda create --name sparseassembler #create and name the environment
-source activate sparseassembler #activate the environment
+conda create --name SparseAssembler #create and name the environment
+source activate SparseAssembler #activate the environment
 conda install -c bioconda sparseassembler # install the program
 conda activate sparseassembler 
 
 #--------------------------------------------------------------------------------
+
+# If you haven't done it yet, gunzip the files 
+gunzip /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly/fastp/*fastq.gz
+
+# Use SparseAssembler to construct short but accurate contigs  
+SparseAssembler \
+LD 0 k 51 g 15 \
+NodeCovTh 1 \
+EdgeCovTh 0 \
+GS 2500000000 \
+i1 NC3_R1_cleaned.fastq \
+i2 NC3_R2_cleaned.fastq
+
+
+#--------------------------------------------------------------------------------
+
+echo "done"
+
+conda deactivate
