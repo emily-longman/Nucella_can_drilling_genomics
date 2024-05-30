@@ -44,8 +44,9 @@ WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/proces
 #This is the location where the reference genome and all its indexes are stored.
 REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_May2024/Assembly.fasta.k24.w150.z1000.ntLink.8rounds.fa
 
-#Input folder is genotype likelihoods from ANGSD
-INPUT=$WORKING_FOLDER/site_frequency_spectrum
+#Input folders are GL and site frequency spectrums from ANGSD
+INPUT_GL=$WORKING_FOLDER/genotype_likelihoods_SNPs
+INPUT_SFS=$WORKING_FOLDER/site_frequency_spectrum
 
 #Name of pipeline
 PIPELINE=Diversity_stats_sites
@@ -108,8 +109,8 @@ echo $L
 # Estimate theta diversity stats
 
 # Estimate the thetas for each site
-realSFS saf2theta ${INPUT}/${L}_GL.saf.idx \
--sfs ${OUTPUT}/${L}.sfs \
+realSFS saf2theta ${INPUT_GL}/${L}_GL.saf.idx \
+-sfs ${INPUT_SFS}/${L}.sfs \
 -outname ${OUTPUT}/${L}
 
 # Estimate thetas using the SFS
