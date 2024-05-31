@@ -42,6 +42,11 @@ conda activate sparseassembler
 # If you haven't done it yet, gunzip the files 
 gunzip /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly/fastp/*fastq.gz
 
+#--------------------------------------------------------------------------------
+
+# Move to the directory where the output files will be saved
+cd /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly/SparseAssembler
+
 # Use SparseAssembler to construct short but accurate contigs  
 SparseAssembler \
 LD 0 k 51 g 15 \
@@ -51,7 +56,11 @@ GS 2500000000 \
 i1 NC3_R1_cleaned.fastq \
 i2 NC3_R2_cleaned.fastq
 
+# In future try k = 31 and k = 71
+
 #--------------------------------------------------------------------------------
+
+# Inform that SparseAssembler is done
 
 echo "done"
 
