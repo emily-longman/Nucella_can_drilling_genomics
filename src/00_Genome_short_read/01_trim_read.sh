@@ -51,7 +51,7 @@ echo $NAME1 $NAME2
 -o /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly/fastp/${NAME1} \
 -O /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly/fastp/${NAME2} \
 --detect_adapter_for_pe \
---trim_front1 12 \
+--trim_front1 8 \
 --trim_poly_g \
 --thread 16 \
 --cut_right \
