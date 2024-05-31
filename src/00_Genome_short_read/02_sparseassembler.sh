@@ -18,7 +18,7 @@
 #SBATCH --time=07-00:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
-#SBATCH --mem=300G
+#SBATCH --mem=900G
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/%x_%j.out # Standard output
@@ -50,7 +50,6 @@ EdgeCovTh 0 \
 GS 2500000000 \
 i1 NC3_R1_cleaned.fastq \
 i2 NC3_R2_cleaned.fastq
-
 
 #--------------------------------------------------------------------------------
 
