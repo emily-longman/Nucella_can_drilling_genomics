@@ -57,6 +57,6 @@ echo $NAME1 $NAME2
 --cut_right \
 --cut_window_size 6 \
 --qualified_quality_phred 20 \
---length_required 35 
+--length_required 35 \
 --html /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly/fastp/NC3_fastp.html \
 --json /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly/fastp/NC3_fastp.json
