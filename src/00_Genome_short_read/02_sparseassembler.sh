@@ -61,8 +61,8 @@ LD 0 k 51 g 15 \
 NodeCovTh 1 \
 EdgeCovTh 0 \
 GS 2500000000 \
-i1 $WORKING_FOLDER/fastp/NC3_R1_cleaned.fastq \
-i2 $WORKING_FOLDER/fastp/NC3_R2_cleaned.fastq
+i1 $WORKING_FOLDER/fastp/NC3_R1_clean.fastq \
+i2 $WORKING_FOLDER/fastp/NC3_R2_clean.fastq
 
 # In future try k = 31 and k = 71
 
@@ -72,4 +72,4 @@ i2 $WORKING_FOLDER/fastp/NC3_R2_cleaned.fastq
 
 echo "done"
 
-conda deactivate
+#conda deactivate
