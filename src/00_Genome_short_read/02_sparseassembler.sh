@@ -35,7 +35,7 @@ source ${ANACONDA_ROOT}/etc/profile.d/conda.sh
 conda create --name SparseAssembler #create and name the environment
 source activate SparseAssembler #activate the environment
 conda install -c bioconda sparseassembler # install the program
-conda activate sparseassembler 
+conda activate SparseAssembler 
 
 #--------------------------------------------------------------------------------
 
