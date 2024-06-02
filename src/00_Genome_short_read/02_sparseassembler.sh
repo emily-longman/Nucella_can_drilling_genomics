@@ -29,32 +29,40 @@
 
 #--------------------------------------------------------------------------------
 
+# SparseAssembler executable
+SparseAssembler=/gpfs1/home/e/l/elongman/software/SparseAssembler
+
 # Call package (installed with conda)
-module load python3.11-anaconda/2023.09-0
-source ${ANACONDA_ROOT}/etc/profile.d/conda.sh
-conda create --name SparseAssembler #create and name the environment
-source activate SparseAssembler #activate the environment
-conda install -c bioconda sparseassembler # install the program
-conda activate SparseAssembler 
+#module load python3.11-anaconda/2023.09-0
+#source ${ANACONDA_ROOT}/etc/profile.d/conda.sh
+#conda create --name SparseAssembler #create and name the environment
+#source activate SparseAssembler #activate the environment
+#conda install -c bioconda SparseAssembler # install the program
+#conda activate SparseAssembler 
+
+#--------------------------------------------------------------------------------
+
+#Working folder is core folder where this pipeline is being run.
+WORKING_FOLDER=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/short_read_assembly
 
 #--------------------------------------------------------------------------------
 
 # If you haven't done it yet, gunzip the files 
-gunzip /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly/fastp/*fastq.gz
+#gunzip $WORKING_FOLDER/fastp/*fastq.gz
 
 #--------------------------------------------------------------------------------
 
 # Move to the directory where the output files will be saved
-cd /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly/SparseAssembler
+cd $WORKING_FOLDER/SparseAssembler
 
 # Use SparseAssembler to construct short but accurate contigs  
-SparseAssembler \
+$SparseAssembler \
 LD 0 k 51 g 15 \
 NodeCovTh 1 \
 EdgeCovTh 0 \
 GS 2500000000 \
-i1 NC3_R1_cleaned.fastq \
-i2 NC3_R2_cleaned.fastq
+i1 $WORKING_FOLDER/fastp/NC3_R1_cleaned.fastq \
+i2 $WORKING_FOLDER/fastp/NC3_R2_cleaned.fastq
 
 # In future try k = 31 and k = 71
 
