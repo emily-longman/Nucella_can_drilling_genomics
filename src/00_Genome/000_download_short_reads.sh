@@ -34,4 +34,4 @@
 cd /netfiles/pespenilab_share/Nucella/raw/
 
 # Use rsync to download the data
-rsync -avL slimsdata.genomecenter.ucdavis.edu::slims/v9czo36oz7/Unaligned/Project_ESEL_NC3
+rsync -avL slimsdata.genomecenter.ucdavis.edu::slims/v9czo36oz7/Unaligned/Project_ESEL_NC3 .
