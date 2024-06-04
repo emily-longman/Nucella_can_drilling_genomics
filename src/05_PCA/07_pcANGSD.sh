@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=pcANGSD
+#SBATCH --job-name=pcangsd
 
 # Specify partition
 #SBATCH --partition=bluemoon
@@ -45,7 +45,7 @@ REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_M
 INPUT=$WORKING_FOLDER/genotype_likelihoods_SNPs
 
 #Name of pipeline
-PIPELINE=pcANGSD
+PIPELINE=pcangsd
 
 #--------------------------------------------------------------------------------
 # Define parameters
@@ -84,6 +84,6 @@ python $pcangsd \
 
 # PCAngsd accepts either genotype likelihoods in Beagle format generated from BAM files using ANGSD
 # -e : Manually select the number of eigenvalues to use in the modelling of individual allele frequencies (the number of clusters is K-1)
-# -admix : Individual admixture proportions and ancestral allele frequencies can be estimated assuming K ancestral populations using an accelerated mini-batch NMF method.
+# --admix : Individual admixture proportions and ancestral allele frequencies can be estimated assuming K ancestral populations using an accelerated mini-batch NMF method.
 
 # https://www.popgen.dk/software/index.php/PCAngsd
