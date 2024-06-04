@@ -84,6 +84,6 @@ python $pcangsd \
 -e 1 \
 --admix \
 --admix_alpha 50 \
---threads 1 
+--threads 1
 
 # PCAngsd accepts either genotype likelihoods in Beagle format generated from BAM files using ANGSD
