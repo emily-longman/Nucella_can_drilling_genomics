@@ -80,10 +80,10 @@ SUFFIX="Nucella_poly"
 python $pcangsd \
 -b ${INPUT}/Nucella_SNPs.beagle.gz \
 -o ${OUTPUT}/${SUFFIX} \
--t $CPU \
--e 1 \
---admix \
---admix_alpha 50 \
---threads 1
+-t $CPU 
 
 # PCAngsd accepts either genotype likelihoods in Beagle format generated from BAM files using ANGSD
+# -e : Manually select the number of eigenvalues to use in the modelling of individual allele frequencies (the number of clusters is K-1)
+# -admix : Individual admixture proportions and ancestral allele frequencies can be estimated assuming K ancestral populations using an accelerated mini-batch NMF method.
+
+# https://www.popgen.dk/software/index.php/PCAngsd
