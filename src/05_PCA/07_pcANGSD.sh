@@ -61,13 +61,13 @@ cd $WORKING_FOLDER
 
 # This part of the script will check and generate, if necessary, all of the output folders used in the script
 
-if [ -d "pcANGSD" ]
-then echo "Working pcANGSD folder exist"; echo "Let's move on."; date
-else echo "Working pcANGSD folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/pcANGSD; date
+if [ -d "pcangsd" ]
+then echo "Working pcangsd folder exist"; echo "Let's move on."; date
+else echo "Working pcangsd folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/pcangsd; date
 fi
 
 #Output folder
-OUTPUT=$WORKING_FOLDER/pcANGSD
+OUTPUT=$WORKING_FOLDER/pcangsd
 
 #--------------------------------------------------------------------------------
 # Make a copy of the list of bam files for all the Nucella samples and place in the output directory. You'll need this later for making figures.
