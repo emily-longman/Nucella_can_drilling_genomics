@@ -32,14 +32,6 @@
 # SparseAssembler executable
 SparseAssembler=/gpfs1/home/e/l/elongman/software/SparseAssembler
 
-# Call package (installed with conda)
-#module load python3.11-anaconda/2023.09-0
-#source ${ANACONDA_ROOT}/etc/profile.d/conda.sh
-#conda create --name SparseAssembler #create and name the environment
-#source activate SparseAssembler #activate the environment
-#conda install -c bioconda SparseAssembler # install the program
-#conda activate SparseAssembler 
-
 #--------------------------------------------------------------------------------
 
 #Working folder is core folder where this pipeline is being run.
