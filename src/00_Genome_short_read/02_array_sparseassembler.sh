@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=SparseAssembler
+#SBATCH --job-name=SparseAssembler_array
 
 # Specify partition
 #SBATCH --partition=bigmemwk
@@ -20,8 +20,11 @@
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
 #SBATCH --mem=900G
 
+# Submit job array
+#SBATCH --array=1-16
+
 # Name output of this job using %x=job-name and %j=job-id
-#SBATCH --output=./slurmOutput/%x_%j.out # Standard output
+#SBATCH --output=./slurmOutput/SparseAssembler_array.%A_%a.out # Standard output
 
 # Receive emails when job begins and ends or fails
 #SBATCH --mail-type=ALL # indicates if you want an email when the job starts, ends, or both
