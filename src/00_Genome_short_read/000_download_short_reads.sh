@@ -8,13 +8,13 @@
 #SBATCH --job-name=download_short_reads
 
 # Specify partition
-#SBATCH --partition=bluemoon
+#SBATCH --partition=bigmemwk
 
 # Request nodes
 #SBATCH --ntasks-per-node=1 # this is number of CPUs you want to use for parallel computing [also referred to as threads] 
 
-# Reserve walltime -- hh:mm:ss
-#SBATCH --time=24:00:00 #<= this may depend on your resources
+# Reserve walltime -- hh:mm:ss --7 day limit
+#SBATCH --time=07-00:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
 #SBATCH --mem=100G #<= this may depend on your resources
