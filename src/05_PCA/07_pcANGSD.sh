@@ -34,7 +34,6 @@
 #module load python-3.7.7-gcc-7.3.0-gg6f6kc
 pcangsd=/gpfs1/home/e/l/elongman/software/pcangsd/pcangsd/pcangsd.py
 
-
 # Define important file locations
 
 #Working folder is core folder where this pipeline is being run.
