@@ -36,6 +36,33 @@ SparseAssembler=/gpfs1/home/e/l/elongman/software/SparseAssembler
 
 #Working folder is core folder where this pipeline is being run.
 WORKING_FOLDER=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/short_read_assembly
+#--------------------------------------------------------------------------------
+
+## Read guide files
+# This is a guide file with all of the parameter combinations
+# k = 31, 51, 71, 91
+# NodeCovTh = 1, 2
+# EdgeCovTh = 0, 1
+
+GUIDE_FILE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/short_read_assembly/SparseAssembler/SparseAssembler_GuideFile.txt
+
+#Example: -- the headers are just for descriptive purposes. The actual file has no headers.
+##   k       NodeCovTh     EdgeCovTh   
+##   31          1            0
+##   31          1            1
+##   31          2            0
+##   31          2            1
+##   51          1            0
+##   ....
+
+#--------------------------------------------------------------------------------
+
+# Determine parameter combination to process
+k=$( cat $GUIDE_FILE  | sed "${SLURM_ARRAY_TASK_ID}q;d" | awk '{ print $1 }' )
+NCT=$( cat $GUIDE_FILE  | sed "${SLURM_ARRAY_TASK_ID}q;d" | awk '{ print $2 }' )
+ECT=$( cat $GUIDE_FILE  | sed "${SLURM_ARRAY_TASK_ID}q;d" | awk '{ print $3 }' )
+
+echo $k  $NCT  $ECT
 
 #--------------------------------------------------------------------------------
 
@@ -44,19 +71,22 @@ WORKING_FOLDER=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/short_re
 
 #--------------------------------------------------------------------------------
 
+# Make directory for each parameter combination
+mkdir $WORKING_FOLDER/SparseAssembler/SparseAssembler_${k}_${NCT}_${ECT}
+
+#--------------------------------------------------------------------------------
+
 # Move to the directory where the output files will be saved
-cd $WORKING_FOLDER/SparseAssembler
+cd $WORKING_FOLDER/SparseAssembler/SparseAssembler_${k}_${NCT}_${ECT}
 
 # Use SparseAssembler to construct short but accurate contigs  
 $SparseAssembler \
-LD 0 k 51 g 15 \
-NodeCovTh 1 \
-EdgeCovTh 0 \
+LD 0 k ${k} g 15 \
+NodeCovTh ${NCT} \
+EdgeCovTh ${ECT} \
 GS 2500000000 \
 i1 $WORKING_FOLDER/fastp/NC3_R1_clean.fastq \
 i2 $WORKING_FOLDER/fastp/NC3_R2_clean.fastq
-
-# In future try k = 31 and k = 71
 
 #--------------------------------------------------------------------------------
 
