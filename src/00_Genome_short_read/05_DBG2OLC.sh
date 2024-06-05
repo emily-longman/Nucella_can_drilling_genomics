@@ -41,6 +41,13 @@ DBG2OLC=/gpfs1/home/e/l/elongman/software/DBG2OLC
 #Working folder is core folder where this pipeline is being run.
 WORKING_FOLDER=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/short_read_assembly
 
+# Long reads
+#ONT_FOLDER=/netfiles/pespenilab_share/Nucella/raw/ONT
+#If you haven't done it yet, unzip the files 
+#gunzip $ONT_FOLDER/FC_all.ONT.nuc.fastq.gz
+#If you haven't done it yet, unzip the files 
+ONT=/netfiles/pespenilab_share/Nucella/raw/ONT/FC_all.ONT.nuc.fastq
+
 #--------------------------------------------------------------------------------
 
 # Make directory for DBG2OLC
@@ -59,7 +66,7 @@ KmerCovTh 2 \
 MinOverlap 20 \
 RemoveChimera 1 \
 Contigs $WORKING_FOLDER/SparseAssembler/SparseAssembler_test/Contigs.txt \
-f ../Pacbio_data/Pacbio_20x.fasta
+f $ONT
 
 
 ./DBG2OLC k 17 AdaptiveTh 0.0001 KmerCovTh 2 MinOverlap 20 RemoveChimera 1 Contigs Contigs.txt f ../Pacbio_data/Pacbio_20x.fasta
