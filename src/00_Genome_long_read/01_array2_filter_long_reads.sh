@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=fltlong 
+#SBATCH --job-name=fltlong_array2 
 
 # Specify partition
 #SBATCH --partition=bigmem
