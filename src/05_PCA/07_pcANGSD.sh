@@ -30,8 +30,10 @@
 #--------------------------------------------------------------------------------
 
 #Load modules 
-module load python3.11-anaconda/2023.09-0
+
+#module load python-3.7.7-gcc-7.3.0-gg6f6kc
 pcangsd=/gpfs1/home/e/l/elongman/software/pcangsd/pcangsd/pcangsd.py
+
 
 # Define important file locations
 
