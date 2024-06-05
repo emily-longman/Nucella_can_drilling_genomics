@@ -20,6 +20,9 @@
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
 #SBATCH --mem=50G
 
+# Submit job array
+#SBATCH --array=1-16
+
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/%x_%j.out # Standard output
 
@@ -78,5 +81,5 @@ mkdir $WORKING_FOLDER/SparseAssembler/Quast/SparseAssembler_${k}_${NCT}_${ECT}
 #--------------------------------------------------------------------------------
 
 # Run quast
-quast $WORKING_FOLDER/SparseAssembler/SparseAssembler_${k}_${NCT}_${ECT}/Contig.txt \
+quast $WORKING_FOLDER/SparseAssembler/SparseAssembler_${k}_${NCT}_${ECT}/Contigs.txt \
 -o $WORKING_FOLDER/SparseAssembler/Quast/SparseAssembler_${k}_${NCT}_${ECT}
