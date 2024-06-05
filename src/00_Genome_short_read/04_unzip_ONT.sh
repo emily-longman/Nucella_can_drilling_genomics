@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=tar_ONT
+#SBATCH --job-name=unzip_ONT
 
 # Specify partition
 #SBATCH --partition=bluemoon
@@ -33,5 +33,6 @@
 
 # Long reads
 ONT_FOLDER=/netfiles/pespenilab_share/Nucella/raw/ONT
+
 #If you haven't done it yet, unzip the files 
-tar -xvzf $ONT_FOLDER/ONT.tar.gz
+gunzip $ONT_FOLDER/FC_all.ONT.nuc.fastq.gz
