@@ -23,7 +23,7 @@
 #SBATCH --mem=900G #<= this may depend on your resources
 
 # Submit job array
-#SBATCH --array=0-1
+#SBATCH --array=0-2
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH -o ./slurmOutput/flye.%A_%a.out # Standard output
@@ -35,16 +35,22 @@
 
 #--------------------------------------------------------------------------------
 
-# Move to the directory where the output files will be saved
-cd /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/Flye_assembly
-
 ### Make flye executable
 flye=/gpfs1/home/e/l/elongman/software/Flye/bin/flye
 
 ## reads
-arr=(5000 10000)
+arr=(15000 25000 50000)
 L="${arr[$SLURM_ARRAY_TASK_ID]}"
 echo $L
+
+# Move to the directory
+cd /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/ONT_fltlong
+
+# Unzip files
+gunzip Nuc.*.fastq.gz
+
+# Move to the directory where the output files will be saved
+cd /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/Flye_assembly
 
 #input
 ont=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/ONT_fltlong/Nuc.$L.fltlong.fastq
