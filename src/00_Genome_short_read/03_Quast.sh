@@ -90,5 +90,5 @@ fi
 #--------------------------------------------------------------------------------
 
 # Run quast
-quast $WORKING_FOLDER/SparseAssembler/SparseAssembler_${k}_${NCT}_${ECT}/Contigs.txt \
+$quast $WORKING_FOLDER/SparseAssembler/SparseAssembler_${k}_${NCT}_${ECT}/Contigs.txt \
 -o $WORKING_FOLDER/SparseAssembler/Quast/SparseAssembler_${k}_${NCT}_${ECT}
