@@ -20,9 +20,6 @@
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
 #SBATCH --mem=900G
 
-# Submit job array
-#SBATCH --array=1-16
-
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/%x_%j.out # Standard output
 
@@ -48,9 +45,13 @@ WORKING_FOLDER=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/short_re
 ONT=/netfiles/pespenilab_share/Nucella/raw/ONT/FC_all.ONT.nuc.fastq
 
 #--------------------------------------------------------------------------------
+cd $WORKING_FOLDER/SparseAssembler
 
 # Make directory for DBG2OLC
-mkdir $WORKING_FOLDER/SparseAssembler/DBG2OLC
+if [ -d "DBG2OLC" ]
+then echo "Working DBG2OLC folder exist"; echo "Let's move on."; date
+else echo "Working DBG2OLC folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/SparseAssembler/DBG2OLC; date
+fi
 
 #--------------------------------------------------------------------------------
 
