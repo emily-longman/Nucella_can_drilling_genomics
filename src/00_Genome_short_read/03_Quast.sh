@@ -71,12 +71,21 @@ ECT=$( cat $GUIDE_FILE  | sed "${SLURM_ARRAY_TASK_ID}q;d" | awk '{ print $3 }' )
 echo $k  $NCT  $ECT
 
 #--------------------------------------------------------------------------------
+cd $WORKING_FOLDER/SparseAssembler
 
 # Make Quast directory 
-mkdir $WORKING_FOLDER/SparseAssembler/Quast
+if [ -d "Quast" ]
+then echo "Working Quast folder exist"; echo "Let's move on."; date
+else echo "Working Quast folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/SparseAssembler/Quast; date
+fi
+
+cd $WORKING_FOLDER/SparseAssembler/Quast
 
 # Make Quast directory for each parameter combination
-mkdir $WORKING_FOLDER/SparseAssembler/Quast/SparseAssembler_${k}_${NCT}_${ECT}
+if [ -d "SparseAssembler_${k}_${NCT}_${ECT}" ]
+then echo "Working SparseAssembler_${k}_${NCT}_${ECT} folder exist"; echo "Let's move on."; date
+else echo "Working SparseAssembler_${k}_${NCT}_${ECT} folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/SparseAssembler/Quast/SparseAssembler_${k}_${NCT}_${ECT}; date
+fi
 
 #--------------------------------------------------------------------------------
 
