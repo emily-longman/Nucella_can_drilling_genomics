@@ -32,7 +32,6 @@
 
 #--------------------------------------------------------------------------------
 
-
 # SparseAssembler executable
 DBG2OLC=/gpfs1/home/e/l/elongman/software/DBG2OLC
 
@@ -67,6 +66,3 @@ MinOverlap 20 \
 RemoveChimera 1 \
 Contigs $WORKING_FOLDER/SparseAssembler/SparseAssembler_test/Contigs.txt \
 f $ONT
-
-
-./DBG2OLC k 17 AdaptiveTh 0.0001 KmerCovTh 2 MinOverlap 20 RemoveChimera 1 Contigs Contigs.txt f ../Pacbio_data/Pacbio_20x.fasta
