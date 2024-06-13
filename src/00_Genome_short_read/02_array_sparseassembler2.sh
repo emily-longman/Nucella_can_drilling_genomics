@@ -21,7 +21,7 @@
 #SBATCH --mem=900G
 
 # Submit job array
-#SBATCH --array=1-16
+#SBATCH --array=1-12
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/SparseAssembler_array.%A_%a.out # Standard output
