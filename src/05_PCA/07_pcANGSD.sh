@@ -32,7 +32,7 @@
 #Load modules 
 
 #module load python-3.7.7-gcc-7.3.0-gg6f6kc
-pcangsd=/gpfs1/home/e/l/elongman/software/pcangsd/pcangsd/pcangsd.py
+pcangsd=/gpfs1/home/e/l/elongman/software/pcangsd/pcangsd.py
 
 # Define important file locations
 
@@ -76,12 +76,13 @@ OUTPUT=$WORKING_FOLDER/pcangsd
 cp ${INPUT}/Nucella_bam.list ${OUTPUT}
 
 # Then, run PCA and admixture scores with pcangsd:
-SUFFIX="Nucella_poly"
+SUFFIX="Nucella_poly_covmatrix"
 
 python $pcangsd \
 -b ${INPUT}/Nucella_SNPs.beagle.gz \
 -o ${OUTPUT}/${SUFFIX} \
 -t $CPU 
+
 
 # PCAngsd accepts either genotype likelihoods in Beagle format generated from BAM files using ANGSD
 # -e : Manually select the number of eigenvalues to use in the modelling of individual allele frequencies (the number of clusters is K-1)
