@@ -18,7 +18,7 @@
 #SBATCH --time=24:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
-#SBATCH --mem=100G 
+#SBATCH --mem=65G 
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/%x_%j.out # Standard output
@@ -32,7 +32,7 @@
 #Load modules 
 
 #module load python-3.7.7-gcc-7.3.0-gg6f6kc
-pcangsd=/gpfs1/home/e/l/elongman/software/pcangsd/pcangsd.py
+#pcangsd=/gpfs1/home/e/l/elongman/software/pcangsd/pcangsd.py
 
 # Define important file locations
 
@@ -78,7 +78,7 @@ cp ${INPUT}/Nucella_bam.list ${OUTPUT}
 # Then, run PCA and admixture scores with pcangsd:
 SUFFIX="Nucella_poly_covmatrix"
 
-python $pcangsd \
+python /netfiles/pespenilab_share/pcangsd/pcangsd.py \
 -b ${INPUT}/Nucella_SNPs.beagle.gz \
 -o ${OUTPUT}/${SUFFIX} \
 -t $CPU 
