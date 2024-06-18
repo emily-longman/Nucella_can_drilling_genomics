@@ -103,7 +103,7 @@ cd $WORKING_FOLDER
 # File suffix to distinguish analysis choices
 SUFFIX_1="GL_allsites"
 
-# Generate GL's for each collection location
+# Generate GL's for each drilling group
 #angsd -b ${BAM_LIST_FOLDER}/${L}_bam.list \
 #-ref ${REFERENCE} \
 #-anc ${REFERENCE} \
@@ -123,7 +123,7 @@ SUFFIX_1="GL_allsites"
 #-doHWE 1
 
 
-# Generate GL's for each collection location
+# Generate GL's for each group
 angsd -b ${BAM_LIST_FOLDER}/${L}_bam.list \
 -ref ${REFERENCE} \
 -anc ${REFERENCE} \
