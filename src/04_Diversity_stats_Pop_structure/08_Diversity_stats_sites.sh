@@ -72,16 +72,6 @@ echo "Your unique run id is:" $unique_run_id
 echo $PIPELINE
 echo $WORKING_FOLDER
 
-if [[ -e "${PIPELINE}.warnings.log" ]]
-then echo "Warning log exist"; echo "Let's move on."; date
-else echo "Warning log doesnt exist. Let's fix that."; touch $WORKING_FOLDER/${PIPELINE}.warnings.log; date
-fi
-
-if [[ -e "${PIPELINE}.completion.log" ]]
-then echo "Completion log exist"; echo "Let's move on."; date
-else echo "Completion log doesnt exist. Let's fix that."; touch $WORKING_FOLDER/${PIPELINE}.completion.log; date
-fi
-
 #--------------------------------------------------------------------------------
 
 # Generate Folders and files

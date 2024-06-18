@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=Diversity_stats_SNPs_sites
+#SBATCH --job-name=Genotype_likelihoods_groups
 
 # Specify partition
 #SBATCH --partition=bluemoon
@@ -15,7 +15,7 @@
 #SBATCH --ntasks-per-node=1
 
 # Reserve walltime -- hh:mm:ss --30 hrs max
-#SBATCH --time=28:00:00 
+#SBATCH --time=30:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
 #SBATCH --mem=80G 
@@ -24,13 +24,14 @@
 #SBATCH --array=0-2
 
 # Name output of this job using %x=job-name and %j=job-id
-#SBATCH --output=./slurmOutput/Diversity_SNPS_sites.%A_%a.out # Standard output
+#SBATCH --output=./slurmOutput/GL_sites.%A_%a.out # Standard output
 
 # Receive emails when job begins and ends or fails
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=emily.longman@uvm.edu 
 
 #--------------------------------------------------------------------------------
+
 
 #Load modules 
 module load angsd-0.933-gcc-7.3.0-4wsdzjw
@@ -41,15 +42,14 @@ module load samtools-1.10-gcc-7.3.0-pdbkohx
 #Working folder is core folder where this pipeline is being run.
 WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_VCF
 
+#Folder for joint bams
+BAMS_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_VCF/Merged_Bams
+
 #This is the location where the reference genome and all its indexes are stored.
 REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_May2024/Assembly.fasta.k24.w150.z1000.ntLink.8rounds.fa
 
-#Input folders are GL and site frequency spectrums from ANGSD
-INPUT_GL=$WORKING_FOLDER/genotype_likelihoods_SNPs
-INPUT_SFS=$WORKING_FOLDER/site_frequency_spectrum
-
 #Name of pipeline
-PIPELINE=Diversity_stats_SNPs_sites
+PIPELINE=Genotype_Likelihoods_groups
 
 #--------------------------------------------------------------------------------
 
@@ -59,63 +59,68 @@ echo "using #CPUs ==" $SLURM_CPUS_ON_NODE
 
 #--------------------------------------------------------------------------------
 
-# Move to working directory
-cd $WORKING_FOLDER
-
-# Begin Pipeline
-
-# This part of the pipeline will generate log files to record warnings and completion status
-
-# Welcome message
-echo "Your unique run id is:" $unique_run_id
-
-echo $PIPELINE
-echo $WORKING_FOLDER
-
-#--------------------------------------------------------------------------------
-
-# Generate Folders and files
-
-# This part of the script will check and generate, if necessary, all of the output folders used in the script
-
-if [ -d "diversity_stats" ]
-then echo "Working diversity_stats folder exist"; echo "Let's move on."; date
-else echo "Working diversity_stats folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/diversity_stats; date
-fi
-
-#Output folder
-OUTPUT=$WORKING_FOLDER/diversity_stats
-
-#--------------------------------------------------------------------------------
-
 # Establish array
 
-arr=("FB" "HC" "MP")
+arr=("Drilled" "Not.Drilled")
 L="${arr[$SLURM_ARRAY_TASK_ID]}"
 echo $L
 
 #--------------------------------------------------------------------------------
 
-# Estimate theta diversity stats
+# Move to working directory
+cd $WORKING_FOLDER
 
-# Estimate the thetas for each site
-realSFS saf2theta ${INPUT_GL}/${L}_SNPs.saf.idx \
--sfs ${INPUT_SFS}/${L}_SNPs.sfs \
--outname ${OUTPUT}/${L}_SNPs
+# Begin Pipeline
 
-# Estimate thetas using the SFS
-thetaStat do_stat ${OUTPUT}/${L}_SNPs.thetas.idx
+# Generate Folders and files
 
-# Estimate thetas using the SFS on a sliding window
-thetaStat do_stat ${OUTPUT}/${L}_SNPs.thetas.idx \
--win 50000 \
--step 10000 \
--outnames ${OUTPUT}/${L}_SNPs.thetasWindow.gz
+# This part of the script will check and generate, if necessary, all of the output folders used in the script
 
-# Cut the first column becuase formatted a bit funny
-cut -f2- ${OUTPUT}/${L}_SNPs.thetas.idx.pestPG > ${OUTPUT}/${L}_SNPs.thetas
+if [ -d "genotype_likelihoods" ]
+then echo "Working genotype_likelihoods folder exist"; echo "Let's move on."; date
+else echo "Working genotype_likelihoods folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/genotype_likelihoods; date
+fi
+
+#Output folder
+OUTPUT=$WORKING_FOLDER/genotype_likelihoods
 
 #--------------------------------------------------------------------------------
+
+## Prepare bamlist
+# This is a file with the name and full path of all the bam files to be processed.
+
+# Move to bams folder
+cd $BAMS_FOLDER
+
+# Create a bamlist for each collection location
+ls -d "$PWD/"${L}* > $OUTPUT/${L}_bam.list 
+
+#--------------------------------------------------------------------------------
+
+# Estimating Genotype Likelihoods's and allele frequencies for all sites with ANGSD
+
+# Move back to working directory
+cd $WORKING_FOLDER
+
+# File suffix to distinguish analysis choices
+SUFFIX_1="GL"
+
+# Generate GL's for each collection location
+angsd -b ${OUTPUT}/${L}_bam.list \
+-ref ${REFERENCE} \
+-anc ${REFERENCE} \
+-out ${OUTPUT}/${L}_${SUFFIX_1} \
+-nThreads $CPU \
+-remove_bads 1 \
+-C 50 \
+-baq 1 \
+-minMapQ 20 \
+-minQ 20 \
+-GL 1 \
+-doSaf 1
+
+#--------------------------------------------------------------------------------
+
 # Inform that sample is done
 
 # This part of the pipeline will notify the completion of run i. 
