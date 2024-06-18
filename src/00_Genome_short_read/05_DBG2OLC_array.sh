@@ -32,6 +32,8 @@
 
 #--------------------------------------------------------------------------------
 
+### Not completed! Need to figure out which paramters and Sparse Assemblers I will use
+
 # SparseAssembler executable
 DBG2OLC=/gpfs1/home/e/l/elongman/software/DBG2OLC
 
