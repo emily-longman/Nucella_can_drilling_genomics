@@ -1,0 +1,6 @@
+PCAngsd v1.21
+Time: 18/06/2024 10:30:00
+Directory: /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_VCF
+Options:
+	--beagle /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_VCF/genotype_likelihoods_SNPs/Nucella_SNPs.beagle.gz
+	--out /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_VCF/pcangsd/Nucella_poly_covmatrix
