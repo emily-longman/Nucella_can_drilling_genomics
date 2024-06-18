@@ -21,7 +21,7 @@
 #SBATCH --mem=80G 
 
 # Submit job array
-#SBATCH --array=0-2
+#SBATCH --array=0-1
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/GL_sites.%A_%a.out # Standard output
@@ -61,11 +61,20 @@ echo "using #CPUs ==" $SLURM_CPUS_ON_NODE
 
 # Establish array
 
-arr=("Drilled" "Not.Drilled")
+arr=("Drilled" "NotDrilled")
 L="${arr[$SLURM_ARRAY_TASK_ID]}"
 echo $L
 
 #--------------------------------------------------------------------------------
+
+## Bamlists
+# These are files with the name and full path of all the bam files to be processed for snails that both Drilled and NotDrilled
+
+#Folder for joint bams
+BAM_LIST_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_VCF/Guide_Files
+
+#--------------------------------------------------------------------------------
+
 
 # Move to working directory
 cd $WORKING_FOLDER
@@ -86,27 +95,16 @@ OUTPUT=$WORKING_FOLDER/genotype_likelihoods
 
 #--------------------------------------------------------------------------------
 
-## Prepare bamlist
-# This is a file with the name and full path of all the bam files to be processed.
-
-# Move to bams folder
-cd $BAMS_FOLDER
-
-# Create a bamlist for each collection location
-ls -d "$PWD/"${L}* > $OUTPUT/${L}_bam.list 
-
-#--------------------------------------------------------------------------------
-
 # Estimating Genotype Likelihoods's and allele frequencies for all sites with ANGSD
 
 # Move back to working directory
 cd $WORKING_FOLDER
 
 # File suffix to distinguish analysis choices
-SUFFIX_1="GL"
+SUFFIX_1="GL_allsites"
 
 # Generate GL's for each collection location
-angsd -b ${OUTPUT}/${L}_bam.list \
+angsd -b ${BAM_LIST_FOLDER}/${L}_bam.list \
 -ref ${REFERENCE} \
 -anc ${REFERENCE} \
 -out ${OUTPUT}/${L}_${SUFFIX_1} \
@@ -114,17 +112,18 @@ angsd -b ${OUTPUT}/${L}_bam.list \
 -remove_bads 1 \
 -C 50 \
 -baq 1 \
--minMapQ 20 \
+-minMapQ 30 \
 -minQ 20 \
+-skipTriallelic 1 \
 -GL 1 \
--doSaf 1
+-doCounts 1 \
+-doMajorMinor 1 \
+-doMaf 1 \
+-doSaf 1 \
+-doHWE 1
 
 #--------------------------------------------------------------------------------
 
-# Inform that sample is done
-
-# This part of the pipeline will notify the completion of run i. 
-
-echo ${L} " completed" >> $WORKING_FOLDER/${PIPELINE}.completion.log
+# Inform that the pipeline is done
 
 echo "pipeline completed" $(date)
