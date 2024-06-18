@@ -104,6 +104,26 @@ cd $WORKING_FOLDER
 SUFFIX_1="GL_allsites"
 
 # Generate GL's for each collection location
+#angsd -b ${BAM_LIST_FOLDER}/${L}_bam.list \
+#-ref ${REFERENCE} \
+#-anc ${REFERENCE} \
+#-out ${OUTPUT}/${L}_${SUFFIX_1} \
+#-nThreads $CPU \
+#-remove_bads 1 \
+#-C 50 \
+#-baq 1 \
+#-minMapQ 30 \
+#-minQ 20 \
+#-skipTriallelic 1 \
+#-GL 1 \
+#-doCounts 1 \
+#-doMajorMinor 1 \
+#-doMaf 1 \
+#-doSaf 1 \
+#-doHWE 1
+
+
+# Generate GL's for each collection location
 angsd -b ${BAM_LIST_FOLDER}/${L}_bam.list \
 -ref ${REFERENCE} \
 -anc ${REFERENCE} \
@@ -114,14 +134,8 @@ angsd -b ${BAM_LIST_FOLDER}/${L}_bam.list \
 -baq 1 \
 -minMapQ 30 \
 -minQ 20 \
--skipTriallelic 1 \
 -GL 1 \
--doCounts 1 \
--doMajorMinor 1 \
--doMaf 1 \
--doSaf 1 \
--doHWE 1
-
+-doSaf 1
 #--------------------------------------------------------------------------------
 
 # Inform that the pipeline is done
