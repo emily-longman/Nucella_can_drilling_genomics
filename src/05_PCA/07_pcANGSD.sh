@@ -88,6 +88,8 @@ fi
 #Output folder
 OUTPUT=$WORKING_FOLDER/pcangsd
 
+##NOTE: Ideally, change the output folder to the results folder in the github. I just scp the output over
+
 #--------------------------------------------------------------------------------
 # Make a copy of the list of bam files for all the Nucella samples and place in the output directory. You'll need this later for making figures.
 

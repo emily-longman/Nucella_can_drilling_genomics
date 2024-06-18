@@ -7,7 +7,7 @@ dir(find_root(has_file("README.md")))
 rel_path_from_root <- find_root_file("results", "diversity_stats", criterion = has_file("README.md"))
 
 # List files in this folder to make sure you're in the right spot.
-list.files(rel_path_from_root)
+list.files(rel_path_from_root) 
 # Set working directory as path from root
 setwd(rel_path_from_root)
 
