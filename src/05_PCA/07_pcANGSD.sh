@@ -29,10 +29,24 @@
 
 #--------------------------------------------------------------------------------
 
-#Load modules 
+#Load python version 
+module load python3.11-anaconda/2023.09-0
 
-#module load python-3.7.7-gcc-7.3.0-gg6f6kc
-#pcangsd=/gpfs1/home/e/l/elongman/software/pcangsd/pcangsd.py
+# Extra code notes
+#pip install Cython #don't need to do because Cython is installed in this python version
+#python setup.py build_ext --inplace #needed to rebuild pcangsd after Csenge made 'build' executable
+
+# Installing on my own in /gpfs1/home/e/l/elongman/software (still run into an error when do this)
+#module load python3.11-anaconda/2023.09-0
+#git clone https://github.com/Rosemeis/pcangsd.git
+#cd pcangsd/
+#python setup.py build_ext --inplace
+#pip install --user -r requirements.txt
+# Make pcangsd executable
+#pcangsd=/gpfs1/home/e/l/elongman/software/pcangsd/pcangsd/pcangsd.py
+
+# Make pcangsd executable (Csenge version)
+pcangsd=/netfiles/pespenilab_share/pcangsd/pcangsd.py
 
 # Define important file locations
 
@@ -81,8 +95,7 @@ SUFFIX="Nucella_poly_covmatrix"
 python /netfiles/pespenilab_share/pcangsd/pcangsd.py \
 -b ${INPUT}/Nucella_SNPs.beagle.gz \
 -o ${OUTPUT}/${SUFFIX} \
--t $CPU 
-
+-threads $CPU 
 
 # PCAngsd accepts either genotype likelihoods in Beagle format generated from BAM files using ANGSD
 # -e : Manually select the number of eigenvalues to use in the modelling of individual allele frequencies (the number of clusters is K-1)
