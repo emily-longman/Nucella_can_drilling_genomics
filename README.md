@@ -11,7 +11,8 @@ The files in this project are organized in the following structure:
      - raw/
      - processed/
  - src/
- - output/
+ - results/
+     - stats/
      - figures/
      - tables/
  - docs/
