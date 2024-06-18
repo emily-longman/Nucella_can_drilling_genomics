@@ -48,6 +48,10 @@ module load python3.11-anaconda/2023.09-0
 # Make pcangsd executable (Csenge version)
 pcangsd=/netfiles/pespenilab_share/pcangsd/pcangsd.py
 
+#Notes for Csenge's version 
+# She needed to make it executable for me, then I needed to re-run:
+# python setup.py build_ext --inplace
+
 # Define important file locations
 
 #Working folder is core folder where this pipeline is being run.
