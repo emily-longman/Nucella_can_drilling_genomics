@@ -5,20 +5,20 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=DBG2OLC_2
+#SBATCH --job-name=DBG2OLC_array
 
 # Specify partition
 #SBATCH --partition=bigmemwk
 
 # Request nodes
-#SBATCH --nodes=1 
+#SBATCH --nodes=5 
 #SBATCH --ntasks-per-node=1  
 
 # Reserve walltime -- hh:mm:ss --7 day limit
 #SBATCH --time=07-00:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
-#SBATCH --mem=1000G
+#SBATCH --mem=900G
 
 # Submit job array
 #SBATCH --array=1-24
