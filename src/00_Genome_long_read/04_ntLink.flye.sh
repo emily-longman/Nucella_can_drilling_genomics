@@ -32,6 +32,9 @@
 ### Just need to use ntLink_rounds (Bennet already helped me install it into my path)
 
 
+module load python3.11-anaconda/2023.09-0
+conda activate /netfiles/nunezlab/Shared_Resources/Software/miniconda3_envs/ntlink
+
 #Output folder
 OUTPUT=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/ntlink_flye
 
