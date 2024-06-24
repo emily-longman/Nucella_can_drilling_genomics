@@ -84,20 +84,19 @@ cd ${OUTPUT}
 
 # Estimate Fst between my red spruce pop and black spruce:
 
-realSFS Drilled_GL_allsites.saf.idx \
-NotDrilled_GL_allsites.saf.idx \
+realSFS ${INPUT}/Drilled_GL_allsites.saf.idx \
+${INPUT}/NotDrilled_GL_allsites.saf.idx \
 -P 1 \
->$Drilled_NotDrilled.sfs
+>${OUTPUT}/Drilled_NotDrilled.sfs
 
 realSFS fst index \
-Drilled_GL_allsites.saf.idx \
-NotDrilled_GL_allsites.saf.idx \
--sfs Drilled_NotDrilled.sfs \
--fstout Drilled_NotDrilled \
+${INPUT}/Drilled_GL_allsites.saf.idx \
+${INPUT}/NotDrilled_GL_allsites.saf.idx \
+-sfs ${OUTPUT}/Drilled_NotDrilled.sfs \
+-fstout ${OUTPUT}/Drilled_NotDrilled \
 -whichFst 1
 
-realSFS fst stats Drilled_NotDrilled.fst.idx 
-
+realSFS fst stats ${OUTPUT}/Drilled_NotDrilled.fst.idx 
 
 #--------------------------------------------------------------------------------
 # Inform that sample is done
