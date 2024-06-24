@@ -37,7 +37,7 @@ module load python3.11-anaconda
 module list
 
 # Set a directory for your project and the name of your virtual environment:
-export project_dir=/gpfs1/home/e/l/elongman
+export project_dir=/gpfs1/home/e/l/elongman/venv
 export venv_name=pcangsd-venv
 
 # Change into the project directory, create and activate your virtual environment:
