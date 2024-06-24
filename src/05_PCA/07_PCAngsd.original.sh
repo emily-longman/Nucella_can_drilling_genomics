@@ -29,42 +29,28 @@
 
 #--------------------------------------------------------------------------------
 
-# Install pcangsd
+#Load python version 
+module load python3.11-anaconda/2023.09-0
 
-module purge
-module load gcc/10.5.0
-module load python3.11-anaconda
-module list
+# Extra code notes
+#pip install Cython #don't need to do because Cython is installed in this python version
+#python setup.py build_ext --inplace #needed to rebuild pcangsd after Csenge made 'build' executable
 
-# Set a directory for your project and the name of your virtual environment:
-export project_dir=/gpfs1/home/e/l/elongman
-export venv_name=pcangsd-venv
-
-# Change into the project directory, create and activate your virtual environment:
-#cd $project_dir
-#python -m venv $venv_name  
-#source $venv_name/bin/activate
-
-# Download PCAngsd via git clone and change to that directory:
-#cd software/
+# Installing on my own in /gpfs1/home/e/l/elongman/software (still run into an error when do this)
+#module load python3.11-anaconda/2023.09-0
 #git clone https://github.com/Rosemeis/pcangsd.git
 #cd pcangsd/
+#python setup.py build_ext --inplace
+#pip install --user -r requirements.txt
+# Make pcangsd executable
+#pcangsd=/gpfs1/home/e/l/elongman/software/pcangsd/pcangsd/pcangsd.py
 
-# Install PCAngsd and run the help command
-#pip3 install .
-#pcangsd -h
+# Make pcangsd executable (Csenge version)
+pcangsd=/netfiles/pespenilab_share/pcangsd/pcangsd.py
 
-# Get some sample data to test that it will do more than print help:
-#mkdir test_data
-#cd test_data
-#wget popgen.dk/software/download/NGSadmix/data/Demo1input.gz
-#pcangsd -b Demo1input.gz -e 2 -t 4 -o pcangsd
-
-# Change into the project directory and activate your virtual environment:
-cd $project_dir 
-source $venv_name/bin/activate
-
-#--------------------------------------------------------------------------------
+#Notes for Csenge's version 
+# She needed to make it executable for me, then I needed to re-run:
+# python setup.py build_ext --inplace
 
 # Define important file locations
 
@@ -122,10 +108,3 @@ python /netfiles/pespenilab_share/pcangsd/pcangsd.py \
 # --admix : Individual admixture proportions and ancestral allele frequencies can be estimated assuming K ancestral populations using an accelerated mini-batch NMF method.
 
 # https://www.popgen.dk/software/index.php/PCAngsd
-
-
-#--------------------------------------------------------------------------------
-
-# Deactivate the virtual environment
-
-deactivate
