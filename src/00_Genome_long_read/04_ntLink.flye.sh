@@ -33,10 +33,17 @@
 
 
 module load python3.11-anaconda/2023.09-0
-conda activate /netfiles/nunezlab/Shared_Resources/Software/miniconda3_envs/ntlink
+source ${ANACONDA_ROOT}/etc/profile.d/conda.sh
+conda create --name ntlink #create and name the environment
+source activate ntlink #activate the environment
+conda install -c bioconda -c conda-forge ntlink
+#conda install -c bioconda -c conda-forge btllib
+conda activate ntlink 
 
-conda install -c bioconda -c conda-forge btllib
-
+#Try to use Joaquin's version 
+#conda activate /netfiles/nunezlab/Shared_Resources/Software/miniconda3_envs/ntlink
+# Got an error abox btllib and a dependency so tried to install separately
+#conda install -c bioconda -c conda-forge btllib
 
 #Output folder
 OUTPUT=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/ntlink_flye
