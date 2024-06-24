@@ -94,13 +94,13 @@ cd $WORKING_FOLDER
 
 # This part of the script will check and generate, if necessary, all of the output folders used in the script
 
-if [ -d "pcangsd" ]
-then echo "Working pcangsd folder exist"; echo "Let's move on."; date
-else echo "Working pcangsd folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/pcangsd; date
+if [ -d "pcangsd_test" ]
+then echo "Working pcangsd_test folder exist"; echo "Let's move on."; date
+else echo "Working pcangsd_test folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/pcangsd_test; date
 fi
 
 #Output folder
-OUTPUT=$WORKING_FOLDER/pcangsd
+OUTPUT=$WORKING_FOLDER/pcangsd_test
 
 ##NOTE: Ideally, change the output folder to the results folder in the github. I just scp the output over
 
