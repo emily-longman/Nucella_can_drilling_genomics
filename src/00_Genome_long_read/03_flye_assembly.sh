@@ -50,7 +50,7 @@ cd /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/ONT_fltl
 gunzip Nuc.*.fastq.gz
 
 # Move to the directory where the output files will be saved
-cd /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/Flye_assembly
+cd /netfiles/pespenilab_share/Nucella/processed/Base_Genome/Flye_assembly
 
 #input
 ont=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/ONT_fltlong/Nuc.$L.fltlong.fastq
