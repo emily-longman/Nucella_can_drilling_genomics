@@ -46,7 +46,7 @@ conda activate ntlink
 #conda install -c bioconda -c conda-forge btllib
 
 #Output folder
-OUTPUT=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/ntlink_flye
+OUTPUT=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Flye_assembly/ntlink_flye_25000
 
 # Move to the directory where the output files will be saved
 cd ${OUTPUT}
