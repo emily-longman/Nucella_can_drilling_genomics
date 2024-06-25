@@ -30,7 +30,7 @@
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=emily.longman@uvm.edu # where to email updates to
 
-cd /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/ONT_fltlong/
+cd /netfiles/pespenilab_share/Nucella/processed/Base_Genome/ONT_fltlong
 
 filtlong=/gpfs1/home/e/l/elongman/software/Filtlong/bin/filtlong
 input=/netfiles/pespenilab_share/Nucella/raw/ONT/FC_all.ONT.nuc.fastq.gz
