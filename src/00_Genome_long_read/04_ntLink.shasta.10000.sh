@@ -29,47 +29,50 @@
 
 # ---------------------------
 
-# Move to the directory where the output files will be saved
-cd /netfiles/pespenilab_share/Nucella/processed/Base_Genome/ntlink
+# Load ntlink
+module load python3.11-anaconda/2023.09-0
+source ${ANACONDA_ROOT}/etc/profile.d/conda.sh
+conda create --name ntlink #create and name the environment
+source activate ntlink #activate the environment
+#conda install -c bioconda -c conda-forge ntlink # Only need to install once
+conda activate ntlink 
+
+#Working folder
+WORKING_FOLDER=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Shasta_assemblies/ntlink
 
 # ---------------------------
 
-# Instead try to just install ntlink
-# curl -L --output ntLink-1.3.9.tar.gz https://github.com/bcgsc/ntLink/releases/download/v1.3.9/ntLink-1.3.9.tar.gz && tar xvzf ntLink-1.3.9.tar.gz 
-# This didn't work either
+# Generate Folders and files
 
-# Call package (installed with conda)
-#module load python3.11-anaconda/2023.09-0
+cd ${WORKING_FOLDER}
 
-#module load python3.10-anaconda/2023.09-0 #this will load an older version of conda and then it should work
-#source ${ANACONDA_ROOT}/etc/profile.d/conda.sh
-#conda create --name ntlink #create and name the environment
-#source activate ntlink #activate the environment
-#conda install -c bioconda -c conda-forge ntlink
-# Bennet helped me install ntlink with conda then created a symbolic link so now I can just run it since it is in my bin folder
+# This part of the script will check and generate, if necessary, all of the output folders used in the script
 
-#conda install -c bioconda --file requirements.txt
+if [ -d "ntlink_10000" ]
+then echo "Working ntlink_10000 folder exist"; echo "Let's move on."; date
+else echo "Working ntlink_10000 folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/ntlink_10000; date
+fi
 
-#conda activate
-#conda install -c bioconda --file requirements.txt  #only need to do once
+#Output folder
+OUTPUT=$WORKING_FOLDER/ntlink_10000
 
-ntlink_r=/gpfs1/home/e/l/elongman/scratch/Nucella_can_drilling_genomics/ntlink_t/ntLink-1.3.10/ntLink_rounds
-#export PATH=$PATH:/gpfs1/home/e/l/elongman/scratch/Nucella_can_drilling_genomics/ntlink_t/ntLink-1.3.10
+# Move to the directory where the output files will be saved
+cd ${OUTPUT}
+
+# ---------------------------
 
 link_pool=/netfiles/pespenilab_share/Nucella/raw/ONT/FC_all.ONT.nuc.fastq.gz
-asm=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/Shasta_assemblies/ShastaRun10000/Assembly.fasta 
+assembly=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Shasta_assemblies/ShastaRun10000/Assembly.fasta 
 
 # Move the assembly to the Base_genome file before scafolding
-cp $asm .
+cp $assembly ${OUTPUT}
 
-#Command from online#
-#ntLink scaffold target=Assembly.fasta reads=$link_pool k=32 w=250
-
-#Code from Joaquin
-$ntlink_r run_rounds_gaps \
+# Run ntLink_rounds
+ntLink_rounds run_rounds_gaps \
 target=Assembly.fasta \
-reads=$link_pool k=32 w=100 t=40 rounds=8
+reads=$link_pool k=24 w=150 t=40 rounds=8
 
-#conda deactivate
+# Deactivate conda
+conda deactivate
 
 echo "done"
