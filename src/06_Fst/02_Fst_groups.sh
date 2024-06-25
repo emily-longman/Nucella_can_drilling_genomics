@@ -21,7 +21,7 @@
 #SBATCH --mem=900G 
 
 # Name output of this job using %x=job-name and %j=job-id
-#SBATCH --output=./slurmOutput/SFS_sites.%A_%a.out # Standard output
+#SBATCH --output=./slurmOutput/%x_%j.out # Standard output
 
 # Receive emails when job begins and ends or fails
 #SBATCH --mail-type=ALL
@@ -84,19 +84,21 @@ cd ${OUTPUT}
 
 # Estimate Fst between my red spruce pop and black spruce:
 
-realSFS ${INPUT}/Drilled_GL_allsites.saf.idx \
-${INPUT}/NotDrilled_GL_allsites.saf.idx \
--P 1 \
+realSFS ${INPUT}/Drilled_GL_allsites.saf.idx ${INPUT}/NotDrilled_GL_allsites.saf.idx \
+-P $CPU \
+-nSites \
 >${OUTPUT}/Drilled_NotDrilled.sfs
 
-realSFS fst index \
-${INPUT}/Drilled_GL_allsites.saf.idx \
-${INPUT}/NotDrilled_GL_allsites.saf.idx \
--sfs ${OUTPUT}/Drilled_NotDrilled.sfs \
--fstout ${OUTPUT}/Drilled_NotDrilled \
--whichFst 1
+# If you have .saf file larger than -nSites (you can check the number of sites in the .saf.pos file), then the program will loop over the genome and output the results for each block. So each line in your Whit.saf.ml, is an SFS for a region.
 
-realSFS fst stats ${OUTPUT}/Drilled_NotDrilled.fst.idx 
+#realSFS fst index \
+#${INPUT}/Drilled_GL_allsites.saf.idx \
+#${INPUT}/NotDrilled_GL_allsites.saf.idx \
+#-sfs ${OUTPUT}/Drilled_NotDrilled.sfs \
+#-fstout ${OUTPUT}/Drilled_NotDrilled \
+#-whichFst 1
+
+#realSFS fst stats ${OUTPUT}/Drilled_NotDrilled.fst.idx 
 
 #--------------------------------------------------------------------------------
 # Inform that sample is done
