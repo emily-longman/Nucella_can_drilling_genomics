@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=ntLinkNu.10000 
+#SBATCH --job-name=ntLink.shasta.10000 
 
 # Specify partition
 #SBATCH --partition=bluemoon
