@@ -20,11 +20,8 @@
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
 #SBATCH --mem=900G
 
-# Submit job array
-#SBATCH --array=1-24
-
 # Name output of this job using %x=job-name and %j=job-id
-#SBATCH --output=./slurmOutput/%x.%A_%a.out # Standard output
+#SBATCH --output=./slurmOutput/%x_%j.out # Standard output
 
 # Receive emails when job begins and ends or fails
 #SBATCH --mail-type=ALL # indicates if you want an email when the job starts, ends, or both
@@ -45,7 +42,7 @@ WORKING_FOLDER=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/short_re
 #If you haven't done it yet, unzip the files 
 #gunzip $ONT_FOLDER/FC_all.ONT.nuc.fastq.gz
 #If you haven't done it yet, unzip the files 
-ONT=/netfiles/pespenilab_share/Nucella/raw/ONT/FC_all.ONT.nuc.fastq
+ONT=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/ONT_fltlong/Nuc.2000.fltlong.fastq
 
 #--------------------------------------------------------------------------------
 
@@ -55,7 +52,7 @@ ONT=/netfiles/pespenilab_share/Nucella/raw/ONT/FC_all.ONT.nuc.fastq
 # MinOverlap = 30, 50, 100, 150
 # AdaptiveTh = 0.001, 0.01
 
-GUIDE_FILE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/short_read_assembly/DBG2OLC/DBG2OLC_GuideFile.txt
+#GUIDE_FILE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/short_read_assembly/DBG2OLC/DBG2OLC_GuideFile.txt
 
 #Example: -- the headers are just for descriptive purposes. The actual file has no headers.
 ##   kmerCovTh   MinOverlap       AdaptiveTh   
@@ -69,9 +66,13 @@ GUIDE_FILE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/short_read_a
 #--------------------------------------------------------------------------------
 
 # Determine parameter combination to process
-kCT=$( cat $GUIDE_FILE  | sed "${SLURM_ARRAY_TASK_ID}q;d" | awk '{ print $1 }' )
-MO=$( cat $GUIDE_FILE  | sed "${SLURM_ARRAY_TASK_ID}q;d" | awk '{ print $2 }' )
-AT=$( cat $GUIDE_FILE  | sed "${SLURM_ARRAY_TASK_ID}q;d" | awk '{ print $3 }' )
+#kCT=$( cat $GUIDE_FILE  | sed "${SLURM_ARRAY_TASK_ID}q;d" | awk '{ print $1 }' )
+#MO=$( cat $GUIDE_FILE  | sed "${SLURM_ARRAY_TASK_ID}q;d" | awk '{ print $2 }' )
+#AT=$( cat $GUIDE_FILE  | sed "${SLURM_ARRAY_TASK_ID}q;d" | awk '{ print $3 }' )
+
+AT=0.015
+MO=20
+kCT=2
 
 echo ${kCT}  ${MO}  ${AT}
 
@@ -95,7 +96,7 @@ cd $WORKING_FOLDER/DBG2OLC/DBG2OLC_${kCT}_${MO}_${AT}
 
 # Use DBG2OLC to construct short but accurate contigs  
 $DBG2OLC \
-k 101 \
+k 17 \
 AdaptiveTh ${AT} \
 KmerCovTh ${kCT} \
 MinOverlap ${MO} \
