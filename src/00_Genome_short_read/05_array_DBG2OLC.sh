@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=DBG2OLC_array
+#SBATCH --job-name=DBG2OLC
 
 # Specify partition
 #SBATCH --partition=bigmemwk
