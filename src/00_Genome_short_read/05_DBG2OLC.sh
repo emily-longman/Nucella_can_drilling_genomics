@@ -11,7 +11,7 @@
 #SBATCH --partition=bigmemwk
 
 # Request nodes
-#SBATCH --nodes=1 
+#SBATCH --nodes=5 
 #SBATCH --ntasks-per-node=1  
 
 # Reserve walltime -- hh:mm:ss --7 day limit
@@ -42,28 +42,64 @@ WORKING_FOLDER=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/short_re
 #If you haven't done it yet, unzip the files 
 #gunzip $ONT_FOLDER/FC_all.ONT.nuc.fastq.gz
 #If you haven't done it yet, unzip the files 
-ONT=/netfiles/pespenilab_share/Nucella/raw/ONT/FC_all.ONT.nuc.fastq
+ONT=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/ONT_fltlong/Nuc.2000.fltlong.fastq
 
 #--------------------------------------------------------------------------------
-cd $WORKING_FOLDER/SparseAssembler
 
-# Make directory for DBG2OLC
-if [ -d "DBG2OLC" ]
-then echo "Working DBG2OLC folder exist"; echo "Let's move on."; date
-else echo "Working DBG2OLC folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/SparseAssembler/DBG2OLC; date
+### Read guide files
+# This is a guide file with all of the parameter combinations
+# kmerCovTh = 2, 5, 10
+# MinOverlap = 30, 50, 100, 150
+# AdaptiveTh = 0.001, 0.01
+
+#GUIDE_FILE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/short_read_assembly/DBG2OLC/DBG2OLC_GuideFile.txt
+
+#Example: -- the headers are just for descriptive purposes. The actual file has no headers.
+##   kmerCovTh   MinOverlap       AdaptiveTh   
+##   2             30               0.001
+##   2             50               0.001
+##   2             100              0.001
+##   2             150              0.001
+##   2             30                0.01
+##   2             50                0.01
+##   ...
+#--------------------------------------------------------------------------------
+
+# Determine parameter combination to process
+#kCT=$( cat $GUIDE_FILE  | sed "${SLURM_ARRAY_TASK_ID}q;d" | awk '{ print $1 }' )
+#MO=$( cat $GUIDE_FILE  | sed "${SLURM_ARRAY_TASK_ID}q;d" | awk '{ print $2 }' )
+#AT=$( cat $GUIDE_FILE  | sed "${SLURM_ARRAY_TASK_ID}q;d" | awk '{ print $3 }' )
+
+AT=0.015
+MO=20
+kCT=2
+
+echo ${kCT}  ${MO}  ${AT}
+
+#--------------------------------------------------------------------------------
+
+cd $WORKING_FOLDER/DBG2OLC
+
+# Make directory for each DBG2OLC parameter combination
+if [ -d "DBG2OLC_${kCT}_${MO}_${AT}" ]
+then echo "Working DBG2OLC_${kCT}_${MO}_${AT} folder exist"; echo "Let's move on."; date
+else echo "Working DBDBG2OLC_${kCT}_${MO}_${AT} folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/DBG2OLC/DBG2OLC_${kCT}_${MO}_${AT}; date
 fi
 
 #--------------------------------------------------------------------------------
 
 # Move to the directory where the output files will be saved
-cd $WORKING_FOLDER/SparseAssembler/DBG2OLC
+cd $WORKING_FOLDER/DBG2OLC/DBG2OLC_${kCT}_${MO}_${AT}
+
+# Using the SparseAssembler with the largest N50 (SparseAssembler_101_2_1)
+# k= 101, NodeCovTh = 2, EdgeCovTh =1 (the last parameter didn't have an effect)
 
 # Use DBG2OLC to construct short but accurate contigs  
 $DBG2OLC \
-k 51 \
-AdaptiveTh 0.0001 \
-KmerCovTh 2 \
-MinOverlap 20 \
+k 17 \
+AdaptiveTh ${AT} \
+KmerCovTh ${kCT} \
+MinOverlap ${MO} \
 RemoveChimera 1 \
-Contigs $WORKING_FOLDER/SparseAssembler/SparseAssembler_test/Contigs.txt \
+Contigs $WORKING_FOLDER/SparseAssembler/SparseAssembler_101_2_1/Contigs.txt \
 f $ONT
