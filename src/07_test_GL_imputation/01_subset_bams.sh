@@ -166,6 +166,6 @@ O=$WORKING_FOLDER/RGSM_final_bams/${i}.RG.bam.bai
 # Index bam files
 
 # Testing 
-samtools view -b $WORKING_FOLDER/RGSM_final_bams/${i}.RG.bam "ntLink_33941" > $WORKING_FOLDER/BAMS_subset/${i}.subset.bam
+#samtools view -b $WORKING_FOLDER/RGSM_final_bams/${i}.RG.bam "ntLink_33941" > $WORKING_FOLDER/BAMS_subset/${i}.subset.bam
 
 #Can't figure out how to specify multiple ntLink scaffolds
