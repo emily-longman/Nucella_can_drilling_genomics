@@ -105,6 +105,11 @@ then echo "Working BAMS_subset folder exist"; echo "Let's move on."; date
 else echo "Working BAMS_subset folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/BAMS_subset; date
 fi
 
+if [ -d "BAMS_subset_merged" ]
+then echo "Working BAMS_subset_merged folder exist"; echo "Let's move on."; date
+else echo "Working BAMS_subset_merged folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/BAMS_subset_merged; date
+fi
+
 #--------------------------------------------------------------------------------
 ## PREPARE GUIDE FILES
 ## Read guide files
@@ -189,7 +194,7 @@ ls $WORKING_FOLDER/BAMS_subset/${i}.*.subset.bam > ${i}.guide.txt
 
 samtools merge \
 -b ${i}.guide.txt \
-$WORKING_FOLDER/BAMS_subset/${i}.subset.bam
+$WORKING_FOLDER/BAMS_subset_merged/${i}.subset.bam
 
 #remove the temporary guide file
 rm ${i}.guide.txt
