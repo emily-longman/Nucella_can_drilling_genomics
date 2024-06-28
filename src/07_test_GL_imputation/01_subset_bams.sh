@@ -163,14 +163,33 @@ O=$WORKING_FOLDER/RGSM_final_bams/${i}.RG.bam.bai
 
 #--------------------------------------------------------------------------------
 
-# Examples form online
-#samtools view -b input.bam "Chr10:18000-45500" > output.bam
-
-# Index bam files
-
 # Testing 
-samtools view -b $WORKING_FOLDER/RGSM_final_bams/${i}.RG.bam "ntLink_33941" > $WORKING_FOLDER/BAMS_subset/${i}.subset.bam
 
-#Can't figure out how to specify multiple ntLink scaffolds
+#Subset the data for only a few scaffolds
 
-#SCAFFOLD_LIST=
+SCAFFOLD_LIST="ntLink_33941 ntLink_33942 ntLink_33943 ntLink_33944 ntLink_33945 ntLink_33946 ntLink_33947 ntLink_33948"
+
+for s in $SCAFFOLD_LIST
+do 
+echo "Processing $s"
+samtools view -b $WORKING_FOLDER/RGSM_final_bams/${i}.RG.bam ${s} > $WORKING_FOLDER/BAMS_subset/${i}.${s}.subset.bam
+done
+
+# If only want one scaffold use the code below:
+#samtools view -b $WORKING_FOLDER/RGSM_final_bams/${i}.RG.bam "ntLink_33941" > $WORKING_FOLDER/BAMS_subset/${i}.subset.bam
+
+#--------------------------------------------------------------------------------
+
+# Here I will merge the joint bam outputs for the multiple lanes of sequencing. These will be named 'Lanes merged'
+
+echo "I will merge these files" $WORKING_FOLDER/BAMS_subset/${i}.*.subset.bam
+
+#Make temporary linefile with list of input BAM files
+ls $WORKING_FOLDER/BAMS_subset/${i}.*.subset.bam > ${i}.guide.txt
+
+samtools merge \
+-b ${i}.guide.txt \
+$WORKING_FOLDER/BAMS_subset/${i}.subset.bam
+
+#remove the temporary guide file
+rm ${i}.guide.txt
