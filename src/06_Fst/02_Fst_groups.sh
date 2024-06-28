@@ -82,7 +82,7 @@ OUTPUT=$WORKING_FOLDER/Fst_groups
 
 cd ${OUTPUT}
 
-# Estimate Fst between my red spruce pop and black spruce:
+# Estimate Fst between my
 
 realSFS ${INPUT}/Drilled_GL_allsites.saf.idx ${INPUT}/NotDrilled_GL_allsites.saf.idx \
 -P $CPU \
