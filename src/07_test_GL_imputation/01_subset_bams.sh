@@ -41,9 +41,6 @@ module load samtools-1.10-gcc-7.3.0-pdbkohx
 #Working folder is core folder where this pipeline is being run.
 WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_VCF
 
-#Folder for joint bams
-BAMS_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_VCF/Merged_Bams
-
 #This is the location where the reference genome and all its indexes are stored.
 REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_May2024/Assembly.fasta.k24.w150.z1000.ntLink.8rounds.fa
 
@@ -56,11 +53,24 @@ if [ -d "BAMS_subset" ]
 then echo "Working BAMS_subset folder exist"; echo "Let's move on."; date
 else echo "Working BAMS_subset folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/BAMS_subset; date
 fi
+#--------------------------------------------------------------------------------
+## PREPARE GUIDE FILES
+
+# Move to bams folder
+cd $WORKING_FOLDER/Merged_Bams
+
+#Make temporary linefile with list of input BAM files
+ls > $WORKING_FOLDER/Guide_Files/bams_subset_guide.txt
+
+# Determine sample to process, "i" and read files
+i=`awk -F "\t" '{print $1}' $WORKING_FOLDER/Guide_Files/bams_subset_guide.txt | sed "${SLURM_ARRAY_TASK_ID}q;d"`
+
+echo $i
 
 #--------------------------------------------------------------------------------
 
 # Change to output folder
-cd $WORKING_FOLDER/BAMS_subset
+#cd $WORKING_FOLDER/BAMS_subset
 
 # Samtools coverage to determine scaffold coverage
 
