@@ -41,6 +41,9 @@ PICARD=/netfiles/nunezlab/Shared_Resources/Software/picard/build/libs/picard.jar
 #Working folder is core folder where this pipeline is being run.
 WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_VCF
 
+#Folder for joint bams
+BAMS_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_VCF/Merged_Bams
+
 #This is the location where the reference genome and all its indexes are stored.
 REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_May2024/Assembly.fasta.k24.w150.z1000.ntLink.8rounds.fa
 
@@ -166,6 +169,6 @@ O=$WORKING_FOLDER/RGSM_final_bams/${i}.RG.bam.bai
 # Index bam files
 
 # Testing 
-#samtools view -b $WORKING_FOLDER/RGSM_final_bams/${i}.RG.bam "ntLink_33941" > $WORKING_FOLDER/BAMS_subset/${i}.subset.bam
+samtools view -b $WORKING_FOLDER/RGSM_final_bams/${i}.RG.bam "ntLink_33941" > $WORKING_FOLDER/BAMS_subset/${i}.subset.bam
 
 #Can't figure out how to specify multiple ntLink scaffolds
