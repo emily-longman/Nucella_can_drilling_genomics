@@ -21,7 +21,7 @@
 #SBATCH --mem=80G 
 
 # Submit job array
-#SBATCH --array=1-576%20
+#SBATCH --array=1-192%6
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/%x_%j.out # Standard output
@@ -172,3 +172,5 @@ O=$WORKING_FOLDER/RGSM_final_bams/${i}.RG.bam.bai
 samtools view -b $WORKING_FOLDER/RGSM_final_bams/${i}.RG.bam "ntLink_33941" > $WORKING_FOLDER/BAMS_subset/${i}.subset.bam
 
 #Can't figure out how to specify multiple ntLink scaffolds
+
+#SCAFFOLD_LIST=
