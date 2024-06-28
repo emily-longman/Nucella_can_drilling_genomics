@@ -34,7 +34,6 @@
 
 #Load modules 
 module load samtools-1.10-gcc-7.3.0-pdbkohx
-module load htslib-1.10.2-gcc-7.3.0-tn65hc6 #tabix
 PICARD=/netfiles/nunezlab/Shared_Resources/Software/picard/build/libs/picard.jar
 
 # Define important file locations
@@ -81,7 +80,7 @@ cd $WORKING_FOLDER/Logs
 # Make Warning logs
 if [[ -e "${PIPELINE}.warnings.log" ]]
 then echo "Warning log exist"; echo "Let's move on."; date
-else echo "Warning log doesnt exist. Let's fix that."; touch $WORKING_FOLDER/${PIPELINE}.warnings.log; date
+else echo "Warning log doesnt exist. Let's fix that."; touch $$WORKING_FOLDER/Logs/${PIPELINE}.warnings.log; date
 fi
 
 #--------------------------------------------------------------------------------
