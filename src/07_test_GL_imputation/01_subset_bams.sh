@@ -107,7 +107,7 @@ fi
 ## Read guide files
 # This is a file with the name all the samples to be processed. One sample name per line with all the info.
 
-SAMPLE_FILE=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_VCF/GuideFileMerged.txt
+SAMPLE_FILE=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_VCF/Guide_Files/GuideFile_Subset_bams.txt
 
 #Example: -- the headers are just for descriptive purposes. The actual file has no headers.
 ## Snail_ID  Sample#   Merged_name 1    Merged_name 2    Merged_name 3   Merged_bam_name
@@ -121,7 +121,7 @@ SAMPLE_FILE=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed
 #--------------------------------------------------------------------------------
 
 # Determine sample to process, "i" and read files
-i=`awk -F "\t" '{print $6}' $SAMPLE_FILE | sed "${SLURM_ARRAY_TASK_ID}q;d"`
+i=`awk -F "\t" '{print $1}' $SAMPLE_FILE | sed "${SLURM_ARRAY_TASK_ID}q;d"`
 echo $i
 
 #--------------------------------------------------------------------------------
@@ -154,9 +154,9 @@ O=$WORKING_FOLDER/RGSM_final_bams/${i}.RG.bam.bai
 # Samtools coverage to determine scaffold coverage
 
 #Make temporary linefile with list of input BAM files
-#ls $WORKING_FOLDER/Merged_Bams/*.Lanes_merged.bam > guide.txt
+#ls $WORKING_FOLDER/Merged_Bams/*.Lanes_merged.bam > $WORKING_FOLDER/Guide_Files/bams_cov_guide.txt
 
-#samtools coverage -m -b guide.txt
+#samtools coverage -m -b $WORKING_FOLDER/Guide_Files/bams_cov_guide.txt 
 
 #--------------------------------------------------------------------------------
 
