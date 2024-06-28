@@ -20,6 +20,8 @@
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
 #SBATCH --mem=80G 
 
+# Submit job array
+#SBATCH --array=1-576%20
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/%x_%j.out # Standard output
@@ -78,7 +80,5 @@ cd $WORKING_FOLDER/BAMS_subset
 
 
 # Testing 
-samtools view -b $WORKING_FOLDER/Merged_Bams/*.Lanes_merged.bam "ntLink_33941:ntLink_33950" > $WORKING_FOLDER/BAMS_subset/*.subset.bam
-
-
+samtools view -b $WORKING_FOLDER/Merged_Bams/${i}.Lanes_merged.bam "ntLink_33941:ntLink_33950" > $WORKING_FOLDER/BAMS_subset/${i}.subset.bam
 
