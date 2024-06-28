@@ -29,6 +29,8 @@
 
 #--------------------------------------------------------------------------------
 
+# THIS SCRIPT ISN'T WORKING. HITTING MEMORY LIMITS
+
 #Load modules 
 module load angsd-0.933-gcc-7.3.0-4wsdzjw
 module load samtools-1.10-gcc-7.3.0-pdbkohx
