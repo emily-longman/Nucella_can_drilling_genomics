@@ -45,6 +45,12 @@ WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/proces
 #This is the location where the reference genome and all its indexes are stored.
 REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_May2024/Assembly.fasta.k24.w150.z1000.ntLink.8rounds.fa
 
+#This is a unique number id which identifies this run
+unique_run_id=`date +%N`
+
+#Name of pipeline
+PIPELINE=Subset_bams
+
 #--------------------------------------------------------------------------------
 # Define parameters
 
@@ -58,6 +64,25 @@ REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_M
 Group_library="Longman_2023"
 Library_Platform="illumina"
 Group_platform="L2023"
+
+#--------------------------------------------------------------------------------
+# Begin Pipeline
+
+# This part of the pipeline will generate log files to record warnings and completion status
+
+# Welcome message
+echo "Your unique run id is:" $unique_run_id
+
+echo $PIPELINE
+echo $WORKING_FOLDER
+
+cd $WORKING_FOLDER/Logs
+
+# Make Warning logs
+if [[ -e "${PIPELINE}.warnings.log" ]]
+then echo "Warning log exist"; echo "Let's move on."; date
+else echo "Warning log doesnt exist. Let's fix that."; touch $WORKING_FOLDER/${PIPELINE}.warnings.log; date
+fi
 
 #--------------------------------------------------------------------------------
 
