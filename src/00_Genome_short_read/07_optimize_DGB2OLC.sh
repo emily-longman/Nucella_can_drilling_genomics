@@ -8,7 +8,7 @@
 #SBATCH --job-name=DBG2OLC_array
 
 # Specify partition
-#SBATCH --partition=bluemoon
+#SBATCH --partition=bigmemwk
 
 # Request nodes
 #SBATCH --nodes=1 # on one node
@@ -18,10 +18,10 @@
 #SBATCH -c 1
 
 # Reserve walltime -- hh:mm:ss --30 hour limit
-#SBATCH --time=29:00:00 
+#SBATCH --time=07-00:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
-#SBATCH --mem=60G
+#SBATCH --mem=150G
 
 # Submit job array
 #SBATCH --array=1-60
