@@ -58,14 +58,14 @@ compressed_ONT=$WORKING_FOLDER/DBG2OLC/DBG2OLC_2_20_0.015/ReadsInfoFrom_Nuc.2000
 
 #--------------------------------------------------------------------------------
 
-### Read guide files
+### Read guide files (split up into two guide files becuase so many assembly outputs)
 
 # This is a guide file with all of the parameter combinations
 # kmerCovTh = 2, 4, 6, 8, 10
 # MinOverlap = 30, 50, 100, 150
 # AdaptiveTh = 0.001, 0.01, 0.02
 
-GUIDE_FILE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/short_read_assembly/DBG2OLC/DBG2OLC_GuideFile.txt
+GUIDE_FILE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/short_read_assembly/DBG2OLC/DBG2OLC_GuideFile_1.txt
 
 #Example: -- the headers are just for descriptive purposes. The actual file has no headers.
 ##   kmerCovTh   MinOverlap       AdaptiveTh   
