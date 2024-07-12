@@ -98,14 +98,14 @@ echo $label $K $M $A
 cd $OUTPUT_FOLDER/DBG2OLC
 if [ -d "${label}" ]
 then echo "Working ${label} folder exist"; echo "Let's move on."; date
-else echo "Working ${label} folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/DBG2OLC/${label}; date
+else echo "Working ${label} folder doesnt exist. Let's fix that."; mkdir $OUTPUT_FOLDER/DBG2OLC/${label}; date
 fi
 
 # Make Quast directory for each parameter combination
 cd $OUTPUT_FOLDER/DBG2OLC/Quast
 if [ -d "${label}" ]
 then echo "Working ${label} folder exist"; echo "Let's move on."; date
-else echo "Working ${label} folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/DBG2OLC/Quast/${label}; date
+else echo "Working ${label} folder doesnt exist. Let's fix that."; mkdir $OUTPUT_FOLDER/DBG2OLC/Quast/${label}; date
 fi
 
 #--------------------------------------------------------------------------------
