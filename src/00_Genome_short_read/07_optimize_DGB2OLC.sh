@@ -43,6 +43,7 @@ quast=/netfiles/nunezlab/Shared_Resources/Software/quast-5.2.0/quast.py
 #--------------------------------------------------------------------------------
 
 #Working folder is core folder where this pipeline is being run.
+OUTPUT_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly
 WORKING_FOLDER=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/short_read_assembly
 
 #--------------------------------------------------------------------------------
@@ -94,14 +95,14 @@ echo $label $K $M $A
 # This part of the script will check and generate, if necessary, all of the output folders used in the script
 
 # Make directory for each DBG2OLC parameter combination
-cd $WORKING_FOLDER/DBG2OLC
+cd $OUTPUT_FOLDER/DBG2OLC
 if [ -d "${label}" ]
 then echo "Working ${label} folder exist"; echo "Let's move on."; date
 else echo "Working ${label} folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/DBG2OLC/${label}; date
 fi
 
 # Make Quast directory for each parameter combination
-cd $WORKING_FOLDER/DBG2OLC/Quast
+cd $OUTPUT_FOLDER/DBG2OLC/Quast
 if [ -d "${label}" ]
 then echo "Working ${label} folder exist"; echo "Let's move on."; date
 else echo "Working ${label} folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/DBG2OLC/Quast/${label}; date
@@ -112,7 +113,7 @@ fi
 # Use DBG2OLC to construct short but accurate contigs  
 
 # Move to the directory where the output files will be saved
-cd $WORKING_FOLDER/DBG2OLC/${label}
+cd $OUTPUT_FOLDER/DBG2OLC/${label}
 
 # Copy read information from previous run
 cp $compressed_ONT ./
@@ -139,8 +140,8 @@ mv backbone_raw.fasta ${label}.backbone_raw.fasta
 #--------------------------------------------------------------------------------
 
 # Run quast
-$quast $WORKING_FOLDER/DBG2OLC/${label}/${label}.backbone_raw.fasta \
--o $WORKING_FOLDER/DBG2OLC/Quast/${label}
+$quast $OUTPUT_FOLDER/DBG2OLC/${label}/${label}.backbone_raw.fasta \
+-o $OUTPUT_FOLDER/DBG2OLC/Quast/${label}
 
 #--------------------------------------------------------------------------------
 
