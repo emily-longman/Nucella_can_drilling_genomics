@@ -66,7 +66,7 @@ compressed_ONT=$WORKING_FOLDER/DBG2OLC/DBG2OLC_2_20_0.015/ReadsInfoFrom_Nuc.2000
 # MinOverlap = 30, 50, 100, 150
 # AdaptiveTh = 0.001, 0.01, 0.02
 
-GUIDE_FILE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/short_read_assembly/DBG2OLC/DBG2OLC_GuideFile_1.txt
+GUIDE_FILE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/short_read_assembly/DBG2OLC/DBG2OLC_GuideFile_2.txt
 
 #Example: -- the headers are just for descriptive purposes. The actual file has no headers.
 ##   kmerCovTh   MinOverlap       AdaptiveTh   
