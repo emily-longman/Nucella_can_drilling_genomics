@@ -50,10 +50,10 @@ conda activate busco_env #activate the environment
 
 # Run BUSCO in directory where given assembly is.
 
-INPUT=./DBG2OLC_KmC_*_MinOv_*_Adth_*.backbone_raw.fasta
+#INPUT=./DBG2OLC_KmC_*_MinOv_*_Adth_*.backbone_raw.fasta
 
 #Input for test run of DBG2OLC
-#INPUT=./backbone_raw.fasta
+INPUT=./backbone_raw.fasta
 
 echo $INPUT
 
