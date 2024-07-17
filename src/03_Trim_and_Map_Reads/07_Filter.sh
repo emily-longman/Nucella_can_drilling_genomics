@@ -131,6 +131,11 @@ then echo "Working Filtered_Bams_qualimap folder exist"; echo "Let's move on."; 
 else echo "Working Filtered_Bams_qualimap folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/Filtered_Bams_qualimap; date
 fi
 
+if [ -d "Filtered_Bams_qualimap_multi_bamqc" ]
+then echo "Working Filtered_Bams_qualimap_multi_bamqc folder exist"; echo "Let's move on."; date
+else echo "Working Filtered_Bams_qualimap_multi_bamqc folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/Filtered_Bams_qualimap_multi_bamqc; date
+fi
+
 #--------------------------------------------------------------------------------
 
 # Filter merged bam files with samtools view and add flags
@@ -157,7 +162,7 @@ $qualimap bamqc \
 # Assess quality of all bam files
 $qualimap multi-bamqc \
 -d $GUIDE_FILE \
--outdir $WORKING_FOLDER/Filtered_Bams_qualimap/Qualimap_multi_bamqc \
+-outdir $WORKING_FOLDER/Filtered_Bams_qualimap_multi_bamqc \
 --java-mem-size=$JAVAMEM
 
 #--------------------------------------------------------------------------------
