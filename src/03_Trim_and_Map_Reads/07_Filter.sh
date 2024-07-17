@@ -142,7 +142,14 @@ $WORKING_FOLDER/Merged_Bams/${i}.Lanes_merged.bam > $WORKING_FOLDER/Filtered_Bam
 # Assess quality of final file
 $qualimap bamqc \
 -bam $WORKING_FOLDER/Filtered_Bams/${i}.flt.bam \
--outdir $WORKING_FOLDER/Merged_Bams_qualimap/Qualimap_LaneMerged_${i} \
+-outdir $WORKING_FOLDER/Filtered_Bams_qualimap/Qualimap_${i} \
+--java-mem-size=$JAVAMEM
+
+
+# Assess quality of all bam files
+$qualimap multi-bamqc \
+-d $GUIDE_FILE \
+-outdir $WORKING_FOLDER/Filtered_Bams_qualimap/Qualimap_multi_bamqc \
 --java-mem-size=$JAVAMEM
 
 #--------------------------------------------------------------------------------
