@@ -33,7 +33,7 @@
 #--------------------------------------------------------------------------------
 
 #Load modules 
-module load samtools-1.10-gcc-7.3.0-pdbkohx
+spack load samtools@1.10
 qualimap=/netfiles/nunezlab/Shared_Resources/Software/qualimap_v2.2.1/qualimap
 
 # Define important file locations
