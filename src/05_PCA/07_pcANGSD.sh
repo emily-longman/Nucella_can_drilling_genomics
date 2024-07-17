@@ -30,11 +30,16 @@
 #--------------------------------------------------------------------------------
 
 # Install pcangsd
-
 module purge
-module load gcc/10.5.0
+spack clean
+spack load gcc@9.3.0 
 module load python3.11-anaconda
-module list
+spack find
+
+#module purge
+#module load gcc/10.5.0
+#module load python3.11-anaconda
+#module list
 
 # Set a directory for your project and the name of your virtual environment:
 export project_dir=/gpfs1/home/e/l/elongman/venv
