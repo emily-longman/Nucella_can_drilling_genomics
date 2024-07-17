@@ -29,7 +29,6 @@
 
 #--------------------------------------------------------------------------------
 
-
 #Load modules 
 spack load angsd@0.933
 spack load samtools@1.10
@@ -71,12 +70,12 @@ cd Logs
 
 if [[ -e "${PIPELINE}.warnings.log" ]]
 then echo "Warning log exist"; echo "Let's move on."; date
-else echo "Warning log doesnt exist. Let's fix that."; touch $WORKING_FOLDER/${PIPELINE}.warnings.log; date
+else echo "Warning log doesnt exist. Let's fix that."; touch $WORKING_FOLDER/Logs/${PIPELINE}.warnings.log; date
 fi
 
 if [[ -e "${PIPELINE}.completion.log" ]]
 then echo "Completion log exist"; echo "Let's move on."; date
-else echo "Completion log doesnt exist. Let's fix that."; touch $WORKING_FOLDER/${PIPELINE}.completion.log; date
+else echo "Completion log doesnt exist. Let's fix that."; touch $WORKING_FOLDER/Logs/${PIPELINE}.completion.log; date
 fi
 
 #--------------------------------------------------------------------------------
