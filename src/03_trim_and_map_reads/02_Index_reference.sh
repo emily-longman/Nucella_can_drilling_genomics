@@ -36,7 +36,7 @@
 #Load modules 
 bwa=/netfiles/nunezlab/Shared_Resources/Software/bwa-mem2-2.2.1_x64-linux/bwa-mem2.avx2
 PICARD=/netfiles/nunezlab/Shared_Resources/Software/picard/build/libs/picard.jar
-module load samtools-1.10-gcc-7.3.0-pdbkohx
+spack load samtools@1.10
 
 #Define file location
 REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_May2024/Assembly.fasta.k24.w150.z1000.ntLink.8rounds.fa

@@ -41,10 +41,10 @@
 # Thus, the joint suffix referes to this step. Other suffix used here are: "srt" which mean picard sorted, and "rmdp" which mean picard-removed duplicated reads.
   
 #Load modules 
-module load gcc/10.5.0
-module load bwa-0.7.17-gcc-7.3.0-terdbma
-module load fastqc-0.11.7-gcc-7.3.0-vcaesw7
-module load samtools-1.10-gcc-7.3.0-pdbkohx
+spack load gcc@9.3.0 #Originally was module load gcc/10.5.0
+spack load bwa@0.7.17
+spack load fastqc@0.11.7
+spack load samtools@1.10
 
 bbmerge=/gpfs1/home/e/l/elongman/software/bbmap/bbmerge.sh #executable
 

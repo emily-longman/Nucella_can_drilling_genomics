@@ -33,7 +33,7 @@
 #--------------------------------------------------------------------------------
 
 #Load modules 
-module load samtools-1.10-gcc-7.3.0-pdbkohx
+spack load samtools@1.10
 PICARD=/netfiles/nunezlab/Shared_Resources/Software/picard/build/libs/picard.jar
 
 # Define important file locations

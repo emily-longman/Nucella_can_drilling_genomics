@@ -35,7 +35,7 @@
 # This script will gather all sample data across the many lanes of sequencing
 
 #Load modules 
-module load samtools-1.10-gcc-7.3.0-pdbkohx
+spack load samtools@1.10
 PICARD=/netfiles/nunezlab/Shared_Resources/Software/picard/build/libs/picard.jar
 qualimap=/netfiles/nunezlab/Shared_Resources/Software/qualimap_v2.2.1/qualimap
 

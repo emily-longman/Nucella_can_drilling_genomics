@@ -14,7 +14,7 @@ CPU=5
 SAMP=${SLURM_ARRAY_TASK_ID}
 
 ### programs
-module load samtools-1.10-gcc-7.3.0-pdbkohx 
+spack load samtools@1.10
 
 ### Link softwares
 bwa=/netfiles/nunezlab/Shared_Resources/Software/bwa-mem2-2.2.1_x64-linux/bwa-mem2.avx2

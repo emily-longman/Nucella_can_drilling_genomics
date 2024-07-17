@@ -35,9 +35,9 @@
 # This script is the second step in the trim and map pipeline
 
 # Load modules 
-module load gcc/10.5.0
-module load fastqc-0.11.7-gcc-7.3.0-vcaesw7
-module load samtools-1.10-gcc-7.3.0-pdbkohx
+spack load gcc@9.3.0 #Originally was module load gcc/10.5.0
+spack load fastqc@0.11.7
+spack load samtools@1.10
 
 bbduk=/gpfs1/home/e/l/elongman/software/bbmap/bbduk.sh 
 bwa=/netfiles/nunezlab/Shared_Resources/Software/bwa-mem2-2.2.1_x64-linux/bwa-mem2.avx2
