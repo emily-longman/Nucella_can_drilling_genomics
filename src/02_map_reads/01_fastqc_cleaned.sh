@@ -30,7 +30,7 @@ set -e
 set -x #useful for debugging your script. It causes each command in the file to be printed to the log file as it is executed, with a + in front of it
 
 # Call fastp package 
-module load fastqc-0.11.7-gcc-7.3.0-vcaesw7
+spack load fastqc@0.11.7
 
 #Set up directory
 RUN_PATH="/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/clean_Shortreads"
