@@ -15,7 +15,7 @@
 #SBATCH --ntasks-per-node=1  
 
 # Reserve walltime -- hh:mm:ss 
-#SBATCH --time=80:00:00 
+#SBATCH --time=10:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
 #SBATCH --mem=50G
