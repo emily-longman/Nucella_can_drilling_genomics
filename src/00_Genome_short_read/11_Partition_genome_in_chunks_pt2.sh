@@ -20,8 +20,11 @@
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
 #SBATCH --mem=50G
 
+# Submit job array
+#SBATCH --array=1-560
+
 # Name output of this job using %x=job-name and %j=job-id
-#SBATCH --output=./slurmOutput/%x_%j.out # Standard output
+#SBATCH -o ./slurmOutput/partition_genome.%A_%a.out # Standard output
 
 # Receive emails when job begins and ends or fails
 #SBATCH --mail-type=ALL # indicates if you want an email when the job starts, ends, or both
@@ -29,22 +32,33 @@
 
 #--------------------------------------------------------------------------------
 
+# This script will partition the genome into chunks. 
 
+# It will use the txt file produced from the  previous R script which calculated the number of chunks necessary to split the assembly into 50 contig chunks
 
-#SBATCH -o ./slurmOutput/part_info.%A_%a.out # Standard output
-#SBATCH --array=1-1764
+# There are 27922 contigs in the assembly. If the assembly is broken into 50 contig chunks then there are 559 chunks. 
 
+#--------------------------------------------------------------------------------
 
-#1764
-###import files
-cons_info=/gpfs2/scratch/jcnunez/barnacle_genome/DBG2LC/KCov2_Min30_Adp0.02/DBG2OLC_Consensus_info.txt
-backbone=/gpfs2/scratch/jcnunez/barnacle_genome/DBG2LC/KCov2_Min30_Adp0.02/KCov2_Min30_Adp0.02.backbone_raw.fasta
+#Working folder is core folder where this pipeline is being run.
+WORKING_FOLDER_SCRATCH=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly/
+WORKING_FOLDER_NETFILES=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/short_read_assembly
 
-### import master partition file
-guide=./dat.win.partitions.txt
+#--------------------------------------------------------------------------------
+
+# Consensus_info files of optimized DBG2OLC assembly
+cons_info=$WORKING_FOLDER_SCRATCH/DBG2OLC/DBG2OLC_KmC_2_MinOv_100_Adth_0.01/DBG2OLC_Consensus_info.txt
+
+# Backbone of optimized DBG2OLC assembly
+backbone=$WORKING_FOLDER_SCRATCH/DBG2OLC/DBG2OLC_KmC_2_MinOv_100_Adth_0.01/DBG2OLC_KmC_2_MinOv_100_Adth_0.01.backbone_raw.fasta
+
+#--------------------------------------------------------------------------------
+
+# Import master partition file
+# The previous R script created this file in /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/results/tables but I moved it into the working short read assembly directory 
+guide=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly/dat.win.partitions.txt
 
 echo ${SLURM_ARRAY_TASK_ID}
-
 
 init_bck=$(cat ${guide} | sed '1d' | awk '{print $1}' | sed "${SLURM_ARRAY_TASK_ID}q;d")
 final_bck=$(cat ${guide} | sed '1d' | awk '{print $2}' | sed "${SLURM_ARRAY_TASK_ID}q;d")
@@ -54,16 +68,20 @@ var1=$(echo "^>Backbone_${init_bck}$" )
 var2=$(echo "^>Backbone_${final_bck}$" ) 
 echo $var1 $var2
 
-## make genome chunks
+#--------------------------------------------------------------------------------
+
+# Make genome chunks
 mkdir ./gen_chunks
 cat $backbone | \
 sed -n "/$var1/, /$var2/p" | \
 sed '$d'  > ./gen_chunks/gen_chunks.$init_bck.$final_bck.fasta
 
-## make info chunks
+# Make info chunks
 mkdir ./chunks
 cat $cons_info | \
 sed -n "/$var1/, /$var2/p" | \
 sed '$d'  > ./chunks/chunk.$init_bck.$final_bck.txt
+
+#--------------------------------------------------------------------------------
 
 echo "done"
