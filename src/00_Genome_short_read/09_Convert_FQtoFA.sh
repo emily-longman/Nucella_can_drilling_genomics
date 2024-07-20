@@ -31,10 +31,11 @@
 #SBATCH --mail-user=emily.longman@uvm.edu # where to email updates to
 
 #--------------------------------------------------------------------------------
+#Working folder is core folder where this pipeline is being run.
+WORKING_FOLDER_SCRATCH=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly
+ONT_FLT=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/ONT_fltlong
 
-# Change to directory to the filtered ONT files
-
-cd /netfiles/pespenilab_share/Nucella/processed/Base_Genome/ONT_fltlong
+#--------------------------------------------------------------------------------
 
 # Convert ONT from fastq to fasta
-cat Nuc.2000.fltlong.fastq | sed -n '1~4s/^@/>/p;2~4p' > Nuc.2000.fltlong.FQtoFA.fasta
+cat $ONT_FLT/Nuc.2000.fltlong.fastq | sed -n '1~4s/^@/>/p;2~4p' > $WORKING_FOLDER_SCRATCH/consensus/Nuc.2000.fltlong.FQtoFA.fasta
