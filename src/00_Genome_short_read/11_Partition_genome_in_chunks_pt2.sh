@@ -41,8 +41,8 @@
 #--------------------------------------------------------------------------------
 
 #Working folder is core folder where this pipeline is being run.
-WORKING_FOLDER_SCRATCH=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly/
-WORKING_FOLDER_NETFILES=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/short_read_assembly
+WORKING_FOLDER_SCRATCH=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly
+#WORKING_FOLDER_NETFILES=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/short_read_assembly
 
 #--------------------------------------------------------------------------------
 
@@ -56,7 +56,7 @@ backbone=$WORKING_FOLDER_SCRATCH/DBG2OLC/DBG2OLC_KmC_2_MinOv_100_Adth_0.01/DBG2O
 
 # Import master partition file
 # The previous R script created this file in /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/results/tables but I moved it into the working short read assembly directory 
-guide=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly/dat.win.partitions.txt
+guide=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly/consensus/dat.win.partitions.txt
 
 echo ${SLURM_ARRAY_TASK_ID}
 
@@ -71,16 +71,16 @@ echo $var1 $var2
 #--------------------------------------------------------------------------------
 
 # Make genome chunks
-mkdir ./gen_chunks
+mkdir $WORKING_FOLDER_SCRATCH/consensus/gen_chunks
 cat $backbone | \
 sed -n "/$var1/, /$var2/p" | \
-sed '$d'  > ./gen_chunks/gen_chunks.$init_bck.$final_bck.fasta
+sed '$d'  > $WORKING_FOLDER_SCRATCH/consensus/gen_chunks/gen_chunks.$init_bck.$final_bck.fasta
 
 # Make info chunks
-mkdir ./chunks
+mkdir $WORKING_FOLDER_SCRATCH/consensus/chunks
 cat $cons_info | \
 sed -n "/$var1/, /$var2/p" | \
-sed '$d'  > ./chunks/chunk.$init_bck.$final_bck.txt
+sed '$d'  > $WORKING_FOLDER_SCRATCH/consensus/chunks/chunk.$init_bck.$final_bck.txt
 
 #--------------------------------------------------------------------------------
 
