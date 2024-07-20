@@ -32,10 +32,9 @@
 
 #--------------------------------------------------------------------------------
 
-# Change to directory with raw ONT files
+# Change to directory to the filtered ONT files
 
-cd /netfiles/pespenilab_share/Nucella/raw/ONT
+cd /netfiles/pespenilab_share/Nucella/processed/Base_Genome/ONT_fltlong
 
 # Convert ONT from fastq to fasta
-
-cat FC_all.ONT.nuc.fastq | sed -n '1~4s/^@/>/p;2~4p' > FC_all.ONT.nuc.FQtoFA.fasta
+cat Nuc.2000.fltlong.fastq | sed -n '1~4s/^@/>/p;2~4p' > Nuc.2000.fltlong.FQtoFA.fasta
