@@ -32,10 +32,7 @@
 
 #--------------------------------------------------------------------------------
 
-# This script will run the first half of the consensus script. 
-
-#Questions
-# JCBN has no array in this script?
+# This script will run the second half of the consensus script. 
 
 #--------------------------------------------------------------------------------
 
@@ -122,7 +119,7 @@ cd $WORKING_FOLDER_SCRATCH/consensus
 
 ### Run consensus
 # Note: split_and_run_sparc.pt1.sh needs to be in the same directory where running 
-sh /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/00_Genome_short_read/12_consensus_scripts_extra/split_and_run_sparc.pt1.sh \
+sh /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/00_Genome_short_read/12_consensus_scripts_extra/split_and_run_sparc.pt2.sh \
 gen_chunks/gen_chunks.$init_bck.$final_bck.fasta \
 chunks/chunk.$init_bck.$final_bck.txt \
 ctg_ont.fasta \
