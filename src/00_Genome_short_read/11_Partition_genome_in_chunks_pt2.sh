@@ -40,7 +40,7 @@
 
 #--------------------------------------------------------------------------------
 
-#Working folder is core folder where this pipeline is being run.
+# Working folder is core folder where this pipeline is being run.
 WORKING_FOLDER_SCRATCH=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly
 #WORKING_FOLDER_NETFILES=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/short_read_assembly
 
