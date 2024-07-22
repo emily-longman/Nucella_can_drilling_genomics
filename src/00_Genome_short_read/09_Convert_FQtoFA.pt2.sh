@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=convert_FQtoFA
+#SBATCH --job-name=convert_FQtoFA.pt2
 
 # Specify partition
 #SBATCH --partition=bluemoon
