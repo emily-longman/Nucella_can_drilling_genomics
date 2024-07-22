@@ -21,7 +21,7 @@
 #SBATCH --mem=50G
 
 # Submit job array
-#SBATCH --array=2-560
+#SBATCH --array=1-559
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH -o ./slurmOutput/consensus_pt2.%A_%a.out # Standard output
@@ -100,18 +100,6 @@ chmod 777 *
 
 #--------------------------------------------------------------------------------
 
-# This part of the script will check and generate, if necessary, all of the output folders used in the script
-
-# Change to consensus directory
-cd $WORKING_FOLDER_SCRATCH/consensus
-
-if [ -d "consensus_dir_chunked_July22" ]
-then echo "Working consensus_dir_chunked_July22 folder exist"; echo "Let's move on."; date
-else echo "Working consensus_dir_chunked_July22 folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/consensus/consensus_dir_chunked_July22; date
-fi
-
-#--------------------------------------------------------------------------------
-
 # Run consensus
 
 # Change to consensus directory
@@ -123,7 +111,7 @@ sh /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/00_Genome_short_rea
 gen_chunks/gen_chunks.$init_bck.$final_bck.fasta \
 chunks/chunk.$init_bck.$final_bck.txt \
 ctg_ont.fasta \
-$WORKING_FOLDER_SCRATCH/consensus/consensus_dir_chunked_July22 \
+$WORKING_FOLDER_SCRATCH/consensus \
 2 \
 32 \
 $shiftn > cns_log.txt 2>&1
