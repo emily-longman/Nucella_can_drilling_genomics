@@ -117,8 +117,6 @@ fi
 # Change to consensus directory
 cd $WORKING_FOLDER_SCRATCH/consensus
 
-/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/00_Genome_short_read/12_consensus_scripts_extra/split_and_run_sparc.pt1.sh
-
 ### Run consensus
 # Note: split_and_run_sparc.pt1.sh needs to be in the same directory where running 
 sh /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/00_Genome_short_read/12_consensus_scripts_extra/split_and_run_sparc.pt1.sh \
