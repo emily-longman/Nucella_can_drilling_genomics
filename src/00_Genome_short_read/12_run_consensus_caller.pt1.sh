@@ -47,6 +47,8 @@ WORKING_FOLDER_SCRATCH=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/dat
 WORKING_FOLDER_NETFILES=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/short_read_assembly
 
 #--------------------------------------------------------------------------------
+# Change to consensus directory
+cd $WORKING_FOLDER_SCRATCH/consensus
 
 # Input files for consensus: 
 #(1) backbone_raw.fasta by DBG2OLC
@@ -58,7 +60,7 @@ Contigs=$WORKING_FOLDER_NETFILES/SparseAssembler/SparseAssembler_101_2_1/Contigs
 #(4) ONT reads (in fasta format) - converted in step 9
 ONT_FA=$WORKING_FOLDER_SCRATCH/consensus/Nuc.2000.fltlong.FQtoFA.fasta
 
-cat $Contigs $ONT_FA > ctg_ont.fasta
+#cat $Contigs $ONT_FA > ctg_ont.fasta
 
 #--------------------------------------------------------------------------------
 
