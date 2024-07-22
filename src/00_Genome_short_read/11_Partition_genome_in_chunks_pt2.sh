@@ -46,11 +46,15 @@ WORKING_FOLDER_SCRATCH=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/dat
 
 #--------------------------------------------------------------------------------
 
-# Consensus_info files of optimized DBG2OLC assembly
-cons_info=$WORKING_FOLDER_SCRATCH/DBG2OLC/DBG2OLC_KmC_2_MinOv_100_Adth_0.01/DBG2OLC_Consensus_info.txt
-
-# Backbone of optimized DBG2OLC assembly
+# Input files for consensus: 
+#(1) backbone_raw.fasta by DBG2OLC
 backbone=$WORKING_FOLDER_SCRATCH/DBG2OLC/DBG2OLC_KmC_2_MinOv_100_Adth_0.01/DBG2OLC_KmC_2_MinOv_100_Adth_0.01.backbone_raw.fasta
+#(2) DBG2OLC_Consensus_info.txt by DBG2OLC
+cons_info=$WORKING_FOLDER_SCRATCH/DBG2OLC/DBG2OLC_KmC_2_MinOv_100_Adth_0.01/DBG2OLC_Consensus_info.txt
+#(3) DBG contigs (in fasta format)
+#Contigs=$WORKING_FOLDER_NETFILES/SparseAssembler/SparseAssembler_101_2_1/Contigs.txt
+#(4) ONT reads (in fasta format)
+#ONT_FA=$WORKING_FOLDER_SCRATCH/consensus/Nuc.2000.fltlong.FQtoFA.fasta
 
 #--------------------------------------------------------------------------------
 
