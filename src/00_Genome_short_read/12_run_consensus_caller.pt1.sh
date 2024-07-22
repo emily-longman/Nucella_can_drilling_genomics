@@ -42,7 +42,7 @@ WORKING_FOLDER_SCRATCH=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/dat
 
 #--------------------------------------------------------------------------------
 
-### import master partition file
+### import master partition file (first row is column headers)
 guide=$WORKING_FOLDER_SCRATCH/consensus/dat.win.partitions.txt
 
 echo ${SLURM_ARRAY_TASK_ID}
@@ -60,6 +60,8 @@ echo $shiftn
 ###please run as
 #-># sbatch --reservation=jcnunez_test  run_consesus_caller.sh
 ###please run as
+
+#--------------------------------------------------------------------------------
 
 hostname
 
@@ -93,8 +95,18 @@ module load python/python-2.7.5
 #Contigs=/gpfs2/scratch/jcnunez/barnacle_genome/sparse_Assb/array_contigs/N2_E1.Contigs.txt
 #cat $Contigs $ONT_FA > ctg_pb.fasta
 
-####
-mkdir consensus_dir_chunked_Jan9
+#--------------------------------------------------------------------------------
+
+# This part of the script will check and generate, if necessary, all of the output folders used in the script
+
+cd $WORKING_FOLDER_SCRATCH/consensus
+
+if [ -d "consensus_dir_chunked_July22" ]
+then echo "Working consensus_dir_chunked_July22 folder exist"; echo "Let's move on."; date
+else echo "Working consensus_dir_chunked_July22 folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/consensus/consensus_dir_chunked_July22; date
+fi
+
+#--------------------------------------------------------------------------------
 
 ### Run consensus
 sh split_and_run_sparc.pt1.sh \
