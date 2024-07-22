@@ -99,6 +99,19 @@ ulimit -n
 chmod 777 *
 
 #--------------------------------------------------------------------------------
+# Move to working directory
+cd $WORKING_FOLDER_SCRATCH/consensus
+
+# Generate Folders and files
+
+# This part of the script will check and generate, if necessary, all of the output folders used in the script
+
+if [ -d "consensus_dir_chunked_July22" ]
+then echo "Working consensus_dir_chunked_July22 folder exist"; echo "Let's move on."; date
+else echo "Working consensus_dir_chunked_July22 folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/consensus/consensus_dir_chunked_July22; date
+fi
+
+#--------------------------------------------------------------------------------
 
 # Run consensus
 
@@ -111,7 +124,7 @@ sh /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/00_Genome_short_rea
 gen_chunks/gen_chunks.$init_bck.$final_bck.fasta \
 chunks/chunk.$init_bck.$final_bck.txt \
 ctg_ont.fasta \
-$WORKING_FOLDER_SCRATCH/consensus \
+$WORKING_FOLDER_SCRATCH/consensus/consensus_dir_chunked_July22 \
 2 \
 32 \
 $shiftn > cns_log.txt 2>&1
