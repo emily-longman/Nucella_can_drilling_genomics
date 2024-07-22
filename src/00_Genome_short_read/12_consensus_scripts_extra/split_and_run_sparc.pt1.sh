@@ -30,8 +30,7 @@ alias Sparc="/gpfs1/home/e/l/elongman/software/Sparc"
 #clean the directory first  --- no longer required
 #find ${split_dir} -name "backbone-*" -delete
 
-/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/
-./split_reads_by_backbone.py -b ${backbone_fasta} -o ${split_dir} -r ${reads_fasta} -c ${consensus_fasta} -s ${nshift}
+/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/00_Genome_short_read/12_consensus_scripts_extra/split_reads_by_backbone.py -b ${backbone_fasta} -o ${split_dir} -r ${reads_fasta} -c ${consensus_fasta} -s ${nshift}
 
 #===#for file in $(find ${split_dir} -name "*.reads.fasta"); do
 #===#chunk=`basename $file .reads.fasta`
