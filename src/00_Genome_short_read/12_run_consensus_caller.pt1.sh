@@ -39,7 +39,6 @@
 # Load modules
 module load blasr
 spack load python/python-2.7.18
-#module load python/python-2.7.5
 
 #--------------------------------------------------------------------------------
 
@@ -56,7 +55,7 @@ WORKING_FOLDER_NETFILES=/netfiles/pespenilab_share/Nucella/processed/Base_Genome
 #cons_info=$WORKING_FOLDER_SCRATCH/DBG2OLC/DBG2OLC_KmC_2_MinOv_100_Adth_0.01/DBG2OLC_Consensus_info.txt
 #(3) DBG contigs (in fasta format)
 Contigs=$WORKING_FOLDER_NETFILES/SparseAssembler/SparseAssembler_101_2_1/Contigs.txt
-#(4) ONT reads (in fasta format)
+#(4) ONT reads (in fasta format) - converted in step 9
 ONT_FA=$WORKING_FOLDER_SCRATCH/consensus/Nuc.2000.fltlong.FQtoFA.fasta
 
 cat $Contigs $ONT_FA > ctg_ont.fasta
@@ -78,10 +77,6 @@ echo $shiftn
 #var2=$(echo "^>Backbone_${final_bck}$" ) 
 #echo $var1 $var2
 
-###please run as
-#-># sbatch --reservation=jcnunez_test  run_consesus_caller.sh
-###please run as
-
 #--------------------------------------------------------------------------------
 
 hostname
@@ -97,7 +92,7 @@ ulimit -n
 #echo "ulimit after change"
 #ulimit -n
 
-# change some stuff
+# change permissions
 chmod 777 *
 
 #--------------------------------------------------------------------------------
@@ -114,13 +109,16 @@ fi
 
 #--------------------------------------------------------------------------------
 
-### Run consensus
+# Run consensus
 
 # Change to consensus directory
 cd $WORKING_FOLDER_SCRATCH/consensus
 
+/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/00_Genome_short_read/12_consensus_scripts_extra/split_and_run_sparc.pt1.sh
+
 ### Run consensus
-sh split_and_run_sparc.pt1.sh \
+# Note: split_and_run_sparc.pt1.sh needs to be in the same directory where running 
+sh /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/00_Genome_short_read/12_consensus_scripts_extra/split_and_run_sparc.pt1.sh \
 gen_chunks/gen_chunks.$init_bck.$final_bck.fasta \
 chunks/chunk.$init_bck.$final_bck.txt \
 ctg_ont.fasta \
