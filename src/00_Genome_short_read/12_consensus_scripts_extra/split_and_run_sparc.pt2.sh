@@ -25,7 +25,7 @@ echo $nshift
 
 ### Make some aliaces
 #alias blasr="/gpfs1/home/j/c/jcnunez/software/blasrmc/alignment/bin/blasrmc"
-alias Sparc="/gpfs1/home/j/c/jcnunez/software/DBG2OLC/compiled/Sparc"
+alias Sparc="/gpfs1/home/e/l/elongman/software/Sparc"
 
 #clean the directory first  --- no longer required
 #find ${split_dir} -name "backbone-*" -delete
@@ -33,40 +33,40 @@ alias Sparc="/gpfs1/home/j/c/jcnunez/software/DBG2OLC/compiled/Sparc"
 #===#./split_reads_by_backbone.py -b ${backbone_fasta} -o ${split_dir} -r ${reads_fasta} -c ${consensus_fasta} -s ${nshift}
 
 for file in $(find ${split_dir} -name "*.reads.fasta"); do
-    chunk=`basename $file .reads.fasta`
+chunk=`basename $file .reads.fasta`
 
-    cmd=""
-       for iter in `seq 1 ${iterations}`; do
-       # create this to shorten the subsequent commands to more readable length
-       # I think I got them all substituted correctly.
-       d="${split_dir}/${chunk}"
-       cmd="blasr -nproc $ncpus ${d}.reads.fasta ${d}.fasta -bestn 1 -m 5 -minMatch 19 -out ${d}.mapped.m5"
-       echo $cmd ; eval $cmd
-       cmd="Sparc m ${d}.mapped.m5 b ${d}.fasta k 1 c 2 g 1 HQ_Prefix Contig boost 5 t 0.2 o ${d}"
-       echo $cmd ; eval $cmd        
-       if [[ ${iter} -lt ${iterations} ]]
-       then
-       # rename
-           cmd="mv ${d}.consensus.fasta ${d}.fasta"
-           echo $cmd ; eval $cmd
-       fi
-   done
+cmd=""
+for iter in `seq 1 ${iterations}`; do
+# create this to shorten the subsequent commands to more readable length
+# I think I got them all substituted correctly.
+d="${split_dir}/${chunk}"
+cmd="blasr -nproc $ncpus ${d}.reads.fasta ${d}.fasta -bestn 1 -m 5 -minMatch 19 -out ${d}.mapped.m5"
+echo $cmd ; eval $cmd
+cmd="Sparc m ${d}.mapped.m5 b ${d}.fasta k 1 c 2 g 1 HQ_Prefix Contig boost 5 t 0.2 o ${d}"
+echo $cmd ; eval $cmd        
+if [[ ${iter} -lt ${iterations} ]]
+then
+# rename
+cmd="mv ${d}.consensus.fasta ${d}.fasta"
+echo $cmd ; eval $cmd
+fi
+done
 
-    echo $cmd
-    eval $cmd
+echo $cmd
+eval $cmd
 
 
-    #to save space
-    cmd="rm ${split_dir}/${chunk}.mapped.m5"
-    echo $cmd
-    eval $cmd
-    cmd="rm ${split_dir}/${chunk}.reads.fasta"
-    echo $cmd
-    eval $cmd
+#to save space
+cmd="rm ${split_dir}/${chunk}.mapped.m5"
+echo $cmd
+eval $cmd
+cmd="rm ${split_dir}/${chunk}.reads.fasta"
+echo $cmd
+eval $cmd
 
 done
 
 for confile in $(find ${split_dir} -name "*.consensus.fasta"); do
-	cmd="cat ${confile};"
-	eval $cmd
-done > /gpfs2/scratch/jcnunez/barnacle_genome/test_conses/final_assembly.fasta
+cmd="cat ${confile};"
+eval $cmd
+done > /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly/consensus/final_assembly.fasta
