@@ -57,9 +57,10 @@ cd $WORKING_FOLDER_SCRATCH/consensus
 #cons_info=$WORKING_FOLDER_SCRATCH/DBG2OLC/DBG2OLC_KmC_2_MinOv_100_Adth_0.01/DBG2OLC_Consensus_info.txt
 #(3) DBG contigs (in fasta format)
 Contigs=$WORKING_FOLDER_NETFILES/SparseAssembler/SparseAssembler_101_2_1/Contigs.txt
-#(4) ONT reads (in fasta format) - converted in step 9
+#(4) ONT reads (in fasta format) - converted in step 9 part 1
 ONT_FA=$WORKING_FOLDER_SCRATCH/consensus/Nuc.2000.fltlong.FQtoFA.fasta
 
+# Cat contigs and the raw reads for consensus - cat in step 9 part 2
 #cat $Contigs $ONT_FA > ctg_ont.fasta
 
 #--------------------------------------------------------------------------------
