@@ -76,13 +76,21 @@ echo $init_bck $final_bck
 shiftn=`expr $init_bck - 1`
 echo $shiftn
 
-#var1=$(echo "^>Backbone_${init_bck}$" ) 
-#var2=$(echo "^>Backbone_${final_bck}$" ) 
-#echo $var1 $var2
-
 #--------------------------------------------------------------------------------
 
-hostname
+# Move to working directory
+cd $WORKING_FOLDER_SCRATCH/consensus
+
+# Generate Folders and files
+
+# This part of the script will check and generate, if necessary, all of the output folders used in the script
+
+if [ -d "consensus_dir_chunked_July2024" ]
+then echo "Working consensus_dir_chunked_July2024 folder exist"; echo "Let's move on."; date
+else echo "Working consensus_dir_chunked_July2024 folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/consensus/consensus_dir_chunked_July2024; date
+fi
+
+#--------------------------------------------------------------------------------
 
 # We need to open a lot of files to distribute the above file into lots of smaller files
 
@@ -99,19 +107,6 @@ ulimit -n
 chmod 777 *
 
 #--------------------------------------------------------------------------------
-# Move to working directory
-cd $WORKING_FOLDER_SCRATCH/consensus
-
-# Generate Folders and files
-
-# This part of the script will check and generate, if necessary, all of the output folders used in the script
-
-if [ -d "consensus_dir_chunked_July22" ]
-then echo "Working consensus_dir_chunked_July22 folder exist"; echo "Let's move on."; date
-else echo "Working consensus_dir_chunked_July22 folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/consensus/consensus_dir_chunked_July22; date
-fi
-
-#--------------------------------------------------------------------------------
 
 # Run consensus
 
@@ -121,10 +116,10 @@ cd $WORKING_FOLDER_SCRATCH/consensus
 ### Run consensus
 # Note: split_and_run_sparc.pt1.sh needs to be in the same directory where running 
 sh /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/00_Genome_short_read/12_consensus_scripts_extra/split_and_run_sparc.pt1.sh \
-gen_chunks/gen_chunks.$init_bck.$final_bck.fasta \
-chunks/chunk.$init_bck.$final_bck.txt \
+gen_chunks/gen_chunks.${init_bck}.${final_bck}.fasta \
+chunks/chunk.${init_bck}.${final_bck}.txt \
 ctg_ont.fasta \
-$WORKING_FOLDER_SCRATCH/consensus/consensus_dir_chunked_July22 \
+$WORKING_FOLDER_SCRATCH/consensus/consensus_dir_chunked_July2024 \
 2 \
 32 \
 $shiftn > cns_log.txt 2>&1
