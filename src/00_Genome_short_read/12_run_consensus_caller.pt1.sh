@@ -38,7 +38,7 @@
 
 # Load modules
 module load blasr
-spack load python/python-2.7.18
+spack load python@2.7.18
 
 #--------------------------------------------------------------------------------
 
