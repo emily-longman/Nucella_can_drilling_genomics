@@ -21,7 +21,7 @@
 #SBATCH --mem=50G
 
 # Submit job array
-#SBATCH --array=1-559
+#SBATCH --array=1-559%15
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH -o ./slurmOutput/consensus_pt1.%A_%a.out # Standard output
