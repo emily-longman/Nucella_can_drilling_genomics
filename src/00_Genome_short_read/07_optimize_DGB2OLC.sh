@@ -24,7 +24,7 @@
 #SBATCH --mem=900G
 
 # Submit job array
-#SBATCH --array=1-60
+#SBATCH --array=1-12
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/DBG2OLC_array.%A_%a.out # Standard output
@@ -59,7 +59,8 @@ compressed_ONT=$WORKING_FOLDER/DBG2OLC/DBG2OLC_2_20_0.015/ReadsInfoFrom_Nuc.2000
 
 #--------------------------------------------------------------------------------
 
-### Read guide files (split up into two guide files becuase so many assembly outputs)
+### Read guide files (split up into two guide files becuase so many assembly outputs) 
+#NOTE: as switch guide files will need to update the array
 
 # This is a guide file with all of the parameter combinations
 # kmerCovTh = 2, 4, 6, 8, 10
