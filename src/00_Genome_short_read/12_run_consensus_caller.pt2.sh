@@ -8,7 +8,7 @@
 #SBATCH --job-name=consensus_pt2
 
 # Specify partition
-#SBATCH --partition=bluemoon
+#SBATCH --partition=bigmem
 
 # Request nodes
 #SBATCH --nodes=1 
@@ -18,10 +18,10 @@
 #SBATCH --time=28:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
-#SBATCH --mem=50G
+#SBATCH --mem=200G
 
 # Submit job array
-#SBATCH --array=1-559
+#SBATCH --array=1-559%15
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH -o ./slurmOutput/consensus_pt2.%A_%a.out # Standard output
@@ -112,8 +112,7 @@ chmod 777 *
 # Change to consensus directory
 cd $WORKING_FOLDER_SCRATCH/consensus
 
-### Run consensus
-# Note: split_and_run_sparc.pt1.sh needs to be in the same directory where running 
+### Run consensus (i.e. run split_and_run_sparc.pt2.sh)
 sh /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/00_Genome_short_read/12_consensus_scripts_extra/split_and_run_sparc.pt2.sh \
 gen_chunks/gen_chunks.${init_bck}.${final_bck}.fasta \
 chunks/chunk.${init_bck}.${final_bck}.txt \

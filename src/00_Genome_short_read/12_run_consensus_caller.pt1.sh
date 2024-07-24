@@ -113,8 +113,7 @@ chmod 777 *
 # Change to consensus directory
 cd $WORKING_FOLDER_SCRATCH/consensus
 
-### Run consensus
-# Note: split_and_run_sparc.pt1.sh needs to be in the same directory where running 
+### Run consensus (i.e. run split_and_run_sparc.pt1.sh)
 sh /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/00_Genome_short_read/12_consensus_scripts_extra/split_and_run_sparc.pt1.sh \
 gen_chunks/gen_chunks.${init_bck}.${final_bck}.fasta \
 chunks/chunk.${init_bck}.${final_bck}.txt \
