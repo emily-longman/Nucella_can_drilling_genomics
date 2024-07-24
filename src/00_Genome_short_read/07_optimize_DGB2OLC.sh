@@ -15,7 +15,7 @@
 #SBATCH --ntasks-per-node=1  
 
 # Request CPUs per task
-#SBATCH -c 1
+#SBATCH --cpus-per-task=1
 
 # Reserve walltime -- hh:mm:ss --30 hour limit
 #SBATCH --time=07-00:00:00 

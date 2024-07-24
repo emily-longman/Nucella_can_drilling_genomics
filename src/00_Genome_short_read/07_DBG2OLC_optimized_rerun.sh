@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=DBG2OLC_rerun
+#SBATCH --job-name=DBG2OLC_rerun2
 
 # Specify partition
 #SBATCH --partition=bigmemwk
@@ -15,7 +15,7 @@
 #SBATCH --ntasks-per-node=1  
 
 # Request CPUs per task
-#SBATCH -c 1
+#SBATCH --cpus-per-task=1
 
 # Reserve walltime -- hh:mm:ss --30 hour limit
 #SBATCH --time=07-00:00:00 
