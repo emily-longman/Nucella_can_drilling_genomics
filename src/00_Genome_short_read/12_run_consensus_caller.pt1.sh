@@ -47,8 +47,6 @@ WORKING_FOLDER_SCRATCH=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/dat
 WORKING_FOLDER_NETFILES=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/short_read_assembly
 
 #--------------------------------------------------------------------------------
-# Change to consensus directory
-cd $WORKING_FOLDER_SCRATCH/consensus
 
 # Input files for consensus: 
 #(1) backbone_raw.fasta by DBG2OLC
@@ -70,6 +68,7 @@ guide=$WORKING_FOLDER_SCRATCH/consensus/dat.win.partitions.txt
 
 echo ${SLURM_ARRAY_TASK_ID}
 
+# Using the guide file, delete the first row (i.e., the column headers), print the first column, then extract the row based on the Slurm array task ID
 init_bck=$(cat ${guide} | sed '1d' | awk '{print $1}' | sed "${SLURM_ARRAY_TASK_ID}q;d")
 final_bck=$(cat ${guide} | sed '1d' | awk '{print $2}' | sed "${SLURM_ARRAY_TASK_ID}q;d")
 echo $init_bck $final_bck
@@ -95,8 +94,8 @@ fi
 # We need to open a lot of files to distribute the above file into lots of smaller files
 
 # Show the ulimit at startup
-echo "ulimit at startup"
-ulimit -n
+#echo "ulimit at startup"
+#ulimit -n
 # Change the limit
 #ulimit -n 1048576
 # Show new value
@@ -114,7 +113,7 @@ chmod 777 *
 cd $WORKING_FOLDER_SCRATCH/consensus
 
 ### Run consensus (i.e. run split_and_run_sparc.pt1.sh)
-sh /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/00_Genome_short_read/12_consensus_scripts_extra/split_and_run_sparc.pt1.sh \
+/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/00_Genome_short_read/12_consensus_scripts_extra/split_and_run_sparc.pt1.sh \
 gen_chunks/gen_chunks.${init_bck}.${final_bck}.fasta \
 chunks/chunk.${init_bck}.${final_bck}.txt \
 ctg_ont.fasta \

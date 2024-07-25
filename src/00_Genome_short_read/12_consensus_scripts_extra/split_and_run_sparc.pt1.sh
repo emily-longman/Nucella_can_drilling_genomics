@@ -3,13 +3,13 @@
 ###
 # USAGE: ./split_and_run_sparc.sh [BACKBONE_FASTA] [CONSENSUS_FASTA] [READS_FASTA] [OUTPUT_DIR] [ITERATIONS] ###
 
-backbone_fasta=$1
-consensus_fasta=$2
-reads_fasta=$3
-split_dir=$4
-iterations=$5
-ncpus=$6
-nshift=$7
+backbone_fasta=$1 #backbone broken into chunks
+consensus_fasta=$2 #text file with contig names in chunks
+reads_fasta=$3 #contigs and raw ONT reads catted together
+split_dir=$4 #file output directory 
+iterations=$5 #set to 2
+ncpus=$6 #set to 32
+nshift=$7 #shiftn
 
 echo $backbone_fasta
 echo $consensus_fasta
@@ -24,7 +24,7 @@ echo $nshift
 ##split_reads_by_backbone.py
 
 ### Make some aliaces
-#alias blasr="/gpfs1/home/j/c/jcnunez/software/blasrmc/alignment/bin/blasrmc"
+#alias blasr="/gpfs1/home/j/c/jcnunez/software/blasrmc/alignment/bin/blasrmc" #now loaded from the VACC
 alias Sparc="/gpfs1/home/e/l/elongman/software/Sparc"
 
 #clean the directory first  --- no longer required

@@ -8,7 +8,7 @@
 #SBATCH --job-name=consensus_pt3
 
 # Specify partition
-#SBATCH --partition=bluemoon
+#SBATCH --partition=bigmem
 
 # Request nodes
 #SBATCH --nodes=1 
@@ -18,7 +18,7 @@
 #SBATCH --time=28:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
-#SBATCH --mem=50G
+#SBATCH --mem=300G
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/%x_%j.out # Standard output
