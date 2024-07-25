@@ -21,10 +21,10 @@
 #SBATCH --mem=700G
 
 # Request CPUs
-
+#SBATCH --cpus-per-task=4
 
 # Submit job array
-#SBATCH --array=1-559%15
+#SBATCH --array=1-4 #NOTE!!! will need to update this to 1-559%15
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH -o ./slurmOutput/consensus_pt2.%A_%a.out # Standard output
@@ -41,7 +41,7 @@
 
 # Load modules
 module load blasr
-spack load python/python-2.7.18
+spack load python@2.7.18
 
 #--------------------------------------------------------------------------------
 
@@ -73,6 +73,7 @@ guide=$WORKING_FOLDER_SCRATCH/consensus/dat.win.partitions.txt
 
 echo ${SLURM_ARRAY_TASK_ID}
 
+# Using the guide file, delete the first row (i.e., the column headers), print the first column, then extract the row based on the Slurm array task ID
 init_bck=$(cat ${guide} | sed '1d' | awk '{print $1}' | sed "${SLURM_ARRAY_TASK_ID}q;d")
 final_bck=$(cat ${guide} | sed '1d' | awk '{print $2}' | sed "${SLURM_ARRAY_TASK_ID}q;d")
 echo $init_bck $final_bck
@@ -97,8 +98,8 @@ fi
 # We need to open a lot of files to distribute the above file into lots of smaller files
 
 # Show the ulimit at startup
-echo "ulimit at startup"
-ulimit -n
+#echo "ulimit at startup"
+#ulimit -n
 # Change the limit
 #ulimit -n 1048576
 # Show new value
@@ -116,7 +117,7 @@ chmod 777 *
 cd $WORKING_FOLDER_SCRATCH/consensus
 
 ### Run consensus (i.e. run split_and_run_sparc.pt2.sh)
-sh /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/00_Genome_short_read/12_consensus_scripts_extra/split_and_run_sparc.pt2.sh \
+/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/00_Genome_short_read/12_consensus_scripts_extra/split_and_run_sparc.pt2.sh \
 gen_chunks/gen_chunks.${init_bck}.${final_bck}.fasta \
 chunks/chunk.${init_bck}.${final_bck}.txt \
 ctg_ont.fasta \
