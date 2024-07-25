@@ -66,7 +66,7 @@ eval $cmd
 
 done
 
-#for confile in $(find ${split_dir} -name "*.consensus.fasta"); do
-#cmd="cat ${confile};"
-#eval $cmd
-#done > /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly/consensus/final_assembly.fasta
+for confile in $(find ${split_dir} -name "*.consensus.fasta"); do
+cmd="cat ${confile};"
+eval $cmd
+done > /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly/consensus/final_assembly.${SLURM_ARRAY_TASK_ID}.fasta
