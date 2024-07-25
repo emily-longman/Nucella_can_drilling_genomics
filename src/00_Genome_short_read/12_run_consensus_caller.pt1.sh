@@ -121,5 +121,6 @@ $WORKING_FOLDER_SCRATCH/consensus/consensus_dir_chunked_July2024 \
 2 \
 32 \
 $shiftn > cns_log.txt 2>&1
+# 2>&1 redirects stderr to stdout
 
 echo "done"

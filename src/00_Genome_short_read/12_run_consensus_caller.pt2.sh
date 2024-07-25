@@ -18,7 +18,10 @@
 #SBATCH --time=28:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
-#SBATCH --mem=200G
+#SBATCH --mem=700G
+
+# Request CPUs
+
 
 # Submit job array
 #SBATCH --array=1-559%15
@@ -121,5 +124,6 @@ $WORKING_FOLDER_SCRATCH/consensus/consensus_dir_chunked_July2024 \
 2 \
 32 \
 $shiftn > cns_log.txt 2>&1
+# 2>&1 redirects stderr to stdout
 
 echo "done"
