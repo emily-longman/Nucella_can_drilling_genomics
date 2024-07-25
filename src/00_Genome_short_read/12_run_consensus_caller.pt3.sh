@@ -35,13 +35,24 @@ WORKING_FOLDER_NETFILES=/netfiles/pespenilab_share/Nucella/processed/Base_Genome
 
 #--------------------------------------------------------------------------------
 
-
 split_dir=$WORKING_FOLDER_SCRATCH/consensus/consensus_dir_chunked_July2024
-
-#--------------------------------------------------------------------------------
 
 # Cat files together to produce a final consensus
 for confile in $(find ${split_dir} -name "*.consensus.fasta"); do
 cmd="cat ${confile};"
 eval $cmd
 done > /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly/consensus/final_assembly.fasta
+
+#--------------------------------------------------------------------------------
+
+# OR could either cat smaller sections at the end of consensus pt2 (using the code below) then cat all of those parts together for a final consensus
+
+#for confile in $(find ${split_dir} -name "*.consensus.fasta"); do
+#cmd="cat ${confile};"
+#eval $cmd
+#done > /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly/consensus/final_assembly.${SLURM_ARRAY_TASK_ID}.fasta
+
+#for confile in $(find $WORKING_FOLDER_SCRATCH/consensus -name "final_assembly.*.fasta"); do
+#cmd="cat ${confile};"
+#eval $cmd
+#done > /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly/consensus/final_assembly.fasta

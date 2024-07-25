@@ -93,6 +93,11 @@ then echo "Working consensus_dir_chunked_July2024 folder exist"; echo "Let's mov
 else echo "Working consensus_dir_chunked_July2024 folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/consensus/consensus_dir_chunked_July2024; date
 fi
 
+if [ -d "final_assembly_chunked_July2024" ]
+then echo "Working final_assembly_chunked_July2024 folder exist"; echo "Let's move on."; date
+else echo "Working final_assembly_chunked_July2024 folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/consensus/final_assembly_chunked_July2024; date
+fi
+
 #--------------------------------------------------------------------------------
 
 # We need to open a lot of files to distribute the above file into lots of smaller files
