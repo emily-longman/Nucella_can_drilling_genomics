@@ -111,7 +111,12 @@ fi
 #echo "ulimit after change"
 #ulimit -n
 
-# change permissions
+# change permissions for consensus
+chmod 777 *
+
+
+# change permissions for accompanying scripts
+cd /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/00_Genome_short_read/12_consensus_scripts_extra
 chmod 777 *
 
 #--------------------------------------------------------------------------------
