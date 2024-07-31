@@ -93,9 +93,9 @@ then echo "Working consensus_dir_chunked_July2024 folder exist"; echo "Let's mov
 else echo "Working consensus_dir_chunked_July2024 folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/consensus/consensus_dir_chunked_July2024; date
 fi
 
-if [ -d "final_assembly_chunked_July2024" ]
-then echo "Working final_assembly_chunked_July2024 folder exist"; echo "Let's move on."; date
-else echo "Working final_assembly_chunked_July2024 folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/consensus/final_assembly_chunked_July2024; date
+if [ -d "final_assembly_chunked" ]
+then echo "Working final_assembly_chunked folder exist"; echo "Let's move on."; date
+else echo "Working final_assembly_chunked folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/consensus/final_assembly_chunked; date
 fi
 
 #--------------------------------------------------------------------------------
