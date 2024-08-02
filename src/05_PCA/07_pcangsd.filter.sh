@@ -113,7 +113,7 @@ SUFFIX="Nucella_poly_covmatrix"
 
 pcangsd -b ${INPUT}/Nucella_SNPs_flt.beagle.gz \
 -o ${OUTPUT}/${SUFFIX} \
--threads $CPU 
+-t $CPU 
 
 #python /netfiles/pespenilab_share/pcangsd/pcangsd.py \
 #-b ${INPUT}/Nucella_SNPs.beagle.gz \
