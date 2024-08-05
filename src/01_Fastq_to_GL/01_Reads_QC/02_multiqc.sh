@@ -29,7 +29,7 @@
 
 #--------------------------------------------------------------------------------
 
-# This script will initiate a pipeline which will do some quality QC on the reads and then will proceed to map the reads to a reference genome.
+# This script will initiate a pipeline which will do some quality QC on the reads.
 
 # Load modules 
 # Call package (installed with conda)
