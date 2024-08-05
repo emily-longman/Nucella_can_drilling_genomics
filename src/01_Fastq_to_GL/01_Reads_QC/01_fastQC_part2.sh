@@ -21,7 +21,7 @@
 #SBATCH --mem=20G
 
 # Submit job array
-#SBATCH --array=1-1152%20
+#SBATCH --array=1-576%20
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/fastQC.%A_%a.out # Standard output
@@ -32,7 +32,8 @@
 
 #--------------------------------------------------------------------------------
 
-# This script will initiate a pipeline which will do some quality QC on the reads and then will proceed to map the reads to a reference genome.
+# This script will initiate a pipeline which will do some quality QC on the reads.
+# Due to the number of fastq files and array limits, the QC is broken up into two arrays 
 
 # Load modules 
 # Call fastqc package 
@@ -56,14 +57,14 @@ PIPELINE=fastQC
 ## PREPARE GUIDE FILES
 ## Read guide files
 # This is a file with the name all the samples to be processed. One sample name per line with all the info.
-GUIDE_FILE=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL/Guide_Files/Guide_File_qc.txt
+GUIDE_FILE=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL/Guide_Files/Guide_File_qc_part2.txt
 
 #Example: -- the headers are just for descriptive purposes. The actual file has no headers.
 ##               File               Snail_ID  Sample#  Lane# 
-## FB1-1_S84_L002_R1_001.fastq.gz    FB1-1     S84     L002
-## FB1-1_S84_L002_R2_001.fastq.gz    FB1-1     S84     L002
-## FB1-1_S84_L007_R1_001.fastq.gz    FB1-1     S84     L007
-## FB1-1_S84_L007_R2_001.fastq.gz    FB1-1     S84     L007
+## HC5-10_140_L002_R1_001.fastq.gz   HC5-10    S140    L002
+## HC5-10_140_L002_R2_001.fastq.gz   HC5-10    S140    L002
+## HC5-10_140_L007_R1_001.fastq.gz   HC5-10    S140    L007
+## HC5-10_140_L007_R2_001.fastq.gz   HC5-10    S140    L007
 ## ...
 ## MP9-9_S191_L008_R1_001.fastq.gz   MP9-9    S191     L008
 ## MP9-9_S191_L008_R2_001.fastq.gz   MP9-9    S191     L008
