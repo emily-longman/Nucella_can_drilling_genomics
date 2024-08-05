@@ -65,8 +65,8 @@ GUIDE_FILE=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/
 ## FB1-1_S84_L007_R1_001.fastq.gz    FB1-1     S84     L007
 ## FB1-1_S84_L007_R2_001.fastq.gz    FB1-1     S84     L007
 ## ...
-## MP9-10_S26_L008_R1_001.fastq.gz   MP9-10    S26     L008
-## MP9-10_S26_L008_R2_001.fastq.gz   MP9-10    S26     L008
+## MP9-9_S191_L008_R1_001.fastq.gz   MP9-9    S191     L008
+## MP9-9_S191_L008_R2_001.fastq.gz   MP9-9    S191     L008
 
 #--------------------------------------------------------------------------------
 
