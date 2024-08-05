@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=fastQC 
+#SBATCH --job-name=fastQC_part1 
 
 # Specify partition
 #SBATCH --partition=bluemoon
