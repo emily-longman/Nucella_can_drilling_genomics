@@ -81,28 +81,28 @@ cd $WORKING_FOLDER
 
 # Run multiqc on all of the reads
 multiqc $FAST_QC_FOLDER \
--n multiqc_report_cleaned_all.html \
+-n multiqc_report_all.html \
 -o multiqc
 
 # Run multiqc on each of the lanes individually
 
 # Run multiqc on L002 
 multiqc $FAST_QC_FOLDER \
--n multiqc_report_cleaned_L002.html \
+-n multiqc_report_L002.html \
 --ignore "*L007*" \
 --ignore "*L008*" \
 -o multiqc
 
 # Run multiqc on L007
 multiqc $FAST_QC_FOLDER \
--n multiqc_report_cleaned_L002.html \
+-n multiqc_report_L007.html \
 --ignore "*L002*" \
 --ignore "*L008*" \
 -o multiqc
 
 # Run multiqc on L008 
 multiqc $FAST_QC_FOLDER \
--n multiqc_report_cleaned_L002.html \
+-n multiqc_report_L008.html \
 --ignore "*L002*" \
 --ignore "*L007*" \
 -o multiqc

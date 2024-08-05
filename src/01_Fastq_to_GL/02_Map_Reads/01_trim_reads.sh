@@ -56,10 +56,10 @@ PIPELINE=Trim_reads
 ## Read guide files
 # This is a file with the name all the samples to be processed. One sample name per line with all the info.
 
-SAMPLE_FILE=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL/GuideFile_trim_bam.txt
+SAMPLE_FILE=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL/Guide_File_trim_bam.txt
 
 #Example: -- the headers are just for descriptive purposes. The actual file has no headers.
-##               File1                             File2              Snail_ID  Sample#  Lane#    Merged_name    Merged_bam_name
+##               File1                             File2              Snail_ID  Sample#  Lane#    Paired_name      Bam_name
 ## FB1-1_S84_L002_R1_001.fastq.gz    FB1-1_S84_L002_R2_001.fastq.gz    FB1-1     S84     L002    FB1-1_S84_L002    FB1-1_S84
 ## FB1-1_S84_L007_R1_001.fastq.gz    FB1-1_S84_L007_R2_001.fastq.gz    FB1-1     S84     L007    FB1-1_S84_L007    FB1-1_S84
 ## FB1-1_S84_L008_R1_001.fastq.gz    FB1-1_S84_L008_R2_001.fastq.gz    FB1-1     S84     L008    FB1-1_S84_L008    FB1-1_S84
@@ -74,49 +74,91 @@ SAMPLE_FILE=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed
 i=`awk -F "\t" '{print $6}' $SAMPLE_FILE | sed "${SLURM_ARRAY_TASK_ID}q;d"`
 read1=`awk -F "\t" '{print $1}' $SAMPLE_FILE | sed "${SLURM_ARRAY_TASK_ID}q;d"`
 read2=`awk -F "\t" '{print $2}' $SAMPLE_FILE | sed "${SLURM_ARRAY_TASK_ID}q;d"`
-echo $i "+" $read1 "+" $read2
+echo ${i} "+" ${read1} "+" ${read2}
 
 #--------------------------------------------------------------------------------
 
-# This script loops through a set of files defined by MYSAMP, matching left and right reads
-# and cleans the raw data using fastp according to parameters set below
+# Move to working directory
+cd $WORKING_FOLDER
+# Move to logs direcotry
+cd logs
 
-# Define the sample code to anlayze
+# Begin Pipeline
 
-# For each file that has "_R1_001.fastq.gz" (read 1) in the name (the wildcard * allows for the different reps to be captured in the list)
-# Start a loop with this file as the input:
+# This part of the pipeline will generate log files to record warnings and completion status
 
-for READ1 in *_R1_001.fastq.gz
-do
+echo $PIPELINE
 
-# The partner to this file (read 2) can be found by replacing _R1_001.fastq.gz with _R2_001.fastq.gz
-# second part of the input for PE reads
+if [[ -e "${PIPELINE}.completion.log" ]]
+then echo "Completion log exist"; echo "Let's move on."; date
+else echo "Completion log doesnt exist. Let's fix that."; touch $WORKING_FOLDER/Logs/${PIPELINE}.completion.log; date
+fi
 
-READ2=${READ1/_R1_001.fastq.gz/_R2_001.fastq.gz}
+#--------------------------------------------------------------------------------
 
-# make the output file names: print the fastq name, replace _# with _#_clean
+# Generate Folders and files
 
-NAME1=$(echo $READ1 | sed "s/_R1/_R1_clean/g")
-NAME2=$(echo $READ2 | sed "s/_R2/_R2_clean/g")
+# Move to working directory
+cd $WORKING_FOLDER
 
-# print the input and output to screen 
+# This part of the script will check and generate, if necessary, all of the output folders used in the script
 
-echo $READ1 $READ2
-echo $NAME1 $NAME2
+if [ -d "trimmed_reads" ]
+then echo "Working trimmed_reads folder exist"; echo "Let's move on."; date
+else echo "Working trimmed_reads folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/trimmed_reads; date
+fi
 
-# call fastp
-/gpfs1/home/e/l/elongman/software/fastp -i ${READ1} -I ${READ2} \
--o /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/clean_Shortreads/${NAME1} \
--O /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/clean_Shortreads/${NAME2} \
+if [ -d "fastp_reports" ]
+then echo "Working fastp_reports folder exist"; echo "Let's move on."; date
+else echo "Working fastp_reports folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/fastp_reports; date
+fi
+
+#--------------------------------------------------------------------------------
+
+# Start pipeline
+
+# Move to working directory
+cd $WORKING_FOLDER
+
+# This script uses an array and matches left and right reads and cleans the raw data using fastp according to parameters set below
+# Decide on the trimming parameters based on fastQC step done before this script.
+
+echo ${i} "Trimming reads"
+
+# Call fastp and do some light trimming
+$fastp \
+-i $RAW_READS/${read1} \
+-I $RAW_READS/${read2} \
+-o $WORKING_FOLDER/trimmed_reads/${i}_R1_clean \
+-O $WORKING_FOLDER/trimmed_reads/${i}_R2_clean \
 --detect_adapter_for_pe \
 --trim_front1 12 \
 --trim_poly_g \
---thread 16 \
+--thread 6 \
 --cut_right \
---cut_window_size 6 \
+--cut_right_window_size 6 \
 --qualified_quality_phred 20 \
---length_required 35 \
---html /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/processed/fastp/${NAME1}.html \
---json /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/processed/fastp/${NAME1}.json
+--html $WORKING_FOLDER/fastp_reports/${i}_R1_clean.html \
+--json $WORKING_FOLDER/fastp_reports/${i}_R1_clean.json
 
-done
+# i = read 1
+# I = read 2
+# o & O = outputs
+# outputs .json and html for qc
+
+# Adapter trimming is enabled by default using overlap analysis, but for PE data you can also specify adapter sequence auto-detection by specifying --detect_adapter_for_pe
+# For read 1 of PE data, the front trimming settings are --trim_front1
+# Detect and trim polyG in read tails using --trim_poly_g
+# Per read cutting by quality options:
+### --cut_right: Move a sliding window from front to tail, if meet one window with mean quality < threshold, drop the bases in the window and the right part, then stop
+### --cut_right_window_size: The window size option for cut_right
+### --qualified_quality_phred: The quality vlue that a base is qualified 
+
+#--------------------------------------------------------------------------------
+# Inform that sample is done
+
+# This part of the pipeline will notify the completion of run i. 
+
+echo ${i} " completed" >> $WORKING_FOLDER/${PIPELINE}.completion.log
+
+echo "pipeline completed" $(date)
