@@ -159,6 +159,6 @@ $fastp \
 
 # This part of the pipeline will notify the completion of run i. 
 
-echo ${i} " completed" >> $WORKING_FOLDER/${PIPELINE}.completion.log
+echo ${i} " completed" >> $WORKING_FOLDER/Logs/${PIPELINE}.completion.log
 
 echo "pipeline completed" $(date)
