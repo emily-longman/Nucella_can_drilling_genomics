@@ -11,14 +11,14 @@
 #SBATCH --partition=bigmemwk
 
 # Request nodes
-#SBATCH --nodes=3 
+#SBATCH --nodes=1 
 #SBATCH --ntasks-per-node=1  
 
 # Reserve walltime -- hh:mm:ss --7 day limit
 #SBATCH --time=03-00:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
-#SBATCH --mem=900G
+#SBATCH --mem=400G
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/%x_%j.out # Standard output
@@ -86,6 +86,9 @@ cd $WORKING_FOLDER/DBG2OLC/DBG2OLC_${label}
 
 # Copy read information from previous run
 cp $compressed_ONT ./
+
+# change permissions
+chmod 777 *
 
 # Use DBG2OLC to construct short but accurate contigs  
 $DBG2OLC \
