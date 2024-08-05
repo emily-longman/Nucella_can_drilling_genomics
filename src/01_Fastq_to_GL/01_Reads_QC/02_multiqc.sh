@@ -5,14 +5,14 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=fastQC 
+#SBATCH --job-name=multiqc 
 
 # Specify partition
 #SBATCH --partition=bluemoon
 
 # Request nodes
 #SBATCH --nodes=1 
-#SBATCH --ntasks-per-node=5 
+#SBATCH --ntasks-per-node=2 
 
 # Reserve walltime -- hh:mm:ss --30 hrs max
 #SBATCH --time=8:00:00
@@ -20,11 +20,8 @@
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
 #SBATCH --mem=20G
 
-# Submit job array
-#SBATCH --array=1-1152%20
-
 # Name output of this job using %x=job-name and %j=job-id
-#SBATCH --output=./slurmOutput/fastQC.%A_%a.out # Standard output
+#SBATCH --output=./slurmOutput/%x_%j.out # Standard output
 
 # Receive emails when job begins and ends or fails
 #SBATCH --mail-type=ALL
@@ -35,8 +32,13 @@
 # This script will initiate a pipeline which will do some quality QC on the reads and then will proceed to map the reads to a reference genome.
 
 # Load modules 
-# Call fastqc package 
-spack load fastqc@0.11.7
+# Call package (installed with conda)
+module load python3.11-anaconda/2023.09-0
+source ${ANACONDA_ROOT}/etc/profile.d/conda.sh
+#conda create --name multiqc #If you haven't already done so, create and name the environment
+source activate multiqc #activate the environment
+#conda install -c bioconda multiqc # f you haven't already done so, install the program
+conda activate multiqc 
 
 #--------------------------------------------------------------------------------
 
@@ -48,31 +50,10 @@ RAW_READS=/netfiles/pespenilab_share/Nucella/raw/Shortreads/All_shortreads
 #Working folder is core folder where this pipeline is being run.
 WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL
 
+FAST_QC_FOLDER=$WORKING_FOLDER/fastQC
+
 #Name of pipeline
-PIPELINE=fastQC
-
-#--------------------------------------------------------------------------------
-
-## PREPARE GUIDE FILES
-## Read guide files
-# This is a file with the name all the samples to be processed. One sample name per line with all the info.
-GUIDE_FILE=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL/Guide_Files/Guide_File_qc.txt
-
-#Example: -- the headers are just for descriptive purposes. The actual file has no headers.
-##               File               Snail_ID  Sample#  Lane# 
-## FB1-1_S84_L002_R1_001.fastq.gz    FB1-1     S84     L002
-## FB1-1_S84_L002_R2_001.fastq.gz    FB1-1     S84     L002
-## FB1-1_S84_L007_R1_001.fastq.gz    FB1-1     S84     L007
-## FB1-1_S84_L007_R2_001.fastq.gz    FB1-1     S84     L007
-## ...
-## MP9-10_S26_L008_R1_001.fastq.gz   MP9-10    S26     L008
-## MP9-10_S26_L008_R2_001.fastq.gz   MP9-10    S26     L008
-
-#--------------------------------------------------------------------------------
-
-# Determine sample to process, "i" and read files
-i=`awk -F "\t" '{print $1}' $GUIDE_FILE | sed "${SLURM_ARRAY_TASK_ID}q;d"`
-echo ${i}
+PIPELINE=multiqc
 
 #--------------------------------------------------------------------------------
 
@@ -84,30 +65,53 @@ echo ${i}
 cd $WORKING_FOLDER
 
 # Generating new folders 
-if [ -d "fastQC" ]
-then echo "Working fastQC folder exist"; echo "Let's move on"; date
-else echo "Working fastQC folder doesnt exist. Let's fix that"; mkdir $WORKING_FOLDER/fastQC; date
+if [ -d "multiqc" ]
+then echo "Working multiqc folder exist"; echo "Let's move on"; date
+else echo "Working multiqc folder doesnt exist. Let's fix that"; mkdir $WORKING_FOLDER/multiqc; date
 fi
 
 #--------------------------------------------------------------------------------
 
-# Do QC on raw reads with fastqc
+# Run multiqc on the fastqc files
 
 # Move to working directory
 cd $WORKING_FOLDER
 
-echo -e $i "is now processing"
-date
-
 # Lets do some QC on the reads
-fastqc $RAW_READS/${i} \
---outdir $WORKING_FOLDER/fastQC
+
+# Run multiqc on all of the reads
+multiqc $FAST_QC_FOLDER \
+-n multiqc_report_cleaned_all.html \
+-o multiqc
+
+# Run multiqc on each of the lanes individually
+
+# Run multiqc on L002 
+multiqc $FAST_QC_FOLDER \
+-n multiqc_report_cleaned_L002.html \
+--ignore "*L007*" \
+--ignore "*L008*" \
+-o multiqc
+
+# Run multiqc on L007
+multiqc $FAST_QC_FOLDER \
+-n multiqc_report_cleaned_L002.html \
+--ignore "*L002*" \
+--ignore "*L008*" \
+-o multiqc
+
+# Run multiqc on L008 
+multiqc $FAST_QC_FOLDER \
+-n multiqc_report_cleaned_L002.html \
+--ignore "*L002*" \
+--ignore "*L007*" \
+-o multiqc
 
 #--------------------------------------------------------------------------------
-# Inform that sample is done
 
 # This part of the pipeline will produce a notification stating the completion of the script. 
 
-echo ${i} " completed"
-
 echo "pipeline" ${PIPELINE} $(date)
+
+# Deactivate conda
+conda deactivate
