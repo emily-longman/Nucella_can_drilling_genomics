@@ -56,7 +56,7 @@ PIPELINE=Trim_reads
 ## Read guide files
 # This is a file with the name all the samples to be processed. One sample name per line with all the info.
 
-SAMPLE_FILE=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL/Guide_File_trim_bam.txt
+GUIDE_FILE=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL/Guide_Files/Guide_File_trim_bam.txt
 
 #Example: -- the headers are just for descriptive purposes. The actual file has no headers.
 ##               File1                             File2              Snail_ID  Sample#  Lane#    Paired_name      Bam_name
@@ -71,21 +71,19 @@ SAMPLE_FILE=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed
 #--------------------------------------------------------------------------------
 
 # Determine sample to process, "i" and read files
-i=`awk -F "\t" '{print $6}' $SAMPLE_FILE | sed "${SLURM_ARRAY_TASK_ID}q;d"`
-read1=`awk -F "\t" '{print $1}' $SAMPLE_FILE | sed "${SLURM_ARRAY_TASK_ID}q;d"`
-read2=`awk -F "\t" '{print $2}' $SAMPLE_FILE | sed "${SLURM_ARRAY_TASK_ID}q;d"`
+i=`awk -F "\t" '{print $6}' $GUIDE_FILE | sed "${SLURM_ARRAY_TASK_ID}q;d"`
+read1=`awk -F "\t" '{print $1}' $GUIDE_FILE | sed "${SLURM_ARRAY_TASK_ID}q;d"`
+read2=`awk -F "\t" '{print $2}' $GUIDE_FILE | sed "${SLURM_ARRAY_TASK_ID}q;d"`
 echo ${i} "+" ${read1} "+" ${read2}
 
 #--------------------------------------------------------------------------------
 
+# This part of the pipeline will generate log files to record warnings and completion status
+
 # Move to working directory
 cd $WORKING_FOLDER
 # Move to logs direcotry
-cd logs
-
-# Begin Pipeline
-
-# This part of the pipeline will generate log files to record warnings and completion status
+cd Logs
 
 echo $PIPELINE
 
