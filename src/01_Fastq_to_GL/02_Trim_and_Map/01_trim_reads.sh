@@ -136,8 +136,8 @@ $fastp \
 --cut_right \
 --cut_right_window_size 6 \
 --qualified_quality_phred 20 \
---html $WORKING_FOLDER/fastp_reports/${i}_R1_clean.html \
---json $WORKING_FOLDER/fastp_reports/${i}_R1_clean.json
+--html $WORKING_FOLDER/fastp_reports/${i}_clean.html \
+--json $WORKING_FOLDER/fastp_reports/${i}_clean.json
 
 # i = read 1
 # I = read 2
