@@ -127,8 +127,8 @@ echo ${i} "Trimming reads"
 $fastp \
 -i $RAW_READS/${read1} \
 -I $RAW_READS/${read2} \
--o $WORKING_FOLDER/trimmed_reads/${i}_R1_clean \
--O $WORKING_FOLDER/trimmed_reads/${i}_R2_clean \
+-o $WORKING_FOLDER/trimmed_reads/${i}_R1_clean.fq.gz \
+-O $WORKING_FOLDER/trimmed_reads/${i}_R2_clean.fq.gz \
 --detect_adapter_for_pe \
 --trim_front1 12 \
 --trim_poly_g \
