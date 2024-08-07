@@ -59,9 +59,9 @@ cd $WORKING_FOLDER_SCRATCH/consensus
 #(2) DBG2OLC_Consensus_info.txt by DBG2OLC
 #cons_info=$WORKING_FOLDER_SCRATCH/DBG2OLC/DBG2OLC_KmC_2_MinOv_100_Adth_0.01/DBG2OLC_Consensus_info.txt
 #(3) DBG contigs (in fasta format)
-Contigs=$WORKING_FOLDER_NETFILES/SparseAssembler/SparseAssembler_101_2_1/Contigs.txt
+#Contigs=$WORKING_FOLDER_NETFILES/SparseAssembler/SparseAssembler_101_2_1/Contigs.txt
 #(4) ONT reads (in fasta format) - converted in step 9 part 1
-ONT_FA=$WORKING_FOLDER_SCRATCH/consensus/Nuc.2000.fltlong.FQtoFA.fasta
+#ONT_FA=$WORKING_FOLDER_SCRATCH/consensus/Nuc.2000.fltlong.FQtoFA.fasta
 
 # Cat contigs and the raw reads for consensus - cat in step 9 part 2
 #cat $Contigs $ONT_FA > ctg_ont.fasta
@@ -93,9 +93,9 @@ then echo "Working consensus_dir_chunked_Aug2024 folder exist"; echo "Let's move
 else echo "Working consensus_dir_chunked_Aug2024 folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/consensus/consensus_dir_chunked_Aug2024; date
 fi
 
-if [ -d "final_assembly_chunked" ]
-then echo "Working final_assembly_chunked folder exist"; echo "Let's move on."; date
-else echo "Working final_assembly_chunked folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/consensus/final_assembly_chunked; date
+if [ -d "final_assembly" ]
+then echo "Working final_assembly folder exist"; echo "Let's move on."; date
+else echo "Working final_assembly folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/consensus/final_assembly; date
 fi
 
 #--------------------------------------------------------------------------------
@@ -120,6 +120,9 @@ cd /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/00_Genome_short_rea
 chmod 777 *
 
 #--------------------------------------------------------------------------------
+
+# Move to working directory
+cd $WORKING_FOLDER_SCRATCH/consensus
 
 # Run consensus
 

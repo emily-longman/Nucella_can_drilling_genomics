@@ -50,8 +50,8 @@ cmd="Sparc m ${d}.mapped.m5 b ${d}.fasta k 1 c 2 g 1 HQ_Prefix Contig boost 5 t 
 echo $cmd ; eval $cmd        
 if [[ ${iter} -lt ${iterations} ]]
 then
-# rename
-cmd="mv ${d}.consensus.fasta ${d}.fasta" #Move this to the consensus dir
+# rename and move to final assembly directory
+cmd="mv ${d}.consensus.fasta $WORKING_FOLDER_SCRATCH/consensus/final_assembly/${d}.consensus.fasta"
 echo $cmd ; eval $cmd
 fi
 done
