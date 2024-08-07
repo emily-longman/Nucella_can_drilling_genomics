@@ -12,7 +12,7 @@
 
 # Request nodes
 #SBATCH --nodes=1 
-#SBATCH --ntasks-per-node=6
+#SBATCH --ntasks-per-node=1
 
 # Reserve walltime -- hh:mm:ss --30 hrs max
 #SBATCH --time=8:00:00 
@@ -24,7 +24,7 @@
 #SBATCH --array=1-576%20
 
 # Name output of this job using %x=job-name and %j=job-id
-#SBATCH --output=./slurmOutput/Trim_reads.%A_%a.out # Standard output
+#SBATCH --output=./slurmOutput/Map_reads.%A_%a.out # Standard output
 
 # Receive emails when job begins and ends or fails
 #SBATCH --mail-type=ALL
@@ -36,12 +36,9 @@
 
 # Load modules  
 spack load gcc@9.3.0
-spack load fastqc@0.11.7
 spack load samtools@1.10
 
 bwa=/netfiles/nunezlab/Shared_Resources/Software/bwa-mem2-2.2.1_x64-linux/bwa-mem2.avx2
-PICARD=/netfiles/nunezlab/Shared_Resources/Software/picard/build/libs/picard.jar
-qualimap=/netfiles/nunezlab/Shared_Resources/Software/qualimap_v2.2.1/qualimap
 
 #--------------------------------------------------------------------------------
 
@@ -52,9 +49,6 @@ RAW_READS=/netfiles/pespenilab_share/Nucella/raw/Shortreads/All_shortreads
 
 #Working folder is core folder where this pipeline is being run.
 WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL
-
-# CLEAN READS indicates the folder where the cleaned reads are stored.
-CLEAN_READS=$WORKING_FOLDER/trimmed_reads
 
 #This is the location where the reference genome and all its indexes are stored.
 REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_Aug2024/backbone_raw.fasta
@@ -104,11 +98,6 @@ cd $WORKING_FOLDER
 cd Logs
 
 echo $PIPELINE
-
-if [[ -e "${PIPELINE}.warning.log" ]]
-then echo "Completion log exist"; echo "Let's move on."; date
-else echo "Completion log doesnt exist. Let's fix that."; touch $WORKING_FOLDER/Logs/${PIPELINE}.warning.log; date
-fi
 
 if [[ -e "${PIPELINE}.completion.log" ]]
 then echo "Completion log exist"; echo "Let's move on."; date

@@ -5,14 +5,14 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=Map_reads
+#SBATCH --job-name=Filter_bams
 
 # Specify partition
 #SBATCH --partition=bluemoon
 
 # Request nodes
 #SBATCH --nodes=1 
-#SBATCH --ntasks-per-node=6
+#SBATCH --ntasks-per-node=1
 
 # Reserve walltime -- hh:mm:ss --30 hrs max
 #SBATCH --time=8:00:00 
@@ -24,7 +24,7 @@
 #SBATCH --array=1-576%20
 
 # Name output of this job using %x=job-name and %j=job-id
-#SBATCH --output=./slurmOutput/Trim_reads.%A_%a.out # Standard output
+#SBATCH --output=./slurmOutput/Filter_bams.%A_%a.out # Standard output
 
 # Receive emails when job begins and ends or fails
 #SBATCH --mail-type=ALL
@@ -32,10 +32,8 @@
 
 #--------------------------------------------------------------------------------
 
-
-#--------------------------------------------------------------------------------
-
-# This script will map the reads with bwa mem.
+# This script will clean the bam files, specifically it will filter, sort and remove duplicates. 
+# I will also conduct an intermediary QC step with Qualimap. 
 
 # Load modules  
 spack load gcc@9.3.0
@@ -56,14 +54,11 @@ RAW_READS=/netfiles/pespenilab_share/Nucella/raw/Shortreads/All_shortreads
 #Working folder is core folder where this pipeline is being run.
 WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL
 
-# CLEAN READS indicates the folder where the cleaned reads are stored.
-CLEAN_READS=$WORKING_FOLDER/trimmed_reads
-
 #This is the location where the reference genome and all its indexes are stored.
 REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_Aug2024/backbone_raw.fasta
 
 #Name of pipeline
-PIPELINE=Map_reads
+PIPELINE=Filter_bams
 
 #--------------------------------------------------------------------------------
 
@@ -191,3 +186,13 @@ mv $WORKING_FOLDER/sams/${i}.flagstats_raw.sam.txt \
 $WORKING_FOLDER/mapping_stats
 mv $WORKING_FOLDER/bams/${i}.dupstat.txt \
 $WORKING_FOLDER/mapping_stats
+
+
+#--------------------------------------------------------------------------------
+# Inform that sample is done
+
+# This part of the pipeline will notify the completion of run i. 
+
+echo ${i} " completed" >> $WORKING_FOLDER/Logs/${PIPELINE}.completion.log
+
+echo "pipeline completed" $(date)
