@@ -56,7 +56,7 @@ PIPELINE=Trim_reads
 ## Read guide files
 # This is a file with the name all the samples to be processed. One sample name per line with all the info.
 
-GUIDE_FILE=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL/Guide_Files/Guide_File_trim_bam.txt
+GUIDE_FILE=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL/Guide_Files/Guide_File_trim_map.txt
 
 #Example: -- the headers are just for descriptive purposes. The actual file has no headers.
 ##               File1                             File2              Snail_ID  Sample#  Lane#    Paired_name      Bam_name

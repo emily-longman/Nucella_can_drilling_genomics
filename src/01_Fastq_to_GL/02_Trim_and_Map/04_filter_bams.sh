@@ -32,6 +32,9 @@
 
 #--------------------------------------------------------------------------------
 
+
+#--------------------------------------------------------------------------------
+
 # This script will map the reads with bwa mem.
 
 # Load modules  
@@ -129,56 +132,62 @@ then echo "Working sams folder exist"; echo "Let's move on."; date
 else echo "Working sams folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/sams; date
 fi
 
-if [ -d "mapping_stats" ]
-then echo "Working mapping_stats folder exist"; echo "Let's move on."; date
-else echo "Working mapping_stats folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/mapping_stats; date
-fi
-
 if [ -d "bams" ]
 then echo "Working bams folder exist"; echo "Let's move on."; date
 else echo "Working bams folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/bams; date
 fi
 
-#--------------------------------------------------------------------------------
+if [ -d "mapping_stats" ]
+then echo "Working mapping_stats folder exist"; echo "Let's move on."; date
+else echo "Working mapping_stats folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/mapping_stats; date
+fi
 
-# Map reads to a reference
-
-# This part will map reads to the reference genome. After reads have been mapped, they will be compressed into bam files, 
-# sorted, and duplicates will be removed. I will also conduct an intermediary QC step with Qualimap. 
-# Because there are inherent QC steps here, I have avoided adding extra "warnings" in the log. 
-# Remember to take a look at the qualimap and the flagstat outputs to check for inconsistencies.
-
-# Start pipeline
-
-# Move to working directory
-cd $WORKING_FOLDER
-
-# Starting mapping
-echo "Begin mapping" ${i}
-  
-# I will conduct the mapping with BWA-MEM 2	
-$bwa mem -M -t $CPU $REFERENCE \
-$WORKING_FOLDER/trimmed_reads/${i}_R1_clean.fq.gz \
-$WORKING_FOLDER/trimmed_reads/${i}_R2_clean.fq.gz \
-> $WORKING_FOLDER/sams/${i}.sam
+if [ -d "bams_qualimap" ]
+then echo "Working joint_bams_qualimap folder exist"; echo "Let's move on."; date
+else echo "Working joint_bams_qualimap folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/joint_bams_qualimap; date
+fi
 
 #--------------------------------------------------------------------------------
 
-# I will now extract some summary stats
-samtools flagstat --threads $CPU \
-$WORKING_FOLDER/sams/${i}.sam \
-> $WORKING_FOLDER/mapping_stats/${i}.flagstats_raw.sam.txt
 
-# Build bam files
-samtools view -b -q $QUAL --threads $CPU  \
-$WORKING_FOLDER/sams/${i}.sam \
-> $WORKING_FOLDER/bams/${i}.bam
 
-#--------------------------------------------------------------------------------
-# Inform that sample is done
 
-# This part of the pipeline will notify the completion of run i. 
 
-echo ${i} " completed" >> $WORKING_FOLDER/Logs/${PIPELINE}.completion.log
 
-echo "pipeline completed" $(date)
+
+
+
+
+
+# Sort with picard
+# Notice that once a file has been sorted it is added the "srt" suffix
+java -Xmx$JAVAMEM -jar $PICARD SortSam \
+I=$WORKING_FOLDER/bams/${i}.bam \
+O=$WORKING_FOLDER/bams/${i}.srt.bam \
+SO=coordinate \
+VALIDATION_STRINGENCY=SILENT
+
+# Remove duplicates with picard
+# Notice that once a file has been sorted it is added the "rmdp" suffix
+java -Xmx$JAVAMEM -jar $PICARD MarkDuplicates \
+I=$WORKING_FOLDER/bams/${i}.srt.bam \
+O=$WORKING_FOLDER/bams/${i}.srt.rmdp.bam \
+M=$WORKING_FOLDER/bams/${i}.dupstat.txt \
+VALIDATION_STRINGENCY=SILENT REMOVE_DUPLICATES=true
+
+# Lets do QC on the bam file
+$qualimap bamqc \
+-bam $WORKING_FOLDER/bams/${i}.srt.rmdp.bam \
+-outdir $WORKING_FOLDER/mapping_stats/Qualimap_${i} \
+--java-mem-size=$JAVAMEM
+
+#J loop#	# Clean intermediate files
+#rm $WORKING_FOLDER/${j}_reads/${i}/${i}.${j}.sam
+#rm $WORKING_FOLDER/${j}_reads/${i}/${i}.${j}.bam
+#rm $WORKING_FOLDER/${j}_reads/${i}/${i}.${j}.srt.bam
+
+# Housekeeping
+mv $WORKING_FOLDER/sams/${i}.flagstats_raw.sam.txt \
+$WORKING_FOLDER/mapping_stats
+mv $WORKING_FOLDER/bams/${i}.dupstat.txt \
+$WORKING_FOLDER/mapping_stats
