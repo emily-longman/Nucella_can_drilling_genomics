@@ -54,9 +54,9 @@ WORKING_FOLDER_NETFILES=/netfiles/pespenilab_share/Nucella/processed/Base_Genome
 #(2) DBG2OLC_Consensus_info.txt by DBG2OLC
 #cons_info=$WORKING_FOLDER_SCRATCH/DBG2OLC/DBG2OLC_KmC_2_MinOv_100_Adth_0.01/DBG2OLC_Consensus_info.txt
 #(3) DBG contigs (in fasta format)
-Contigs=$WORKING_FOLDER_NETFILES/SparseAssembler/SparseAssembler_101_2_1/Contigs.txt
+#Contigs=$WORKING_FOLDER_NETFILES/SparseAssembler/SparseAssembler_101_2_1/Contigs.txt
 #(4) ONT reads (in fasta format) - converted in step 9 part 1
-ONT_FA=$WORKING_FOLDER_SCRATCH/consensus/Nuc.2000.fltlong.FQtoFA.fasta
+#ONT_FA=$WORKING_FOLDER_SCRATCH/consensus/Nuc.2000.fltlong.FQtoFA.fasta
 
 # Cat contigs and the raw reads for consensus - cat in step 9 part 2
 #cat $Contigs $ONT_FA > ctg_ont.fasta
@@ -84,9 +84,9 @@ cd $WORKING_FOLDER_SCRATCH/consensus
 
 # This part of the script will check and generate, if necessary, all of the output folders used in the script
 
-if [ -d "consensus_dir_chunked_July2024" ]
-then echo "Working consensus_dir_chunked_July2024 folder exist"; echo "Let's move on."; date
-else echo "Working consensus_dir_chunked_July2024 folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/consensus/consensus_dir_chunked_July2024; date
+if [ -d "consensus_dir_chunked_Aug2024" ]
+then echo "Working consensus_dir_chunked_Aug2024 folder exist"; echo "Let's move on."; date
+else echo "Working consensus_dir_chunked_Aug2024 folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/consensus/consensus_dir_chunked_Aug2024; date
 fi
 
 #--------------------------------------------------------------------------------
@@ -109,18 +109,17 @@ chmod 777 *
 
 # Run consensus
 
-# Change to consensus directory
-cd $WORKING_FOLDER_SCRATCH/consensus
-
 ### Run consensus (i.e. run split_and_run_sparc.pt1.sh)
-/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/00_Genome_short_read/12_consensus_scripts_extra/split_and_run_sparc.pt1.sh \
+sprun_pt1=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/00_Genome_short_read/12_consensus_scripts_extra/split_and_run_sparc.pt1.sh
+
+$sprun_pt1 \
 gen_chunks/gen_chunks.${init_bck}.${final_bck}.fasta \
 chunks/chunk.${init_bck}.${final_bck}.txt \
 ctg_ont.fasta \
-$WORKING_FOLDER_SCRATCH/consensus/consensus_dir_chunked_July2024 \
+$WORKING_FOLDER_SCRATCH/consensus/consensus_dir_chunked_Aug2024 \
 2 \
 32 \
-$shiftn > cns_log.txt 2>&1
+$shiftn > cns_log_pt1.txt 2>&1
 # 2>&1 redirects stderr to stdout
 
 echo "done"

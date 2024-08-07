@@ -88,9 +88,9 @@ cd $WORKING_FOLDER_SCRATCH/consensus
 
 # This part of the script will check and generate, if necessary, all of the output folders used in the script
 
-if [ -d "consensus_dir_chunked_July2024" ]
-then echo "Working consensus_dir_chunked_July2024 folder exist"; echo "Let's move on."; date
-else echo "Working consensus_dir_chunked_July2024 folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/consensus/consensus_dir_chunked_July2024; date
+if [ -d "consensus_dir_chunked_Aug2024" ]
+then echo "Working consensus_dir_chunked_Aug2024 folder exist"; echo "Let's move on."; date
+else echo "Working consensus_dir_chunked_Aug2024 folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/consensus/consensus_dir_chunked_Aug2024; date
 fi
 
 if [ -d "final_assembly_chunked" ]
@@ -123,18 +123,17 @@ chmod 777 *
 
 # Run consensus
 
-# Change to consensus directory
-cd $WORKING_FOLDER_SCRATCH/consensus
-
 ### Run consensus (i.e. run split_and_run_sparc.pt2.sh)
-/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/00_Genome_short_read/12_consensus_scripts_extra/split_and_run_sparc.pt2.sh \
+sprun_pt2=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/00_Genome_short_read/12_consensus_scripts_extra/split_and_run_sparc.pt2.sh
+
+$sprun_pt2 \
 gen_chunks/gen_chunks.${init_bck}.${final_bck}.fasta \
 chunks/chunk.${init_bck}.${final_bck}.txt \
 ctg_ont.fasta \
-$WORKING_FOLDER_SCRATCH/consensus/consensus_dir_chunked_July2024 \
+$WORKING_FOLDER_SCRATCH/consensus/consensus_dir_chunked_Aug2024 \
 2 \
 32 \
-$shiftn > cns_log.txt 2>&1
+$shiftn > cns_log_pt2.txt 2>&1
 # 2>&1 redirects stderr to stdout
 
 echo "done"

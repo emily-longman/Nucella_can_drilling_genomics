@@ -51,7 +51,7 @@ echo $cmd ; eval $cmd
 if [[ ${iter} -lt ${iterations} ]]
 then
 # rename
-cmd="mv ${d}.consensus.fasta ${d}.fasta"
+cmd="mv ${d}.consensus.fasta ${d}.fasta" #Move this to the consensus dir
 echo $cmd ; eval $cmd
 fi
 done
@@ -70,7 +70,7 @@ eval $cmd
 
 done
 
-for confile in $(find ${split_dir} -name "*.consensus.fasta"); do
-cmd="cat ${confile};"
-eval $cmd
-done > $WORKING_FOLDER_SCRATCH/consensus/final_assembly_chunked/final_assembly.${SLURM_ARRAY_TASK_ID}.fasta
+#for confile in $(find ${split_dir} -name "*.consensus.fasta"); do
+#cmd="cat ${confile};"
+#eval $cmd
+#done > $WORKING_FOLDER_SCRATCH/consensus/final_assembly_chunked/final_assembly.${SLURM_ARRAY_TASK_ID}.fasta
