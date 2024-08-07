@@ -18,7 +18,7 @@
 #SBATCH --time=8:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
-#SBATCH --mem=60G 
+#SBATCH --mem=40G 
 
 # Submit job array
 #SBATCH --array=1-576%20
