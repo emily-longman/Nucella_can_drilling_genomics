@@ -21,7 +21,7 @@
 #SBATCH --mem=60G 
 
 # Submit job array
-#SBATCH --array=1-2
+#SBATCH --array=1-576%20
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/Clean_bams.%A_%a.out # Standard output
@@ -129,11 +129,6 @@ then echo "Working bams_qualimap folder exist"; echo "Let's move on."; date
 else echo "Working bams_qualimap folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/bams_qualimap; date
 fi
 
-if [ -d "bams_qualimap_multi_bamqc" ]
-then echo "Working bams_qualimap_multi_bamqc folder exist"; echo "Let's move on."; date
-else echo "Working bams_qualimap_multi_bamqc folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/bams_qualimap_multi_bamqc; date
-fi
-
 #--------------------------------------------------------------------------------
 
 # Clean the bam files
@@ -188,14 +183,6 @@ $qualimap bamqc \
 # Housekeeping
 mv $WORKING_FOLDER/bams/${i}.dupstat.txt \
 $WORKING_FOLDER/mapping_stats
-
-#--------------------------------------------------------------------------------
-
-# Assess quality of all bam files
-$qualimap multi-bamqc \
--d $GUIDE_FILE \
--outdir $WORKING_FOLDER/Filtered_Bams_qualimap_multi_bamqc \
---java-mem-size=$JAVAMEM
 
 #--------------------------------------------------------------------------------
 
