@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=Filter_bams
+#SBATCH --job-name=Clean_bams
 
 # Specify partition
 #SBATCH --partition=bluemoon
@@ -18,13 +18,13 @@
 #SBATCH --time=8:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
-#SBATCH --mem=20G 
+#SBATCH --mem=60G 
 
 # Submit job array
-#SBATCH --array=1-576%20
+#SBATCH --array=1-2
 
 # Name output of this job using %x=job-name and %j=job-id
-#SBATCH --output=./slurmOutput/Filter_bams.%A_%a.out # Standard output
+#SBATCH --output=./slurmOutput/Clean_bams.%A_%a.out # Standard output
 
 # Receive emails when job begins and ends or fails
 #SBATCH --mail-type=ALL
@@ -36,11 +36,8 @@
 # I will also conduct an intermediary QC step with Qualimap. 
 
 # Load modules  
-spack load gcc@9.3.0
-spack load fastqc@0.11.7
 spack load samtools@1.10
 
-bwa=/netfiles/nunezlab/Shared_Resources/Software/bwa-mem2-2.2.1_x64-linux/bwa-mem2.avx2
 PICARD=/netfiles/nunezlab/Shared_Resources/Software/picard/build/libs/picard.jar
 qualimap=/netfiles/nunezlab/Shared_Resources/Software/qualimap_v2.2.1/qualimap
 
@@ -58,7 +55,7 @@ WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/proces
 REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_Aug2024/backbone_raw.fasta
 
 #Name of pipeline
-PIPELINE=Filter_bams
+PIPELINE=Clean_bams
 
 #--------------------------------------------------------------------------------
 
@@ -103,11 +100,6 @@ cd Logs
 
 echo $PIPELINE
 
-if [[ -e "${PIPELINE}.warning.log" ]]
-then echo "Completion log exist"; echo "Let's move on."; date
-else echo "Completion log doesnt exist. Let's fix that."; touch $WORKING_FOLDER/Logs/${PIPELINE}.warning.log; date
-fi
-
 if [[ -e "${PIPELINE}.completion.log" ]]
 then echo "Completion log exist"; echo "Let's move on."; date
 else echo "Completion log doesnt exist. Let's fix that."; touch $WORKING_FOLDER/Logs/${PIPELINE}.completion.log; date
@@ -122,14 +114,9 @@ cd $WORKING_FOLDER
 
 # This part of the script will check and generate, if necessary, all of the output folders used in the script
 
-if [ -d "sams" ]
-then echo "Working sams folder exist"; echo "Let's move on."; date
-else echo "Working sams folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/sams; date
-fi
-
-if [ -d "bams" ]
-then echo "Working bams folder exist"; echo "Let's move on."; date
-else echo "Working bams folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/bams; date
+if [ -d "bams_clean" ]
+then echo "Working bams_clean folder exist"; echo "Let's move on."; date
+else echo "Working bams_clean folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/bams_clean; date
 fi
 
 if [ -d "mapping_stats" ]
@@ -138,57 +125,80 @@ else echo "Working mapping_stats folder doesnt exist. Let's fix that."; mkdir $W
 fi
 
 if [ -d "bams_qualimap" ]
-then echo "Working joint_bams_qualimap folder exist"; echo "Let's move on."; date
-else echo "Working joint_bams_qualimap folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/joint_bams_qualimap; date
+then echo "Working bams_qualimap folder exist"; echo "Let's move on."; date
+else echo "Working bams_qualimap folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/bams_qualimap; date
+fi
+
+if [ -d "bams_qualimap_multi_bamqc" ]
+then echo "Working bams_qualimap_multi_bamqc folder exist"; echo "Let's move on."; date
+else echo "Working bams_qualimap_multi_bamqc folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/bams_qualimap_multi_bamqc; date
 fi
 
 #--------------------------------------------------------------------------------
 
+# Clean the bam files
 
+# These steps will sort the bams, and duplicates will be removed. I will also conduct an intermediary QC step with Qualimap. 
+# Remember to take a look at the qualimap and the flagstat outputs to check for inconsistencies.
 
+# Start pipeline
 
+# Move to working directory
+cd $WORKING_FOLDER
 
-
-
-
-
-
+# Filter merged bam files with samtools view and add flags
+samtools view \
+-b \
+-q $QUAL \
+-f 0x0002 -F 0x0004 -F 0x0008 \
+--threads $CPU  \
+$WORKING_FOLDER/bams/${i}.bam \
+> $WORKING_FOLDER/bams_clean/${i}.bam
+# -q = Skip alignments with MAPQ smaller than $QUAL (40)
+# 0x0002 = read mapped in proper pair (0x2)*
+# 0x0004 = read unmapped (0x4)
+# 0x0008 = mate unmapped (0x8)*
 
 # Sort with picard
 # Notice that once a file has been sorted it is added the "srt" suffix
 java -Xmx$JAVAMEM -jar $PICARD SortSam \
-I=$WORKING_FOLDER/bams/${i}.bam \
-O=$WORKING_FOLDER/bams/${i}.srt.bam \
+I=$WORKING_FOLDER/bams_clean/${i}.bam \
+O=$WORKING_FOLDER/bams_clean/${i}.srt.bam \
 SO=coordinate \
 VALIDATION_STRINGENCY=SILENT
 
 # Remove duplicates with picard
 # Notice that once a file has been sorted it is added the "rmdp" suffix
 java -Xmx$JAVAMEM -jar $PICARD MarkDuplicates \
-I=$WORKING_FOLDER/bams/${i}.srt.bam \
-O=$WORKING_FOLDER/bams/${i}.srt.rmdp.bam \
-M=$WORKING_FOLDER/bams/${i}.dupstat.txt \
+I=$WORKING_FOLDER/bams_clean/${i}.srt.bam \
+O=$WORKING_FOLDER/bams_clean/${i}.srt.rmdp.bam \
+M=$WORKING_FOLDER/bams_clean/${i}.dupstat.txt \
 VALIDATION_STRINGENCY=SILENT REMOVE_DUPLICATES=true
 
 # Lets do QC on the bam file
 $qualimap bamqc \
--bam $WORKING_FOLDER/bams/${i}.srt.rmdp.bam \
--outdir $WORKING_FOLDER/mapping_stats/Qualimap_${i} \
+-bam $WORKING_FOLDER/bams_clean/${i}.srt.rmdp.bam \
+-outdir $WORKING_FOLDER/bams_qualimap/Qualimap_${i} \
 --java-mem-size=$JAVAMEM
 
-#J loop#	# Clean intermediate files
-#rm $WORKING_FOLDER/${j}_reads/${i}/${i}.${j}.sam
-#rm $WORKING_FOLDER/${j}_reads/${i}/${i}.${j}.bam
-#rm $WORKING_FOLDER/${j}_reads/${i}/${i}.${j}.srt.bam
+# Clean intermediate files
+#rm $WORKING_FOLDER/bams_clean/${i}.bam
+#rm $WORKING_FOLDER/bams_clean/${i}.srt.bam
 
 # Housekeeping
-mv $WORKING_FOLDER/sams/${i}.flagstats_raw.sam.txt \
-$WORKING_FOLDER/mapping_stats
 mv $WORKING_FOLDER/bams/${i}.dupstat.txt \
 $WORKING_FOLDER/mapping_stats
 
+#--------------------------------------------------------------------------------
+
+# Assess quality of all bam files
+$qualimap multi-bamqc \
+-d $GUIDE_FILE \
+-outdir $WORKING_FOLDER/Filtered_Bams_qualimap_multi_bamqc \
+--java-mem-size=$JAVAMEM
 
 #--------------------------------------------------------------------------------
+
 # Inform that sample is done
 
 # This part of the pipeline will notify the completion of run i. 
