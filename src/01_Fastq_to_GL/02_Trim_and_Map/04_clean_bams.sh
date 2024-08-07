@@ -177,8 +177,8 @@ $qualimap bamqc \
 --java-mem-size=$JAVAMEM
 
 # Clean intermediate files
-#rm $WORKING_FOLDER/bams_clean/${i}.bam
-#rm $WORKING_FOLDER/bams_clean/${i}.srt.bam
+rm $WORKING_FOLDER/bams_clean/${i}.bam
+rm $WORKING_FOLDER/bams_clean/${i}.srt.bam
 
 # Housekeeping
 mv $WORKING_FOLDER/bams/${i}.dupstat.txt \
