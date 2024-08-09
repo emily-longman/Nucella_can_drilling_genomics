@@ -78,7 +78,6 @@ echo "done"
 cmd="blasr -nproc $ncpus consensus_dir_chunked_July2024/backbone-20841.reads.fasta consensus_dir_chunked_July2024/backbone-20841.fasta  -bestn 1 -m 5 -minMatch 19 -out TEST.mapped.m5"
 echo $cmd ; eval $cmd
 
-
 cmd="Sparc m TEST.mapped.m5 b consensus_dir_chunked_July2024/backbone-20841.fasta k 1 c 2 g 1 HQ_Prefix Contig boost 5 t 0.2 o TEST"
 echo $cmd ; eval $cmd     
 
@@ -101,14 +100,6 @@ ncpus=32
 nshift=$shiftn 
 #> cns_log_pt2.txt 2>&1
 
-backbone_fasta=$1 #backbone broken into chunks
-consensus_fasta=$2 #text file with contig names in chunks
-reads_fasta=$3 #contigs and raw ONT reads catted together
-split_dir=$4 #file output directory 
-iterations=$5 #set to 2
-ncpus=$6 #set to 32
-nshift=$7 #shiftn
-
 echo $backbone_fasta
 echo $consensus_fasta
 echo $reads_fasta
@@ -116,3 +107,49 @@ echo $split_dir
 echo $iterations
 echo $ncpus
 echo $nshift
+
+chunk=backbone-10004
+
+cmd=""
+
+d="${split_dir}/backbone-10004"
+#d="${split_dir}/${chunk}"
+cmd="blasr -nproc $ncpus ${d}.reads.fasta ${d}.fasta -bestn 1 -m 5 -minMatch 19 -out ${chunk}.mapped.m5"
+echo $cmd ; eval $cmd ;
+cmd="Sparc m ${chunk}.mapped.m5 b ${d}.fasta k 1 c 2 g 1 HQ_Prefix Contig boost 5 t 0.2 o ${chunk}"
+echo $cmd ; eval $cmd ;
+
+# rename and move to final assembly directory
+cmd="mv ${chunk}.consensus.fasta $WORKING_FOLDER_SCRATCH/consensus/final_assembly/${chunk}.consensus.fasta"
+echo $cmd ; eval $cmd ;
+
+cmd="rm ${chunk}.mapped.m5"
+echo $cmd
+eval $cmd
+cmd="rm ${split_dir}/${chunk}.reads.fasta"
+echo $cmd
+eval $cmd
+
+
+
+
+
+for file in $(find ${split_dir} -name "*.reads.fasta"); do
+chunk=`basename $file .reads.fasta`
+
+cmd=""
+for iter in `seq 1 ${iterations}`; do
+# create this to shorten the subsequent commands to more readable length
+# I think I got them all substituted correctly.
+d="${split_dir}/${chunk}"
+cmd="blasr -nproc $ncpus ${d}.reads.fasta ${d}.fasta -bestn 1 -m 5 -minMatch 19 -out ${d}.mapped.m5"
+echo $cmd ; eval $cmd
+cmd="Sparc m ${d}.mapped.m5 b ${d}.fasta k 1 c 2 g 1 HQ_Prefix Contig boost 5 t 0.2 o ${d}"
+echo $cmd ; eval $cmd        
+if [[ ${iter} -lt ${iterations} ]]
+then
+# rename and move to final assembly directory
+cmd="mv ${d}.consensus.fasta $WORKING_FOLDER_SCRATCH/consensus/final_assembly/${d}.consensus.fasta"
+echo $cmd ; eval $cmd
+fi
+done

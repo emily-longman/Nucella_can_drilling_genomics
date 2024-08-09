@@ -24,7 +24,7 @@
 #SBATCH --cpus-per-task=4
 
 # Submit job array
-#SBATCH --array=1-559%15
+#SBATCH --array=62-63 #1-559%15
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH -o ./slurmOutput/consensus_pt2.%A_%a.out # Standard output
