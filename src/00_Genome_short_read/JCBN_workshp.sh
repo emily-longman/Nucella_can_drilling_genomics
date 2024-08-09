@@ -85,3 +85,34 @@ echo $cmd ; eval $cmd
 d=TEST
 cmd="mv ${d}.consensus.fasta ${d}.fasta"
 echo $cmd ; eval $cmd
+
+
+
+###########################
+
+#Emily test
+
+backbone_fasta=gen_chunks/gen_chunks.${init_bck}.${final_bck}.fasta 
+consensus_fasta=chunks/chunk.${init_bck}.${final_bck}.txt
+reads_fasta=ctg_ont.fasta
+split_dir=$WORKING_FOLDER_SCRATCH/consensus/consensus_dir_chunked_Aug2024
+iterations=2
+ncpus=32
+nshift=$shiftn 
+#> cns_log_pt2.txt 2>&1
+
+backbone_fasta=$1 #backbone broken into chunks
+consensus_fasta=$2 #text file with contig names in chunks
+reads_fasta=$3 #contigs and raw ONT reads catted together
+split_dir=$4 #file output directory 
+iterations=$5 #set to 2
+ncpus=$6 #set to 32
+nshift=$7 #shiftn
+
+echo $backbone_fasta
+echo $consensus_fasta
+echo $reads_fasta
+echo $split_dir
+echo $iterations
+echo $ncpus
+echo $nshift

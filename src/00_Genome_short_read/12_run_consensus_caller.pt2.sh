@@ -51,7 +51,7 @@ WORKING_FOLDER_NETFILES=/netfiles/pespenilab_share/Nucella/processed/Base_Genome
 
 #--------------------------------------------------------------------------------
 # Change to consensus directory
-cd $WORKING_FOLDER_SCRATCH/consensus
+#cd $WORKING_FOLDER_SCRATCH/consensus
 
 # Input files for consensus: 
 #(1) backbone_raw.fasta by DBG2OLC
