@@ -21,7 +21,7 @@
 #SBATCH --mem=60G 
 
 # Submit job array
-#SBATCH --array=1-576%20
+#SBATCH --array=1-192%20
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/Merge_bams.%A_%a.out # Standard output
