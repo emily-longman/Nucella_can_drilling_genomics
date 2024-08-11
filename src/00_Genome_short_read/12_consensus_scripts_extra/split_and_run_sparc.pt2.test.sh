@@ -44,14 +44,14 @@ for iter in `seq 1 ${iterations}`; do
 # create this to shorten the subsequent commands to more readable length
 # I think I got them all substituted correctly.
 d="${split_dir}/${chunk}"
-cmd="blasr -nproc $ncpus ${d}.reads.fasta ${d}.fasta -bestn 1 -m 5 -minMatch 19 -out ${chunk}.mapped.m5"
-echo $cmd ; eval $cmd
-cmd="Sparc m ${chunk}.mapped.m5 b ${d}.fasta k 1 c 2 g 1 HQ_Prefix Contig boost 5 t 0.2 o ${chunk}"
-echo $cmd ; eval $cmd        
+cmd="blasr -nproc $ncpus ${d}.reads.fasta ${d}.fasta -bestn 1 -m 5 -minMatch 19 -out $WORKING_FOLDER_SCRATCH/consensus/${chunk}.mapped.m5"
+echo $cmd ; eval $cmd ;
+cmd="Sparc m $WORKING_FOLDER_SCRATCH/consensus/${chunk}.mapped.m5 b ${d}.fasta k 1 c 2 g 1 HQ_Prefix Contig boost 5 t 0.2 o $WORKING_FOLDER_SCRATCH/consensus/${chunk}"
+echo $cmd ; eval $cmd  ;      
 if [[ ${iter} -lt ${iterations} ]]
 then
 # rename and move to final assembly directory
-cmd="mv ${chunk}.consensus.fasta $WORKING_FOLDER_SCRATCH/consensus/final_assembly/${chunk}.consensus.fasta"
+cmd="mv $WORKING_FOLDER_SCRATCH/consensus/${chunk}.consensus.fasta $WORKING_FOLDER_SCRATCH/consensus/final_assembly/${chunk}.consensus.fasta"
 echo $cmd ; eval $cmd
 fi
 done
