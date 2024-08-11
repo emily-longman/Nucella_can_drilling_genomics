@@ -29,7 +29,8 @@ WORKING_FOLDER_NETFILES=/netfiles/pespenilab_share/Nucella/processed/Base_Genome
 
 ### Make some aliaces
 #alias blasr="/gpfs1/home/j/c/jcnunez/software/blasrmc/alignment/bin/blasrmc"
-alias Sparc="/gpfs1/home/e/l/elongman/software/Sparc"
+#alias Sparc="/gpfs1/home/e/l/elongman/software/Sparc"
+Sparc=/gpfs1/home/e/l/elongman/software/Sparc
 
 #clean the directory first  --- no longer required
 #find ${split_dir} -name "backbone-*" -delete
@@ -44,14 +45,16 @@ for iter in `seq 1 ${iterations}`; do
 # create this to shorten the subsequent commands to more readable length
 # I think I got them all substituted correctly.
 d="${split_dir}/${chunk}"
-cmd="blasr -nproc $ncpus ${d}.reads.fasta ${d}.fasta -bestn 1 -m 5 -minMatch 19 -out ${d}.mapped.m5"
-echo $cmd ; eval $cmd
-cmd="Sparc m ${d}.mapped.m5 b ${d}.fasta k 1 c 2 g 1 HQ_Prefix Contig boost 5 t 0.2 o ${d}"
-echo $cmd ; eval $cmd        
+#cmd="blasr -nproc $ncpus ${d}.reads.fasta ${d}.fasta -bestn 1 -m 5 -minMatch 19 -out $WORKING_FOLDER_SCRATCH/consensus/${chunk}.mapped.m5"
+#echo $cmd ; eval $cmd ;
+blasr -nproc $ncpus ${d}.reads.fasta ${d}.fasta -bestn 1 -m 5 -minMatch 19 -out $WORKING_FOLDER_SCRATCH/consensus/${chunk}.mapped.m5
+#cmd="Sparc m $WORKING_FOLDER_SCRATCH/consensus/${chunk}.mapped.m5 b ${d}.fasta k 1 c 2 g 1 HQ_Prefix Contig boost 5 t 0.2 o $WORKING_FOLDER_SCRATCH/consensus/${chunk}""
+#echo $cmd ; eval $cmd  ;      
+$Sparc m $WORKING_FOLDER_SCRATCH/consensus/${chunk}.mapped.m5 b ${d}.fasta k 1 c 2 g 1 HQ_Prefix Contig boost 5 t 0.2 o $WORKING_FOLDER_SCRATCH/consensus/${chunk}
 if [[ ${iter} -lt ${iterations} ]]
 then
 # rename and move to final assembly directory
-cmd="mv ${d}.consensus.fasta $WORKING_FOLDER_SCRATCH/consensus/final_assembly/${d}.consensus.fasta"
+cmd="mv $WORKING_FOLDER_SCRATCH/consensus/${chunk}.consensus.fasta $WORKING_FOLDER_SCRATCH/consensus/final_assembly/${chunk}.consensus.fasta"
 echo $cmd ; eval $cmd
 fi
 done
@@ -61,12 +64,12 @@ eval $cmd
 
 
 #to save space
-cmd="rm ${split_dir}/${chunk}.mapped.m5"
+cmd="rm ${chunk}.mapped.m5"
 echo $cmd
 eval $cmd
-cmd="rm ${split_dir}/${chunk}.reads.fasta"
-echo $cmd
-eval $cmd
+#cmd="rm ${split_dir}/${chunk}.reads.fasta"
+#echo $cmd
+#eval $cmd
 
 done
 
