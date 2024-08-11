@@ -29,7 +29,8 @@ WORKING_FOLDER_NETFILES=/netfiles/pespenilab_share/Nucella/processed/Base_Genome
 
 ### Make some aliaces
 #alias blasr="/gpfs1/home/j/c/jcnunez/software/blasrmc/alignment/bin/blasrmc"
-alias Sparc="/gpfs1/home/e/l/elongman/software/Sparc"
+#alias Sparc="/gpfs1/home/e/l/elongman/software/Sparc"
+Sparc=/gpfs1/home/e/l/elongman/software/Sparc
 
 #clean the directory first  --- no longer required
 #find ${split_dir} -name "backbone-*" -delete
@@ -46,7 +47,7 @@ for iter in `seq 1 ${iterations}`; do
 d="${split_dir}/${chunk}"
 cmd="blasr -nproc $ncpus ${d}.reads.fasta ${d}.fasta -bestn 1 -m 5 -minMatch 19 -out $WORKING_FOLDER_SCRATCH/consensus/${chunk}.mapped.m5"
 echo $cmd ; eval $cmd ;
-cmd="Sparc m $WORKING_FOLDER_SCRATCH/consensus/${chunk}.mapped.m5 b ${d}.fasta k 1 c 2 g 1 HQ_Prefix Contig boost 5 t 0.2 o $WORKING_FOLDER_SCRATCH/consensus/${chunk}"
+cmd=$Sparc m $WORKING_FOLDER_SCRATCH/consensus/${chunk}.mapped.m5 b ${d}.fasta k 1 c 2 g 1 HQ_Prefix Contig boost 5 t 0.2 o $WORKING_FOLDER_SCRATCH/consensus/${chunk}
 echo $cmd ; eval $cmd  ;      
 if [[ ${iter} -lt ${iterations} ]]
 then
