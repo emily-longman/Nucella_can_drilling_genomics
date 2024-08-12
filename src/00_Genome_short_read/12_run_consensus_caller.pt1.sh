@@ -84,9 +84,9 @@ cd $WORKING_FOLDER_SCRATCH/consensus
 
 # This part of the script will check and generate, if necessary, all of the output folders used in the script
 
-if [ -d "consensus_dir_chunked" ]
-then echo "Working consensus_dir_chunked folder exist"; echo "Let's move on."; date
-else echo "Working consensus_dir_chunked folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/consensus/consensus_dir_chunked; date
+if [ -d "consensus_chunked" ]
+then echo "Working consensus_chunked folder exist"; echo "Let's move on."; date
+else echo "Working consensus_chunked folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/consensus/consensus_chunked; date
 fi
 
 #--------------------------------------------------------------------------------
@@ -116,7 +116,7 @@ $sprun_pt1 \
 gen_chunks/gen_chunks.${init_bck}.${final_bck}.fasta \
 chunks/chunk.${init_bck}.${final_bck}.txt \
 ctg_ont.fasta \
-$WORKING_FOLDER_SCRATCH/consensus/consensus_dir_chunked \
+$WORKING_FOLDER_SCRATCH/consensus/consensus_chunked \
 2 \
 32 \
 $shiftn > cns_log_pt1.txt 2>&1
