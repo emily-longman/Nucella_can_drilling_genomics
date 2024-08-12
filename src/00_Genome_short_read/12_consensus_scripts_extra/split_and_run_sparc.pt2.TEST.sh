@@ -41,28 +41,27 @@ for file in $(find ${split_dir} -name "*.reads.fasta"); do
 chunk=`basename $file .reads.fasta`
 
 cmd=""
-for iter in `seq 1 ${iterations}`; do
-# create this to shorten the subsequent commands to more readable length
-# I think I got them all substituted correctly.
+#for iter in `seq 1 ${iterations}`; do
+
 d="${split_dir}/${chunk}"
+
 echo $chunk
 echo $d
-#cmd="blasr -nproc $ncpus ${d}.reads.fasta ${d}.fasta -bestn 1 -m 5 -minMatch 19 -out $WORKING_FOLDER_SCRATCH/consensus/${chunk}.mapped.m5"
-#echo $cmd ; eval $cmd ;
-blasr -nproc $ncpus ${d}.reads.fasta ${d}.fasta -bestn 1 -m 5 -minMatch 19 -out $WORKING_FOLDER_SCRATCH/consensus/${chunk}.mapped.m5
-#cmd="Sparc m $WORKING_FOLDER_SCRATCH/consensus/${chunk}.mapped.m5 b ${d}.fasta k 1 c 2 g 1 HQ_Prefix Contig boost 5 t 0.2 o $WORKING_FOLDER_SCRATCH/consensus/${chunk}""
-#echo $cmd ; eval $cmd  ;      
+echo "Align contig with blasr and Sparc."
+
+blasr -nproc $ncpus ${d}.reads.fasta ${d}.fasta -bestn 1 -m 5 -minMatch 19 -out $WORKING_FOLDER_SCRATCH/consensus/${chunk}.mapped.m5   
 $Sparc m $WORKING_FOLDER_SCRATCH/consensus/${chunk}.mapped.m5 b ${d}.fasta k 1 c 2 g 1 HQ_Prefix Contig boost 5 t 0.2 o $WORKING_FOLDER_SCRATCH/consensus/${chunk}
-if [[ ${iter} -lt ${iterations} ]]
-then
-# rename and move to final assembly directory
+#if [[ ${iter} -lt ${iterations} ]]
+#then
+
+# Rename and move to final assembly directory
 cmd="mv $WORKING_FOLDER_SCRATCH/consensus/${chunk}.consensus.fasta $WORKING_FOLDER_SCRATCH/consensus/final_assembly/${chunk}.consensus.fasta"
 echo $cmd ; eval $cmd
-fi
-done
+#fi
+#done
 
-echo $cmd
-eval $cmd
+#echo $cmd
+#eval $cmd
 
 
 #to save space
@@ -72,7 +71,6 @@ eval $cmd
 #cmd="rm ${split_dir}/${chunk}.reads.fasta"
 #echo $cmd
 #eval $cmd
-
 
 done
 
