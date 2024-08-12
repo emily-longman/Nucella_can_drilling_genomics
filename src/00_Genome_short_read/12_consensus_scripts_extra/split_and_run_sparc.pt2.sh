@@ -45,6 +45,8 @@ for iter in `seq 1 ${iterations}`; do
 # create this to shorten the subsequent commands to more readable length
 # I think I got them all substituted correctly.
 d="${split_dir}/${chunk}"
+echo $chunk
+echo $d
 #cmd="blasr -nproc $ncpus ${d}.reads.fasta ${d}.fasta -bestn 1 -m 5 -minMatch 19 -out $WORKING_FOLDER_SCRATCH/consensus/${chunk}.mapped.m5"
 #echo $cmd ; eval $cmd ;
 blasr -nproc $ncpus ${d}.reads.fasta ${d}.fasta -bestn 1 -m 5 -minMatch 19 -out $WORKING_FOLDER_SCRATCH/consensus/${chunk}.mapped.m5
