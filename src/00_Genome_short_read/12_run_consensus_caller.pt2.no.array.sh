@@ -119,7 +119,7 @@ cd $WORKING_FOLDER_SCRATCH/consensus
 # Run consensus
 
 ### Run consensus (i.e. run split_and_run_sparc.pt2.sh)
-sprun_pt2=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/00_Genome_short_read/12_consensus_scripts_extra/split_and_run_sparc.pt2.TEST.sh
+sprun_pt2=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/00_Genome_short_read/12_consensus_scripts_extra/split_and_run_sparc.pt2.no.array.sh
 
 $sprun_pt2 \
 gen_chunks/gen_chunks.*.fasta \
