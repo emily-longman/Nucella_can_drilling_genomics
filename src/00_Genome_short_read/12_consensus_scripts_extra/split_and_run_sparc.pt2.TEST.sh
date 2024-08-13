@@ -55,7 +55,7 @@ $Sparc m $WORKING_FOLDER_SCRATCH/consensus/${chunk}.mapped.m5 b ${d}.fasta k 1 c
 #then
 
 # Rename and move to final assembly directory
-cmd="mv $WORKING_FOLDER_SCRATCH/consensus/${chunk}.consensus.fasta $WORKING_FOLDER_SCRATCH/consensus/final_assembly/${chunk}.consensus.fasta"
+cmd="mv $WORKING_FOLDER_SCRATCH/consensus/${chunk}.consensus.fasta $WORKING_FOLDER_SCRATCH/consensus/final_assembly_no_array/${chunk}.consensus.fasta"
 echo $cmd ; eval $cmd
 #fi
 #done
