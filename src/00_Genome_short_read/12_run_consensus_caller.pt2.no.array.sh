@@ -8,14 +8,14 @@
 #SBATCH --job-name=consensus_pt2
 
 # Specify partition
-#SBATCH --partition=bigmem
+#SBATCH --partition=bigmemwk
 
 # Request nodes
 #SBATCH --nodes=1 
 #SBATCH --ntasks-per-node=1  
 
-# Reserve walltime -- hh:mm:ss 
-#SBATCH --time=28:00:00 
+# Reserve walltime -- hh:mm:ss --7 day limit
+#SBATCH --time=07-00:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
 #SBATCH --mem=200G
@@ -128,7 +128,7 @@ $sprun_pt2 \
 gen_chunks/gen_chunks.${init_bck}.${final_bck}.fasta \
 chunks/chunk.${init_bck}.${final_bck}.txt \
 ctg_ont.fasta \
-$WORKING_FOLDER_SCRATCH/consensus/consensus_dir_chunked \
+$WORKING_FOLDER_SCRATCH/consensus/consensus_chunked \
 2 \
 32 \
 $shiftn \
