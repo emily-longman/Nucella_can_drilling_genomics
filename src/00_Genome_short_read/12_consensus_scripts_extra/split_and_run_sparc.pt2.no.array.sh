@@ -9,7 +9,7 @@ reads_fasta=$3 #contigs and raw ONT reads catted together
 split_dir=$4 #file output directory 
 iterations=$5 #set to 2
 ncpus=$6 #set to 32
-#nshift=$7 #shiftn
+nshift=$7 #shiftn
 
 echo $backbone_fasta
 echo $consensus_fasta
@@ -17,7 +17,7 @@ echo $reads_fasta
 echo $split_dir
 echo $iterations
 echo $ncpus
-#echo $nshift
+echo $nshift
 
 
 # Working folder is core folder where this pipeline is being run.

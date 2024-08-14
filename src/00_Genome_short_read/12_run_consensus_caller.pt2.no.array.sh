@@ -23,8 +23,11 @@
 # Request CPUs
 #SBATCH --cpus-per-task=4
 
+# Submit job array
+#SBATCH --array=1 #1-559%15
+
 # Name output of this job using %x=job-name and %j=job-id
-#SBATCH --output=./slurmOutput/%x_%j.out # Standard output
+#SBATCH -o ./slurmOutput/consensus_pt2.%A_%a.out # Standard output
 
 # Receive emails when job begins and ends or fails
 #SBATCH --mail-type=ALL # indicates if you want an email when the job starts, ends, or both
@@ -68,14 +71,14 @@ WORKING_FOLDER_NETFILES=/netfiles/pespenilab_share/Nucella/processed/Base_Genome
 ### import master partition file (first row is column headers)
 guide=$WORKING_FOLDER_SCRATCH/consensus/dat.win.partitions.txt
 
-#echo ${SLURM_ARRAY_TASK_ID}
+echo ${SLURM_ARRAY_TASK_ID}
 
 # Using the guide file, delete the first row (i.e., the column headers), print the first column, then extract the row based on the Slurm array task ID
-#init_bck=$(cat ${guide} | sed '1d' | awk '{print $1}' | sed "${SLURM_ARRAY_TASK_ID}q;d")
-#final_bck=$(cat ${guide} | sed '1d' | awk '{print $2}' | sed "${SLURM_ARRAY_TASK_ID}q;d")
-#echo $init_bck $final_bck
-#shiftn=`expr $init_bck - 1`
-#echo $shiftn
+init_bck=$(cat ${guide} | sed '1d' | awk '{print $1}' | sed "${SLURM_ARRAY_TASK_ID}q;d")
+final_bck=$(cat ${guide} | sed '1d' | awk '{print $2}' | sed "${SLURM_ARRAY_TASK_ID}q;d")
+echo $init_bck $final_bck
+shiftn=`expr $init_bck - 1`
+echo $shiftn
 
 #--------------------------------------------------------------------------------
 # Move to working directory
@@ -122,13 +125,13 @@ cd $WORKING_FOLDER_SCRATCH/consensus
 sprun_pt2=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/00_Genome_short_read/12_consensus_scripts_extra/split_and_run_sparc.pt2.no.array.sh
 
 $sprun_pt2 \
-gen_chunks/gen_chunks.*.fasta \
-chunks/chunk.*.txt \
+gen_chunks/gen_chunks.${init_bck}.${final_bck}.fasta \
+chunks/chunk.${init_bck}.${final_bck}.txt \
 ctg_ont.fasta \
 $WORKING_FOLDER_SCRATCH/consensus/consensus_dir_chunked \
 2 \
 32 \
-#$shiftn \
+$shiftn \
 > cns_log_pt2.txt 2>&1
 # 2>&1 redirects stderr to stdout
 
