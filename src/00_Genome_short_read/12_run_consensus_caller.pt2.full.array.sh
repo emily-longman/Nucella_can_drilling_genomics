@@ -132,7 +132,7 @@ $WORKING_FOLDER_SCRATCH/consensus/consensus_dir_chunked \
 2 \
 32 \
 $shiftn \
-> cns_log_pt2.txt 2>&1
+> cns_log_pt2_array.txt 2>&1
 # 2>&1 redirects stderr to stdout
 
 echo "done"
