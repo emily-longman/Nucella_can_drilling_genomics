@@ -74,14 +74,23 @@ echo $var1 $var2
 
 #--------------------------------------------------------------------------------
 
+# Move to consensus directory
+cd $WORKING_FOLDER_SCRATCH/consensus/
+
 # Make genome chunks
-mkdir $WORKING_FOLDER_SCRATCH/consensus/gen_chunks
+if [ -d "gen_chunks" ]
+then echo "Working gen_chunks folder exist"; echo "Let's move on."; date
+else echo "Working gen_chunks folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/consensus/gen_chunks; date
+fi
 cat $backbone | \
 sed -n "/$var1/, /$var2/p" | \
 sed '$d'  > $WORKING_FOLDER_SCRATCH/consensus/gen_chunks/gen_chunks.$init_bck.$final_bck.fasta
 
 # Make info chunks
-mkdir $WORKING_FOLDER_SCRATCH/consensus/chunks
+if [ -d "chunks" ]
+then echo "Working chunks folder exist"; echo "Let's move on."; date
+else echo "Working chunks folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/consensus/chunks; date
+fi
 cat $cons_info | \
 sed -n "/$var1/, /$var2/p" | \
 sed '$d'  > $WORKING_FOLDER_SCRATCH/consensus/chunks/chunk.$init_bck.$final_bck.txt
