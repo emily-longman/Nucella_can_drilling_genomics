@@ -49,30 +49,13 @@ REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_A
 BAMS_FOLDER=$WORKING_FOLDER/bams_merged
 
 #Name of pipeline
-PIPELINE=Genotype_likelihoods
+PIPELINE=Genotype_likelihoods_no_C
 
 #--------------------------------------------------------------------------------
 
 # Define parameters
 CPU=$SLURM_CPUS_ON_NODE
 echo "using #CPUs ==" $SLURM_CPUS_ON_NODE
-
-
-#--------------------------------------------------------------------------------
-
-# This part of the pipeline will generate log files to record warnings and completion status
-
-# Move to working directory
-cd $WORKING_FOLDER
-# Move to logs direcotry
-cd Logs
-
-echo $PIPELINE
-
-if [[ -e "${PIPELINE}.completion.log" ]]
-then echo "Completion log exist"; echo "Let's move on."; date
-else echo "Completion log doesnt exist. Let's fix that."; touch $WORKING_FOLDER/Logs/${PIPELINE}.completion.log; date
-fi
 
 #--------------------------------------------------------------------------------
 

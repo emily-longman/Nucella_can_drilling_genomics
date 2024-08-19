@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=Genotype_likelihoods
+#SBATCH --job-name=Genotype_likelihoods_lower_minInd
 
 # Specify partition
 #SBATCH --partition=bigmemwk
@@ -49,7 +49,7 @@ REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_A
 BAMS_FOLDER=$WORKING_FOLDER/bams_merged
 
 #Name of pipeline
-PIPELINE=Genotype_likelihoods
+PIPELINE=Genotype_likelihoods_lower_minInd
 
 #--------------------------------------------------------------------------------
 
@@ -96,7 +96,7 @@ ls -d "$PWD/"* > $OUTPUT/Nucella_bam.list
 cd $WORKING_FOLDER
 
 # File suffix to distinguish analysis choices
-SUFFIX_2="SNPs_all"
+SUFFIX_2="SNPs_all_lower_minInd"
 
 ## Filter changes:
 # minMapQ: threshold for minimum read mapping quality (Phred): increase from 20 to 30
@@ -112,7 +112,7 @@ angsd -b ${OUTPUT}/Nucella_bam.list \
 -nThreads $CPU \
 -doMaf 1 -doSaf 1 -GL 1 -doGlf 2 -doMajorMinor 1 -doCounts 1 \
 -remove_bads 1 -baq 1 -skipTriallelic 1 -minMapQ 30 -minQ 20 -C 50 \
--minInd 163 -setMinDepthInd 0.1 -minMaf 0.01 -setMaxDepth 2 \
+-minInd 96 -setMinDepthInd 0.1 -minMaf 0.01 -setMaxDepth 2 \
 -SNP_pval 1e-6 
 
 # -nThreads 1: how many cpus to use 
