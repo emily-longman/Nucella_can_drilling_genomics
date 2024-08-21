@@ -83,7 +83,7 @@ OUTPUT=$WORKING_FOLDER/genotype_likelihoods_all
 cd $BAMS_FOLDER
 
 # Create bamlist for all Nucella samples
-ls -d "$PWD/"* > $OUTPUT/Nucella_bam.list
+ls -d "$PWD/"* > $OUTPUT/Nucella_bam_no_C.list
 
 #--------------------------------------------------------------------------------
 
@@ -106,7 +106,7 @@ SUFFIX_2="SNPs_all_no_C"
 # minMaf: Keep only sites with minor allele freq > some proportion (0.01)
 
 # Generate GL's for polymorphic sites for all Nucella samples
-angsd -b ${OUTPUT}/Nucella_bam.list \
+angsd -b ${OUTPUT}/Nucella_bam_no_C.list \
 -ref ${REFERENCE} -anc ${REFERENCE} \
 -out ${OUTPUT}/Nucella_${SUFFIX_2} \
 -nThreads $CPU \
