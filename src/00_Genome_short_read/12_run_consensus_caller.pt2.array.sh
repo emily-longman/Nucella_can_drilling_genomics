@@ -8,7 +8,7 @@
 #SBATCH --job-name=consensus_pt2_array
 
 # Specify partition
-#SBATCH --partition=bigmem
+#SBATCH --partition=bluemoon
 
 # Request nodes
 #SBATCH --nodes=1 
@@ -18,13 +18,13 @@
 #SBATCH --time=10:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
-#SBATCH --mem=200G
+#SBATCH --mem=60G
 
 # Request CPUs
-#SBATCH --cpus-per-task=4
+#SBATCH --cpus-per-task=5
 
 # Submit job array
-#SBATCH --array=1 #1-931%15
+#SBATCH --array=1-931%15
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH -o ./slurmOutput/consensus_pt2.%A_%a.out # Standard output
@@ -73,6 +73,9 @@ guide_file=$WORKING_FOLDER_SCRATCH/consensus/guide_file_array.txt
 
 echo ${SLURM_ARRAY_TASK_ID}
 
+# Move to working directory
+cd $WORKING_FOLDER_SCRATCH/consensus
+
 # Using the guide file, extract the rows associated based on the Slurm array task ID
 awk '$2=='${SLURM_ARRAY_TASK_ID}'' $guide_file | awk '{print $1}' > backbone.names.${SLURM_ARRAY_TASK_ID}.txt
 
@@ -107,7 +110,7 @@ cd $WORKING_FOLDER_SCRATCH/consensus
 
 # Run consensus
 
-### Run consensus (i.e. run split_and_run_sparc.pt2.sh)
+### Run consensus (i.e. run split_and_run_sparc.pt2.array.sh)
 sprun_pt2=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/00_Genome_short_read/12_consensus_scripts_extra/split_and_run_sparc.pt2.array.sh
 
 $sprun_pt2 \
@@ -118,5 +121,10 @@ $WORKING_FOLDER_SCRATCH/consensus/consensus_dir_chunked \
 2 \
 32 > cns_log_pt2_array.txt 2>&1
 # 2>&1 redirects stderr to stdout
+
+#--------------------------------------------------------------------------------
+
+# Remove backbone names file
+rm backbone.names.${SLURM_ARRAY_TASK_ID}.txt
 
 echo "done"

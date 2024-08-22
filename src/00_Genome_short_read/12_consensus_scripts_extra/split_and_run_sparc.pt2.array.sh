@@ -37,6 +37,9 @@ Sparc=/gpfs1/home/e/l/elongman/software/Sparc
 
 #===#/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/00_Genome_short_read/12_consensus_scripts_extra/split_reads_by_backbone.py -b ${backbone_fasta} -o ${split_dir} -r ${reads_fasta} -c ${consensus_fasta} -s ${nshift}
 
+# Move to working directory
+cd $WORKING_FOLDER_SCRATCH/consensus
+
 for file in $(cat backbone.names.${SLURM_ARRAY_TASK_ID}.txt); do 
 echo $file
 
