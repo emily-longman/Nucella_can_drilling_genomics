@@ -24,7 +24,7 @@
 #SBATCH --cpus-per-task=5
 
 # Submit job array
-#SBATCH --array=1-931%15
+#SBATCH --array=1-3 #1-931%15
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH -o ./slurmOutput/consensus_pt2.%A_%a.out # Standard output
@@ -92,6 +92,11 @@ then echo "Working final_assembly_array folder exist"; echo "Let's move on."; da
 else echo "Working final_assembly_array folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/consensus/final_assembly_array; date
 fi
 
+if [ -d "Logs" ]
+then echo "Working Logs folder exist"; echo "Let's move on."; date
+else echo "Working Logs folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/consensus/Logs; date
+fi
+
 #--------------------------------------------------------------------------------
 
 # We need to open a lot of files to distribute the above file into lots of smaller files
@@ -119,7 +124,7 @@ $cons_info \
 ctg_ont.fasta \
 $WORKING_FOLDER_SCRATCH/consensus/consensus_dir_chunked \
 2 \
-32 > cns_log_pt2_array.txt 2>&1
+32 > Logs/cns_log_pt2_array.${SLURM_ARRAY_TASK_ID}.txt 2>&1
 # 2>&1 redirects stderr to stdout
 
 #--------------------------------------------------------------------------------
