@@ -21,7 +21,7 @@
 #SBATCH --mem=40G
 
 # Request CPUs
-#SBATCH --cpus-per-task=15
+#SBATCH --cpus-per-task=32
 
 # Submit job array
 #SBATCH --array=1-5 #1-931%15
