@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=DBG2OLC.optimum.2_100_0.01
+#SBATCH --job-name=DBG2OLC.optimum.2_100_0.01_rerun
 
 # Specify partition
 #SBATCH --partition=bigmemwk
@@ -18,7 +18,10 @@
 #SBATCH --time=03-00:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
-#SBATCH --mem=400G
+#SBATCH --mem=200G
+
+# Request CPUs
+#SBATCH --cpus-per-task=32
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/%x_%j.out # Standard output
@@ -72,9 +75,9 @@ echo ${label}
 cd $WORKING_FOLDER/DBG2OLC
 
 # Make directory for each DBG2OLC parameter combination
-if [ -d "DBG2OLC_${label}" ]
-then echo "Working DBG2OLC_${label} folder exist"; echo "Let's move on."; date
-else echo "Working DBG2OLC_${label} folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/DBG2OLC/DBG2OLC_${label}; date
+if [ -d "DBG2OLC_rerun_${label}" ]
+then echo "Working DBG2OLC_rerun_${label} folder exist"; echo "Let's move on."; date
+else echo "Working DBG2OLC_rerun_${label} folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/DBG2OLC/DBG2OLC_rerun_${label}; date
 fi
 
 #--------------------------------------------------------------------------------
@@ -82,7 +85,7 @@ fi
 # Use DBG2OLC to construct short but accurate contigs  
 
 # Move to the directory where the output files will be saved
-cd $WORKING_FOLDER/DBG2OLC/DBG2OLC_${label}
+cd $WORKING_FOLDER/DBG2OLC/DBG2OLC_rerun_${label}
 
 # Copy read information from previous run
 cp $compressed_ONT ./
