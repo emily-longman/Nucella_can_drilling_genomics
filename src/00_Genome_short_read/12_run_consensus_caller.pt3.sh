@@ -8,7 +8,7 @@
 #SBATCH --job-name=consensus_pt3
 
 # Specify partition
-#SBATCH --partition=bigmem
+#SBATCH --partition=bluemoon
 
 # Request nodes
 #SBATCH --nodes=1 
@@ -18,7 +18,7 @@
 #SBATCH --time=28:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
-#SBATCH --mem=300G
+#SBATCH --mem=60G
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/%x_%j.out # Standard output
@@ -31,28 +31,13 @@
 
 # Working folder is core folder where this pipeline is being run.
 WORKING_FOLDER_SCRATCH=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly
-WORKING_FOLDER_NETFILES=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/short_read_assembly
 
 #--------------------------------------------------------------------------------
 
-split_dir=$WORKING_FOLDER_SCRATCH/consensus/consensus_dir_chunked_July2024
+final_dir=$WORKING_FOLDER_SCRATCH/consensus/final_assembly_array
 
 # Cat files together to produce a final consensus
-for confile in $(find ${split_dir} -name "*.consensus.fasta"); do
-cmd="cat ${confile};"
+for file in $(find ${final_dir} -name "*.consensus.fasta"); do
+cmd="cat ${file};"
 eval $cmd
 done > /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly/consensus/final_assembly.fasta
-
-#--------------------------------------------------------------------------------
-
-# OR could either cat smaller sections at the end of consensus pt2 (using the code below) then cat all of those parts together for a final consensus
-
-#for confile in $(find ${split_dir} -name "*.consensus.fasta"); do
-#cmd="cat ${confile};"
-#eval $cmd
-#done > /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly/consensus/final_assembly.${SLURM_ARRAY_TASK_ID}.fasta
-
-#for confile in $(find $WORKING_FOLDER_SCRATCH/consensus -name "final_assembly.*.fasta"); do
-#cmd="cat ${confile};"
-#eval $cmd
-#done > /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly/consensus/final_assembly.fasta
