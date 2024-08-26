@@ -46,7 +46,7 @@ cd $WORKING_FOLDER/consensus
 # Make Quast directory 
 if [ -d "Quast" ]
 then echo "Working Quast folder exist"; echo "Let's move on."; date
-else echo "Working Quast folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/DBG2OLC/Quast; date
+else echo "Working Quast folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/consensus/Quast; date
 fi
 
 #--------------------------------------------------------------------------------
