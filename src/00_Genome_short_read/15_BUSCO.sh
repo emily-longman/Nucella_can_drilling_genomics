@@ -35,7 +35,7 @@
 
 #--------------------------------------------------------------------------------
 
-# This script runs on BUSCO on an assembly in the current directory
+# This script runs on BUSCO on an assembly in the current directory. Thus must cd to that directory before running.
 
 #--------------------------------------------------------------------------------
 
@@ -66,12 +66,12 @@ echo $INPUT
 if [ ${SLURM_ARRAY_TASK_ID} == 1 ]
 then
 echo "eval 1"
-OUTPUT=$WORKING_FOLDER_SCRATCH/ntlink/Nucella_consensus_eukaryota
+OUTPUT=./Nucella_consensus_eukaryota
 LINEAGE=/netfiles/nunezlab/BUSCO_Lineages/busco_downloads/lineages/eukaryota_odb10
 elif [ ${SLURM_ARRAY_TASK_ID} == 2 ]
 then
 echo "eval 2"
-OUTPUT=$WORKING_FOLDER_SCRATCH/ntlink/Nucella_consensus_mollusca
+OUTPUT=./Nucella_consensus_mollusca
 LINEAGE=/netfiles/nunezlab/BUSCO_Lineages/busco_downloads/lineages/mollusca_odb10
 fi
 
