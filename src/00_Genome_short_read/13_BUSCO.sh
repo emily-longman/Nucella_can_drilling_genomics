@@ -49,13 +49,13 @@ conda activate busco_env #activate the environment
 #--------------------------------------------------------------------------------
 
 #Working folder is core folder where this pipeline is being run.
-WORKING_FOLDER=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/short_read_assembly
+WORKING_FOLDER_SCRATCH=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly
 
 #--------------------------------------------------------------------------------
 
 # Run BUSCO in directory where given assembly is.
 
-INPUT=$WORKING_FOLDER/consensus/final_assembly.fasta
+INPUT=$WORKING_FOLDER_SCRATCH/consensus/final_assembly.fasta
 
 echo $INPUT
 
@@ -66,12 +66,12 @@ echo $INPUT
 if [ ${SLURM_ARRAY_TASK_ID} == 1 ]
 then
 echo "eval 1"
-OUTPUT=$WORKING_FOLDER/consensus/Nucella_consensus_eukaryota
+OUTPUT=$WORKING_FOLDER_SCRATCH/consensus/Nucella_consensus_eukaryota
 LINEAGE=/netfiles/nunezlab/BUSCO_Lineages/busco_downloads/lineages/eukaryota_odb10
 elif [ ${SLURM_ARRAY_TASK_ID} == 2 ]
 then
 echo "eval 2"
-OUTPUT=$WORKING_FOLDER/consensus/Nucella_consensus_mollusca
+OUTPUT=$WORKING_FOLDER_SCRATCH/consensus/Nucella_consensus_mollusca
 LINEAGE=/netfiles/nunezlab/BUSCO_Lineages/busco_downloads/lineages/mollusca_odb10
 fi
 
