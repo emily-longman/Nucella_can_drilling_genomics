@@ -37,11 +37,11 @@ quast=/netfiles/nunezlab/Shared_Resources/Software/quast-5.2.0/quast.py
 #--------------------------------------------------------------------------------
 
 #Working folder is core folder where this pipeline is being run.
-WORKING_FOLDER=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/short_read_assembly
+WORKING_FOLDER_SCRATCH=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly
 
 #--------------------------------------------------------------------------------
 
-cd $WORKING_FOLDER/consensus
+cd $WORKING_FOLDER_SCRATCH/consensus
 
 # Make Quast directory 
 if [ -d "Quast" ]
@@ -52,5 +52,5 @@ fi
 #--------------------------------------------------------------------------------
 
 # Run quast
-$quast $WORKING_FOLDER/consensus/final_assembly.fasta \
--o $WORKING_FOLDER/consensus/Quast/final_assembly
+$quast $WORKING_FOLDER_SCRATCH/consensus/final_assembly.fasta \
+-o $WORKING_FOLDER_SCRATCH/consensus/Quast/final_assembly
