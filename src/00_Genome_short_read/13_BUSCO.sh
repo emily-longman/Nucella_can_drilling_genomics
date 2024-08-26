@@ -66,12 +66,12 @@ echo $INPUT
 if [ ${SLURM_ARRAY_TASK_ID} == 1 ]
 then
 echo "eval 1"
-OUTPUT=$WORKING_FOLDER/consensus/Nucella_DBG2OLC_eukaryota
+OUTPUT=$WORKING_FOLDER/consensus/Nucella_consensus_eukaryota
 LINEAGE=/netfiles/nunezlab/BUSCO_Lineages/busco_downloads/lineages/eukaryota_odb10
 elif [ ${SLURM_ARRAY_TASK_ID} == 2 ]
 then
 echo "eval 2"
-OUTPUT=$WORKING_FOLDER/consensus/Nucella_DBG2OLC_mollusca
+OUTPUT=$WORKING_FOLDER/consensus/Nucella_consensus_mollusca
 LINEAGE=/netfiles/nunezlab/BUSCO_Lineages/busco_downloads/lineages/mollusca_odb10
 fi
 
