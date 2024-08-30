@@ -32,7 +32,7 @@
 
 #--------------------------------------------------------------------------------
 
-# This script will clean the bam files, specifically it will filter, sort and remove duplicates. 
+# This script will clean the bam files, specifically it will filter, sort, remove duplicates and index. 
 # I will also conduct an intermediary QC step with Qualimap. 
 
 # Load modules  
