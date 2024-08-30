@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=ntLink.consensus
+#SBATCH --job-name=ntLink.consensus.6round
 
 # Specify partition
 #SBATCH --partition=bluemoon
@@ -50,13 +50,13 @@ cd $WORKING_FOLDER_SCRATCH/consensus
 
 # This part of the script will check and generate, if necessary, all of the output folders used in the script
 
-if [ -d "ntlink" ]
-then echo "Working ntlink folder exist"; echo "Let's move on."; date
-else echo "Working ntlink folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/ntlink; date
+if [ -d "ntlink_test_6round" ]
+then echo "Working ntlink_test_6round folder exist"; echo "Let's move on."; date
+else echo "Working ntlink_test_6round folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/ntlink_test_6round; date
 fi
 
 #Output folder
-OUTPUT=$WORKING_FOLDER_SCRATCH/ntlink
+OUTPUT=$WORKING_FOLDER_SCRATCH/ntlink_test_6round
 
 # Move to the directory where the output files will be saved
 cd ${OUTPUT}
@@ -72,7 +72,7 @@ cp $assembly ${OUTPUT}
 # Run ntLink_rounds
 ntLink_rounds run_rounds_gaps \
 target=final_assembly.fasta \
-reads=$link_pool k=24 w=150 t=40 rounds=8
+reads=$link_pool k=24 w=150 t=40 rounds=6
 
 # Deactivate conda
 conda deactivate
