@@ -170,6 +170,10 @@ O=$WORKING_FOLDER/bams_clean/${i}.srt.rmdp.bam \
 M=$WORKING_FOLDER/bams_clean/${i}.dupstat.txt \
 VALIDATION_STRINGENCY=SILENT REMOVE_DUPLICATES=true
 
+# Index with samtools
+samtools index \
+$WORKING_FOLDER/bams_clean/${i}.srt.rmdp.bam
+
 # Lets do QC on the bam file
 $qualimap bamqc \
 -bam $WORKING_FOLDER/bams_clean/${i}.srt.rmdp.bam \
