@@ -18,7 +18,7 @@
 #SBATCH --time=8:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
-#SBATCH --mem=40G 
+#SBATCH --mem=60G 
 
 # Submit job array
 #SBATCH --array=1-576%20
@@ -119,11 +119,6 @@ then echo "Working bams_clean folder exist"; echo "Let's move on."; date
 else echo "Working bams_clean folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/bams_clean; date
 fi
 
-if [ -d "mapping_stats" ]
-then echo "Working mapping_stats folder exist"; echo "Let's move on."; date
-else echo "Working mapping_stats folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/mapping_stats; date
-fi
-
 if [ -d "bams_qualimap" ]
 then echo "Working bams_qualimap folder exist"; echo "Let's move on."; date
 else echo "Working bams_qualimap folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/bams_qualimap; date
@@ -162,17 +157,16 @@ O=$WORKING_FOLDER/bams_clean/${i}.srt.bam \
 SO=coordinate \
 VALIDATION_STRINGENCY=SILENT
 
+# Index with samtools
+samtools index $WORKING_FOLDER/bams_clean/${i}.srt.bam
+
 # Remove duplicates with picard
-# Notice that once a file has been sorted it is added the "rmdp" suffix
+# Notice that once a file has duplicates removed it is added the "rmdp" suffix
 java -Xmx$JAVAMEM -jar $PICARD MarkDuplicates \
 I=$WORKING_FOLDER/bams_clean/${i}.srt.bam \
 O=$WORKING_FOLDER/bams_clean/${i}.srt.rmdp.bam \
 M=$WORKING_FOLDER/bams_clean/${i}.dupstat.txt \
 VALIDATION_STRINGENCY=SILENT REMOVE_DUPLICATES=true
-
-# Index with samtools
-samtools index \
-$WORKING_FOLDER/bams_clean/${i}.srt.rmdp.bam
 
 # Lets do QC on the bam file
 $qualimap bamqc \
