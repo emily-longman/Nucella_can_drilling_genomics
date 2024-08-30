@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=Quast_ntlink
+#SBATCH --job-name=Quast_ntlink_array
 
 # Specify partition
 #SBATCH --partition=bluemoon
@@ -15,10 +15,13 @@
 #SBATCH --ntasks-per-node=1  
 
 # Reserve walltime -- hh:mm:ss --7 day limit
-#SBATCH --time=8:00:00 
+#SBATCH --time=2:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
 #SBATCH --mem=50G
+
+# Submit job array
+#SBATCH --array=1-12
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/%x_%j.out # Standard output
@@ -41,6 +44,34 @@ WORKING_FOLDER_SCRATCH=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/dat
 
 #--------------------------------------------------------------------------------
 
+## Read guide files
+# This is a guide file with all of the parameter combinations
+# k = 20, 24, 30
+# w = 60, 75, 100, 150
+
+GUIDE_FILE=$WORKING_FOLDER_SCRATCH/ntlink/ntlink_guide_file.txt
+
+#Example: -- the headers are just for descriptive purposes. The actual file has no headers.
+##   k            w        
+##   20          60            
+##   20          75           
+##   20          100          
+##   20          150         
+##   24          60          
+##   ...
+
+#--------------------------------------------------------------------------------
+
+# Determine parameter combination to process
+k=$( cat $GUIDE_FILE  | sed "${SLURM_ARRAY_TASK_ID}q;d" | awk '{ print $1 }' )
+w=$( cat $GUIDE_FILE  | sed "${SLURM_ARRAY_TASK_ID}q;d" | awk '{ print $2 }' )
+
+label=k.${k}_w.${w}
+
+echo ${k} ${w} ${label}
+
+#--------------------------------------------------------------------------------
+
 cd $WORKING_FOLDER_SCRATCH/ntlink
 
 # Make Quast directory 
@@ -49,8 +80,18 @@ then echo "Working Quast folder exist"; echo "Let's move on."; date
 else echo "Working Quast folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/ntlink/Quast; date
 fi
 
+cd $WORKING_FOLDER_SCRATCH/ntlink/Quast
+# Make Quast directory for each parameter combination
+if [ -d "ntlink_${label}" ]
+then echo "Working Quast_ntlink_${label} folder exist"; echo "Let's move on."; date
+else echo "Working Quast_ntlink_${label} folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/ntlink/Quast/Quast_ntlink_${label}; date
+fi
+
 #--------------------------------------------------------------------------------
 
+# Assembly name
+ASSEMBLY=$WORKING_FOLDER_SCRATCH/ntlink/final_assembly.fasta.k${k}.w${w}.z1000.ntLink.ntLink.ntLink.ntLink.ntLink.gap_fill.fa.${k}.w${w}.z1000.ntLink.scaffolds.gap_fill.fa
+
 # Run quast
-$quast $WORKING_FOLDER_SCRATCH/ntlink_test/final_assembly.fasta.k24.w150.z1000.ntLink.ntLink.ntLink.ntLink.ntLink.ntLink.ntLink.gap_fill.fa.k24.w150.z1000.ntLink.scaffolds.gap_fill.fa \
--o $WORKING_FOLDER_SCRATCH/ntlink/Quast/final_assembly
+$quast $ASSEMBLY \
+-o $WORKING_FOLDER_SCRATCH/ntlink/Quast/Quast_ntlink_${label}
