@@ -102,7 +102,7 @@ SUFFIX="Nucella_poly_covmatrix"
 
 echo "Analyse covariance matrix on all individuals"
 
-pcangsd -b ${INPUT}/Nucella_SNPs_flt.beagle.gz \
+pcangsd -b ${INPUT}/Nucella_SNPs_all.beagle.gz \
 -o ${OUTPUT}/${SUFFIX} \
 -t $CPU 
 
