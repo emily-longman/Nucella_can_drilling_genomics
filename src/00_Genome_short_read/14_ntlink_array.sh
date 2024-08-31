@@ -21,7 +21,7 @@
 #SBATCH --mem=60G 
 
 # Submit job array
-#SBATCH --array=1-12
+#SBATCH --array=1-6
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/ntLink_array.%A_%a.out # Standard output
