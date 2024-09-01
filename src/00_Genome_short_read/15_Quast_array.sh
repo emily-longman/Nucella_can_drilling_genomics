@@ -21,7 +21,7 @@
 #SBATCH --mem=50G
 
 # Submit job array
-#SBATCH --array=1-12
+#SBATCH --array=3-6
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/%x_%j.out # Standard output
@@ -48,16 +48,17 @@ WORKING_FOLDER_SCRATCH=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/dat
 # This is a guide file with all of the parameter combinations
 # k = 20, 24, 30
 # w = 60, 75, 100, 150
+# r = 6, 8, 10
 
-GUIDE_FILE=$WORKING_FOLDER_SCRATCH/ntlink/ntlink_guide_file.txt
+GUIDE_FILE=$WORKING_FOLDER_SCRATCH/ntlink/ntlink_guide_file_2.txt
 
 #Example: -- the headers are just for descriptive purposes. The actual file has no headers.
-##   k            w        
-##   20          60            
-##   20          75           
-##   20          100          
-##   20          150         
-##   24          60          
+##   k            w        r
+##   20          60        6    
+##   20          75        6   
+##   20          100       6   
+##   20          150       6  
+##   24          60        6  
 ##   ...
 
 #--------------------------------------------------------------------------------
@@ -65,10 +66,11 @@ GUIDE_FILE=$WORKING_FOLDER_SCRATCH/ntlink/ntlink_guide_file.txt
 # Determine parameter combination to process
 k=$( cat $GUIDE_FILE  | sed "${SLURM_ARRAY_TASK_ID}q;d" | awk '{ print $1 }' )
 w=$( cat $GUIDE_FILE  | sed "${SLURM_ARRAY_TASK_ID}q;d" | awk '{ print $2 }' )
+r=$( cat $GUIDE_FILE  | sed "${SLURM_ARRAY_TASK_ID}q;d" | awk '{ print $3 }' )
 
-label=k.${k}_w.${w}
+label=k.${k}_w.${w}_r.${r}
 
-echo ${k} ${w} ${label}
+echo ${k} ${w} ${r} ${label}
 
 #--------------------------------------------------------------------------------
 
