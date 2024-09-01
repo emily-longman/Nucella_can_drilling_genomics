@@ -92,7 +92,7 @@ fi
 #--------------------------------------------------------------------------------
 
 # Assembly name
-ASSEMBLY=$WORKING_FOLDER_SCRATCH/ntlink/ntlink_k.${k}_w.${w}/final_assembly.fasta.k${k}.w${w}.z1000.ntLink.ntLink.ntLink.ntLink.ntLink.gap_fill.fa.k${k}.w${w}.z1000.ntLink.scaffolds.gap_fill.fa
+ASSEMBLY=$WORKING_FOLDER_SCRATCH/ntlink/ntlink_${label}/final_assembly.fasta.k${k}.w${w}.z1000.ntLink.ntLink.ntLink.ntLink.ntLink.gap_fill.fa.k${k}.w${w}.z1000.ntLink.scaffolds.gap_fill.fa
 
 # Run quast
 $quast $ASSEMBLY \
