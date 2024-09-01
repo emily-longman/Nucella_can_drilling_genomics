@@ -21,7 +21,7 @@
 #SBATCH --mem=50G
 
 # Submit job array
-#SBATCH --array=3-6
+#SBATCH --array=1-4
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/%x_%j.out # Standard output
@@ -50,7 +50,7 @@ WORKING_FOLDER_SCRATCH=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/dat
 # w = 60, 75, 100, 150
 # r = 6, 8, 10
 
-GUIDE_FILE=$WORKING_FOLDER_SCRATCH/ntlink/ntlink_guide_file_2.txt
+GUIDE_FILE=$WORKING_FOLDER_SCRATCH/ntlink/ntlink_guide_file_2_subset.txt
 
 #Example: -- the headers are just for descriptive purposes. The actual file has no headers.
 ##   k            w        r
