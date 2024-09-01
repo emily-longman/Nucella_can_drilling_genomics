@@ -55,7 +55,7 @@ WORKING_FOLDER_SCRATCH=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/dat
 
 # Run BUSCO in directory where given assembly is.
 
-INPUT=$WORKING_FOLDER_SCRATCH/ntlink_test/final_assembly.fasta.k24.w150.z1000.ntLink.ntLink.ntLink.ntLink.ntLink.ntLink.ntLink.gap_fill.fa.k24.w150.z1000.ntLink.scaffolds.gap_fill.fa
+INPUT=$WORKING_FOLDER_SCRATCH/ntlink/ntlink_k.30_w.200_r.6/final_assembly.fasta.k30.w200.z1000.ntLink.ntLink.ntLink.ntLink.ntLink.gap_fill.fa.k30.w200.z1000.ntLink.scaffolds.gap_fill.fa
 
 echo $INPUT
 
