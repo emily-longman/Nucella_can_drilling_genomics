@@ -1,0 +1,7 @@
+# Notes on using singularity for angsd
+
+# Load the singularity in VACC
+module load singularity/3.7.1
+
+# Download the angsd singularity
+singularity pull shub://James-S-Santangelo/singularity-recipes:angsd_v0.933

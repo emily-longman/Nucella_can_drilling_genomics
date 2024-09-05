@@ -32,8 +32,8 @@
 # This script will calculate genotype likelihoods of SNPs for all individuals
 
 # Load modules
-spack load angsd@0.933
-spack load samtools@1.10
+#spack load angsd@0.933
+#spack load samtools@1.10
 
 #--------------------------------------------------------------------------------
 
@@ -47,9 +47,6 @@ REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_A
 
 #Path to the directory with the lane merged bams (filtered, sorted and duplicates removed). 
 BAMS_FOLDER=$WORKING_FOLDER/bams_merged
-
-#Name of pipeline
-PIPELINE=Genotype_likelihoods
 
 #--------------------------------------------------------------------------------
 
@@ -105,8 +102,10 @@ SUFFIX_2="SNPs_all"
 # skipTriallelic: don’t use sites with >2 alleles
 # minMaf: Keep only sites with minor allele freq > some proportion (0.01)
 
+singularity run --home $WORKING_FOLDER singularity-recipes_angsd_v0.933.sif
+
 # Generate GL's for polymorphic sites for all Nucella samples
-angsd -b ${OUTPUT}/Nucella_bam.list \
+./angsd -b ${OUTPUT}/Nucella_bam.list \
 -ref ${REFERENCE} -anc ${REFERENCE} \
 -out ${OUTPUT}/Nucella_${SUFFIX_2} \
 -nThreads $CPU \
