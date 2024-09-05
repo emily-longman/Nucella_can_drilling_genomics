@@ -32,8 +32,12 @@
 # This script will calculate genotype likelihoods of SNPs for all individuals
 
 # Load modules
+module load singularity/3.7.1
 #spack load angsd@0.933
 #spack load samtools@1.10
+
+# Add path to angsd singularity
+export PATH="$PATH:/gpfs1/home/e/l/elongman/software/angsd_sing"
 
 #--------------------------------------------------------------------------------
 
@@ -63,13 +67,13 @@ cd $WORKING_FOLDER
 
 # This part of the script will check and generate, if necessary, all of the output folders used in the script
 
-if [ -d "genotype_likelihoods_all" ]
-then echo "Working genotype_likelihoods_all folder exist"; echo "Let's move on."; date
-else echo "Working genotype_likelihoods_all folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/genotype_likelihoods_all; date
+if [ -d "genotype_likelihoods_all_test" ]
+then echo "Working genotype_likelihoods_all_test folder exist"; echo "Let's move on."; date
+else echo "Working genotype_likelihoods_all_test folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/genotype_likelihoods_all_test; date
 fi
 
 #Output folder
-OUTPUT=$WORKING_FOLDER/genotype_likelihoods_all
+OUTPUT=$WORKING_FOLDER/genotype_likelihoods_all_test
 
 #--------------------------------------------------------------------------------
 
@@ -102,10 +106,8 @@ SUFFIX_2="SNPs_all"
 # skipTriallelic: don’t use sites with >2 alleles
 # minMaf: Keep only sites with minor allele freq > some proportion (0.01)
 
-singularity run --home $WORKING_FOLDER singularity-recipes_angsd_v0.933.sif
-
 # Generate GL's for polymorphic sites for all Nucella samples
-./angsd -b ${OUTPUT}/Nucella_bam.list \
+angsd_sing -b ${OUTPUT}/Nucella_bam.list \
 -ref ${REFERENCE} -anc ${REFERENCE} \
 -out ${OUTPUT}/Nucella_${SUFFIX_2} \
 -nThreads $CPU \

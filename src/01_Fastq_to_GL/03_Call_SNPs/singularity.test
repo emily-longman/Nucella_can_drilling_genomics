@@ -5,3 +5,52 @@ module load singularity/3.7.1
 
 # Download the angsd singularity
 singularity pull shub://James-S-Santangelo/singularity-recipes:angsd_v0.933
+
+# Code to run a singularity 
+singularity run --home <<folder>> <<sif file>> ... options
+module load singularity
+
+ singularity run \
+  --home $1 \
+  $1/dest_freeze1_latest.sif \
+  $1/${read_file}_1.fq.gz \
+  $1/${read_file}_2.fq.gz \
+  ${sampleid} \
+  $3 \
+  --cores $SLURM_CPUS_PER_TASK \
+  --max-cov 0.95 \
+  --min-cov 4 \
+  --base-quality-threshold 25 \
+  --num-flies ${numFlies} \
+  --do_poolsnp \
+  --do_snape
+
+
+
+WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL
+
+singularity run --home $WORKING_FOLDER singularity-recipes_angsd_v0.933.sif
+
+# Erica's code: 
+singularity exec singularity-recipes_angsd_v0.933.sif /opt/bin/angsd
+
+#######
+
+# Make a folder in my software directory called "angsd_sing". Within that is a script called "angsd_sing.sh" that has the following code:
+
+#!/bin/bash
+
+exec singularity exec /gpfs1/home/e/l/elongman/software/angsd_sing/singularity-recipes_angsd_v0.933.sif angsd "$@"
+
+
+# I then add this to my path 
+
+export PATH="$PATH:/gpfs1/home/e/l/elongman/software/angsd_sing"
+
+# Load singularity
+
+module load singularity/3.7.1
+
+# Call the program with angsd_sing
+
+angsd_sing
