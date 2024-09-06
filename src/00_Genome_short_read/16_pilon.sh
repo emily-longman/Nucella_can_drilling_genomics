@@ -23,18 +23,12 @@
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
 #SBATCH --mem=60G
 
-# Submit job array
-#SBATCH --array=1-2
-
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/busco.%A_%a.out # Standard output
 
 # Receive emails when job begins and ends or fails
 #SBATCH --mail-type=ALL # indicates if you want an email when the job starts, ends, or both
 #SBATCH --mail-user=emily.longman@uvm.edu # where to email updates to
-
-#--------------------------------------------------------------------------------
-
 
 #--------------------------------------------------------------------------------
 
