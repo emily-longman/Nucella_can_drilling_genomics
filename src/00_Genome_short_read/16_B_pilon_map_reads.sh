@@ -15,13 +15,13 @@
 #SBATCH --ntasks-per-node=1
 
 # Reserve walltime -- hh:mm:ss --30 hrs max
-#SBATCH --time=8:00:00 
+#SBATCH --time=20:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
-#SBATCH --mem=20G 
+#SBATCH --mem=30G 
 
 # Name output of this job using %x=job-name and %j=job-id
-#SBATCH --output=./slurmOutput/Map_reads.%A_%a.out # Standard output
+#SBATCH --output=./slurmOutput/%x_%j.out # Standard output
 
 # Receive emails when job begins and ends or fails
 #SBATCH --mail-type=ALL

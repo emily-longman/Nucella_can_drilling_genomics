@@ -5,26 +5,26 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=busco_ntlink
+#SBATCH --job-name=pilon_polish
 
 # Specify partition
-#SBATCH --partition=bluemoon
+#SBATCH --partition=bigmemwk
 
 # Request nodes
 #SBATCH --nodes=1 # on one node
 #SBATCH --ntasks-per-node=1  
 
 # Request CPUs per task
-#SBATCH -c 1
+#SBATCH -c 3
 
-# Reserve walltime -- hh:mm:ss --30 hour limit
-#SBATCH --time=30:00:00 
+# Reserve walltime -- hh:mm:ss 
+#SBATCH --time=5-00:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
-#SBATCH --mem=60G
+#SBATCH --mem=600G
 
 # Name output of this job using %x=job-name and %j=job-id
-#SBATCH --output=./slurmOutput/busco.%A_%a.out # Standard output
+#SBATCH --output=./slurmOutput/%x_%j.out # Standard output
 
 # Receive emails when job begins and ends or fails
 #SBATCH --mail-type=ALL # indicates if you want an email when the job starts, ends, or both
@@ -41,7 +41,15 @@ conda activate pilon #activate the environment
 
 #--------------------------------------------------------------------------------
 
+#Define important file locations
 
+# Working folder is core folder where this pipeline is being run.
+WORKING_FOLDER_SCRATCH=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly
+
+#This is the location where the reference genome and all its indexes are stored.
+REFERENCE=$WORKING_FOLDER_SCRATCH/ntlink/final/final_assembly.fasta.k30.w200.z1000.ntLink.ntLink.ntLink.ntLink.ntLink.gap_fill.fa.k30.w200.z1000.ntLink.scaffolds.gap_fill.fa
+
+#--------------------------------------------------------------------------------
 
 
 
