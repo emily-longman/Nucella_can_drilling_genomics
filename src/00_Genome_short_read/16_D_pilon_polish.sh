@@ -47,7 +47,7 @@ conda activate pilon #activate the environment
 WORKING_FOLDER_SCRATCH=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly
 
 #This is the location where the reference genome and all its indexes are stored.
-REFERENCE=$WORKING_FOLDER_SCRATCH/ntlink/final/final_assembly.fasta.k30.w200.z1000.ntLink.ntLink.ntLink.ntLink.ntLink.gap_fill.fa.k30.w200.z1000.ntLink.scaffolds.gap_fill.fa
+REFERENCE=$WORKING_FOLDER_SCRATCH/ntlink/final/final_assembly.ntLink.scaffolds.gap_fill.fa
 
 # This is the location of the cleaned and indexed bams
 BAMS=$WORKING_FOLDER_SCRATCH/
@@ -71,11 +71,9 @@ fi
 
 # Use pilon to polish the genome 
 
-pilon --genome $REFERENCE --jumps $BAMS --outdir $WORKING_FOLDER_SCRATCH/pilon/polished_genome
+pilon --genome $REFERENCE --frags $BAMS --outdir $WORKING_FOLDER_SCRATCH/pilon/polished_genome
 
 # --frags for paired-end sequencing of DNA fragments, such as Illumina paired-end reads of fragment size <1000bp.
-# --jumps for paired sequencing data of larger insert size, such as Illumina mate pair libraries, typically of insert size >1000bp. 
-
 
 #--------------------------------------------------------------------------------
 
