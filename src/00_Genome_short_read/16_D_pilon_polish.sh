@@ -49,14 +49,32 @@ WORKING_FOLDER_SCRATCH=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/dat
 #This is the location where the reference genome and all its indexes are stored.
 REFERENCE=$WORKING_FOLDER_SCRATCH/ntlink/final/final_assembly.fasta.k30.w200.z1000.ntLink.ntLink.ntLink.ntLink.ntLink.gap_fill.fa.k30.w200.z1000.ntLink.scaffolds.gap_fill.fa
 
+# This is the location of the cleaned and indexed bams
+BAMS=$WORKING_FOLDER_SCRATCH/
+##### PLACEHOLDER!
+
 #--------------------------------------------------------------------------------
 
+# Generate Folders and files
 
+# Move to working directory
+cd $WORKING_FOLDER_SCRATCH/pilon
 
+# This part of the script will check and generate, if necessary, all of the output folders used in the script
 
+if [ -d "polished_genome" ]
+then echo "Working polished_genome folder exist"; echo "Let's move on."; date
+else echo "Working polished_genome folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/pilon/polished_genome; date
+fi
 
+#--------------------------------------------------------------------------------
 
+# Use pilon to polish the genome 
 
+pilon --genome $REFERENCE --jumps $BAMS --outdir $WORKING_FOLDER_SCRATCH/pilon/polished_genome
+
+# --frags for paired-end sequencing of DNA fragments, such as Illumina paired-end reads of fragment size <1000bp.
+# --jumps for paired sequencing data of larger insert size, such as Illumina mate pair libraries, typically of insert size >1000bp. 
 
 
 #--------------------------------------------------------------------------------
