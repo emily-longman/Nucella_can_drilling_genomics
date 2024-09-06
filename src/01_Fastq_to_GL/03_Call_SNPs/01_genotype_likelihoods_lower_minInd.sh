@@ -32,8 +32,12 @@
 # This script will calculate genotype likelihoods of SNPs for all individuals
 
 # Load modules
-spack load angsd@0.933
-spack load samtools@1.10
+module load singularity/3.7.1
+#spack load angsd@0.933
+#spack load samtools@1.10
+
+# Add path to angsd singularity
+export PATH="$PATH:/gpfs1/home/e/l/elongman/software/angsd_sing"
 
 #--------------------------------------------------------------------------------
 
@@ -106,7 +110,7 @@ SUFFIX_2="SNPs_all_lower_minInd"
 # minMaf: Keep only sites with minor allele freq > some proportion (0.01)
 
 # Generate GL's for polymorphic sites for all Nucella samples
-angsd -b ${OUTPUT}/Nucella_bam_lower_minInd.list \
+angsd_sing -b ${OUTPUT}/Nucella_bam_lower_minInd.list \
 -ref ${REFERENCE} -anc ${REFERENCE} \
 -out ${OUTPUT}/Nucella_${SUFFIX_2} \
 -nThreads $CPU \
