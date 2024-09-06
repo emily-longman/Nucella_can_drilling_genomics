@@ -46,12 +46,12 @@ PICARD=/netfiles/nunezlab/Shared_Resources/Software/picard/build/libs/picard.jar
 WORKING_FOLDER_SCRATCH=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly
 
 # Genome from scaffolding
-ASSEMBLY=$WORKING_FOLDER_SCRATCH/ntlink/ntlink_k.30_w.200_r.6/final_assembly.fasta.k30.w200.z1000.ntLink.ntLink.ntLink.ntLink.ntLink.gap_fill.fa.k30.w200.z1000.ntLink.scaffolds.gap_fill.fa
+ASSEMBLY=$WORKING_FOLDER_SCRATCH/ntlink/final/final_assembly.fasta.k30.w200.z1000.ntLink.ntLink.ntLink.ntLink.ntLink.gap_fill.fa.k30.w200.z1000.ntLink.scaffolds.gap_fill.fa
 
 #--------------------------------------------------------------------------------
 
 # Move to the directory that the genome is currently stored
-cd $WORKING_FOLDER_SCRATCH/ntlink/ntlink_k.30_w.200_r.6
+cd $WORKING_FOLDER_SCRATCH/ntlink/final
 
 # Index database sequences in the FASTA format 
 $bwa index $ASSEMBLY 
