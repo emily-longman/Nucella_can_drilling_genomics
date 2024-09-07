@@ -66,7 +66,7 @@ WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/proces
 REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_Aug2024/backbone_raw.fasta
 
 #Input folder is genotype likelihoods from ANGSD
-INPUT=$WORKING_FOLDER/genotype_likelihoods_all
+INPUT=$WORKING_FOLDER/genotype_likelihoods_all_test
 
 #--------------------------------------------------------------------------------
 # Define parameters
