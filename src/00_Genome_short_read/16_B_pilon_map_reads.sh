@@ -14,8 +14,8 @@
 #SBATCH --nodes=1 
 #SBATCH --ntasks-per-node=1
 
-# Reserve walltime -- hh:mm:ss --30 hrs max
-#SBATCH --time=3-00:00:00 
+# Reserve walltime -- hh:mm:ss 
+#SBATCH --time=7-00:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
 #SBATCH --mem=50G 
@@ -64,27 +64,27 @@ cd $WORKING_FOLDER_SCRATCH
 
 # This part of the script will check and generate, if necessary, all of the output folders used in the script
 
-if [ -d "pilon" ]
-then echo "Working pilon folder exist"; echo "Let's move on."; date
-else echo "Working pilon folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/pilon; date
+if [ -d "polish" ]
+then echo "Working polish folder exist"; echo "Let's move on."; date
+else echo "Working polish folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/polish; date
 fi
 
-# Move to pilon directory
-cd $WORKING_FOLDER_SCRATCH/pilon
+# Move to polish directory
+cd $WORKING_FOLDER_SCRATCH/polish
 
 if [ -d "sams" ]
 then echo "Working sams folder exist"; echo "Let's move on."; date
-else echo "Working sams folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/pilon/sams; date
+else echo "Working sams folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/polish/sams; date
 fi
 
 if [ -d "mapping_stats" ]
 then echo "Working mapping_stats folder exist"; echo "Let's move on."; date
-else echo "Working mapping_stats folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/pilon/mapping_stats; date
+else echo "Working mapping_stats folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/polish/mapping_stats; date
 fi
 
 if [ -d "bams" ]
 then echo "Working bams folder exist"; echo "Let's move on."; date
-else echo "Working bams folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/pilon/bams; date
+else echo "Working bams folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/polish/bams; date
 fi
 
 #--------------------------------------------------------------------------------
@@ -98,7 +98,7 @@ fi
 # Start pipeline
 
 # Move to working directory
-cd $WORKING_FOLDER_SCRATCH/pilon
+cd $WORKING_FOLDER_SCRATCH/polish
 
 # Starting mapping
 echo "Begin mapping" 
@@ -107,19 +107,19 @@ echo "Begin mapping"
 $bwa mem -M -t $CPU $REFERENCE \
 $WORKING_FOLDER_SCRATCH/fastp/NC3_R1_clean.fastq.gz \
 $WORKING_FOLDER_SCRATCH/fastp/NC3_R2_clean.fastq.gz \
-> $WORKING_FOLDER_SCRATCH/pilon/sams/Ncan.sam
+> $WORKING_FOLDER_SCRATCH/polish/sams/Ncan.sam
 
 #--------------------------------------------------------------------------------
 
 # I will now extract some summary stats
 samtools flagstat --threads $CPU \
-$WORKING_FOLDER_SCRATCH/pilon/sams/Ncan.sam \
-> $WORKING_FOLDER_SCRATCH/pilon/mapping_stats/Ncan.flagstats_raw.sam.txt
+$WORKING_FOLDER_SCRATCH/polish/sams/Ncan.sam \
+> $WORKING_FOLDER_SCRATCH/polish/mapping_stats/Ncan.flagstats_raw.sam.txt
 
 # Build bam files
 samtools view -b -q $QUAL --threads $CPU  \
-$WORKING_FOLDER_SCRATCH/pilon/sams/Ncan.sam \
-> $WORKING_FOLDER_SCRATCH/pilon/bams/Ncan.bam
+$WORKING_FOLDER_SCRATCH/polish/sams/Ncan.sam \
+> $WORKING_FOLDER_SCRATCH/polish/bams/Ncan.bam
 
 #--------------------------------------------------------------------------------
 
