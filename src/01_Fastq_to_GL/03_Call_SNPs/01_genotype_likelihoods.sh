@@ -15,10 +15,13 @@
 #SBATCH --ntasks-per-node=1
 
 # Reserve walltime -- hh:mm:ss --7 day limit 
-#SBATCH --time=06-00:00:00 
+#SBATCH --time=02-00:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
-#SBATCH --mem=500G 
+#SBATCH --mem=200G 
+
+# Request CPU
+#SBATCH --cpus-per-task=3
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/%x_%j.out # Standard output
@@ -30,14 +33,6 @@
 #--------------------------------------------------------------------------------
 
 # This script will calculate genotype likelihoods of SNPs for all individuals
-
-# Load modules
-module load singularity/3.7.1
-#spack load angsd@0.933
-#spack load samtools@1.10
-
-# Add path to angsd singularity
-export PATH="$PATH:/gpfs1/home/e/l/elongman/software/angsd_sing"
 
 #--------------------------------------------------------------------------------
 
@@ -54,12 +49,6 @@ BAMS_FOLDER=$WORKING_FOLDER/bams_merged
 
 #--------------------------------------------------------------------------------
 
-# Define parameters
-CPU=$SLURM_CPUS_ON_NODE
-echo "using #CPUs ==" $SLURM_CPUS_ON_NODE
-
-#--------------------------------------------------------------------------------
-
 # Generate Folders and files
 
 # Move to working directory
@@ -67,13 +56,13 @@ cd $WORKING_FOLDER
 
 # This part of the script will check and generate, if necessary, all of the output folders used in the script
 
-if [ -d "genotype_likelihoods_all_test" ]
-then echo "Working genotype_likelihoods_all_test folder exist"; echo "Let's move on."; date
-else echo "Working genotype_likelihoods_all_test folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/genotype_likelihoods_all_test; date
+if [ -d "genotype_likelihoods_all" ]
+then echo "Working genotype_likelihoods_all folder exist"; echo "Let's move on."; date
+else echo "Working genotype_likelihoods_all folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/genotype_likelihoods_all; date
 fi
 
 #Output folder
-OUTPUT=$WORKING_FOLDER/genotype_likelihoods_all_test
+OUTPUT=$WORKING_FOLDER/genotype_likelihoods_all
 
 #--------------------------------------------------------------------------------
 
@@ -107,7 +96,7 @@ SUFFIX_2="SNPs_all"
 # minMaf: Keep only sites with minor allele freq > some proportion (0.01)
 
 # Generate GL's for polymorphic sites for all Nucella samples
-angsd_sing -b ${OUTPUT}/Nucella_bam.list \
+angsd -b ${OUTPUT}/Nucella_bam.list \
 -ref ${REFERENCE} -anc ${REFERENCE} \
 -out ${OUTPUT}/Nucella_${SUFFIX_2} \
 -nThreads $CPU \
