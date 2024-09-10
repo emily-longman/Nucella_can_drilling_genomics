@@ -20,6 +20,9 @@
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
 #SBATCH --mem=50G 
 
+# Request CPU
+#SBATCH --cpus-per-task=16
+
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/%x_%j.out # Standard output
 
@@ -50,10 +53,7 @@ REFERENCE=$WORKING_FOLDER_SCRATCH/ntlink/final/final_assembly.ntLink.scaffolds.g
 #--------------------------------------------------------------------------------
 
 # Define parameters
-CPU=$SLURM_CPUS_ON_NODE
-echo "using #CPUs ==" $SLURM_CPUS_ON_NODE
 QUAL=40 # Quality threshold for samtools
-JAVAMEM=18G # Java memory
 
 #--------------------------------------------------------------------------------
 
@@ -64,27 +64,27 @@ cd $WORKING_FOLDER_SCRATCH
 
 # This part of the script will check and generate, if necessary, all of the output folders used in the script
 
-if [ -d "polish" ]
-then echo "Working polish folder exist"; echo "Let's move on."; date
-else echo "Working polish folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/polish; date
+if [ -d "pilon" ]
+then echo "Working pilon folder exist"; echo "Let's move on."; date
+else echo "Working pilon folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/pilon; date
 fi
 
 # Move to polish directory
-cd $WORKING_FOLDER_SCRATCH/polish
+cd $WORKING_FOLDER_SCRATCH/pilon
 
 if [ -d "sams" ]
 then echo "Working sams folder exist"; echo "Let's move on."; date
-else echo "Working sams folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/polish/sams; date
+else echo "Working sams folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/pilon/sams; date
 fi
 
 if [ -d "mapping_stats" ]
 then echo "Working mapping_stats folder exist"; echo "Let's move on."; date
-else echo "Working mapping_stats folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/polish/mapping_stats; date
+else echo "Working mapping_stats folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/pilon/mapping_stats; date
 fi
 
 if [ -d "bams" ]
 then echo "Working bams folder exist"; echo "Let's move on."; date
-else echo "Working bams folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/polish/bams; date
+else echo "Working bams folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/pilon/bams; date
 fi
 
 #--------------------------------------------------------------------------------
@@ -98,28 +98,28 @@ fi
 # Start pipeline
 
 # Move to working directory
-cd $WORKING_FOLDER_SCRATCH/polish
+cd $WORKING_FOLDER_SCRATCH/pilon
 
 # Starting mapping
 echo "Begin mapping" 
   
 # I will conduct the mapping with BWA-MEM 2	
-$bwa mem -M -t $CPU $REFERENCE \
+$bwa mem -M -t 16 $REFERENCE \
 $WORKING_FOLDER_SCRATCH/fastp/NC3_R1_clean.fastq.gz \
 $WORKING_FOLDER_SCRATCH/fastp/NC3_R2_clean.fastq.gz \
-> $WORKING_FOLDER_SCRATCH/polish/sams/Ncan.sam
+> $WORKING_FOLDER_SCRATCH/pilon/sams/Ncan.sam
 
 #--------------------------------------------------------------------------------
 
 # I will now extract some summary stats
-samtools flagstat --threads $CPU \
-$WORKING_FOLDER_SCRATCH/polish/sams/Ncan.sam \
-> $WORKING_FOLDER_SCRATCH/polish/mapping_stats/Ncan.flagstats_raw.sam.txt
+samtools flagstat --threads 16 \
+$WORKING_FOLDER_SCRATCH/pilon/sams/Ncan.sam \
+> $WORKING_FOLDER_SCRATCH/pilon/mapping_stats/Ncan.flagstats_raw.sam.txt
 
 # Build bam files
-samtools view -b -q $QUAL --threads $CPU  \
-$WORKING_FOLDER_SCRATCH/polish/sams/Ncan.sam \
-> $WORKING_FOLDER_SCRATCH/polish/bams/Ncan.bam
+samtools view -b -q $QUAL --threads 16  \
+$WORKING_FOLDER_SCRATCH/pilon/sams/Ncan.sam \
+> $WORKING_FOLDER_SCRATCH/pilon/bams/Ncan.bam
 
 #--------------------------------------------------------------------------------
 
