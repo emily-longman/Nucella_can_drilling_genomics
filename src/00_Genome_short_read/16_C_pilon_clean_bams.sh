@@ -65,18 +65,18 @@ JAVAMEM=18G # Java memory
 # Generate Folders and files
 
 # Move to working directory
-cd $WORKING_FOLDER/pilon
+cd $WORKING_FOLDER_SCRATCH/pilon
 
 # This part of the script will check and generate, if necessary, all of the output folders used in the script
 
 if [ -d "bams_clean" ]
 then echo "Working bams_clean folder exist"; echo "Let's move on."; date
-else echo "Working bams_clean folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/pilon/bams_clean; date
+else echo "Working bams_clean folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/pilon/bams_clean; date
 fi
 
 if [ -d "bams_qualimap" ]
 then echo "Working bams_qualimap folder exist"; echo "Let's move on."; date
-else echo "Working bams_qualimap folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/pilon/bams_qualimap; date
+else echo "Working bams_qualimap folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/pilon/bams_qualimap; date
 fi
 
 #--------------------------------------------------------------------------------
@@ -89,7 +89,7 @@ fi
 # Start pipeline
 
 # Move to working directory
-cd $WORKING_FOLDER/pilon
+cd $WORKING_FOLDER_SCRATCH/pilon
 
 # Filter merged bam files with samtools view and add flags
 samtools view \
