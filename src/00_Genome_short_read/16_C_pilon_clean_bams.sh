@@ -20,6 +20,9 @@
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
 #SBATCH --mem=60G 
 
+# Request CPU
+#SBATCH --cpus-per-task=4
+
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/%x_%j.out # Standard output
 
@@ -54,8 +57,6 @@ BAMS=$WORKING_FOLDER_SCRATCH/pilon/bams
 #--------------------------------------------------------------------------------
 
 # Define parameters
-CPU=$SLURM_CPUS_ON_NODE
-echo "using #CPUs ==" $SLURM_CPUS_ON_NODE
 QUAL=40 # Quality threshold for samtools
 JAVAMEM=18G # Java memory
 
@@ -95,7 +96,7 @@ samtools view \
 -b \
 -q $QUAL \
 -f 0x0002 -F 0x0004 -F 0x0008 \
---threads $CPU  \
+--threads 4  \
 $WORKING_FOLDER_SCRATCH/pilon/bams/Ncan.bam \
 > $WORKING_FOLDER_SCRATCH/pilon/bams_clean/Ncan.bam
 # -q = Skip alignments with MAPQ smaller than $QUAL (40)
