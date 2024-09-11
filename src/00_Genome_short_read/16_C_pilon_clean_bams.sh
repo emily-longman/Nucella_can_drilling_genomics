@@ -8,14 +8,14 @@
 #SBATCH --job-name=Clean_bams
 
 # Specify partition
-#SBATCH --partition=bluemoon
+#SBATCH --partition=bigmemwk
 
 # Request nodes
 #SBATCH --nodes=1 
 #SBATCH --ntasks-per-node=1
 
 # Reserve walltime -- hh:mm:ss --30 hrs max
-#SBATCH --time=8:00:00 
+#SBATCH --time=3-00:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
 #SBATCH --mem=60G 
