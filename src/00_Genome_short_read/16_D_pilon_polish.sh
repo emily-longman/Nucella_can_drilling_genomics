@@ -14,14 +14,11 @@
 #SBATCH --nodes=1 # on one node
 #SBATCH --ntasks-per-node=1  
 
-# Request CPUs per task
-#SBATCH --cpus-per-task=12
-
 # Reserve walltime -- hh:mm:ss 
 #SBATCH --time=5-00:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
-#SBATCH --mem=600G
+#SBATCH --mem=900G
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/%x_%j.out # Standard output
@@ -76,7 +73,7 @@ samtools index $BAM
 
 # Use pilon to polish the genome 
 
-pilon --genome $REFERENCE --frags $BAM --threads 12 --output N.canaliculata_polished_genome --outdir $WORKING_FOLDER_SCRATCH/pilon/polished_genome
+pilon --genome $REFERENCE --frags $BAM --output N.canaliculata_polished_genome --outdir $WORKING_FOLDER_SCRATCH/pilon/polished_genome
 
 # --frags for paired-end sequencing of DNA fragments, such as Illumina paired-end reads of fragment size <1000bp.
 
