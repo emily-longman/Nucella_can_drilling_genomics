@@ -15,7 +15,7 @@
 #SBATCH --ntasks-per-node=1  
 
 # Request CPUs per task
-#SBATCH -c 3
+#SBATCH --cpus-per-task=4
 
 # Reserve walltime -- hh:mm:ss 
 #SBATCH --time=5-00:00:00 
@@ -50,8 +50,7 @@ WORKING_FOLDER_SCRATCH=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/dat
 REFERENCE=$WORKING_FOLDER_SCRATCH/ntlink/final/final_assembly.ntLink.scaffolds.gap_fill.fa
 
 # This is the location of the cleaned and indexed bams
-BAMS=$WORKING_FOLDER_SCRATCH/
-##### PLACEHOLDER!
+BAMS=$WORKING_FOLDER_SCRATCH/pilon/bams_clean
 
 #--------------------------------------------------------------------------------
 
@@ -71,7 +70,7 @@ fi
 
 # Use pilon to polish the genome 
 
-pilon --genome $REFERENCE --frags $BAMS --outdir $WORKING_FOLDER_SCRATCH/pilon/polished_genome
+pilon --genome $REFERENCE --frags $BAMS --output N.canaliculata_polished_genome --outdir $WORKING_FOLDER_SCRATCH/pilon/polished_genome
 
 # --frags for paired-end sequencing of DNA fragments, such as Illumina paired-end reads of fragment size <1000bp.
 
