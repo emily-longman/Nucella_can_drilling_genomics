@@ -15,7 +15,7 @@
 #SBATCH --ntasks-per-node=1  
 
 # Request CPUs per task
-#SBATCH --cpus-per-task=4
+#SBATCH --cpus-per-task=12
 
 # Reserve walltime -- hh:mm:ss 
 #SBATCH --time=5-00:00:00 
@@ -70,7 +70,7 @@ fi
 
 # Use pilon to polish the genome 
 
-pilon --genome $REFERENCE --frags $BAMS --output N.canaliculata_polished_genome --outdir $WORKING_FOLDER_SCRATCH/pilon/polished_genome
+pilon --genome $REFERENCE --frags $BAMS --threads 12 --output N.canaliculata_polished_genome --outdir $WORKING_FOLDER_SCRATCH/pilon/polished_genome
 
 # --frags for paired-end sequencing of DNA fragments, such as Illumina paired-end reads of fragment size <1000bp.
 
