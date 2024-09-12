@@ -50,7 +50,7 @@ WORKING_FOLDER_SCRATCH=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/dat
 REFERENCE=$WORKING_FOLDER_SCRATCH/ntlink/final/final_assembly.ntLink.scaffolds.gap_fill.fa
 
 # This is the location of the cleaned and indexed bams
-BAMS=$WORKING_FOLDER_SCRATCH/pilon/bams_clean
+BAM=$WORKING_FOLDER_SCRATCH/pilon/bams_clean/Ncan.srt.rmdp.bam
 
 #--------------------------------------------------------------------------------
 
@@ -70,7 +70,7 @@ fi
 
 # Use pilon to polish the genome 
 
-pilon --genome $REFERENCE --frags $BAMS --threads 12 --output N.canaliculata_polished_genome --outdir $WORKING_FOLDER_SCRATCH/pilon/polished_genome
+pilon --genome $REFERENCE --frags $BAM --threads 12 --output N.canaliculata_polished_genome --outdir $WORKING_FOLDER_SCRATCH/pilon/polished_genome
 
 # --frags for paired-end sequencing of DNA fragments, such as Illumina paired-end reads of fragment size <1000bp.
 
