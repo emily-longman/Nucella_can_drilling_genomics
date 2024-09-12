@@ -33,6 +33,7 @@
 #--------------------------------------------------------------------------------
 
 # Call package (installed with conda)
+spack load samtools@1.10
 module load python3.11-anaconda/2023.09-0
 source ${ANACONDA_ROOT}/etc/profile.d/conda.sh
 #conda create --name pilon #create and name the environment
@@ -65,6 +66,11 @@ if [ -d "polished_genome" ]
 then echo "Working polished_genome folder exist"; echo "Let's move on."; date
 else echo "Working polished_genome folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/pilon/polished_genome; date
 fi
+
+#--------------------------------------------------------------------------------
+
+# Index Bam
+samtools index $BAM
 
 #--------------------------------------------------------------------------------
 
