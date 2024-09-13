@@ -20,6 +20,9 @@
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
 #SBATCH --mem=800G
 
+# Submit job array
+#SBATCH --array=1-634%20
+
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/%x_%j.out # Standard output
 
@@ -48,11 +51,6 @@ BAM=$WORKING_FOLDER_SCRATCH/pilon/bams_clean/Ncan.srt.rmdp.bam
 
 #--------------------------------------------------------------------------------
 
-# Java memory limits
-JAVA_TOOL_OPTIONS="-Xmx300G -Xss2560k" # set maximum heap size to something reasonable
-
-#--------------------------------------------------------------------------------
-
 # Generate Folders and files
 
 # Move to working directory
@@ -60,19 +58,30 @@ cd $WORKING_FOLDER_SCRATCH/pilon
 
 # This part of the script will check and generate, if necessary, all of the output folders used in the script
 
-if [ -d "genome_chunks" ]
-then echo "Working genome_chunks folder exist"; echo "Let's move on."; date
-else echo "Working genome_chunks folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/pilon/genome_chunks; date
+if [ -d "polished_genome" ]
+then echo "Working polished_genome folder exist"; echo "Let's move on."; date
+else echo "Working polished_genome folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/pilon/polished_genome; date
 fi
+
+#--------------------------------------------------------------------------------
+
+## Import master partition file 
+guide_file=$WORKING_FOLDER_SCRATCH/pilon/guide_file_array.txt
+
+echo ${SLURM_ARRAY_TASK_ID}
+
+# Move to working directory
+cd $WORKING_FOLDER_SCRATCH/pilon
+
+# Using the guide file, extract the rows associated based on the Slurm array task ID
+awk '$2=='${SLURM_ARRAY_TASK_ID}'' $guide_file | awk '{print $1}' > ntLink.names.${SLURM_ARRAY_TASK_ID}.txt
 
 #--------------------------------------------------------------------------------
 
 # Use pilon to polish the genome 
 
-java -Xmx800G -jar $PILONJAR --genome $REFERENCE --frags $BAM --output N.canaliculata_polished_genome --outdir $WORKING_FOLDER_SCRATCH/pilon/polished_genome
+java -Xmx800G -jar $PILONJAR --genome $REFERENCE --frags $BAM --output N.canaliculata_polished_genome.${SLURM_ARRAY_TASK_ID} --outdir $WORKING_FOLDER_SCRATCH/pilon/polished_genome
 
 # --frags for paired-end sequencing of DNA fragments, such as Illumina paired-end reads of fragment size <1000bp.
 
 #--------------------------------------------------------------------------------
-
-conda deactivate

@@ -12,9 +12,6 @@ grep ">" $REFERENCE > scaffold_names.txt
 # Get rid of the ">"
 sed -i 's/>//g' scaffold_names.txt
 
-# Switch "_" to "-""
-sed -i 's/_/-/g' scaffold_names.txt
-
 # Modify in R
 module load R/4.4.0
 
