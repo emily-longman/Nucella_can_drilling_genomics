@@ -112,9 +112,6 @@ O=$WORKING_FOLDER_SCRATCH/pilon/bams_clean/Ncan.srt.bam \
 SO=coordinate \
 VALIDATION_STRINGENCY=SILENT
 
-# Index with samtools
-samtools index $WORKING_FOLDER_SCRATCH/pilon/bams_clean/Ncan.srt.bam
-
 # Remove duplicates with picard
 # Notice that once a file has duplicates removed it is added the "rmdp" suffix
 java -Xmx$JAVAMEM -jar $PICARD MarkDuplicates \
@@ -122,6 +119,9 @@ I=$WORKING_FOLDER_SCRATCH/pilon/bams_clean/Ncan.srt.bam \
 O=$WORKING_FOLDER_SCRATCH/pilon/bams_clean/Ncan.srt.rmdp.bam \
 M=$WORKING_FOLDER_SCRATCH/pilon/bams_clean/Ncan.dupstat.txt \
 VALIDATION_STRINGENCY=SILENT REMOVE_DUPLICATES=true
+
+# Index with samtools
+samtools index $WORKING_FOLDER_SCRATCH/pilon/bams_clean/Ncan.srt.rmdp.bam
 
 # Lets do QC on the bam file
 $qualimap bamqc \
