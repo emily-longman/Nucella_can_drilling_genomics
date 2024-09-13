@@ -15,10 +15,10 @@
 #SBATCH --ntasks-per-node=1  
 
 # Reserve walltime -- hh:mm:ss 
-#SBATCH --time=5-00:00:00 
+#SBATCH --time=6-00:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
-#SBATCH --mem=900G
+#SBATCH --mem=800G
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/%x_%j.out # Standard output
@@ -31,11 +31,12 @@
 
 # Call package (installed with conda)
 spack load samtools@1.10
-module load python3.11-anaconda/2023.09-0
-source ${ANACONDA_ROOT}/etc/profile.d/conda.sh
+#module load python3.11-anaconda/2023.09-0
+#source ${ANACONDA_ROOT}/etc/profile.d/conda.sh
 #conda create --name pilon #create and name the environment
-conda activate pilon #activate the environment
+#conda activate pilon #activate the environment
 #conda install bioconda::pilon # install the program
+PILONJAR=/gpfs1/home/e/l/elongman/software/pilon-1.24.jar
 
 #--------------------------------------------------------------------------------
 
@@ -73,7 +74,7 @@ samtools index $BAM
 
 # Use pilon to polish the genome 
 
-pilon --genome $REFERENCE --frags $BAM --output N.canaliculata_polished_genome --outdir $WORKING_FOLDER_SCRATCH/pilon/polished_genome
+java -Xmx800G -jar $PILONJAR --genome $REFERENCE --frags $BAM --output N.canaliculata_polished_genome --outdir $WORKING_FOLDER_SCRATCH/pilon/polished_genome
 
 # --frags for paired-end sequencing of DNA fragments, such as Illumina paired-end reads of fragment size <1000bp.
 
