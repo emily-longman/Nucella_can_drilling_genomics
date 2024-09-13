@@ -31,11 +31,6 @@
 
 # Call package (installed with conda)
 spack load samtools@1.10
-#module load python3.11-anaconda/2023.09-0
-#source ${ANACONDA_ROOT}/etc/profile.d/conda.sh
-#conda create --name pilon #create and name the environment
-#conda activate pilon #activate the environment
-#conda install bioconda::pilon # install the program
 PILONJAR=/gpfs1/home/e/l/elongman/software/pilon-1.24.jar
 
 #--------------------------------------------------------------------------------
@@ -54,7 +49,7 @@ BAM=$WORKING_FOLDER_SCRATCH/pilon/bams_clean/Ncan.srt.rmdp.bam
 #--------------------------------------------------------------------------------
 
 # Java memory limits
-JAVA_TOOL_OPTIONS="-Xmx200G -Xss2560k" # set maximum heap size to something reasonable
+JAVA_TOOL_OPTIONS="-Xmx300G -Xss2560k" # set maximum heap size to something reasonable
 
 #--------------------------------------------------------------------------------
 
