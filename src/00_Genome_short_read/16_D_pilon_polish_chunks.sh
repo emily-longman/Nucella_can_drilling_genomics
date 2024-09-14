@@ -8,20 +8,23 @@
 #SBATCH --job-name=pilon_polish
 
 # Specify partition
-#SBATCH --partition=bigmemwk
+#SBATCH --partition=bluemoon
 
 # Request nodes
 #SBATCH --nodes=1 # on one node
 #SBATCH --ntasks-per-node=1  
 
 # Reserve walltime -- hh:mm:ss 
-#SBATCH --time=6-00:00:00 
+#SBATCH --time=10:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
-#SBATCH --mem=200G
+#SBATCH --mem=80G
+
+# Request CPU
+#SBATCH --cpus-per-task=2
 
 # Submit job array
-#SBATCH --array=1-634%20
+#SBATCH --array=1-634%30
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/%x_%j.out # Standard output
@@ -121,6 +124,7 @@ grep -A 1 ${scaffold} ${REFERENCE} > ${scaffold}.fasta
 java -Xmx49G -jar $PILONJAR \
 --genome ${scaffold}.fasta \
 --frags ${scaffold}.bam \
+--diploid \
 --output ${scaffold}.polished \
 --outdir $WORKING_FOLDER_SCRATCH/pilon/polished_genome_round_1/scaffolds
 # --frags for paired-end sequencing of DNA fragments, such as Illumina paired-end reads of fragment size <1000bp.
