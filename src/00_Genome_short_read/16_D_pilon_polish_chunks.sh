@@ -18,7 +18,7 @@
 #SBATCH --time=10:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
-#SBATCH --mem=80G
+#SBATCH --mem=40G
 
 # Request CPU
 #SBATCH --cpus-per-task=2
