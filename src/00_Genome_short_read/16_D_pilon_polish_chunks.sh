@@ -32,7 +32,7 @@
 
 #--------------------------------------------------------------------------------
 
-# This script will polish the genome. However, given the large size of the genome and a large amount of memory is needed. 
+# This script will polish the genome. However, given the large size of the genome and a large amount of memory is needed to run pilon. 
 # To make the process more manageable, break up both the genome and bam file of the short reads into individual scaffolds then polish each piece.
 # To do this utilize both an array and a while loop. 
 # The previous script produced a guide file that groups scaffolds into 30 scaffold chunks, for a total of 634 partitions.
@@ -73,11 +73,6 @@ fi
 cd $WORKING_FOLDER_SCRATCH/pilon/polished_genome_round_1
 
 if [ -d "scaffolds" ]
-then echo "Working scaffolds folder exist"; echo "Let's move on."; date
-else echo "Working scaffolds folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/pilon/polished_genome_round_1/scaffolds; date
-fi
-
-if [ -d "scaffolds_partitions" ]
 then echo "Working scaffolds folder exist"; echo "Let's move on."; date
 else echo "Working scaffolds folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/pilon/polished_genome_round_1/scaffolds; date
 fi
@@ -127,11 +122,12 @@ java -Xmx49G -jar $PILONJAR \
 --genome ${scaffold}.fasta \
 --frags ${scaffold}.bam \
 --output ${scaffold}.polished \
---outdir $WORKING_FOLDER_SCRATCH/pilon/polished_genome_round_1
+--outdir $WORKING_FOLDER_SCRATCH/pilon/polished_genome_round_1/scaffolds
 # --frags for paired-end sequencing of DNA fragments, such as Illumina paired-end reads of fragment size <1000bp.
 
 # Housekeeping - remove intermediate files
 rm ${scaffold}.bam
+rm ${scaffold}.bam.bai
 rm ${scaffold}.fasta
 
 done
