@@ -29,6 +29,9 @@
 
 #--------------------------------------------------------------------------------
 
+# Load modules
+module load singularity/3.7.1
+
 #Define important file locations
 
 #Working folder is core folder where this pipeline is being run.
