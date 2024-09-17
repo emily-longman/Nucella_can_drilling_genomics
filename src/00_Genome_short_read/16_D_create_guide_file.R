@@ -23,7 +23,7 @@ library(data.table)
 library(tidyverse)
 library(groupdata2)
 
-data <- fread("scaffold_names.txt")
+data <- fread("scaffold_names.txt", header = F)
 
 group(data, n=30, method = "greedy") -> guide_file_array
 

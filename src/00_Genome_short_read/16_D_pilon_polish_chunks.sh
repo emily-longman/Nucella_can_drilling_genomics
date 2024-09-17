@@ -118,7 +118,7 @@ samtools view -b ${BAM} ${scaffold} > ${scaffold}.bam
 samtools index ${scaffold}.bam
 
 # Break up the genome into each scaffold
-grep -A 1 ${scaffold} ${REFERENCE} > ${scaffold}.fasta
+grep -EA 1 "^>${scaffold}$" ${REFERENCE} > ${scaffold}.fasta
 
 # Use pilon to polish the genome 
 java -Xmx49G -jar $PILONJAR \
