@@ -85,8 +85,9 @@ fi
 ## Import master partition file 
 guide_file=$WORKING_FOLDER_SCRATCH/pilon/guide_file_array.txt
 
-#Example: -- the headers are just for descriptive purposes. The actual file has no headers. (dimensions: 2, 19013; 634 partitions)
+#Example: -- the headers are just for descriptive purposes. The actual file has no headers. (dimensions: 2, 19014; 634 partitions)
 # Scaffold name       # Partition
+# ntLink-6475              1
 # ntLink-6476              1
 # ntLink-6477              1
 # ntLink-6478              1
