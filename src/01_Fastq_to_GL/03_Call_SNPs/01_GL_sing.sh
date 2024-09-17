@@ -40,7 +40,7 @@ SCRIPTS_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/01_Fast
 cd $SCRIPTS_FOLDER/03_Call_SNPs
 
 # Change permissions for associated script
-chmod +x 01_genotype_likelihoods.sh
+chmod +x 01_GL.sh
 
 # Use the singularity to run angsd
-singularity exec $SCRIPTS_FOLDER/03_Call_SNPs/singularity-recipes_angsd_v0.933.sif $SCRIPTS_FOLDER/03_Call_SNPs/01_genotype_likelihoods.sh
+singularity exec $SCRIPTS_FOLDER/03_Call_SNPs/singularity-recipes_angsd_v0.933.sif $SCRIPTS_FOLDER/03_Call_SNPs/01_GL.sh
