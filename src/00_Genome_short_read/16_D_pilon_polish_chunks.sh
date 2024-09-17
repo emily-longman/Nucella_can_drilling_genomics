@@ -56,7 +56,7 @@ WORKING_FOLDER_SCRATCH=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/dat
 REFERENCE=$WORKING_FOLDER_SCRATCH/ntlink/final/final_assembly.ntLink.scaffolds.gap_fill.fa
 
 # This is the location of the cleaned and indexed bams
-BAM=$WORKING_FOLDER_SCRATCH/pilon/bams_clean/Ncan.srt.rmdp.bam
+BAM=$WORKING_FOLDER_SCRATCH/pilon/polished_genome_round_1/bams_clean/Ncan.srt.rmdp.bam
 
 #--------------------------------------------------------------------------------
 
