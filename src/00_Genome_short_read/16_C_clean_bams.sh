@@ -52,7 +52,7 @@ WORKING_FOLDER_SCRATCH=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/dat
 REFERENCE=$WORKING_FOLDER_SCRATCH/ntlink/final/final_assembly.ntLink.scaffolds.gap_fill.fa
 
 # This is the location of the bams
-BAMS=$WORKING_FOLDER_SCRATCH/pilon/bams
+BAMS=$WORKING_FOLDER_SCRATCH/pilon/polished_genome_round_1/bams
 
 #--------------------------------------------------------------------------------
 
@@ -65,18 +65,18 @@ JAVAMEM=18G # Java memory
 # Generate Folders and files
 
 # Move to working directory
-cd $WORKING_FOLDER_SCRATCH/pilon
+cd $WORKING_FOLDER_SCRATCH/pilon/polished_genome_round_1
 
 # This part of the script will check and generate, if necessary, all of the output folders used in the script
 
 if [ -d "bams_clean" ]
 then echo "Working bams_clean folder exist"; echo "Let's move on."; date
-else echo "Working bams_clean folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/pilon/bams_clean; date
+else echo "Working bams_clean folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/pilon/polished_genome_round_1/bams_clean; date
 fi
 
 if [ -d "bams_qualimap" ]
 then echo "Working bams_qualimap folder exist"; echo "Let's move on."; date
-else echo "Working bams_qualimap folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/pilon/bams_qualimap; date
+else echo "Working bams_qualimap folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/pilon/polished_genome_round_1/bams_qualimap; date
 fi
 
 #--------------------------------------------------------------------------------
@@ -89,7 +89,7 @@ fi
 # Start pipeline
 
 # Move to working directory
-cd $WORKING_FOLDER_SCRATCH/pilon
+cd $WORKING_FOLDER_SCRATCH/pilon/polished_genome_round_1
 
 # Filter merged bam files with samtools view and add flags
 samtools view \
@@ -97,8 +97,8 @@ samtools view \
 -q $QUAL \
 -f 0x0002 -F 0x0004 -F 0x0008 \
 --threads 4  \
-$WORKING_FOLDER_SCRATCH/pilon/bams/Ncan.bam \
-> $WORKING_FOLDER_SCRATCH/pilon/bams_clean/Ncan.bam
+$WORKING_FOLDER_SCRATCH/pilon/polished_genome_round_1/bams/Ncan.bam \
+> $WORKING_FOLDER_SCRATCH/pilon/polished_genome_round_1/bams_clean/Ncan.bam
 # -q = Skip alignments with MAPQ smaller than $QUAL (40)
 # 0x0002 = read mapped in proper pair (0x2)*
 # 0x0004 = read unmapped (0x4)
@@ -107,34 +107,34 @@ $WORKING_FOLDER_SCRATCH/pilon/bams/Ncan.bam \
 # Sort with picard
 # Notice that once a file has been sorted it is added the "srt" suffix
 java -Xmx$JAVAMEM -jar $PICARD SortSam \
-I=$WORKING_FOLDER_SCRATCH/pilon/bams_clean/Ncan.bam \
-O=$WORKING_FOLDER_SCRATCH/pilon/bams_clean/Ncan.srt.bam \
+I=$WORKING_FOLDER_SCRATCH/pilon/polished_genome_round_1/bams_clean/Ncan.bam \
+O=$WORKING_FOLDER_SCRATCH/pilon/polished_genome_round_1/bams_clean/Ncan.srt.bam \
 SO=coordinate \
 VALIDATION_STRINGENCY=SILENT
 
 # Remove duplicates with picard
 # Notice that once a file has duplicates removed it is added the "rmdp" suffix
 java -Xmx$JAVAMEM -jar $PICARD MarkDuplicates \
-I=$WORKING_FOLDER_SCRATCH/pilon/bams_clean/Ncan.srt.bam \
-O=$WORKING_FOLDER_SCRATCH/pilon/bams_clean/Ncan.srt.rmdp.bam \
-M=$WORKING_FOLDER_SCRATCH/pilon/bams_clean/Ncan.dupstat.txt \
+I=$WORKING_FOLDER_SCRATCH/pilon/polished_genome_round_1/bams_clean/Ncan.srt.bam \
+O=$WORKING_FOLDER_SCRATCH/pilon/polished_genome_round_1/bams_clean/Ncan.srt.rmdp.bam \
+M=$WORKING_FOLDER_SCRATCH/pilon/polished_genome_round_1/bams_clean/Ncan.dupstat.txt \
 VALIDATION_STRINGENCY=SILENT REMOVE_DUPLICATES=true
 
 # Index with samtools
-samtools index $WORKING_FOLDER_SCRATCH/pilon/bams_clean/Ncan.srt.rmdp.bam
+samtools index $WORKING_FOLDER_SCRATCH/pilon/polished_genome_round_1/bams_clean/Ncan.srt.rmdp.bam
 
 # Lets do QC on the bam file
 $qualimap bamqc \
--bam $WORKING_FOLDER_SCRATCH/pilon/bams_clean/Ncan.srt.rmdp.bam \
--outdir $WORKING_FOLDER_SCRATCH/pilon/bams_qualimap/Qualimap_Ncan \
+-bam $WORKING_FOLDER_SCRATCH/pilon/polished_genome_round_1/bams_clean/Ncan.srt.rmdp.bam \
+-outdir $WORKING_FOLDER_SCRATCH/pilon/polished_genome_round_1/bams_qualimap/Qualimap_Ncan \
 --java-mem-size=$JAVAMEM
 
 # Clean intermediate files
-rm $WORKING_FOLDER_SCRATCH/pilon/bams_clean/Ncan.bam
-rm $WORKING_FOLDER_SCRATCH/pilon/bams_clean/Ncan.srt.bam
+rm $WORKING_FOLDER_SCRATCH/pilon/polished_genome_round_1/bams_clean/Ncan.bam
+rm $WORKING_FOLDER_SCRATCH/pilon/polished_genome_round_1/bams_clean/Ncan.srt.bam
 
 # Housekeeping
-mv $WORKING_FOLDER_SCRATCH/pilon/bams_clean/Ncan.dupstat.txt \
+mv $WORKING_FOLDER_SCRATCH/pilon/polished_genome_round_1/bams_clean/Ncan.dupstat.txt \
 $WORKING_FOLDER_SCRATCH/pilon/mapping_stats
 
 #--------------------------------------------------------------------------------
