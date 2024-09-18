@@ -100,7 +100,7 @@ SUFFIX_2="SNPs_all_test"
 
 # Generate GL's for polymorphic sites for all Nucella samples
 angsd -b ${OUTPUT}/Nucella_bam_test.list \
--anc ${REFERENCE} \
+-ref ${REFERENCE} -anc ${REFERENCE} \
 -out ${OUTPUT}/Nucella_${SUFFIX_2} \
 -P $NB_CPU \
 -doMaf 1 -doSaf 1 -GL 2 -doGlf 2 -doMajorMinor 1 -doCounts 1 \
