@@ -140,6 +140,7 @@ $seqtk seq ${scaffold}.polished.fasta > $WORKING_FOLDER_SCRATCH/pilon/polished_g
 rm ${scaffold}.bam
 rm ${scaffold}.bam.bai
 rm ${scaffold}.fasta
+rm ${scaffold}.polished.fasta
 
 done
 
