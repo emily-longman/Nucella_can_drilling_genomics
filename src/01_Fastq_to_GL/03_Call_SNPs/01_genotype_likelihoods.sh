@@ -12,7 +12,7 @@
 
 # Request nodes
 #SBATCH --nodes=1 
-#SBATCH --ntasks-per-node=40
+#SBATCH --ntasks-per-node=10
 
 # Reserve walltime -- hh:mm:ss --7 day limit 
 #SBATCH --time=02-00:00:00 

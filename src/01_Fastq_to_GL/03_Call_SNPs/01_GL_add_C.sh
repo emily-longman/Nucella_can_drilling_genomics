@@ -5,20 +5,20 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=Genotype_likelihoods_no_C
+#SBATCH --job-name=Genotype_likelihoods_add_C
 
 # Specify partition
 #SBATCH --partition=bigmemwk
 
 # Request nodes
 #SBATCH --nodes=1 
-#SBATCH --ntasks-per-node=1
+#SBATCH --ntasks-per-node=40
 
 # Reserve walltime -- hh:mm:ss --7 day limit 
-#SBATCH --time=06-00:00:00 
+#SBATCH --time=02-00:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
-#SBATCH --mem=500G 
+#SBATCH --mem=200G 
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/%x_%j.out # Standard output
@@ -30,14 +30,6 @@
 #--------------------------------------------------------------------------------
 
 # This script will calculate genotype likelihoods of SNPs for all individuals
-
-# Load modules
-module load singularity/3.7.1
-#spack load angsd@0.933
-#spack load samtools@1.10
-
-# Add path to angsd singularity
-export PATH="$PATH:/gpfs1/home/e/l/elongman/software/angsd_sing"
 
 #--------------------------------------------------------------------------------
 
@@ -52,14 +44,11 @@ REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_A
 #Path to the directory with the lane merged bams (filtered, sorted and duplicates removed). 
 BAMS_FOLDER=$WORKING_FOLDER/bams_merged
 
-#Name of pipeline
-PIPELINE=Genotype_likelihoods_no_C
-
 #--------------------------------------------------------------------------------
 
 # Define parameters
-CPU=$SLURM_CPUS_ON_NODE
-echo "using #CPUs ==" $SLURM_CPUS_ON_NODE
+NB_CPU=40 #change accordingly in SLURM header
+echo "using #CPUs ==" $NB_CPU
 
 #--------------------------------------------------------------------------------
 
@@ -87,7 +76,7 @@ OUTPUT=$WORKING_FOLDER/genotype_likelihoods_all
 cd $BAMS_FOLDER
 
 # Create bamlist for all Nucella samples
-ls -d "$PWD/"* > $OUTPUT/Nucella_bam_no_C.list
+ls -d "$PWD/"* > $OUTPUT/Nucella_bam_add_C.list
 
 #--------------------------------------------------------------------------------
 
@@ -100,7 +89,7 @@ ls -d "$PWD/"* > $OUTPUT/Nucella_bam_no_C.list
 cd $WORKING_FOLDER
 
 # File suffix to distinguish analysis choices
-SUFFIX_2="SNPs_all_no_C"
+SUFFIX_2="SNPs_all_add_C"
 
 ## Filter changes:
 # minMapQ: threshold for minimum read mapping quality (Phred): increase from 20 to 30
@@ -110,17 +99,19 @@ SUFFIX_2="SNPs_all_no_C"
 # minMaf: Keep only sites with minor allele freq > some proportion (0.01)
 
 # Generate GL's for polymorphic sites for all Nucella samples
-angsd_sing -b ${OUTPUT}/Nucella_bam_no_C.list \
+angsd -b ${OUTPUT}/Nucella_bam_add_C.list \
 -ref ${REFERENCE} -anc ${REFERENCE} \
 -out ${OUTPUT}/Nucella_${SUFFIX_2} \
--nThreads $CPU \
--doMaf 1 -doSaf 1 -GL 1 -doGlf 2 -doMajorMinor 1 -doCounts 1 \
+-P $NB_CPU \
+-doMaf 1 -doSaf 1 -GL 2 -doGlf 2 -doMajorMinor 1 -doCounts 1 -C 50 \
 -remove_bads 1 -baq 1 -skipTriallelic 1 -minMapQ 30 -minQ 20 \
--minInd 163 -setMinDepthInd 0.1 -minMaf 0.01 -setMaxDepth 2 \
+-minInd 163 -setMinDepthInd 0.1 -minMaf 0.01 -setMaxDepth 600 \
 -SNP_pval 1e-6 
 
-# -nThreads 1: how many cpus to use 
+# Change setMaxDepth to 600 (i.e., 3 * expected coverage (1X) * ~200 ind  )
+# Switched GL to 2 rather than 1 (i.e., GL from GATK model rather than Samtools)
 
+# -P: number of threads
 # -doMaf 1: estimate allele frequencies
 # -doSaf 1: estimate the SFS and/or neutrality tests genotype calling
 # -GL 1: estimate genotype likelihoods (GL) using the Samtools formula (1)
@@ -133,10 +124,11 @@ angsd_sing -b ${OUTPUT}/Nucella_bam_no_C.list \
 # -skipTriallelic 1: don’t use sites with >2 alleles
 # -minMapQ 30: threshold for minimum read mapping quality (Phred)
 # -minQ 20: threshold for minimum base quality (Phred)
+# -C 50: enforce downgrading of map quality if contains excessive mismatches
 
 # -minInd 163: min number of individuals to keep a site (~85%)
 # -setMinDepthInd 0.1: min read depth for an individual to count towards a site
 # -minMaf 0.01: Keep only sites with minor allele freq > some proportion.
-# -setMaxDepth: Keep SNPs with a maximum total depth (typically set at 2-4 times teh expected coverage to remove repeat regions)
+# -setMaxDepth: Keep SNPs with a maximum total depth (typically set at 2-4 times the expected coverage times the number of ind to remove repeat regions)
 
 # -SNP_pval 1e-6: Keep only site highly likely to be polymorphic (SNPs)

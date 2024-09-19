@@ -5,14 +5,14 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=Genotype_likelihoods_sing
+#SBATCH --job-name=Genotype_likelihoods_add_C_sing
 
 # Specify partition
 #SBATCH --partition=bigmemwk
 
 # Request nodes
 #SBATCH --nodes=1 
-#SBATCH --ntasks-per-node=10
+#SBATCH --ntasks-per-node=40
 
 # Reserve walltime -- hh:mm:ss --7 day limit 
 #SBATCH --time=02-00:00:00 
