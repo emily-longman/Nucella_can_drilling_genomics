@@ -41,9 +41,10 @@
 # The previous script produced a guide file that groups scaffolds into 30 scaffold chunks, for a total of 634 partitions.
 # For each partition, this script will loop over each scaffold name, break the genome and bam file into that scaffold then clean that scaffold.
 
-# Call package (installed with conda)
+# Call packages
 spack load samtools@1.10
 PILONJAR=/gpfs1/home/e/l/elongman/software/pilon-1.24.jar
+seqtk=/gpfs1/home/e/l/elongman/software/seqtk/seqtk
 
 #--------------------------------------------------------------------------------
 
@@ -127,8 +128,13 @@ java -Xmx49G -jar $PILONJAR \
 --frags ${scaffold}.bam \
 --diploid \
 --output ${scaffold}.polished \
---outdir $WORKING_FOLDER_SCRATCH/pilon/polished_genome_round_1/scaffolds
+--outdir $WORKING_FOLDER_SCRATCH/pilon/polished_genome_round_1
 # --frags for paired-end sequencing of DNA fragments, such as Illumina paired-end reads of fragment size <1000bp.
+
+# Note: the output of pilon is interleaved (i.e., the DNA sequence is in chunks of 80bps a line), 
+# you need to switch them to put all of the sequences on one line 
+
+$seqtk seq ${scaffold}.polished.fasta > $WORKING_FOLDER_SCRATCH/pilon/polished_genome_round_1/scaffolds/${scaffold}.polished.fasta
 
 # Housekeeping - remove intermediate files
 rm ${scaffold}.bam
