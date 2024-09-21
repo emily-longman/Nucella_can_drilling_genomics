@@ -33,6 +33,11 @@
 
 #--------------------------------------------------------------------------------
 
+#Load modules 
+spack load angsd@0.933
+spack load samtools@1.10
+
+#--------------------------------------------------------------------------------
 #Define important file locations
 
 #Working folder is core folder where this pipeline is being run.
