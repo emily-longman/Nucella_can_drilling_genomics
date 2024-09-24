@@ -43,4 +43,4 @@ cd $WORKING_FOLDER_SCRATCH/pilon/polished_genome_round_5
 for file in $(find ${scaffolds_dir} -name "*.polished.fasta"); do
 cmd="cat ${file};"
 eval $cmd
-done > $WORKING_FOLDER_SCRATCH/pilon/polished_genome_round_4/polished_assembly.fasta
+done > $WORKING_FOLDER_SCRATCH/pilon/polished_genome_round_5/polished_assembly.fasta
