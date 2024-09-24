@@ -49,7 +49,7 @@ RepeatMasker=/netfiles/nunezlab/Shared_Resources/Software/RepeatMasker/RepeatMas
 # Working folder is core folder where this pipeline is being run.
 WORKING_FOLDER_SCRATCH=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly
 
-#This is the location where the reference genome and all its indexes are stored.
+#This is the location where the reference genome. (note: copied a final version from pilon to repeatmasker directory)
 REFERENCE=$WORKING_FOLDER_SCRATCH/repeatmasker/polished_assembly.fasta
 
 #--------------------------------------------------------------------------------
