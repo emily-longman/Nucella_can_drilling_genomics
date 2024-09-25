@@ -66,7 +66,7 @@ WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/proces
 REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_Aug2024/backbone_raw.fasta
 
 #Input folder is genotype likelihoods from ANGSD
-INPUT=$WORKING_FOLDER/genotype_likelihoods_all_test
+INPUT=$WORKING_FOLDER/genotype_likelihoods_all
 
 #--------------------------------------------------------------------------------
 # Define parameters
@@ -95,14 +95,14 @@ OUTPUT=$WORKING_FOLDER/pcangsd
 #--------------------------------------------------------------------------------
 
 # Make a copy of the list of bam files for all the Nucella samples and place in the output directory. You'll need this later for making figures.
-cp ${INPUT}/Nucella_bam_test.list ${OUTPUT}
+cp ${INPUT}/Nucella_bam.list ${OUTPUT}
 
 # Then, run PCA and admixture scores with pcangsd:
 SUFFIX="Nucella_poly_covmatrix"
 
 echo "Analyse covariance matrix on all individuals"
 
-pcangsd -b ${INPUT}/Nucella_SNPs_all_test.beagle.gz \
+pcangsd -b ${INPUT}/Nucella_SNPs_all.beagle.gz \
 -o ${OUTPUT}/${SUFFIX} \
 -t $CPU 
 
