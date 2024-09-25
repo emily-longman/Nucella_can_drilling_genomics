@@ -23,9 +23,6 @@
 # Request CPU
 #SBATCH --cpus-per-task=6
 
-# Submit job array
-#SBATCH --array=1-634%30
-
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/%x_%j.out # Standard output
 
