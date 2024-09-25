@@ -95,14 +95,14 @@ OUTPUT=$WORKING_FOLDER/pcangsd
 #--------------------------------------------------------------------------------
 
 # Make a copy of the list of bam files for all the Nucella samples and place in the output directory. You'll need this later for making figures.
-cp ${INPUT}/Nucella_bam_lower_p.list ${OUTPUT}
+cp ${INPUT}/Nucella_bam_lower_minInd.list ${OUTPUT}
 
 # Then, run PCA and admixture scores with pcangsd:
-SUFFIX="Nucella_poly_covmatrix_lower_p"
+SUFFIX="Nucella_poly_covmatrix_lower_minInd"
 
 echo "Analyse covariance matrix on all individuals"
 
-pcangsd -b ${INPUT}/Nucella_SNPs_all_lower_p.beagle.gz \
+pcangsd -b ${INPUT}/Nucella_SNPs_all_lower_minInd.beagle.gz \
 -o ${OUTPUT}/${SUFFIX} \
 -t $CPU 
 
