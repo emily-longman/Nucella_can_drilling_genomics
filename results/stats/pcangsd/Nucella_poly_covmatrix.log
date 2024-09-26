@@ -1,15 +1,15 @@
 PCAngsd v1.35
-Time: 02/08/2024 06:44:52
-Directory: /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_VCF
+Time: 24/09/2024 20:37:39
+Directory: /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL
 Options:
-	--beagle /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_VCF/genotype_likelihoods_SNPs_flt/Nucella_SNPs_flt.beagle.gz
+	--beagle /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL/genotype_likelihoods_all/Nucella_SNPs_all.beagle.gz
 	--threads 2
-	--out /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_VCF/pcangsd_test2/Nucella_poly_covmatrix
+	--out /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL/pcangsd/Nucella_poly_covmatrix
 
-Loaded 2355 sites and 192 individuals.
-Number of sites after MAF filtering (0.05): 912
+Loaded 942 sites and 192 individuals.
+Number of sites after MAF filtering (0.05): 389
 
-PCAngsd converged in 31 iterations using 1 eigenvectors.
-Saved covariance matrix as /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_VCF/pcangsd_test2/Nucella_poly_covmatrix.cov
+PCAngsd did not converge using 1 eigenvectors!
+Saved covariance matrix as /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL/pcangsd/Nucella_poly_covmatrix.cov
 
-Total elapsed time: 0m23s
+Total elapsed time: 0m5s

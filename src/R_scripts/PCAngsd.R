@@ -27,7 +27,7 @@ library(ggplot2)
 library(ggpubr)
 
 # Load data
-COV <- as.matrix(read.table("Nucella_poly_covmatrix.cov")) # Read in the genetic covariance matrix
+COV <- as.matrix(read.table("Nucella_poly_covmatrix_add_C.cov")) # Read in the genetic covariance matrix
 
 # Extract the principal components from the COV matrix
 PCA <- eigen(COV) 
@@ -132,3 +132,4 @@ ggscatter(data, x = "V1", y = "V3",
   labs(x = paste0("PC1: (",var[1]*100,"%)"), y = paste0("PC2: (",var[2]*100,"%)")) +
   scale_color_manual(values=c(cols3), name="Source population") +
   guides(colour = guide_legend(nrow = 2))
+
