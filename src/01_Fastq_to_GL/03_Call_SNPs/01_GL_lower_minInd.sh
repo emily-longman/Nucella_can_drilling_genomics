@@ -111,7 +111,7 @@ angsd -b ${OUTPUT}/Nucella_bam_lower_minInd.list \
 -P $NB_CPU \
 -doMaf 1 -doSaf 1 -GL 2 -doGlf 2 -doMajorMinor 1 -doCounts 1 \
 -remove_bads 1 -baq 1 -skipTriallelic 1 -minMapQ 30 -minQ 20 \
--minInd 96 -setMinDepthInd 0.1 -minMaf 0.01 -setMaxDepth 600 \
+-minInd 144 -setMinDepthInd 0.1 -minMaf 0.01 -setMaxDepth 600 \
 -SNP_pval 1e-6 
 
 # Change setMaxDepth to 600 (i.e., 3 * expected coverage (1X) * ~200 ind  )
