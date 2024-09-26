@@ -78,6 +78,8 @@ INFILE=genotype_likelihoods_all/Nucella_SNPs_all.mafs
 OUTFILE_sites=sites_info/sites_all_maf
 OUTFILE_regions=sites_info/regions_all_maf
 
-Rscript $SCRIPT_FOLDER/03_Call_SNPs/02_make_sites_list_maxdepth.R "$INFILE" "$OUTFILE_sites" "$OUTFILE_regions"
+make_sites_list=$SCRIPT_FOLDER/03_Call_SNPs/02_make_sites_list_maxdepth.R 
+
+$make_sites_list "$INFILE" "$OUTFILE_sites" "$OUTFILE_regions"
 
 angsd sites index $OUTFILE_sites
