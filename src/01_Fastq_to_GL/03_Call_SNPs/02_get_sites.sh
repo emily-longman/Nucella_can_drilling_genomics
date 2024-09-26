@@ -78,6 +78,9 @@ INFILE=genotype_likelihoods_all/Nucella_SNPs_all.mafs
 OUTFILE_sites=sites_info/sites_all_maf
 OUTFILE_regions=sites_info/regions_all_maf
 
+# Change permissions for script 
+chmod 777 $SCRIPT_FOLDER/03_Call_SNPs/02_make_sites_list_maxdepth.R
+
 make_sites_list=$SCRIPT_FOLDER/03_Call_SNPs/02_make_sites_list_maxdepth.R 
 
 $make_sites_list "$INFILE" "$OUTFILE_sites" "$OUTFILE_regions"
