@@ -54,6 +54,10 @@ MIN_MAF=0.01
 PERCENT_IND=0.5 
 MIN_DEPTH=0.1
 
+# Filter : min number of individuals to keep a site 
+# Currently set to 75% of 192
+MIN_IND=144
+
 # Filter: will keep SNP with at least a coverage of this factor multiplied by the number of ind - across all ind. 
 # Advice: we usually set it at 2-4 times the expected coverage to remove repeated regions
 MAX_DEPTH_FACTOR=3
