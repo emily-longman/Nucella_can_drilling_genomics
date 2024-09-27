@@ -56,6 +56,7 @@ echo "using #CPUs ==" $NB_CPU
 
 source $SCRIPT_FOLDER/03_Call_SNPs/00_config.sh
 
+# Unsure what the regions is doing in the angsd script
 REGIONS=$WORKING_FOLDER/sites_info/regions_all_maf
 
 #--------------------------------------------------------------------------------
@@ -90,18 +91,3 @@ angsd -b $WORKING_FOLDER/genotype_likelihoods_all/Nucella_bam.list \
 -out $WORKING_FOLDER/plink/Nucella_all_maf"$MIN_MAF"_pctind"$PERCENT_IND"_maxdepth"$MAX_DEPTH_FACTOR" 
 
 # nQueueSize -50  Maximum number of queud elements
-
-
-
-
-OUTFILE_regions=02_info/regions_all_maf"$MIN_MAF"_pctind"$PERCENT_IND"_maxdepth"$MAX_DEPTH_FACTOR"
-
-
-angsd -b ${OUTPUT}/Nucella_bam_lower_minInd.list \
--ref ${REFERENCE} -anc ${REFERENCE} \
--out ${OUTPUT}/Nucella_${SUFFIX_2} \
--P $NB_CPU \
--doMaf 1 -doSaf 1 -GL 2 -doGlf 2 -doMajorMinor 1 -doCounts 1 \
--remove_bads 1 -baq 1 -skipTriallelic 1 -minMapQ 30 -minQ 20 \
--minInd 144 -setMinDepthInd 0.1 -minMaf 0.01 -setMaxDepth 600 \
--SNP_pval 1e-6 
