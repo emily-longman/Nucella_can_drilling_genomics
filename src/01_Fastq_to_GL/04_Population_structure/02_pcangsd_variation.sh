@@ -14,8 +14,8 @@
 #SBATCH --nodes=1 
 #SBATCH --ntasks-per-node=1
 
-# Reserve walltime -- hh:mm:ss --7 day limit 
-#SBATCH --time=24:00:00 
+# Reserve walltime -- hh:mm:ss
+#SBATCH --time=8:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
 #SBATCH --mem=65G 
@@ -98,7 +98,7 @@ OUTPUT=$WORKING_FOLDER/pcangsd
 cp ${INPUT}/Nucella_bam_lower_minInd.list ${OUTPUT}
 
 # Then, run PCA and admixture scores with pcangsd:
-SUFFIX="Nucella_poly_covmatrix_lower_minInd"
+SUFFIX="Nucella_poly_covmatrix_lower_minInd_60perc"
 
 echo "Analyse covariance matrix on all individuals"
 

@@ -29,7 +29,7 @@ library(ggplot2)
 library(ggpubr)
 
 # Load data
-COV <- as.matrix(read.table("Nucella_poly_covmatrix.cov")) # Read in the genetic covariance matrix
+COV <- as.matrix(read.table("Nucella_poly_covmatrix_lower_p.cov")) # Read in the genetic covariance matrix
 
 # Extract the principal components from the COV matrix
 PCA <- eigen(COV) 
@@ -112,14 +112,14 @@ ggscatter(data, x = "V1", y = "V3",
         legend.text=element_text(size=rel(.7)), 
         axis.text = element_text(size=13), 
         legend.position = "bottom") +
-  labs(x = paste0("PC1: (",var[1]*100,"%)"), y = paste0("PC2: (",var[2]*100,"%)")) +
+  labs(x = paste0("PC1: (",var[1]*100,"%)"), y = paste0("PC3: (",var[3]*100,"%)")) +
   scale_color_manual(values=c(cols2), name="Source population") +
   guides(colour = guide_legend(nrow = 2))
 
 
 cols3=c("#377eB8","#EE9B00","#94D2BD","#AE2012", "#6d597a", "#7EA16B")
 
-ggscatter(data, x = "V1", y = "V3",
+ggscatter(data, x = "V1", y = "V2",
           color = "Total.Drilled",
           mean.point = TRUE,
           star.plot = TRUE) +
@@ -134,3 +134,4 @@ ggscatter(data, x = "V1", y = "V3",
   labs(x = paste0("PC1: (",var[1]*100,"%)"), y = paste0("PC2: (",var[2]*100,"%)")) +
   scale_color_manual(values=c(cols3), name="Source population") +
   guides(colour = guide_legend(nrow = 2))
+
