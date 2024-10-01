@@ -29,7 +29,7 @@ library(ggplot2)
 library(ggpubr)
 
 # Load data
-COV <- as.matrix(read.table("Nucella_poly_covmatrix_lower_p.cov")) # Read in the genetic covariance matrix
+COV <- as.matrix(read.table("Nucella_poly_covmatrix.cov")) # Read in the genetic covariance matrix
 
 # Extract the principal components from the COV matrix
 PCA <- eigen(COV) 
