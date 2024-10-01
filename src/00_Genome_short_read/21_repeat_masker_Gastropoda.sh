@@ -56,7 +56,8 @@ REFERENCE=$WORKING_FOLDER_SCRATCH/repeatmasker/polished_assembly.fasta
 # Move to working directory
 cd $WORKING_FOLDER_SCRATCH
 
-# Create a directory for repeatmasker using Drosophila melanogaster as the reference species
+# Create a directory for repeatmasker using Gastropoda as the reference clade 
+# (this includes L. saxatilis, P. pellucida, L. gigantea, G. magus, S. cineraria, H. rufescens, H. cracherodii, H. discus, B. glabrata, A. californica)
 if [ -d "repeatmasker_Gastropoda" ]
 then echo "Working repeatmasker_Gastropoda folder exist"; echo "Let's move on."; date
 else echo "Working repeatmasker_Gastropoda folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/repeatmasker_Gastropoda; date
