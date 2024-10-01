@@ -48,6 +48,7 @@ WORKING_FOLDER_SCRATCH=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/dat
 # Genome from scaffolding
 ASSEMBLY=$WORKING_FOLDER_SCRATCH/ntlink/final/final_assembly.ntLink.scaffolds.gap_fill.fa
 # Note: I renamed the assembly to a shorter name without all of the ntLinks, and moved it to a directory called final
+# The final assembly was: ntlink, k=30, w=200, rounds=6, contigs=19014, total length=1593151670
 
 #--------------------------------------------------------------------------------
 
