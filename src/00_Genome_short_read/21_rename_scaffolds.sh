@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=pilon_polish
+#SBATCH --job-name=rename scaffolds
 
 # Specify partition
 #SBATCH --partition=bluemoon
@@ -15,16 +15,10 @@
 #SBATCH --ntasks-per-node=1  
 
 # Reserve walltime -- hh:mm:ss 
-#SBATCH --time=2:00:00 
+#SBATCH --time=8:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
-#SBATCH --mem=40G
-
-# Request CPU
-#SBATCH --cpus-per-task=2
-
-# Submit job array
-#SBATCH --array=1-634%30
+#SBATCH --mem=30G
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/%x_%j.out # Standard output
