@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=rename scaffolds
+#SBATCH --job-name=rename_scaffolds
 
 # Specify partition
 #SBATCH --partition=bluemoon
