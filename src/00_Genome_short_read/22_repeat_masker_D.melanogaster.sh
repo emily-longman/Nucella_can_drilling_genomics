@@ -8,17 +8,17 @@
 #SBATCH --job-name=repeat_masker_D.melanogaster
 
 # Specify partition
-#SBATCH --partition=bluemoon
+#SBATCH --partition=week
 
 # Request nodes
 #SBATCH --nodes=1 # on one node
 #SBATCH --ntasks-per-node=1  
 
 # Reserve walltime -- hh:mm:ss 
-#SBATCH --time=30:00:00 
+#SBATCH --time=4-00:00:00
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
-#SBATCH --mem=60G
+#SBATCH --mem=30G
 
 # Request CPU
 #SBATCH --cpus-per-task=6
