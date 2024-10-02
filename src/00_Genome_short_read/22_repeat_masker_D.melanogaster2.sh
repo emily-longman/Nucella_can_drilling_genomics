@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=repeat_masker_D.melanogaster
+#SBATCH --job-name=repeat_masker_D.melanogaster2
 
 # Specify partition
 #SBATCH --partition=week
