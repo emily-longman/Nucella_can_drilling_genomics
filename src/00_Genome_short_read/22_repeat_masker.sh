@@ -73,5 +73,8 @@ $RepeatMasker \
 -species "Littorina saxatilis" \
 $REFERENCE
 
+# Note: maybe add -dir in future so doesn't overlap - also can input a masked genome and do a second round
+# RepeatMasker -pa 8 -e ncbi -species tetrapoda -dir Tetrapoda_mask Boa_constrictor_SGA_7C.scaffolds.BovB.fa
+
 # Sequence comparison are performed by NHMMEr - a profile Hidden Markov Model aligner
 #The script creates a .gff file with the annotation in 'General Feature Finding' format. 

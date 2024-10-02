@@ -57,15 +57,15 @@ REFERENCE=$WORKING_FOLDER_SCRATCH/repeatmasker/polished_assembly.fasta
 cd $WORKING_FOLDER_SCRATCH
 
 # Create a directory for repeatmasker using Drosophila melanogaster as the reference species
-if [ -d "repeatmasker_D.melanogaster" ]
-then echo "Working repeatmasker_D.melanogaster folder exist"; echo "Let's move on."; date
-else echo "Working repeatmasker_D.melanogaster folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/repeatmasker_D.melanogaster; date
+if [ -d "repeatmasker_D.melanogaster2" ]
+then echo "Working repeatmasker_D.melanogaster2 folder exist"; echo "Let's move on."; date
+else echo "Working repeatmasker_D.melanogaster2 folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/repeatmasker_D.melanogaster2; date
 fi
 
 #--------------------------------------------------------------------------------
 
 # Change directory
-cd $WORKING_FOLDER_SCRATCH/repeatmasker_D.melanogaster
+cd $WORKING_FOLDER_SCRATCH/repeatmasker_D.melanogaster2
 
 # Use RepeatMasker to mask repeats
 
@@ -75,6 +75,7 @@ $RepeatMasker \
 -pa 6 \
 -gff \
 -species "Drosophila melanogaster" \
+-dir Drosophila_mask \
 $REFERENCE
 
 # Sequence comparison are performed by NHMMEr - a profile Hidden Markov Model aligner
