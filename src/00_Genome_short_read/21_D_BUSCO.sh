@@ -75,7 +75,7 @@ OUTPUT=./Nucella_consensus_mollusca
 LINEAGE=/netfiles/nunezlab/BUSCO_Lineages/busco_downloads/lineages/mollusca_odb10
 fi
 
-busco -m genome -i $INPUT -o $OUTPUT -l $LINEAGE
+busco -m genome -i $REFERENCE -o $OUTPUT -l $LINEAGE
 
 
 #--------------------------------------------------------------------------------
