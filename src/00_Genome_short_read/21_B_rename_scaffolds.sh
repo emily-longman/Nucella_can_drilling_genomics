@@ -20,6 +20,9 @@
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
 #SBATCH --mem=30G
 
+# Submit job array
+#SBATCH --array=1-634%30
+
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/%x_%j.out # Standard output
 
@@ -65,22 +68,31 @@ fi
 
 #--------------------------------------------------------------------------------
 
-# Create guide file - i.e., a list of the scaffold names
+## Import master partition file 
+guide_file=$WORKING_FOLDER_SCRATCH/rename_scaffolds/guide_file_array.txt
 
-# Move to rename scaffolds directory
-cd $WORKING_FOLDER_SCRATCH/rename_scaffolds
-
-# Get all of the scaffold names 
-grep ">" $REFERENCE > scaffold_names.txt
-
-# Get rid of the ">"
-sed -i 's/>//g' scaffold_names.txt
+#Example: -- the headers are just for descriptive purposes. The actual file has no headers. (dimensions: 2, 19014; 634 partitions)
+# Scaffold name                                        # Partition
+# Backbone_22897_pilon_pilon_pilon_pilon_pilon              1
+# Backbone_19840_pilon_pilon_pilon_pilon_pilon              1
+# ntLink_5254_pilon_pilon_pilon_pilon_pilon                 1
+# Backbone_24785_pilon_pilon_pilon_pilon_pilon              1
+# ....
 
 #--------------------------------------------------------------------------------
 
+# Determine partition to process 
+
+# Echo slurm array task ID
+echo ${SLURM_ARRAY_TASK_ID}
+
+# Using the guide file, extract the scaffold names associated based on the Slurm array task ID for a given partition
+awk '$2=='${SLURM_ARRAY_TASK_ID}'' $guide_file | awk '{print $1}' > scaffold.names.${SLURM_ARRAY_TASK_ID}.txt
+
+#--------------------------------------------------------------------------------
 
 # Cat file of scaffold names and start while loop
-cat scaffold_names.txt | \
+cat scaffold.names.${SLURM_ARRAY_TASK_ID}.txt | \
 while read scaffold 
 do echo ${scaffold}
 
@@ -98,10 +110,5 @@ done
 
 #--------------------------------------------------------------------------------
 
-scaffolds_dir=$WORKING_FOLDER_SCRATCH/rename_scaffolds/scaffolds
-
-# Cat files together to produce a final genome with the scaffolds renamed
-for file in $(find ${scaffolds_dir} -name "*.fasta"); do
-cmd="cat ${file};"
-eval $cmd
-done > $WORKING_FOLDER_SCRATCH/rename_scaffolds/N.canaliculata_assembly.fasta
+# Housekeeping
+rm scaffold.names.${SLURM_ARRAY_TASK_ID}.txt
