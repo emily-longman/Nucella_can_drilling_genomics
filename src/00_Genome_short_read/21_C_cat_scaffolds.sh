@@ -1,4 +1,3 @@
-
 #!/usr/bin/env bash
 
 # In the command line, run the following command: sbatch path/to/this/file.sh
