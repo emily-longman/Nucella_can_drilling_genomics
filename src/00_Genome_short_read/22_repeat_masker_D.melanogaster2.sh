@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=repeat_masker_D.melanogaster2
+#SBATCH --job-name=repeat_masker_D.melanogaster3
 
 # Specify partition
 #SBATCH --partition=week
@@ -15,7 +15,7 @@
 #SBATCH --ntasks-per-node=1  
 
 # Reserve walltime -- hh:mm:ss 
-#SBATCH --time=4-00:00:00
+#SBATCH --time=7-00:00:00
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
 #SBATCH --mem=30G
@@ -57,15 +57,15 @@ REFERENCE=$WORKING_FOLDER_SCRATCH/repeatmasker/polished_assembly.fasta
 cd $WORKING_FOLDER_SCRATCH
 
 # Create a directory for repeatmasker using Drosophila melanogaster as the reference species
-if [ -d "repeatmasker_D.melanogaster2" ]
-then echo "Working repeatmasker_D.melanogaster2 folder exist"; echo "Let's move on."; date
-else echo "Working repeatmasker_D.melanogaster2 folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/repeatmasker_D.melanogaster2; date
+if [ -d "repeatmasker_D.melanogaster3" ]
+then echo "Working repeatmasker_D.melanogaster3 folder exist"; echo "Let's move on."; date
+else echo "Working repeatmasker_D.melanogaster3 folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/repeatmasker_D.melanogaster3; date
 fi
 
 #--------------------------------------------------------------------------------
 
 # Change directory
-cd $WORKING_FOLDER_SCRATCH/repeatmasker_D.melanogaster2
+cd $WORKING_FOLDER_SCRATCH/repeatmasker_D.melanogaster3
 
 # Use RepeatMasker to mask repeats
 
