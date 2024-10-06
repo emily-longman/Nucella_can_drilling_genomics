@@ -47,7 +47,7 @@ RepeatMasker=/netfiles/nunezlab/Shared_Resources/Software/RepeatMasker/RepeatMas
 WORKING_FOLDER_SCRATCH=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly
 
 #This is the location where the reference genome. (note: copied a final version from pilon to repeatmasker directory)
-REFERENCE=$WORKING_FOLDER_SCRATCH/repeatmasker/polished_assembly.fasta
+REFERENCE=$WORKING_FOLDER_SCRATCH/rename_scaffolds/N.canaliculata_assembly.fasta
 
 #--------------------------------------------------------------------------------
 
@@ -67,6 +67,9 @@ fi
 # Change directory
 cd $WORKING_FOLDER_SCRATCH/repeatmasker_D.melanogaster3
 
+# Move copy of reference into this directory
+scp $REFERENCE .
+
 # Use RepeatMasker to mask repeats
 
 #RepeatMasker [-options] <seqfiles(s) in fasta format>
@@ -76,7 +79,7 @@ $RepeatMasker \
 -gff \
 -species "Drosophila melanogaster" \
 -dir Drosophila_mask \
-$REFERENCE
+N.canaliculata_assembly.fasta
 
 # Sequence comparison are performed by NHMMEr - a profile Hidden Markov Model aligner
 #The script creates a .gff file with the annotation in 'General Feature Finding' format. 
