@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=repeat_masker_D.melanogaster3
+#SBATCH --job-name=repeat_masker_D.melanogaster
 
 # Specify partition
 #SBATCH --partition=week
@@ -57,15 +57,15 @@ REFERENCE=$WORKING_FOLDER_SCRATCH/rename_scaffolds/N.canaliculata_assembly.fasta
 cd $WORKING_FOLDER_SCRATCH
 
 # Create a directory for repeatmasker using Drosophila melanogaster as the reference species
-if [ -d "repeatmasker_D.melanogaster3" ]
-then echo "Working repeatmasker_D.melanogaster3 folder exist"; echo "Let's move on."; date
-else echo "Working repeatmasker_D.melanogaster3 folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/repeatmasker_D.melanogaster3; date
+if [ -d "repeatmasker_D.melanogaster" ]
+then echo "Working repeatmasker_D.melanogaster folder exist"; echo "Let's move on."; date
+else echo "Working repeatmasker_D.melanogaster folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/repeatmasker_D.melanogaster; date
 fi
 
 #--------------------------------------------------------------------------------
 
 # Change directory
-cd $WORKING_FOLDER_SCRATCH/repeatmasker_D.melanogaster3
+cd $WORKING_FOLDER_SCRATCH/repeatmasker_D.melanogaster
 
 # Move copy of reference into this directory
 scp $REFERENCE .
