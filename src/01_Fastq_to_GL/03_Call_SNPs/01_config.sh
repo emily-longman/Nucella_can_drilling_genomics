@@ -51,12 +51,12 @@ MIN_MAF=0.01
 # This is not necessaily for all individuals, we consider a PERCENT_IND (percentage of individuals over all individuals in step 03, and within each pop at step 07)
 # Advice: For min depth use a value that is a bit below what you expected. 
 # Advice: For percent individual, avoid going below 50% and also consider the whole number of individuals. (it may makes sense to use 50% with 100 ind/pop, but you may want 90% with 9 ind/pop
-PERCENT_IND=0.5 
+PERCENT_IND=0.50 
 MIN_DEPTH=0.1
 
 # Filter : min number of individuals to keep a site 
 # Currently set to 75% of 192
-MIN_IND=144
+MIN_IND=134
 
 # Filter: will keep SNP with at least a coverage of this factor multiplied by the number of ind - across all ind. 
 # Advice: we usually set it at 2-4 times the expected coverage to remove repeated regions

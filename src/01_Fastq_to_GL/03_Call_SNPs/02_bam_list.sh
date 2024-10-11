@@ -61,3 +61,16 @@ cd $BAMS_FOLDER
 
 # Create bamlist for all Nucella samples
 ls -d "$PWD/"* > $WORKING_FOLDER/info/Nucella_bam.list
+
+#--------------------------------------------------------------------------------
+
+# Make a list of bam files by collection site 
+
+# Create bamlist for HC
+ls -d "$PWD/"HC* > $WORKING_FOLDER/info/HC_bam.list
+
+# Create bamlist for FB
+ls -d "$PWD/"FB* > $WORKING_FOLDER/info/FB_bam.list
+
+# Create bamlist for MP
+ls -d "$PWD/"MP* > $WORKING_FOLDER/info/MP_bam.list

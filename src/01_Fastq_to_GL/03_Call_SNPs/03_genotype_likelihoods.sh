@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=Genotype_likelihoods
+#SBATCH --job-name=Genotype_likelihoods_lower_minInd
 
 # Specify partition
 #SBATCH --partition=bigmemwk
@@ -33,6 +33,12 @@
 
 #--------------------------------------------------------------------------------
 
+#Load modules 
+spack load angsd@0.933
+spack load samtools@1.10
+
+#--------------------------------------------------------------------------------
+
 #Define important file locations
 
 #Working folder is core folder where this pipeline is being run.
@@ -41,14 +47,33 @@ WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/proces
 #This is the location where the reference genome and all its indexes are stored.
 REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_Aug2024/backbone_raw.fasta
 
+#Scrips folder
+SCRIPTS=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/01_Fastq_to_GL
+
 #Path to the directory with the lane merged bams (filtered, sorted and duplicates removed). 
 BAMS_FOLDER=$WORKING_FOLDER/bams_merged
+
+#Path to bam list
+BAM_LIST=$WORKING_FOLDER/info/Nucella_bam.list
 
 #--------------------------------------------------------------------------------
 
 # Define parameters
 NB_CPU=40 #change accordingly in SLURM header
 echo "using #CPUs ==" $NB_CPU
+
+#--------------------------------------------------------------------------------
+
+# Prepare variables 
+
+#Use config file (this means you dont need to directly input minimum individual/depth parameters)
+source $SCRIPTS/03_Call_SNPs/01_config.sh
+
+# Extract parameters using config file
+N_IND=$(wc -l $BAM_LIST | cut -d " " -f 1) 
+MIN_IND_FLOAT=$(echo "($N_IND * $PERCENT_IND)"| bc -l)
+MIN_IND=${MIN_IND_FLOAT%.*} 
+MAX_DEPTH=$(echo "($N_IND * $MAX_DEPTH_FACTOR)" |bc -l)
 
 #--------------------------------------------------------------------------------
 
@@ -69,17 +94,6 @@ OUTPUT=$WORKING_FOLDER/genotype_likelihoods_all
 
 #--------------------------------------------------------------------------------
 
-# Prepare bamlist
-# This is a file with the name and full path of all the bam files to be processed.
-
-# Move to bams folder
-cd $BAMS_FOLDER
-
-# Create bamlist for all Nucella samples
-ls -d "$PWD/"* > $OUTPUT/Nucella_bam.list
-
-#--------------------------------------------------------------------------------
-
 # Start pipeline
 
 # Estimate Genotype Likelihoods's and allele frequencies for only the polymorphic sites. 
@@ -88,33 +102,22 @@ ls -d "$PWD/"* > $OUTPUT/Nucella_bam.list
 # Move back to working directory
 cd $WORKING_FOLDER
 
-# File suffix to distinguish analysis choices
-SUFFIX_2="SNPs_all"
-
-## Filter changes:
-# minMapQ: threshold for minimum read mapping quality (Phred): increase from 20 to 30
-# minInd: set min number of individuals to keep a site to 85% of 192 individuals
-# setMinDepthInd: discard individual if sequencing depth for an individual is below 0.1
-# skipTriallelic: don’t use sites with >2 alleles
-# minMaf: Keep only sites with minor allele freq > some proportion (0.01)
-
 # Generate GL's for polymorphic sites for all Nucella samples
-angsd -b ${OUTPUT}/Nucella_bam.list \
+angsd \
+-b $BAM_LIST \
 -ref ${REFERENCE} -anc ${REFERENCE} \
--out ${OUTPUT}/Nucella_${SUFFIX_2} \
+-out ${OUTPUT}/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_maxdepth"$MAX_DEPTH_FACTOR" \
 -P $NB_CPU \
 -doMaf 1 -doSaf 1 -GL 2 -doGlf 2 -doMajorMinor 1 -doCounts 1 \
--remove_bads 1 -baq 1 -skipTriallelic 1 -minMapQ 30 -minQ 20 \
--minInd 163 -setMinDepthInd 0.1 -minMaf 0.01 -setMaxDepth 600 \
--SNP_pval 1e-6 
-
-# Change setMaxDepth to 600 (i.e., 3 * expected coverage (1X) * ~200 ind  )
-# Switched GL to 2 rather than 1 (i.e., GL from GATK model rather than Samtools)
+-remove_bads 1 -baq 1 -skipTriallelic 1 -uniqueOnly 1 -only_proper_pairs 1 -minMapQ 30 -minQ 20 -C 50 \
+-minInd $MIN_IND -setMinDepthInd $MIN_DEPTH -minMaf $MIN_MAF -setMaxDepth $MAX_DEPTH \
+-SNP_pval 1e-4 
 
 # -P: number of threads
+
 # -doMaf 1: estimate allele frequencies
 # -doSaf 1: estimate the SFS and/or neutrality tests genotype calling
-# -GL 1: estimate genotype likelihoods (GL) using the Samtools formula (1)
+# -GL 2: estimate genotype likelihoods (GL) using the GATK formula
 # -doGlf 2: gives us the Beagle format which will be used by pcangsd
 # -doMajorMinor 1: infer the major/minor using different approaches
 # -doCounts 1: calculate various counts statistics
@@ -122,13 +125,15 @@ angsd -b ${OUTPUT}/Nucella_bam.list \
 # -remove_bads 1: remove reads flagged as ‘bad’ by samtools
 # -baq 1: estimates base alignment qualities for bases around indels
 # -skipTriallelic 1: don’t use sites with >2 alleles
+# -uniqueOnly 1: Remove reads that have multiple best hits
+# -only_proper_pairs 1: Include only proper pairs (pairs of read with both mates mapped correctly)
 # -minMapQ 30: threshold for minimum read mapping quality (Phred)
 # -minQ 20: threshold for minimum base quality (Phred)
 # -C 50: enforce downgrading of map quality if contains excessive mismatches
 
-# -minInd 163: min number of individuals to keep a site (~85%)
-# -setMinDepthInd 0.1: min read depth for an individual to count towards a site
-# -minMaf 0.01: Keep only sites with minor allele freq > some proportion.
-# -setMaxDepth: Keep SNPs with a maximum total depth (typically set at 2-4 times the expected coverage times the number of ind to remove repeat regions)
+# -minInd: min number of individuals to keep a site
+# -setMinDepthInd: min read depth for an individual to count towards a site
+# -minMaf: Keep only sites with minor allele freq > some proportion
+# -setMaxDepth: Keep SNPs with a maximum total depth 
 
-# -SNP_pval 1e-6: Keep only site highly likely to be polymorphic (SNPs)
+# -SNP_pval 1e-4: Keep only site highly likely to be polymorphic (SNPs)
