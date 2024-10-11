@@ -13,7 +13,7 @@
 # Request nodes
 #SBATCH --nodes=1 
 
-# Reserve walltime -- hh:mm:ss --7 day limit 
+# Reserve walltime -- hh:mm:ss
 #SBATCH --time=20:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
@@ -54,6 +54,13 @@ SCRIPT_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/01_Fastq
 
 #--------------------------------------------------------------------------------
 
+# Prepare variables 
+
+#Use config file (this means you dont need to directly input minimum individual/depth parameters)
+source $SCRIPT_FOLDER/03_Call_SNPs/01_config.sh
+
+#--------------------------------------------------------------------------------
+
 # Generate Folders and files
 
 # Move to working directory
@@ -66,18 +73,17 @@ then echo "Working sites_info folder exist"; echo "Let's move on."; date
 else echo "Working sites_info folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/sites_info; date
 fi
 
-
 #--------------------------------------------------------------------------------
 
 # Extract sites
 echo "From the maf file, extract a list of SNP chr, position, major all, minor all"
 
 # Unzip maf file if haven't already done so
-#gunzip genotype_likelihoods_all/Nucella_SNPs_all.mafs.gz
+#gunzip $WORKING_FOLDER/genotype_likelihoods_all/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_maxdepth"$MAX_DEPTH_FACTOR".mafs.gz
 
-INFILE=genotype_likelihoods_all/Nucella_SNPs_all.mafs
-OUTFILE_sites=sites_info/sites_all_maf
-OUTFILE_regions=sites_info/regions_all_maf
+INFILE=$WORKING_FOLDER/genotype_likelihoods_all/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_maxdepth"$MAX_DEPTH_FACTOR"
+OUTFILE_sites=$WORKING_FOLDER/sites_info/sites_all_maf
+OUTFILE_regions=$WORKING_FOLDER/sites_info/regions_all_maf
 
 # Change permissions for script 
 chmod 777 $SCRIPT_FOLDER/03_Call_SNPs/02_make_sites_list_maxdepth.R
