@@ -68,6 +68,9 @@ REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_A
 #Input folder is genotype likelihoods from ANGSD
 INPUT=$WORKING_FOLDER/genotype_likelihoods_all
 
+#Path to bam list
+BAM_LIST=$WORKING_FOLDER/info/Nucella_bam.list
+
 #--------------------------------------------------------------------------------
 # Define parameters
 CPU=$SLURM_CPUS_ON_NODE
@@ -87,23 +90,20 @@ then echo "Working pcangsd folder exist"; echo "Let's move on."; date
 else echo "Working pcangsd folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/pcangsd; date
 fi
 
-#Output folder
-OUTPUT=$WORKING_FOLDER/pcangsd
-
 ##NOTE: Ideally, change the output folder to the results folder in the github. I just scp the output over
 
 #--------------------------------------------------------------------------------
 
 # Make a copy of the list of bam files for all the Nucella samples and place in the output directory. You'll need this later for making figures.
-cp ${INPUT}/Nucella_bam.list ${OUTPUT}
+cp $BAM_LIST $WORKING_FOLDER/pcangsd
 
 # Then, run PCA and admixture scores with pcangsd:
 SUFFIX="Nucella_poly_covmatrix"
 
 echo "Analyse covariance matrix on all individuals"
 
-pcangsd -b ${INPUT}/Nucella_SNPs_all.beagle.gz \
--o ${OUTPUT}/${SUFFIX} \
+pcangsd -b ${INPUT}/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_maxdepth"$MAX_DEPTH_FACTOR" \
+-o $WORKING_FOLDER/pcangsd/${SUFFIX} \
 -t $CPU 
 
 # PCAngsd accepts either genotype likelihoods in Beagle format generated from BAM files using ANGSD
@@ -111,7 +111,7 @@ pcangsd -b ${INPUT}/Nucella_SNPs_all.beagle.gz \
 # --admix : Individual admixture proportions and ancestral allele frequencies can be estimated assuming K ancestral populations using an accelerated mini-batch NMF method.
 
 echo "Transform covariance matrix into PCA"
-COV_MAT=${OUTPUT}/${SUFFIX}.cov
+COV_MAT=$WORKING_FOLDER/pcangsd/${SUFFIX}.cov
 
 #--------------------------------------------------------------------------------
 
