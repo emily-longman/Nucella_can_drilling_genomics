@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=repeat_masker_C.gigas
+#SBATCH --job-name=repeat_masker_D.melanogaster
 
 # Specify partition
 #SBATCH --partition=week
@@ -15,20 +15,16 @@
 #SBATCH --ntasks-per-node=1  
 
 # Reserve walltime -- hh:mm:ss 
-#SBATCH --time=7-00:00:00 
+#SBATCH --time=7-00:00:00
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
-#SBATCH --mem=40G
+#SBATCH --mem=30G
 
 # Request CPU
 #SBATCH --cpus-per-task=6
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/%x_%j.out # Standard output
-
-# Receive emails when job begins and ends or fails
-#SBATCH --mail-type=ALL # indicates if you want an email when the job starts, ends, or both
-#SBATCH --mail-user=emily.longman@uvm.edu # where to email updates to
 
 #--------------------------------------------------------------------------------
 
@@ -44,29 +40,28 @@ RepeatMasker=/netfiles/nunezlab/Shared_Resources/Software/RepeatMasker/RepeatMas
 #Define important file locations
 
 # Working folder is core folder where this pipeline is being run.
-WORKING_FOLDER_SCRATCH=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly
+WORKING_FOLDER=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/short_read_assembly
 
-#This is the location where the reference genome. (note: copied a final version from pilon to repeatmasker directory)
-REFERENCE=$WORKING_FOLDER_SCRATCH/repeatmasker/polished_assembly.fasta
+#This is the location of the reference genome. 
+REFERENCE=$WORKING_FOLDER/rename_scaffolds/N.canaliculata_assembly.fasta
 
 #--------------------------------------------------------------------------------
 
 # Generate Folders and files
 
 # Move to working directory
-cd $WORKING_FOLDER_SCRATCH
+cd $WORKING_FOLDER
 
-# Create a directory for repeatmasker using Gastropoda as the reference clade 
-# (this includes L. saxatilis, P. pellucida, L. gigantea, G. magus, S. cineraria, H. rufescens, H. cracherodii, H. discus, B. glabrata, A. californica)
-if [ -d "repeatmasker_C.gigas" ]
-then echo "Working repeatmasker_C.gigas folder exist"; echo "Let's move on."; date
-else echo "Working repeatmasker_C.gigas folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/repeatmasker_C.gigas; date
+# Create a directory for repeatmasker
+if [ -d "repeatmasker" ]
+then echo "Working repeatmasker folder exist"; echo "Let's move on."; date
+else echo "Working repeatmasker folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/repeatmasker; date
 fi
 
 #--------------------------------------------------------------------------------
 
 # Change directory
-cd $WORKING_FOLDER_SCRATCH/repeatmasker_C.gigas
+cd $WORKING_FOLDER/repeatmasker
 
 # Use RepeatMasker to mask repeats
 
@@ -76,6 +71,7 @@ $RepeatMasker \
 -pa 6 \
 -gff \
 -species "Crassostrea gigas" \
+-dir Crassostrea_mask \
 $REFERENCE
 
 # Sequence comparison are performed by NHMMEr - a profile Hidden Markov Model aligner
