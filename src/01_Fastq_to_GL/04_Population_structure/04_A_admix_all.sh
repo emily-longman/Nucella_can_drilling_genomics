@@ -72,6 +72,13 @@ then echo "Working ngs_admix folder exist"; echo "Let's move on."; date
 else echo "Working ngs_admix folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/ngs_admix; date
 fi
 
+cd $WORKING_FOLDER/ngs_admix
+
+if [ -d "K_output" ]
+then echo "Working K_output folder exist"; echo "Let's move on."; date
+else echo "Working K_output folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/K_output; date
+fi
+
 #--------------------------------------------------------------------------------
 
 ## Run admixture for Kmin to Kmax (these set in the config file) 10 times each
@@ -82,6 +89,6 @@ for i in $(seq $K_MIN $K_MAX)
 do 
 echo $i
 $NGSadmix -P $NB_CPU -likes $WORKING_FOLDER/genotype_likelihoods_all/Nucella_SNPs_all.beagle.gz \
--minMaf $MIN_MAF -K $i -o $WORKING_FOLDER/ngs_admix/Nucella_all_maf_K{$i}_run{$j}
+-minMaf $MIN_MAF -K $i -o $WORKING_FOLDER/ngs_admix/K_output/Nucella_all_maf_K{$i}_run{$j}
 done
 done

@@ -34,14 +34,10 @@
 #Working folder is core folder where this pipeline is being run.
 WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL
 
-#Output folder
-OUTPUT=$WORKING_FOLDER/ngs_admix
-
 #--------------------------------------------------------------------------------
 
 # Change directory to output
-cd $OUTPUT
-
+cd $WORKING_FOLDER/ngs_admix
 
 # I don't get what is trying to be extracted here...
 # I get we are looping through the log files and searching using grep for a pattern using perl, but what pattern are we looking for? Maybe my output is incorrect and that is the problem?
