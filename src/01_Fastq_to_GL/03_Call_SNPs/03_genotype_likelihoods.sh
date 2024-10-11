@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=Genotype_likelihoods_lower_minInd
+#SBATCH --job-name=Genotype_likelihoods
 
 # Specify partition
 #SBATCH --partition=bigmemwk
