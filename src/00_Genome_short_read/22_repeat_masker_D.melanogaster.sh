@@ -26,10 +26,6 @@
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/%x_%j.out # Standard output
 
-# Receive emails when job begins and ends or fails
-#SBATCH --mail-type=ALL # indicates if you want an email when the job starts, ends, or both
-#SBATCH --mail-user=emily.longman@uvm.edu # where to email updates to
-
 #--------------------------------------------------------------------------------
 
 # This script will use Repeat Masker to screen the genome for repeats and low complexity DNA sequences. 
@@ -44,31 +40,28 @@ RepeatMasker=/netfiles/nunezlab/Shared_Resources/Software/RepeatMasker/RepeatMas
 #Define important file locations
 
 # Working folder is core folder where this pipeline is being run.
-WORKING_FOLDER_SCRATCH=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly
+WORKING_FOLDER=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/short_read_assembly
 
-#This is the location where the reference genome. 
-REFERENCE=$WORKING_FOLDER_SCRATCH/rename_scaffolds/N.canaliculata_assembly.fasta
+#This is the location of the reference genome. 
+REFERENCE=$WORKING_FOLDER/rename_scaffolds/N.canaliculata_assembly.fasta
 
 #--------------------------------------------------------------------------------
 
 # Generate Folders and files
 
 # Move to working directory
-cd $WORKING_FOLDER_SCRATCH
+cd $WORKING_FOLDER
 
-# Create a directory for repeatmasker using Drosophila melanogaster as the reference species
-if [ -d "repeatmasker_D.melanogaster" ]
-then echo "Working repeatmasker_D.melanogaster folder exist"; echo "Let's move on."; date
-else echo "Working repeatmasker_D.melanogaster folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/repeatmasker_D.melanogaster; date
+# Create a directory for repeatmasker
+if [ -d "repeatmasker" ]
+then echo "Working repeatmasker folder exist"; echo "Let's move on."; date
+else echo "Working repeatmasker folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/repeatmasker; date
 fi
 
 #--------------------------------------------------------------------------------
 
 # Change directory
-cd $WORKING_FOLDER_SCRATCH/repeatmasker_D.melanogaster
-
-# Move copy of reference into this directory
-scp $REFERENCE .
+cd $WORKING_FOLDER/repeatmasker
 
 # Use RepeatMasker to mask repeats
 
@@ -79,7 +72,7 @@ $RepeatMasker \
 -gff \
 -species "Drosophila melanogaster" \
 -dir Drosophila_mask \
-N.canaliculata_assembly.fasta
+$REFERENCE
 
 # Sequence comparison are performed by NHMMEr - a profile Hidden Markov Model aligner
 #The script creates a .gff file with the annotation in 'General Feature Finding' format. 
