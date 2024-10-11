@@ -48,7 +48,7 @@ WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/proces
 REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_Aug2024/backbone_raw.fasta
 
 #Scrips folder
-SCRIPTS=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/01_Fastq_to_GL
+SCRIPT_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/01_Fastq_to_GL
 
 #Path to the directory with the lane merged bams (filtered, sorted and duplicates removed). 
 BAMS_FOLDER=$WORKING_FOLDER/bams_merged
@@ -67,7 +67,7 @@ echo "using #CPUs ==" $NB_CPU
 # Prepare variables 
 
 #Use config file (this means you dont need to directly input minimum individual/depth parameters)
-source $SCRIPTS/03_Call_SNPs/01_config.sh
+source $SCRIPT_FOLDER/03_Call_SNPs/01_config.sh
 
 # Extract parameters using config file
 N_IND=$(wc -l $BAM_LIST | cut -d " " -f 1) 
