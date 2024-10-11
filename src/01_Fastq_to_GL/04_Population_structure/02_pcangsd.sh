@@ -65,16 +65,21 @@ WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/proces
 #This is the location where the reference genome and all its indexes are stored.
 REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_Aug2024/backbone_raw.fasta
 
-#Input folder is genotype likelihoods from ANGSD
-INPUT=$WORKING_FOLDER/genotype_likelihoods_all
-
 #Path to bam list
 BAM_LIST=$WORKING_FOLDER/info/Nucella_bam.list
 
 #--------------------------------------------------------------------------------
+
 # Define parameters
 CPU=$SLURM_CPUS_ON_NODE
 echo "using #CPUs ==" $SLURM_CPUS_ON_NODE
+
+#--------------------------------------------------------------------------------
+
+# Prepare variables 
+
+#Use config file (this means you dont need to directly input minimum individual/depth parameters)
+source $SCRIPT_FOLDER/03_Call_SNPs/01_config.sh
 
 #--------------------------------------------------------------------------------
 
@@ -98,12 +103,11 @@ fi
 cp $BAM_LIST $WORKING_FOLDER/pcangsd
 
 # Then, run PCA and admixture scores with pcangsd:
-SUFFIX="Nucella_poly_covmatrix"
-
 echo "Analyse covariance matrix on all individuals"
 
-pcangsd -b ${INPUT}/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_maxdepth"$MAX_DEPTH_FACTOR" \
--o $WORKING_FOLDER/pcangsd/${SUFFIX} \
+pcangsd \
+-b $WORKING_FOLDER/genotype_likelihoods_all/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_maxdepth"$MAX_DEPTH_FACTOR".beagle.gz \
+-o $WORKING_FOLDER/pcangsd/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_maxdepth"$MAX_DEPTH_FACTOR" \
 -t $CPU 
 
 # PCAngsd accepts either genotype likelihoods in Beagle format generated from BAM files using ANGSD
@@ -111,7 +115,7 @@ pcangsd -b ${INPUT}/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_maxdepth"$MA
 # --admix : Individual admixture proportions and ancestral allele frequencies can be estimated assuming K ancestral populations using an accelerated mini-batch NMF method.
 
 echo "Transform covariance matrix into PCA"
-COV_MAT=$WORKING_FOLDER/pcangsd/${SUFFIX}.cov
+COV_MAT=$WORKING_FOLDER/pcangsd/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_maxdepth"$MAX_DEPTH_FACTOR".cov
 
 #--------------------------------------------------------------------------------
 
