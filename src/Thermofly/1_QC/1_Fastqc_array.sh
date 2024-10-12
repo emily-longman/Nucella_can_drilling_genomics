@@ -9,7 +9,7 @@
 #SBATCH -p bluemoon  
 #SBATCH --array=1-22 
 
-#####
+#--------------------------------------------------------------------------------
 
 echo ${SLURM_ARRAY_TASK_ID}
 
@@ -17,7 +17,7 @@ echo ${SLURM_ARRAY_TASK_ID}
 working_folder=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/Thermofly
 meta=$working_folder/METADATA/Thermofly_metadata.tsv
 
-#####
+#--------------------------------------------------------------------------------
 
 # Use metadata file to extract sample names and forward and reverse reads
 FIL1=$(cat ${meta} | awk -F '\t' '{print $24}' |  sed '1d' | sed "${SLURM_ARRAY_TASK_ID}q;d")
@@ -25,13 +25,13 @@ FIL2=$(cat ${meta} | awk -F '\t' '{print $25}' |  sed '1d' | sed "${SLURM_ARRAY_
 
 SAMP_NAME=$(cat ${meta} | awk -F '\t' '{print $1}' |  sed '1d' | sed "${SLURM_ARRAY_TASK_ID}q;d")
 
-#####
+#--------------------------------------------------------------------------------
 
 # Create output folder
 cd $working_folder
 mkdir fastQC
 
-#####
+#--------------------------------------------------------------------------------
 
 # Estimate QC statists 
 spack load fastqc@0.11.7
