@@ -44,11 +44,10 @@ mkdir fastp_reports
 mkdir cleaned_reads
 
 #--------------------------------------------------------------------------------
-# This part of the pipeline will generate log files to record warnings and completion status
 
+# Use fastp to do some light trimming
 echo ${SAMP_NAME} "Trimming reads"
 
-# Call fastp and do some light trimming
 $fastp \
 -i ${FIL1} \
 -I ${FIL2} \
@@ -64,13 +63,7 @@ $fastp \
 --html $working_folder/fastp_reports/${SAMP_NAME}_clean.html \
 --json $working_folder/fastp_reports/${SAMP_NAME}_clean.json
 
-# Adapter trimming is enabled by default using overlap analysis, but for PE data you can also specify adapter sequence auto-detection by specifying --detect_adapter_for_pe
-# For read 1 of PE data, the front trimming settings are --trim_front1
-# Detect and trim polyG in read tails using --trim_poly_g
-# Per read cutting by quality options:
-### --cut_right: Move a sliding window from front to tail, if meet one window with mean quality < threshold, drop the bases in the window and the right part, then stop
-### --cut_right_window_size: The window size option for cut_right
-### --qualified_quality_phred: The quality vlue that a base is qualified 
+# Trim front of reads, detect and trim polyG in tails and using sliding window to trim low quality reads
 
 #--------------------------------------------------------------------------------
 

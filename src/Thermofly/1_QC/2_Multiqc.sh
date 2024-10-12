@@ -46,7 +46,7 @@ mkdir multiQC
 # Run multiqc on all of the reads
 multiqc $working_folder/fastQC \
 -n multiqc_report_all.html \
--o multiqc
+-o multiQC
 
 #--------------------------------------------------------------------------------
 
