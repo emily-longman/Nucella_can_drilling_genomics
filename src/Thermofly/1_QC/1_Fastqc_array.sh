@@ -42,5 +42,8 @@ fastqc ${FIL1} \
 fastqc ${FIL2} \
 --outdir $working_folder/fastQC
 
+#--------------------------------------------------------------------------------
+
+# Inform completion of pipeline
 echo "done"
 date

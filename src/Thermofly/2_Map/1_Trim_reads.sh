@@ -1,32 +1,32 @@
 #!/usr/bin/env bash  
 #  
-#SBATCH -J QC  
+#SBATCH -J Trim_reads  
 #SBATCH -c 6  
 #SBATCH -N 1 # on one node  
 #SBATCH -t 8:00:00   
 #SBATCH --mem 20G   
 #SBATCH -o ./slurmOutput/myarray.%A_%a.out  
 #SBATCH -p bluemoon  
-#SBATCH --array=2-24 
+#SBATCH --array=1-22
 
 #--------------------------------------------------------------------------------
 
-# This script will trim the reads.
+# Trim reads using fastp
 
-# Load modules  
+# Load software  
 fastp=/netfiles/thermofly/shared_software/fastp
 
 #--------------------------------------------------------------------------------
 
-WORKING_FOLDER=/gpfs2/scratch/jcnunez/thermofly/QC
+echo ${SLURM_ARRAY_TASK_ID}
 
-#Define important file locations
+# Set folders and file locations
+working_folder=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/Thermofly
+meta=$working_folder/METADATA/Thermofly_metadata.tsv
 
-meta=/users/j/c/jcnunez/scratch/thermofly/QC/Thermofly_metadata.tsv
+#--------------------------------------------------------------------------------
 
-#L=$(cat $meta | wc -l)
-#echo ${L}
-
+# Use metadata file to extract sample names and forward and reverse reads
 FIL1=$(cat ${meta} | awk -F '\t' '{print $24}' |  sed '1d' | sed "${SLURM_ARRAY_TASK_ID}q;d")
 FIL2=$(cat ${meta} | awk -F '\t' '{print $25}' |  sed '1d' | sed "${SLURM_ARRAY_TASK_ID}q;d")
 
@@ -36,22 +36,24 @@ echo $FIL1
 echo $FIL2
 echo $SAMP_NAME
 
-head -n1 $FIL1
-head -n1 $FIL2
+#--------------------------------------------------------------------------------
+
+# Create output folders
+cd $working_folder
+mkdir fastp_reports
+mkdir cleaned_reads
 
 #--------------------------------------------------------------------------------
 # This part of the pipeline will generate log files to record warnings and completion status
 
 echo ${SAMP_NAME} "Trimming reads"
-mkdir fastp_reports
-mkdir cleaned_reads
 
 # Call fastp and do some light trimming
 $fastp \
 -i ${FIL1} \
 -I ${FIL2} \
--o $WORKING_FOLDER/cleaned_reads/${SAMP_NAME}_R1_clean.fq.gz \
--O $WORKING_FOLDER/cleaned_reads/${SAMP_NAME}_R2_clean.fq.gz \
+-o $working_folder/cleaned_reads/${SAMP_NAME}_R1_clean.fq.gz \
+-O $working_folder/cleaned_reads/${SAMP_NAME}_R2_clean.fq.gz \
 --detect_adapter_for_pe \
 --trim_front1 12 \
 --trim_poly_g \
@@ -59,13 +61,8 @@ $fastp \
 --cut_right \
 --cut_right_window_size 6 \
 --qualified_quality_phred 20 \
---html $WORKING_FOLDER/fastp_reports/${SAMP_NAME}_clean.html \
---json $WORKING_FOLDER/fastp_reports/${SAMP_NAME}_clean.json
-
-# i = read 1
-# I = read 2
-# o & O = outputs
-# outputs .json and html for qc
+--html $working_folder/fastp_reports/${SAMP_NAME}_clean.html \
+--json $working_folder/fastp_reports/${SAMP_NAME}_clean.json
 
 # Adapter trimming is enabled by default using overlap analysis, but for PE data you can also specify adapter sequence auto-detection by specifying --detect_adapter_for_pe
 # For read 1 of PE data, the front trimming settings are --trim_front1
@@ -76,8 +73,6 @@ $fastp \
 ### --qualified_quality_phred: The quality vlue that a base is qualified 
 
 #--------------------------------------------------------------------------------
-# Inform that sample is done
 
-# This part of the pipeline will notify the completion of run i. 
-
+# Inform completion of pipeline
 echo "pipeline completed" $(date)
