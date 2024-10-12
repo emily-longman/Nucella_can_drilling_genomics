@@ -18,7 +18,6 @@ PICARD=/netfiles/nunezlab/Shared_Resources/Software/picard/build/libs/picard.jar
 #--------------------------------------------------------------------------------
 
 # Set folders and file locations
-working_folder=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/Thermofly
 ref=/netfiles/thermofly/GENOMES/basisetae/D.basisetae_nanopore.fasta.masked
 
 #--------------------------------------------------------------------------------
