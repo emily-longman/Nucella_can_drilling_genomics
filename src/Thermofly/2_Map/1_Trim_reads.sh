@@ -5,8 +5,8 @@
 #SBATCH -N 1 # on one node  
 #SBATCH -t 8:00:00   
 #SBATCH --mem 20G   
-#SBATCH -o ./slurmOutput/myarray.%A_%a.out  
-#SBATCH -p bluemoon  
+#SBATCH -o ./slurmOutput/%x.%A_%a.out
+#SBATCH -p bluemoon
 #SBATCH --array=1-22
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=emily.longman@uvm.edu 
