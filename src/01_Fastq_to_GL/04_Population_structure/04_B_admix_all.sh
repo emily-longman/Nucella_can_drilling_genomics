@@ -41,4 +41,4 @@ cd $WORKING_FOLDER/ngs_admix
 
 # I don't get what is trying to be extracted here...
 # I get we are looping through the log files and searching using grep for a pattern using perl, but what pattern are we looking for? Maybe my output is incorrect and that is the problem?
-(for log in `ls *.log`; do grep -Po 'like=\K[^ ]+' $log; done) > logfile
+(for log in `ls K_output/*.log`; do grep -Po 'like=\K[^ ]+' $log; done) > $WORKING_FOLDER/ngs_admix/logfile
