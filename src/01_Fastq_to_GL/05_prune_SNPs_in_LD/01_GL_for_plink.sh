@@ -60,7 +60,7 @@ REGIONS=$WORKING_FOLDER/sites_info/regions_all_maf
 NB_CPU=40 #change accordingly in SLURM header
 echo "using #CPUs ==" $NB_CPU
 
-source $SCRIPT_FOLDER/03_Call_SNPs/00_config.sh
+source $SCRIPT_FOLDER/03_Call_SNPs/01_config.sh
 
 #--------------------------------------------------------------------------------
 
