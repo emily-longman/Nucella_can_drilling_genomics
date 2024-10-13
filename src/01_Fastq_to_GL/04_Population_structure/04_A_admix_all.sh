@@ -51,8 +51,9 @@ INPUT=$WORKING_FOLDER/genotype_likelihoods_all
 NB_CPU=10 #change accordingly in SLURM header
 echo "using #CPUs ==" $NB_CPU
 
-#Filter : will keep SNP above this allele frequency (over all individuals)
-MIN_MAF=0.01
+#Use config file (this means you dont need to directly input minimum individual/depth parameters)
+source $SCRIPT_FOLDER/03_Call_SNPs/01_config.sh
+
 #Min number of pop to consider for NGS admix
 K_MIN=1
 #Maximum number of pop to consider for NGS admix
@@ -76,7 +77,7 @@ cd $WORKING_FOLDER/ngs_admix
 
 if [ -d "K_output" ]
 then echo "Working K_output folder exist"; echo "Let's move on."; date
-else echo "Working K_output folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/K_output; date
+else echo "Working K_output folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/ngs_admix/K_output; date
 fi
 
 #--------------------------------------------------------------------------------
@@ -88,7 +89,7 @@ do
 for i in $(seq $K_MIN $K_MAX)
 do 
 echo $i
-$NGSadmix -P $NB_CPU -likes $WORKING_FOLDER/genotype_likelihoods_all/Nucella_SNPs_all.beagle.gz \
+$NGSadmix -P $NB_CPU -likes $WORKING_FOLDER/genotype_likelihoods_all/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_maxdepth"$MAX_DEPTH_FACTOR".beagle.gz \
 -minMaf $MIN_MAF -K $i -o $WORKING_FOLDER/ngs_admix/K_output/Nucella_all_maf_K{$i}_run{$j}
 done
 done
