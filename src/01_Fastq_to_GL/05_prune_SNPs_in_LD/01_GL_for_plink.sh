@@ -48,6 +48,12 @@ BAMS_FOLDER=$WORKING_FOLDER/bams_merged
 #Path to directory with scripts for pipeline
 SCRIPT_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/01_Fastq_to_GL
 
+#Path to bam list
+BAM_LIST=$WORKING_FOLDER/info/Nucella_bam.list
+
+# SNP Regions
+REGIONS=$WORKING_FOLDER/sites_info/regions_all_maf
+
 #--------------------------------------------------------------------------------
 
 # Define parameters
@@ -55,9 +61,6 @@ NB_CPU=40 #change accordingly in SLURM header
 echo "using #CPUs ==" $NB_CPU
 
 source $SCRIPT_FOLDER/03_Call_SNPs/00_config.sh
-
-# Unsure what the regions is doing in the angsd script
-REGIONS=$WORKING_FOLDER/sites_info/regions_all_maf
 
 #--------------------------------------------------------------------------------
 
@@ -79,15 +82,15 @@ fi
 
 # create solo script for bam list
 
-angsd -b $WORKING_FOLDER/genotype_likelihoods_all/Nucella_bam.list \
+angsd \
+-b $BAM_LIST \
 -ref ${REFERENCE} -anc ${REFERENCE} \
 -P $NB_CPU \
 -nQueueSize 50 \
 -GL 2 -doMajorMinor 1 -doGeno -4 -doPost 1 -postCutoff 0.8 \
 -doPlink 2 -doMaf 1 -doCounts 1 \
--remove_bads 1 -skipTriallelic 1 -only_proper_pairs 1 -uniqueOnly 1 /
--minMapQ 30 -minQ 20 \
--minInd $MIN_IND -minMaf $MIN_MAF -setMaxDepth 600  \
+-remove_bads 1 -skipTriallelic 1 -uniqueOnly 1 -only_proper_pairs 1 -minMapQ 30 -minQ 20 -C 50 $REGIONS \
+-minInd $MIN_IND -minMaf $MIN_MAF -setMaxDepth $MAX_DEPTH \
 -out $WORKING_FOLDER/plink/Nucella_all_maf"$MIN_MAF"_pctind"$PERCENT_IND"_maxdepth"$MAX_DEPTH_FACTOR" 
 
 # nQueueSize -50  Maximum number of queud elements
