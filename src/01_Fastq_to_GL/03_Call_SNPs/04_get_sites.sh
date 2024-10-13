@@ -86,8 +86,8 @@ OUTFILE_sites=$WORKING_FOLDER/sites_info/sites_all_maf
 OUTFILE_regions=$WORKING_FOLDER/sites_info/regions_all_maf
 
 # Change permissions for script 
-chmod 777 $SCRIPT_FOLDER/03_Call_SNPs/02_make_sites_list_maxdepth.R
+chmod 777 $SCRIPT_FOLDER/03_Call_SNPs/04_make_sites_list_maxdepth.R
 
-Rscript $SCRIPT_FOLDER/03_Call_SNPs/02_make_sites_list_maxdepth.R "$INFILE" "$OUTFILE_sites" "$OUTFILE_regions"
+Rscript $SCRIPT_FOLDER/03_Call_SNPs/04_make_sites_list_maxdepth.R "$INFILE" "$OUTFILE_sites" "$OUTFILE_regions"
 
 angsd sites index $OUTFILE_sites
