@@ -25,5 +25,4 @@ mkdir info
 
 # Create bamlist
 cd $working_folder/bams_clean
-ls -d "$PWD/"* > $WORKING_FOLDER/info/bam_filelist.list
-
+ls -d "$PWD/"*.bam > $working_folder/info/bam_filelist.list
