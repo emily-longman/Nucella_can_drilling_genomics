@@ -52,7 +52,7 @@ SCRIPT_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/01_Fastq
 BAM_LIST=$WORKING_FOLDER/info/Nucella_bam.list
 
 # SNP Regions
-REGIONS=$WORKING_FOLDER/sites_info/regions_all_maf
+REGIONS="-rf $WORKING_FOLDER/sites_info/regions_all_maf"
 
 #--------------------------------------------------------------------------------
 
