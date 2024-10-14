@@ -70,15 +70,15 @@ O=$working_folder/bams_clean/${SAMP_NAME}.srt.bam \
 SO=coordinate \
 VALIDATION_STRINGENCY=SILENT
 
-# Index with samtools
-samtools index $working_folder/bams_clean/${SAMP_NAME}.srt.bam
-
 # Remove duplicates with picard
 java -Xmx$JAVAMEM -jar $PICARD MarkDuplicates \
 I=$working_folder/bams_clean/${SAMP_NAME}.srt.bam \
 O=$working_folder/bams_clean/${SAMP_NAME}.srt.rmdp.bam \
 M=$working_folder/bams_clean/${SAMP_NAME}.dupstat.txt \
 VALIDATION_STRINGENCY=SILENT REMOVE_DUPLICATES=true
+
+# Index with samtools
+samtools index $working_folder/bams_clean/${SAMP_NAME}.srt.rmdp.bam
 
 # Do QC on cleaned bams
 $qualimap bamqc \
