@@ -24,6 +24,7 @@ bam_list=$working_folder/info/bam_filelist.list
 cov_mat=$working_folder/pcangsd/Thermofly_SNPs.cov
 
 #--------------------------------------------------------------------------------
+cd $working_folder
 
 Rscript $script_folder/4_Pop_structure/1_B_pcangsd_vis.R "$cov_mat" "$bam_list" 
 
