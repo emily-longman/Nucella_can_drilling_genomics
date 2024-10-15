@@ -1,6 +1,6 @@
 #!/usr/bin/env bash  
 #  
-#SBATCH -J GL_plink  
+#SBATCH -J plink_prune  
 #SBATCH -c 4  
 #SBATCH -N 1 # on one node  
 #SBATCH -t 8:00:00   
