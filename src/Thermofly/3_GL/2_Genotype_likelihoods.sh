@@ -49,5 +49,5 @@ angsd \
 -doMaf 1 -doSaf 1 -GL 2 -doGlf 2 -doMajorMinor 1 -doCounts 1 \
 -rf $region_file \
 -remove_bads 1 -baq 1 -skipTriallelic 1 -uniqueOnly 1 -only_proper_pairs 1 -minMapQ 30 -minQ 20 -C 50 \
--minInd 20 -setMinDepthInd 5 -minMaf 0.05 -setMaxDepth 440 \
+-minInd 16 -setMinDepthInd 4 -minMaf 0.05 -setMaxDepth 440 \
 -SNP_pval 1e-6
