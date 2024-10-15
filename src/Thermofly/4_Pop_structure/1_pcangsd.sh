@@ -1,6 +1,6 @@
 #!/usr/bin/env bash  
 #  
-#SBATCH -J Genotype_likelihoods  
+#SBATCH -J pcangsd  
 #SBATCH -c 1  
 #SBATCH -N 1 # on one node  
 #SBATCH -t 8:00:00   
