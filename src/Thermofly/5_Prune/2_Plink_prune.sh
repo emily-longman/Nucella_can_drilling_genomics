@@ -38,6 +38,7 @@ R=0.5
 
 $plink --tped $working_folder/plink/Thermofly_all.tped \
 --tfam $working_folder/plink/Thermofly_all.tfam \
---indep-pairwise $WINDOW $STEP $R --allow-extra-chr \
---out $working_folder/plink/Thermofly_all.R2.pruned \
---threads 4 
+--indep-pairwise $WINDOW $STEP $R \
+--out $working_folder/plink/Thermofly_all.R2.pruned --threads 4
+
+#remove --allow-extra-chr 
