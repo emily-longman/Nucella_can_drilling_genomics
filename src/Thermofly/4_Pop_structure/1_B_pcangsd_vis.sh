@@ -3,7 +3,7 @@
 #SBATCH -J pcangsd_vis 
 #SBATCH -c 1  
 #SBATCH -N 1 # on one node  
-#SBATCH -t 8:00:00   
+#SBATCH -t 0:30:00   
 #SBATCH --mem 40G   
 #SBATCH --output=./slurmOutput/%x_%j.out 
 #SBATCH -p bluemoon  
