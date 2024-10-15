@@ -37,7 +37,7 @@
 
 # Fastqc
 
-# 
+# Trim
 
 
 STAR=/netfiles/nunezlab/Shared_Resources/Software/STAR-2.7.11b/bin/Linux_x86_64_static

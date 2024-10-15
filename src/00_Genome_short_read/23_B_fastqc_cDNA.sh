@@ -30,8 +30,7 @@
 #--------------------------------------------------------------------------------
 
 # Call packages
-# Call fastqc package 
-spack load fastqc@0.11.7
+spack load fastqc@0.11.7 # Call fastqc package 
 
 #--------------------------------------------------------------------------------
 
@@ -40,7 +39,24 @@ spack load fastqc@0.11.7
 # Working folder is core folder where this pipeline is being run.
 WORKING_FOLDER_SCRATCH=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly
 
-#This is the location where the reference genome.
-REFERENCE=$WORKING_FOLDER_SCRATCH/pilon/polished_genome_round_5/polished_assembly.fasta
+#RAW cDNA indicates the folder where the raw reads are stored.
+RAW_READS=/netfiles/pespenilab_share/Nucella/raw/cDNA/all_cDNA
 
 #--------------------------------------------------------------------------------
+
+cd $WORKING_FOLDER_SCRATCH
+
+# Make Quast directory 
+if [ -d "cDNA_fastqc" ]
+then echo "Working cDNA_fastqc folder exist"; echo "Let's move on."; date
+else echo "Working cDNA_fastqc folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/cDNA_fastqc; date
+fi
+
+#--------------------------------------------------------------------------------
+
+# Move to working directory
+cd $WORKING_FOLDER_SCRATCH
+
+# Lets do some QC on the reads
+fastqc $RAW_READS/${i} \
+--outdir $WORKING_FOLDER_SCRATCH/cDNA_fastqc

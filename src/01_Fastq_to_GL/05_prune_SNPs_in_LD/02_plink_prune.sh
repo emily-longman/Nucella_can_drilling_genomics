@@ -45,9 +45,9 @@ SCRIPT_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/01_Fastq
 
 # Define parameters
 
-source $SCRIPT_FOLDER/03_Call_SNPs/00_config.sh
+source $SCRIPT_FOLDER/03_Call_SNPs/01_config.sh
 
-N_IND=192
+N_IND=$(wc -l $WORKING_FOLDER/info/Nucella_bam.list | cut -d " " -f 1)
 MIN_IND_FLOAT=$(echo "($N_IND * $PERCENT_IND)"| bc -l)
 MIN_IND=${MIN_IND_FLOAT%.*} 
 MAX_DEPTH=$(echo "($N_IND * $MAX_DEPTH_FACTOR)" |bc -l)
@@ -73,5 +73,6 @@ fi
 #--------------------------------------------------------------------------------
 
 plink --tped angsd/plink/all_plink_maf"$MIN_MAF"_pctind"$PERCENT_IND"_maxdepth"$MAX_DEPTH_FACTOR".tped \
---tfam angsd/plink/all_plink_maf"$MIN_MAF"_pctind"$PERCENT_IND"_maxdepth"$MAX_DEPTH_FACTOR".tfam --indep-pairwise $WINDOW $STEP $R --allow-extra-chr \
+--tfam angsd/plink/all_plink_maf"$MIN_MAF"_pctind"$PERCENT_IND"_maxdepth"$MAX_DEPTH_FACTOR".tfam \
+--indep-pairwise $WINDOW $STEP $R --allow-extra-chr \
 --out angsd/plink/all_plink_maf"$MIN_MAF"_pctind"$PERCENT_IND"_maxdepth"$MAX_DEPTH_FACTOR".R2.pruned --threads 1 
