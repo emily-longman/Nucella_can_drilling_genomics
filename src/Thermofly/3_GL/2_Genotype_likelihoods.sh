@@ -25,6 +25,7 @@ meta=$working_folder/METADATA/Thermofly_metadata.tsv
 ref=/netfiles/thermofly/GENOMES/basisetae/D.basisetae_nanopore.fasta.masked
 script_folder=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/Thermofly
 bam_list=$working_folder/info/bam_filelist.list
+region_file=$working_folder/info/Thermofly_region_file.txt
 
 #--------------------------------------------------------------------------------
 
@@ -46,7 +47,7 @@ angsd \
 -out $working_folder/genotype_likelihoods/Thermofly_GL \
 -P $CPU \
 -doMaf 1 -doSaf 1 -GL 2 -doGlf 2 -doMajorMinor 1 -doCounts 1 \
--r contig_1 -r contig_2 -r contig_3 -r contig_4 -r contig_5 -r contig_6 -r contig_7 -r contig_8 \
+-rf $region_file \
 -remove_bads 1 -baq 1 -skipTriallelic 1 -uniqueOnly 1 -only_proper_pairs 1 -minMapQ 30 -minQ 20 -C 50 \
 -minInd 20 -setMinDepthInd 5 -minMaf 0.05 -setMaxDepth 440 \
 -SNP_pval 1e-6
