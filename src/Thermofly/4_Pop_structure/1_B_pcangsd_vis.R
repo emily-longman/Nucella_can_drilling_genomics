@@ -1,5 +1,5 @@
 # Perform a pca on the covariance matrix
-library(ggplot2)
+#library(ggplot2)
 
 argv <- commandArgs(T)
 INPUT <- argv[1]
@@ -37,8 +37,12 @@ write.table(pca.mat[,1:4], paste0(INPUT,".pca"), quote=F)
 write.table(c(var1,var2,var3,var4,k_ss), paste0(INPUT,".eig"), quote=F)
 
 #plot pca
+jpeg("pca_1.2.jpg")
 pca_1.2 <- plot(pca.mat[,1], pca.mat[,2], pch=20, ylab=paste("PC2", var2), xlab=paste("PC1", var1),col=kmeans_res$cluster, main=paste("k_SS",k_ss))
-ggsave("pca_1.2", path="./figures/pca_1.2.pdf" ,width = 5, height = 5, device="pdf", dpi=200)
+#ggsave("pca_1.2", path="/figures/pca_1.2.pdf" ,width = 5, height = 5, device="pdf", dpi=200)
+dev.off()
+
+jpeg("pca_3.4.jpg")
 pca_3.4 <- plot(pca.mat[,3], pca.mat[,4], pch=20, ylab=paste("PC4", var4), xlab=paste("PC3",var3))
-ggsave("pca_3.4", path="./figures/pca_1.2.pdf", width = 5, height = 5, device="pdf", dpi=200)
+#ggsave("pca_3.4", path="./figures/pca_1.2.pdf", width = 5, height = 5, device="pdf", dpi=200)
 dev.off()
