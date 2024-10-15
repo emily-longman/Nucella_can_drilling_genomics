@@ -72,6 +72,7 @@ fi
 
 #--------------------------------------------------------------------------------
 
+# NOTE: NOT UPDATED YET!
 plink --tped angsd/plink/all_plink_maf"$MIN_MAF"_pctind"$PERCENT_IND"_maxdepth"$MAX_DEPTH_FACTOR".tped \
 --tfam angsd/plink/all_plink_maf"$MIN_MAF"_pctind"$PERCENT_IND"_maxdepth"$MAX_DEPTH_FACTOR".tfam \
 --indep-pairwise $WINDOW $STEP $R --allow-extra-chr \
