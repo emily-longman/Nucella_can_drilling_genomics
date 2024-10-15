@@ -1,8 +1,8 @@
 #!/usr/bin/env bash  
 #  
-#SBATCH -J Genotype_likelihoods  
-#SBATCH -c 6  
-#SBATCH -N 1 # on one node  
+#SBATCH -J Sites  
+#SBATCH -c 1  
+#SBATCH -N 1   
 #SBATCH -t 8:00:00   
 #SBATCH --mem 40G   
 #SBATCH --output=./slurmOutput/%x_%j.out 
@@ -12,40 +12,39 @@
 
 #--------------------------------------------------------------------------------
 
-# Calculate genotype likelihoods
+# Get sites list
 
 # Load software  
 spack load angsd@0.933
+module load R/4.4.0
 
 #--------------------------------------------------------------------------------
 
 # Set folders and file locations
 working_folder=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/Thermofly
-meta=$working_folder/METADATA/Thermofly_metadata.tsv
-ref=/netfiles/thermofly/GENOMES/basisetae/D.basisetae_nanopore.fasta.masked
 script_folder=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/Thermofly
-bam_list=$working_folder/info/bam_filelist.list
-
-#--------------------------------------------------------------------------------
-
-# Parameters for software
-CPU=6
 
 #--------------------------------------------------------------------------------
 
 # Create output folders
 cd $working_folder
-mkdir genotype_likelihoods
+mkdir sites
 
 #--------------------------------------------------------------------------------
 
-# Calculate genotype likelihoods
-angsd \
--b $bam_list \
--ref ${ref} -anc ${ref} \
--out $working_folder/genotype_likelihoods/Thermofly_GL \
--P $CPU \
--doMaf 1 -doSaf 1 -GL 2 -doGlf 2 -doMajorMinor 1 -doCounts 1 \
--remove_bads 1 -baq 1 -skipTriallelic 1 -uniqueOnly 1 -only_proper_pairs 1 -minMapQ 30 -minQ 20 -C 50 \
--minInd 16 -setMinDepthInd 1 -minMaf 0.05 -setMaxDepth 352 \
--SNP_pval 1e-6
+# Unzip maf file 
+#gunzip $working_folder/genotype_likelihoods/Thermofly_GL.mafs.gz
+
+# Change script permissions 
+chmod 777 $script_folder/03_Call_SNPs/3_Sites_list.R
+
+#--------------------------------------------------------------------------------
+
+infile=$working_folder/genotype_likelihoods/Thermofly_GL.mafs
+outfile_sites=$working_folder/sites/sites_maf
+outfile_regions=$working_folder/sites/regions_maf
+
+
+Rscript $script_folder/03_Call_SNPs/3_Sites_list.R "$infile" "$outfile_sites" "$outfile_regions"
+
+angsd sites index $outfile_sites
