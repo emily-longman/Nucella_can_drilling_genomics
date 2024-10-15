@@ -1,6 +1,6 @@
 #!/usr/bin/env bash  
 #  
-#SBATCH -J pcangsd  
+#SBATCH -J pcangsd_vis 
 #SBATCH -c 1  
 #SBATCH -N 1 # on one node  
 #SBATCH -t 8:00:00   
