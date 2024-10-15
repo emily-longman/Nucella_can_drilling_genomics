@@ -94,3 +94,4 @@ angsd \
 -out $WORKING_FOLDER/plink/Nucella_all_maf"$MIN_MAF"_pctind"$PERCENT_IND"_maxdepth"$MAX_DEPTH_FACTOR" 
 
 # nQueueSize -50  Maximum number of queud elements
+# Notice the extra minus in the -dogeno -4 argument, this will suppress the -doGeno output.
