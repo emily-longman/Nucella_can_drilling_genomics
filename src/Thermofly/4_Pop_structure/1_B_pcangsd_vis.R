@@ -1,4 +1,5 @@
 # Perform a pca on the covariance matrix
+library(ggplot2)
 
 argv <- commandArgs(T)
 INPUT <- argv[1]
