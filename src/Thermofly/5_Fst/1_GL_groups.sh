@@ -5,10 +5,9 @@
 #SBATCH -N 1 # on one node  
 #SBATCH -t 8:00:00   
 #SBATCH --mem 40G   
-#SBATCH --output=./slurmOutput/GL_groups.%A_%a.out 
+#SBATCH --output=./slurmOutput/%x_%j.out 
 #SBATCH -p bluemoon 
 # Submit job array
-#SBATCH --array=0-1 
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=emily.longman@uvm.edu 
 
@@ -29,13 +28,6 @@ ref=/netfiles/thermofly/GENOMES/basisetae/D.basisetae_nanopore.fasta.masked
 
 #--------------------------------------------------------------------------------
 
-#  Array
-arr=("Tom" "Olaa")
-L="${arr[$SLURM_ARRAY_TASK_ID]}"
-echo $L
-
-#--------------------------------------------------------------------------------
-
 # Parameters for software
 CPU=6
 
@@ -47,16 +39,30 @@ mkdir genotype_likelihoods_groups
 
 #--------------------------------------------------------------------------------
 
-# Calculate genotype likelihoods
+# Calculate SFS for both sites - need different parameters since different number of ind in each
+
+#Tom's Trail (7 ind)
 angsd \
--b $working_folder/info/${L}_bam.list \
+-b $working_folder/info/Tom_bam.list \
 -ref ${ref} -anc ${ref} \
--out $working_folder/genotype_likelihoods_groups/Thermofly_${L} \
+-out $working_folder/genotype_likelihoods_groups/Thermofly_Tom \
 -P $CPU \
 -doMaf 1 -doSaf 1 -GL 2 -doMajorMinor 3 -doCounts 1 \
 -sites $working_folder/sites/sites_maf \
 -rf $working_folder/sites/regions_maf \
 -remove_bads 1 -skipTriallelic 1 -uniqueOnly 1 -only_proper_pairs 1 -minMapQ 30 -minQ 20 -C 50 \
--minInd 16 -setMinDepthInd 4 -setMaxDepth 440 \
+-minInd 5 -setMinDepthInd 4 -setMaxDepth 140 \
+
+#Olaa Forest (15 ind)
+angsd \
+-b $working_folder/info/Olaa_bam.list \
+-ref ${ref} -anc ${ref} \
+-out $working_folder/genotype_likelihoods_groups/Thermofly_Olaa \
+-P $CPU \
+-doMaf 1 -doSaf 1 -GL 2 -doMajorMinor 3 -doCounts 1 \
+-sites $working_folder/sites/sites_maf \
+-rf $working_folder/sites/regions_maf \
+-remove_bads 1 -skipTriallelic 1 -uniqueOnly 1 -only_proper_pairs 1 -minMapQ 30 -minQ 20 -C 50 \
+-minInd 11 -setMinDepthInd 4 -setMaxDepth 300 \
 
 # Since  we use output for SFS to calculate FSTs/thetas then we don't want min MAF nor p-value filters
