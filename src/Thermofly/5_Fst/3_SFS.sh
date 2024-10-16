@@ -1,6 +1,6 @@
 #!/usr/bin/env bash  
 #  
-#SBATCH -J SFS_pop  
+#SBATCH -J Fst  
 #SBATCH -c 6  
 #SBATCH -N 1 # on one node  
 #SBATCH -t 8:00:00   
@@ -24,7 +24,6 @@ spack load angsd@0.933
 working_folder=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/Thermofly
 meta=$working_folder/METADATA/Thermofly_metadata.tsv
 ref=/netfiles/thermofly/GENOMES/basisetae/D.basisetae_nanopore.fasta.masked
-region_file=$working_folder/info/Thermofly_region_file.txt
 
 #--------------------------------------------------------------------------------
 
@@ -35,32 +34,13 @@ CPU=6
 
 # Create output folders
 cd $working_folder
-mkdir SFS_sites
+mkdir Fst
 
 #--------------------------------------------------------------------------------
 
 # Calculate SFS for both sites - need different parameters since different number of ind in each
 
-#Tom's Trail (7 ind)
-angsd \
--b $working_folder/info/Tom_bam.list \
--ref ${ref} -anc ${ref} \
--out $working_folder/SFS_sites/Thermofly_Tom_saf \
--P $CPU \
--doMaf 1 -doSaf 1 -GL 2 -doMajorMinor 1 \
--rf $region_file \
--remove_bads 1 -skipTriallelic 1 -uniqueOnly 1 -only_proper_pairs 1 -minMapQ 30 -minQ 20 -C 50 \
--minInd 5 \
-
-#Olaa Forest (15 ind)
-angsd \
--b $working_folder/info/Olaa_bam.list \
--ref ${ref} -anc ${ref} \
--out $working_folder/SFS_sites/Thermofly_Olaa \
--P $CPU \
--doMaf 1 -doSaf 1 -GL 2 -doMajorMinor 1 \
--rf $region_file \
--remove_bads 1 -skipTriallelic 1 -uniqueOnly 1 -only_proper_pairs 1 -minMapQ 30 -minQ 20 -C 50 \
--minInd 11 \
-
-# Since  we use output for SFS to calculate FSTs/thetas then we don't want min MAF nor p-value filters
+realSFS $working_folder/SFS_sites/Thermofly_Tom_saf.saf.idx \
+$working_folder/SFS_sites/Thermofly_Olaa.saf.idx \
+-P $CPU -maxIter 30 -fold 1 \
+> $working_folder/Fst/Thermofly_Tom_Olaa
