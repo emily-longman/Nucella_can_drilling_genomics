@@ -40,7 +40,7 @@ mkdir Fst
 
 # Calculate SFS for both sites - need different parameters since different number of ind in each
 
-realSFS $working_folder/SFS_sites/Thermofly_Tom_saf.saf.idx \
+realSFS $working_folder/SFS_sites/Thermofly_Tom.saf.idx \
 $working_folder/SFS_sites/Thermofly_Olaa.saf.idx \
 -P $CPU -maxIter 30 -fold 1 \
 > $working_folder/Fst/Thermofly_Tom_Olaa
