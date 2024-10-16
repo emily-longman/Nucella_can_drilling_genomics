@@ -4,10 +4,9 @@ INPUT <- argv[1]
 BAM <- argv[2]
 META <- argv[3]
 
-install.packages(c('data.table', 'ggplot2', 'ggpubr'))
+install.packages(c('data.table', 'ggplot2'))
 library(data.table)
 library(ggplot2)
-library(ggpubr)
 
 # Load metadata
 meta_data<-fread(META, header=T)
