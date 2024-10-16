@@ -1,4 +1,9 @@
 # Perform a pca on the covariance matrix
+argv <- commandArgs(T)
+INPUT <- argv[1]
+BAM <- argv[2]
+META <- argv[3]
+
 
 install.packages(c('data.table', 'ggplot2'))
 library(data.table)
@@ -6,11 +11,14 @@ library(ggplot2)
 library(ggpubr)
 
 # Load metadata
-meta_data<-fread("Thermofly_metadata.tsv", header=T)
+#meta_data<-fread("Thermofly_metadata.tsv", header=T)
+####meta_data<-fread(META, header=T)
 meta_data_bas<-meta_data[which(meta_data$species_initial=="bas"),]
 
 # Load cov matrix
-cov_mat <- as.matrix(read.table("Thermofly_SNPs.cov")) 
+print(paste("read cov matrix", INPUT))
+#cov_mat <- as.matrix(read.table("Thermofly_SNPs.cov")) 
+#####cov_mat<-as.matrix(read.table(INPUT), header=F)
 pca<-eigen(cov_mat)
 
 pca.mat<-as.matrix(pca$vectors %*% (diag(pca$values))^0.5)
@@ -23,6 +31,9 @@ colnames(pca.mat)<-c(col_PC)
 
 # Add rownames
 rownames(pca.mat)<-meta_data_bas$sampleId
+#bam_names<-read.table(BAM,header=F)
+#rownames(pca.mat)<-bam_names$V1
+
 
 # Two ways to calculate variance
 # Calculate varsum(eigen_mats$values[eigen_mats$values>=0]
@@ -37,13 +48,19 @@ var[1:5] # First 5 PCs
 # Plot the eigenvalues of the PCA:
 barplot(var, xlab="Eigenvalues of the PCA", ylab="Proportion of variance explained")
 
+
 # Make kmeans for 2 groups on PC1
 kmeans_res<-kmeans(as.matrix(pca.mat[,1]), c(min(pca.mat[,1]), median(pca.mat[,1]), max(pca.mat[,1])))
 k_ss<-round(kmeans_res$betweenss/kmeans_res$totss,2)
 
+#save 4PCS eigenvalues and k means SS
+write.table(pca.mat[,1:4], paste0(INPUT,".pca"), quote=F)
+write.table(c(var[1:4],k_ss), paste0(INPUT,".eig"), quote=F)
+
 # Combine metadata and PCs
 data <- cbind(meta_data_bas, pca.mat[,1:4])
 write.table(data, "Thermofly_basisetae_PCs.csv", col.names = T, row.names = F, quote = F, sep = "\t")
+write.csv(data, "Thermofly_basisetae_PCs.csv", row.names=F)
 
 #plot pca
 
