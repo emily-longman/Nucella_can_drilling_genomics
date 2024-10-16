@@ -41,11 +41,6 @@ mkdir SFS_sites
 
 # Calculate SFS for both sites - need different parameters since different number of ind in each
 
-
-
- -minInd $MIN_IND \
-
-
 #Tom's Trail (7 ind)
 angsd \
 -b $working_folder/info/Tom_bam.list \
