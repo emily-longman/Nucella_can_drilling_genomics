@@ -31,4 +31,4 @@ realSFS fst index \
 $working_folder/SFS_sites/Thermofly_Tom.saf.idx \
 $working_folder/SFS_sites/Thermofly_Olaa.saf.idx \
 -sfs $working_folder/Fst/Thermofly_Tom_Olaa_allsites.sfs \
--fold 1 -fstout $working_folder/SFS_sites/Tom_Olaa_allsites -whichFst 1
+-fold 1 -fstout $working_folder/Fst/Tom_Olaa_allsites -whichFst 1
