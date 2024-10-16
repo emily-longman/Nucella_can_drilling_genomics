@@ -16,7 +16,7 @@
 # Calculate Fst between groups
 
 # Load software  
-module load R/4.4.0
+spack load angsd@0.933
 
 #--------------------------------------------------------------------------------
 
@@ -27,5 +27,8 @@ file=$working_folder/Fst/Thermofly_Tom_Olaa
 
 #--------------------------------------------------------------------------------
 
-# Call file 
-Rscript $script_folder/5_Fst/4_Fst.R "$file"
+realSFS fst index \
+$working_folder/SFS_sites/Thermofly_Tom.saf.idx \
+$working_folder/SFS_sites/Thermofly_Olaa.saf.idx \
+-sfs $working_folder/Fst/Thermofly_Tom_Olaa_allsites.sfs \
+-fold 1 -fstout $working_folder/SFS_sites/Tom_Olaa_allsites -whichFst 1
