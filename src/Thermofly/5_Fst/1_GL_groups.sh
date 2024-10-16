@@ -54,7 +54,7 @@ angsd \
 -out $working_folder/genotype_likelihoods_groups/Thermofly_${L} \
 -P $CPU \
 -doMaf 1 -doSaf 1 -GL 2 -doMajorMinor 3 -doCounts 1 \
--sites $working_folder/sites/sites_maf /
+-sites $working_folder/sites/sites_maf \
 -rf $working_folder/sites/regions_maf \
 -remove_bads 1 -skipTriallelic 1 -uniqueOnly 1 -only_proper_pairs 1 -minMapQ 30 -minQ 20 -C 50 \
 -minInd 16 -setMinDepthInd 4 -setMaxDepth 440 \
