@@ -49,8 +49,8 @@ angsd \
 -P $CPU \
 -doMaf 1 -doSaf 1 -GL 2 -doMajorMinor 1 \
 -rf $region_file \
--remove_bads 1 -skipTriallelic 1 -uniqueOnly 1 -only_proper_pairs 1 -minMapQ 30 -minQ 20 \
--minInd 5 -setMinDepthInd 4 -setMaxDepth 140 \
+-remove_bads 1 -skipTriallelic 1 -uniqueOnly 1 -only_proper_pairs 1 -minMapQ 30 -minQ 20 -C 50 \
+-minInd 5 \
 
 #Olaa Forest (15 ind)
 angsd \
@@ -58,10 +58,9 @@ angsd \
 -ref ${ref} -anc ${ref} \
 -out $working_folder/SFS_sites/Thermofly_Olaa \
 -P $CPU \
--doMaf 1 -doSaf 1 -GL 2 -doMajorMinor 3 -doCounts 1 \
--sites $working_folder/sites/sites_maf \
--rf $working_folder/sites/regions_maf \
--remove_bads 1 -skipTriallelic 1 -uniqueOnly 1 -only_proper_pairs 1 -minMapQ 30 -minQ 20 \
--minInd 11 -setMinDepthInd 4 -setMaxDepth 300 \
+-doMaf 1 -doSaf 1 -GL 2 -doMajorMinor 1 \
+-rf $region_file \
+-remove_bads 1 -skipTriallelic 1 -uniqueOnly 1 -only_proper_pairs 1 -minMapQ 30 -minQ 20 -C 50 \
+-minInd 11 \
 
 # Since  we use output for SFS to calculate FSTs/thetas then we don't want min MAF nor p-value filters
