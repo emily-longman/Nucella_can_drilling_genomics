@@ -56,7 +56,7 @@ angsd \
 angsd \
 -b $working_folder/info/Olaa_bam.list \
 -ref ${ref} -anc ${ref} \
--out $working_folder/genotype_likelihoods_groups/Thermofly_Olaa \
+-out $working_folder/SFS_sites/Thermofly_Olaa \
 -P $CPU \
 -doMaf 1 -doSaf 1 -GL 2 -doMajorMinor 3 -doCounts 1 \
 -sites $working_folder/sites/sites_maf \
