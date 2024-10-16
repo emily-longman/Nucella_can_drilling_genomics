@@ -1,13 +1,12 @@
 #!/usr/bin/env bash  
 #  
-#SBATCH -J Clean_bams  
-#SBATCH -c 6  
+#SBATCH -J Coverage_bams  
+#SBATCH -c 1 
 #SBATCH -N 1 # on one node  
 #SBATCH -t 8:00:00   
 #SBATCH --mem 40G   
-#SBATCH -o ./slurmOutput/%x.%A_%a.out  
+#SBATCH --output=./slurmOutput/%x_%j.out  
 #SBATCH -p bluemoon  
-#SBATCH --array=1-22
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=emily.longman@uvm.edu 
 
