@@ -13,34 +13,19 @@
 
 #--------------------------------------------------------------------------------
 
-# Calculate genotype likelihoods per group
+# Calculate Fst between groups
 
 # Load software  
-spack load angsd@0.933
+module load R/4.4.0
 
 #--------------------------------------------------------------------------------
 
 # Set folders and file locations
 working_folder=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/Thermofly
-meta=$working_folder/METADATA/Thermofly_metadata.tsv
-ref=/netfiles/thermofly/GENOMES/basisetae/D.basisetae_nanopore.fasta.masked
+script_folder=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/Thermofly
+file=$working_folder/Fst/Thermofly_Tom_Olaa
 
 #--------------------------------------------------------------------------------
 
-# Parameters for software
-CPU=6
-
-#--------------------------------------------------------------------------------
-
-# Create output folders
-cd $working_folder
-mkdir Fst
-
-#--------------------------------------------------------------------------------
-
-# Calculate SFS
-
-realSFS $working_folder/SFS_sites/Thermofly_Tom.saf.idx \
-$working_folder/SFS_sites/Thermofly_Olaa.saf.idx \
--P $CPU -maxIter 30 -fold 1 \
-> $working_folder/Fst/Thermofly_Tom_Olaa_allsites.sfs
+# Call file 
+Rscript $script_folder/5_Fst/4_Fst.R "$file"
