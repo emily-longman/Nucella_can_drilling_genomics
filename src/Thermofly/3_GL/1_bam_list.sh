@@ -26,3 +26,9 @@ mkdir info
 # Create bamlist
 cd $working_folder/bams_clean
 ls -d "$PWD/"*.bam > $working_folder/info/bam_filelist.list
+
+# Create bamlist for Tom's Trail
+ls -d "$PWD/"*B_T*.bam > $working_folder/info/Tom_bam.list
+
+# Create bamlist for Olaa Forest
+ls -d "$PWD/"*B_O*.bam > $working_folder/info/Olaa_bam.list
