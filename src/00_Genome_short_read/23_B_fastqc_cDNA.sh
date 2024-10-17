@@ -40,7 +40,7 @@ spack load fastqc@0.11.7 # Call fastqc package
 WORKING_FOLDER_SCRATCH=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly
 
 #RAW cDNA indicates the folder where the raw reads are stored.
-RAW_READS=/netfiles/pespenilab_share/Nucella/raw/cDNA/all_cDNA
+RAW_READS=/netfiles/pespenilab_share/Nucella/raw/cDNA/Nucella.ONT.cDNA.fastq.gz
 
 #--------------------------------------------------------------------------------
 
@@ -58,5 +58,5 @@ fi
 cd $WORKING_FOLDER_SCRATCH
 
 # Lets do some QC on the reads
-fastqc $RAW_READS/${i} \
+fastqc $RAW_READS \
 --outdir $WORKING_FOLDER_SCRATCH/cDNA_fastqc
