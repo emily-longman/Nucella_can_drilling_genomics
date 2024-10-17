@@ -1,7 +1,7 @@
 #!/usr/bin/env bash  
 #  
 #SBATCH -J Genotype_likelihoods  
-#SBATCH -c 6  
+#SBATCH -c 10  
 #SBATCH -N 1 # on one node  
 #SBATCH -t 8:00:00   
 #SBATCH --mem 40G   
@@ -30,7 +30,7 @@ region_file=$working_folder/info/Thermofly_region_file.txt
 #--------------------------------------------------------------------------------
 
 # Parameters for software
-CPU=6
+CPU=10
 
 #--------------------------------------------------------------------------------
 
