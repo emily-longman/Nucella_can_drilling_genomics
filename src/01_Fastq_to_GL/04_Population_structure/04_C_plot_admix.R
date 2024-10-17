@@ -1,17 +1,17 @@
 ## Plotting with Zoon plot_admix R code
 
-source("~/Desktop/PD_stuffies/scripts/plot_admixture_v5_function.R")
+source("/Users/emilylongman/Documents/GitHub/Nucella_can_drilling_genomics/src/01_Fastq_to_GL/04_Population_structure/04_C_plot_amix_function.R")
 
 #### K=2
-dir=("~/Desktop/PD_stuffies/R_work/admix_K/ALL_pruned/") # path to input files
+dir=("/Users/emilylongman/Documents/GitHub/Nucella_can_drilling_genomics/results/ngs_admix/K_output/") # path to input files
 
-inName="ALL_2_maf0.05_pctind0.5_maxdepth15_pruned_K2_run2.qopt" # name of the input file to plot, output of ngsAdmix or ADMIXTURE run
+inName="Nucella_all_maf_K{4}_run{3}.qopt" # name of the input file to plot, output of ngsAdmix or ADMIXTURE run
 
-npops=2
+npops=4
 
-samples <- read.table("~/Desktop/PD_stuffies/R_work/admix_all_pruned_OLD/all.filt.info.txt")
+samples <- read.csv("/Users/emilylongman/Documents/GitHub/Nucella_can_drilling_genomics/results/ngs_admix/Metadata.csv", header=T)
 
-i2p=samples[,1:2] # select the sample name and population name columns
+i2p=samples[,c(1,4)] # select the sample name and population name columns
 names(i2p)=c("ind","pop") # give column names
 row.names(i2p)=i2p$ind # give row names
 
@@ -21,10 +21,12 @@ row.names(tbl)= i2p$ind # make row names aline with pop dataframe
 in.tbl<-transform(merge(tbl,i2p,by=0), row.names=Row.names, Row.names=NULL) # merge admix and pop data
 
 # make pop into factor (otherwise will be plotted based in alphabetical order)
-in.tbl$pop=factor(in.tbl$pop, levels=c("BA", "BT", "SR", "PB", "CB", "SC", "SH", "IP", "WA", "CA", "GP", "VN", "SB", "CR", "HP", "DB", "BB", "FR", "KR"))
+#in.tbl$pop=factor(in.tbl$pop, levels=c("FB", "HC", "MP"))
+in.tbl$pop=factor(in.tbl$pop, levels=c("Drilled","Not.Drilled"))
 
 # indicate colors
-colors=c("#36648B", "#CD69C9")
+colors=c("tomato", "lightblue", "wheat","olivedrab")
+colors2=c("#36648B", "#CD69C9")
 
 # plot
 ords=plotAdmixture(data=in.tbl,npops=npops,grouping.method="distance",vshift=0.1, colors = colors)
