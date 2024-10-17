@@ -29,7 +29,7 @@ source $venv_name/bin/activate
 working_folder=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/Thermofly
 ref=/netfiles/thermofly/GENOMES/basisetae/D.basisetae_nanopore.fasta.masked
 script_folder=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/Thermofly
-bam_list=$working_folder/info/bam_filelist.list
+bam_list=$working_folder/info/bam_filelist_reduced.list
 
 #--------------------------------------------------------------------------------
 
@@ -42,11 +42,11 @@ mkdir pcangsd
 cp $bam_list $working_folder/pcangsd
 
 pcangsd \
--b $working_folder/genotype_likelihoods/Thermofly_GL.beagle.gz \
--o $working_folder/pcangsd/Thermofly_SNPs \
+-b $working_folder/genotype_likelihoods/Thermofly_GL_reduced_minInd_16_depth_4.beagle.gz \
+-o $working_folder/pcangsd/Thermofly_SNPs_reduced_minInd_16_depth_4 \
 -t 1 
 
-cov_mat=$working_folder/pcangsd/Thermofly_SNPs.cov
+cov_mat=$working_folder/pcangsd/Thermofly_SNPs_reduced_minInd_16_depth_4.cov
 
 #--------------------------------------------------------------------------------
 
