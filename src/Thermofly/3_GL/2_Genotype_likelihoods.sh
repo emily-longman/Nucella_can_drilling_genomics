@@ -44,12 +44,12 @@ mkdir genotype_likelihoods
 angsd \
 -b $bam_list \
 -ref ${ref} -anc ${ref} \
--out $working_folder/genotype_likelihoods/Thermofly_GL_reduced \
+-out $working_folder/genotype_likelihoods/Thermofly_GL_reduced_minInd_16_depth_4 \
 -P $CPU \
 -doMaf 1 -doSaf 1 -GL 2 -doGlf 2 -doMajorMinor 1 -doCounts 1 \
 -rf $region_file \
 -remove_bads 1 -baq 1 -skipTriallelic 1 -uniqueOnly 1 -only_proper_pairs 1 -minMapQ 30 -minQ 20 -C 50 \
--minInd 15 -setMinDepthInd 4 -minMaf 0.05 -setMaxDepth 360 \
+-minInd 16 -setMinDepthInd 4 -minMaf 0.05 -setMaxDepth 360 \
 -SNP_pval 1e-6
 
 #Note: original parameters with all individuals: -minInd 16 -setMinDepthInd 4 -minMaf 0.05 -setMaxDepth 440 \
