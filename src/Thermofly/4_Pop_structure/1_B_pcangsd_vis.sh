@@ -21,13 +21,8 @@ module load R/4.4.0
 working_folder=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/Thermofly
 script_folder=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/Thermofly
 meta=$working_folder/METADATA/Thermofly_metadata.tsv
-bam_list=$working_folder/info/bam_filelist.list
-cov_mat=$working_folder/pcangsd/Thermofly_SNPs.cov
-
-#--------------------------------------------------------------------------------
-# Create output folders
-cd $working_folder
-mkdir figures
+bam_list=$working_folder/info/bam_filelist_reduced.list
+cov_mat=$working_folder/pcangsd/Thermofly_SNPs_reduced_minInd_16_depth_4.cov
 
 #--------------------------------------------------------------------------------
 
