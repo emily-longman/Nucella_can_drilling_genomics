@@ -35,8 +35,16 @@ ls -d "$PWD/"*B_T*.bam > $working_folder/info/Tom_bam.list
 # Create bamlist for Olaa Forest
 ls -d "$PWD/"*B_O*.bam > $working_folder/info/Olaa_bam.list
 
+#--------------------------------------------------------------------------------
+
 # Change working directory
 cd $working_folder/bams_clean_reduced
 
 # Create bamlist (removing samples w/ coverage <4)
 ls -d "$PWD/"*.bam > $working_folder/info/bam_filelist_reduced.list
+
+# Create bamlist for Tom's Trail
+ls -d "$PWD/"*B_T*.bam > $working_folder/info/Tom_bam_filelist_reduced.list
+
+# Create bamlist for Olaa Forest
+ls -d "$PWD/"*B_O*.bam > $working_folder/info/Olaa_bam_filelist_reduced.list
