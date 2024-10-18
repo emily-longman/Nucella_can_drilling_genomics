@@ -8,14 +8,14 @@
 #SBATCH --job-name=fastqc_CDNA
 
 # Specify partition
-#SBATCH --partition=bluemoon
+#SBATCH --partition=week
 
 # Request nodes
 #SBATCH --nodes=1 # on one node
 #SBATCH --ntasks-per-node=1  
 
 # Reserve walltime -- hh:mm:ss 
-#SBATCH --time=24:00:00 
+#SBATCH --time=3-00:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
 #SBATCH --mem=40G
