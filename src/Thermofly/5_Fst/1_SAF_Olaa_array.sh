@@ -1,6 +1,6 @@
 #!/usr/bin/env bash  
 #  
-#SBATCH -J SAF_pop_1 
+#SBATCH -J SAF_pop_Olaa_array 
 #SBATCH -c 6  
 #SBATCH -N 1 # on one node  
 #SBATCH -t 8:00:00   
