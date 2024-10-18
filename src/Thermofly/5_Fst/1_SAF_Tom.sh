@@ -36,6 +36,8 @@ CPU=6
 # Create output folders
 cd $working_folder
 mkdir SFS_sites
+cd $working_folder/SFS_sites
+mkdir Tom
 
 #--------------------------------------------------------------------------------
 
@@ -46,7 +48,7 @@ mkdir SFS_sites
 angsd \
 -b $working_folder/info/Tom_bam_filelist_reduced.list \
 -ref ${ref} -anc ${ref} \
--out $working_folder/SFS_sites/Thermofly_Tom_reduced \
+-out $working_folder/SFS_sites/Tom/Thermofly_Tom_reduced \
 -P $CPU \
 -doMaf 1 -doSaf 1 -GL 2 -doMajorMinor 3 -doCounts 1 \
 -sites $working_folder/sites/sites_maf \
