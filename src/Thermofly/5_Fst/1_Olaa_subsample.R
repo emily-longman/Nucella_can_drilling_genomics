@@ -13,5 +13,5 @@ for(i in 1:100){
 }
 
 for(i in seq_along(bam_list_List)) {
-    write.table(bam_list_List[[i]], paste("Olaa_bam_filelist_reduced_", i, ".txt", sep = ""), col.names = FALSE, row.names = FALSE, quote = FALSE)
+    write.table(bam_list_List[[i]], paste("Olaa_bam_filelist_reduced_", i, ".list", sep = ""), col.names = FALSE, row.names = FALSE, quote = FALSE)
 }
