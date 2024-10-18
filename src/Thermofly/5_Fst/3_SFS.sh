@@ -40,7 +40,7 @@ mkdir Fst
 
 # Calculate SFS
 
-realSFS $working_folder/SFS_sites/Thermofly_Tom.saf.idx \
-$working_folder/SFS_sites/Thermofly_Olaa.saf.idx \
+realSFS $working_folder/SFS_sites/Tom/Thermofly_Tom_reduced.saf.idx \
+$working_folder/SFS_sites/Olaa/Thermofly_Olaa_reduced_subset_${i}.saf.idx \
 -P $CPU -maxIter 30 -fold 1 \
-> $working_folder/Fst/Thermofly_Tom_Olaa_allsites.sfs
+> $working_folder/Fst/Thermofly_Tom_Olaa_subset_${i}_allsites
