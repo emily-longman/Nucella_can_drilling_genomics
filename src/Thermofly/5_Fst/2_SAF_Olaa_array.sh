@@ -54,15 +54,16 @@ mkdir Olaa
 
 #Olaa Forest
 angsd \
--b $working_folder/info/Olaa_bam_filelist_reduced_subset_${i}.list \
+-b $working_folder/info/Olaa_subsample/Olaa_bam_filelist_reduced_${i}.list \
 -ref ${ref} -anc ${ref} \
--out $working_folder/SFS_sites/Thermofly_Olaa_reduced_subset_${i} \
+-out $working_folder/SFS_sites/Olaa/Thermofly_Olaa_reduced_subset_${i} \
 -P $CPU \
 -doMaf 1 -doSaf 1 -GL 2 -doMajorMinor 3 -doCounts 1 \
 -sites $working_folder/sites/sites_maf \
 -rf $working_folder/sites/regions_maf \
 -remove_bads 1 -skipTriallelic 1 -uniqueOnly 1 -only_proper_pairs 1 -minMapQ 30 -minQ 20 -C 50 \
 -minInd 5 -setMinDepthInd 4
+
 
 # Since  we use output for SFS to calculate FSTs/thetas then we don't want min MAF nor p-value filters
 # -doMajorMinor 3 means use major and minor from a txt file
