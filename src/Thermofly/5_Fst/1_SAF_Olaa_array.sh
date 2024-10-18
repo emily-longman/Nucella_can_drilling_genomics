@@ -7,7 +7,7 @@
 #SBATCH --mem 40G   
 #SBATCH --output=./slurmOutput/%x_%j.out 
 #SBATCH -p bluemoon 
-# Submit job array
+#SBATCH --array=0-9
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=emily.longman@uvm.edu 
 
@@ -33,6 +33,15 @@ CPU=6
 
 #--------------------------------------------------------------------------------
 
+# Create array
+echo ${SLURM_ARRAY_TASK_ID}
+
+array=("1" "2" "3" "4" "5" "6" "7" "8" "9" "10")
+i="${array[$SLURM_ARRAY_TASK_ID]}"
+echo ${i}
+
+#--------------------------------------------------------------------------------
+
 # Create output folders
 cd $working_folder
 mkdir SFS_sites
@@ -41,24 +50,11 @@ mkdir SFS_sites
 
 # Calculate saf for both sites - need different parameters since different number of ind in each
 
-
-#Tom's Trail (7 ind)
-angsd \
--b $working_folder/info/Tom_bam_filelist_reduced.list \
--ref ${ref} -anc ${ref} \
--out $working_folder/SFS_sites/Thermofly_Tom_reduced \
--P $CPU \
--doMaf 1 -doSaf 1 -GL 2 -doMajorMinor 3 -doCounts 1 \
--sites $working_folder/sites/sites_maf \
--rf $working_folder/sites/regions_maf \
--remove_bads 1 -skipTriallelic 1 -uniqueOnly 1 -only_proper_pairs 1 -minMapQ 30 -minQ 20 -C 50 \
--minInd 5 -setMinDepthInd 4
-
 #Olaa Forest
 angsd \
--b $working_folder/info/Olaa_bam_filelist_reduced_subset_1.list \
+-b $working_folder/info/Olaa_bam_filelist_reduced_subset_${i}.list \
 -ref ${ref} -anc ${ref} \
--out $working_folder/SFS_sites/Thermofly_Olaa_reduced_subset_1 \
+-out $working_folder/SFS_sites/Thermofly_Olaa_reduced_subset_${i} \
 -P $CPU \
 -doMaf 1 -doSaf 1 -GL 2 -doMajorMinor 3 -doCounts 1 \
 -sites $working_folder/sites/sites_maf \
