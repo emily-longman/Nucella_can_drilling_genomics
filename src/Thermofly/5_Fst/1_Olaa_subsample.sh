@@ -21,6 +21,7 @@ module load R/4.4.0
 
 # Set folders and file locations
 working_folder=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/Thermofly
+script_folder=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/Thermofly
 
 #--------------------------------------------------------------------------------
 
