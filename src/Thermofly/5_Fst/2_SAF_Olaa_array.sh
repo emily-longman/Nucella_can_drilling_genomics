@@ -7,7 +7,7 @@
 #SBATCH --mem 40G   
 #SBATCH --output=./slurmOutput/%x_%j.out 
 #SBATCH -p bluemoon 
-#SBATCH --array=0-9
+#SBATCH --array=0-99
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=emily.longman@uvm.edu 
 
@@ -36,7 +36,7 @@ CPU=6
 # Create array
 echo ${SLURM_ARRAY_TASK_ID}
 
-array=("1" "2" "3" "4" "5" "6" "7" "8" "9" "10")
+array=({1..100})
 i="${array[$SLURM_ARRAY_TASK_ID]}"
 echo ${i}
 
@@ -45,6 +45,8 @@ echo ${i}
 # Create output folders
 cd $working_folder
 mkdir SFS_sites
+cd $working_folder/SFS_sites
+mkdir Olaa
 
 #--------------------------------------------------------------------------------
 
