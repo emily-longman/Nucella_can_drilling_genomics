@@ -58,6 +58,8 @@ write.table(data, "Thermofly_basisetae_PCs.csv", col.names = T, row.names = F, q
 #plot pca
 
 cols=c("#94D2BD", "#6d597a")
+cols.all=c("pink", "red", "orange", "yellow", "green", "darkolivegreen3","darkgreen", "cyan", "skyblue",
+           "blue", "darkblue", "purple", "darkorchid4", "darkkhaki", "grey", "brown", "black", "tan")
 
 ggscatter(data, x = "PC1", y = "PC2",
           color = "city") +
@@ -73,6 +75,20 @@ ggscatter(data, x = "PC1", y = "PC2",
   scale_color_manual(values=c(cols), name="Source population") +
   guides(colour = guide_legend(nrow = 2))
 ggsave("Basisetae_PC1.PC2.jpeg", width = 8, height = 6, device='jpeg', dpi=300)
+
+ggscatter(data, x = "PC1", y = "PC2",
+          color = "sampleId") +
+  theme_bw(base_size = 13, base_family = "Arial") +
+  theme(panel.background = element_blank(), 
+        legend.background = element_blank(), 
+        panel.grid = element_blank(), 
+        plot.background = element_blank(), 
+        legend.text=element_text(size=rel(.7)), 
+        axis.text = element_text(size=13), 
+        legend.position = "bottom") +
+  labs(x = paste0("PC1: (",var[1],"%)"), y = paste0("PC2: (",var[2],"%)")) +
+  scale_color_manual(values=c(cols.all), name="Source population") +
+  guides(colour = guide_legend(nrow = 6))
 
 ggscatter(data, x = "PC3", y = "PC4",
           color = "city") +
