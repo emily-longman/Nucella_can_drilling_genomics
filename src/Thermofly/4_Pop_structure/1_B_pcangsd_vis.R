@@ -100,7 +100,7 @@ ggscatter(data, x = "PC3", y = "PC4",
         legend.text=element_text(size=rel(.7)), 
         axis.text = element_text(size=13), 
         legend.position = "bottom") +
-  labs(x = paste0("PC3: (",var[1],"%)"), y = paste0("PC4: (",var[2],"%)")) +
+  labs(x = paste0("PC3: (",var[3],"%)"), y = paste0("PC4: (",var[4],"%)")) +
   scale_color_manual(values=c(cols), name="Source population") +
   guides(colour = guide_legend(nrow = 2))
 ggsave("Basisetae_PC3.PC4.jpeg", width = 8, height = 6, device='jpeg', dpi=300)
