@@ -7,7 +7,6 @@
 #SBATCH --mem 40G   
 #SBATCH --output=./slurmOutput/%x_%j.out 
 #SBATCH -p bluemoon 
-# Submit job array
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=emily.longman@uvm.edu 
 
