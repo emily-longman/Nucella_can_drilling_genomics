@@ -9,5 +9,5 @@ bam_list_i <- matrix(ncol=1, nrow=7)
 
 for(i in 1:5){
     bam_list_i <- bam_list[sample(11, 7, replace=F),]
-    write.table(bam_list_i, row.names=F, col.names=F, quote=F)
+    write.table(bam_list_i, "Olaa_bam_filelist_reduced_i.list", row.names=F, col.names=F, quote=F)
 }
