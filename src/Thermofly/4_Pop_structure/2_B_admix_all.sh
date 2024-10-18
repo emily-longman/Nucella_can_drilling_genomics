@@ -24,7 +24,7 @@ working_folder=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/proces
 # Change directory to output
 cd $working_folder/ngs_admix
 
-
-# I don't get what is trying to be extracted here...
-# I get we are looping through the log files and searching using grep for a pattern using perl, but what pattern are we looking for? Maybe my output is incorrect and that is the problem?
+# Loop through the log files to create one output file - identify which value is the lowest for each K - plot that "fopt.gz" for each K
 (for log in `ls K_output/*.log`; do grep -Po 'like=\K[^ ]+' $log; done) > $working_folder/ngs_admix/logfile
+
+# K=1 is best
