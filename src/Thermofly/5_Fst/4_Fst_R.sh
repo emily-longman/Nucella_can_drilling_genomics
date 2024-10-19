@@ -1,6 +1,6 @@
 #!/usr/bin/env bash  
 #  
-#SBATCH -J SFS  
+#SBATCH -J Fst_R  
 #SBATCH -c 6  
 #SBATCH -N 1 # on one node  
 #SBATCH -t 8:00:00   
@@ -23,7 +23,6 @@ module load R/4.4.0
 # Set folders and file locations
 working_folder=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/Thermofly
 script_folder=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/Thermofly
-file=$working_folder/Fst/Thermofly_Tom_Olaa
 
 #--------------------------------------------------------------------------------
 
