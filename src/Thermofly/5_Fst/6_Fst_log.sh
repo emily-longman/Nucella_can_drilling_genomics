@@ -23,6 +23,7 @@ mkdir Fst_summary
 
 #--------------------------------------------------------------------------------
 
+# Change directory
 cd $working_folder/Fst
 
 # Make log of just unweighted 
