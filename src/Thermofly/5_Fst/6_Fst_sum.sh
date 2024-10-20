@@ -1,6 +1,6 @@
 #!/usr/bin/env bash  
 #  
-#SBATCH -J Fst_R  
+#SBATCH -J Fst_calc  
 #SBATCH -c 6  
 #SBATCH -N 1 # on one node  
 #SBATCH -t 8:00:00   
@@ -13,29 +13,22 @@
 
 #--------------------------------------------------------------------------------
 
-# Calculate Fst between groups
-
-# Load software  
-module load R/4.4.0
-
-#--------------------------------------------------------------------------------
-
 # Set folders and file locations
 working_folder=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/Thermofly
-script_folder=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/Thermofly
 
 #--------------------------------------------------------------------------------
 
-# Create array
-echo ${SLURM_ARRAY_TASK_ID}
-
-array=({1..100})
-i="${array[$SLURM_ARRAY_TASK_ID]}"
-echo ${i}
+# Create output folders
+cd $working_folder
+mkdir Fst_summary
 
 #--------------------------------------------------------------------------------
 
-# Call file 
-file=$working_folder/Fst/Thermofly_Tom_Olaa_subset_${i}_allsites
+cd $working_folder/Fst
 
-Rscript $script_folder/5_Fst/4_Fst.R "$file"
+# Make log of just unweighted 
+(for i in 'ls *_allsites_nMAF.fst' ; do cat $i | awk '{print $1}'; done) > $working_folder/Fst_summary/Fst_unweighted_logfile
+
+
+# Make log of just unweighted 
+(for i in 'ls *_allsites_nMAF.fst' ; do cat $i | awk '{print $2}'; done) > $working_folder/Fst_summary/Fst_weighted_logfile
