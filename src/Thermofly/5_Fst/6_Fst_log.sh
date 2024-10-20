@@ -29,5 +29,5 @@ cd $working_folder/Fst
 (for i in 'ls *_allsites_nMAF.fst' ; do cat $i | awk '{print $1}'; done) > $working_folder/Fst_summary/Fst_unweighted_logfile
 
 
-# Make log of just unweighted 
+# Make log of just weighted 
 (for i in 'ls *_allsites_nMAF.fst' ; do cat $i | awk '{print $2}'; done) > $working_folder/Fst_summary/Fst_weighted_logfile
