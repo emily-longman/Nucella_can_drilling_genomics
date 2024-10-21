@@ -85,9 +85,18 @@ echo ${i}
 cd $WORKING_FOLDER
 
 # Generating new folders 
+if [ -d "QC_reads" ]
+then echo "Working QC_reads folder exist"; echo "Let's move on"; date
+else echo "Working QC_reads folder doesnt exist. Let's fix that"; mkdir $WORKING_FOLDER/QC_reads; date
+fi
+
+# Change directory
+cd $WORKING_FOLDER/QC_reads
+
+# Generating new folders 
 if [ -d "fastQC" ]
 then echo "Working fastQC folder exist"; echo "Let's move on"; date
-else echo "Working fastQC folder doesnt exist. Let's fix that"; mkdir $WORKING_FOLDER/fastQC; date
+else echo "Working fastQC folder doesnt exist. Let's fix that"; mkdir $WORKING_FOLDER/QC_reads/fastQC; date
 fi
 
 #--------------------------------------------------------------------------------
