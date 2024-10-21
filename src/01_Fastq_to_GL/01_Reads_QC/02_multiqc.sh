@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=multiqc 
+#SBATCH --job-name=Multiqc 
 
 # Specify partition
 #SBATCH --partition=bluemoon

@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=fastQC_part2
+#SBATCH --job-name=FastQC_part2
 
 # Specify partition
 #SBATCH --partition=bluemoon
@@ -24,7 +24,7 @@
 #SBATCH --array=1-576%20
 
 # Name output of this job using %x=job-name and %j=job-id
-#SBATCH --output=./slurmOutput/fastQC.%A_%a.out # Standard output
+#SBATCH --output=./slurmOutput/FastQC.%A_%a.out # Standard output
 
 # Receive emails when job begins and ends or fails
 #SBATCH --mail-type=ALL
