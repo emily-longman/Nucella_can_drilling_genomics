@@ -15,13 +15,13 @@
 #SBATCH --ntasks-per-node=1
 
 # Reserve walltime -- hh:mm:ss --30 hrs max
-#SBATCH --time=8:00:00 
+#SBATCH --time=1:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
 #SBATCH --mem=60G 
 
 # Submit job array
-#SBATCH --array=1-576%20
+#SBATCH --array=1-2 #1-576%20
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/Clean_bams.%A_%a.out # Standard output
@@ -32,7 +32,7 @@
 
 #--------------------------------------------------------------------------------
 
-# This script will clean the bam files, specifically it will filter, sort, remove duplicates and index. 
+# This script will clean the bam files. More specifically it will filter, sort, remove duplicates and index the bams. 
 # I will also conduct an intermediary QC step with Qualimap. 
 
 # Load modules  
@@ -45,16 +45,13 @@ qualimap=/netfiles/nunezlab/Shared_Resources/Software/qualimap_v2.2.1/qualimap
 
 #Define important file locations
 
-#RAW READS indicates the folder where the raw reads are stored.
-RAW_READS=/netfiles/pespenilab_share/Nucella/raw/Shortreads/All_shortreads
-
-#Working folder is core folder where this pipeline is being run.
+# Working folder is core folder where this pipeline is being run.
 WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL
 
-#This is the location where the reference genome and all its indexes are stored.
+# This is the location where the reference genome and all its indexes are stored.
 REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_Aug2024/backbone_raw.fasta
 
-#Name of pipeline
+# Name of pipeline
 PIPELINE=Clean_bams
 
 #--------------------------------------------------------------------------------
@@ -71,17 +68,17 @@ JAVAMEM=18G # Java memory
 ## Read guide files
 # This is a file with the name all the samples to be processed. One sample name per line with all the info.
 
-GUIDE_FILE=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL/Guide_Files/Guide_File_trim_map.txt
+GUIDE_FILE=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL/guide_files/Guide_File_trim_map.txt
 
 #Example: -- the headers are just for descriptive purposes. The actual file has no headers.
-##               File1                             File2              Snail_ID  Sample#  Lane#    Paired_name    Bam_lanes_merged_name
-## FB1-1_S84_L002_R1_001.fastq.gz    FB1-1_S84_L002_R2_001.fastq.gz    FB1-1     S84     L002    FB1-1_S84_L002       FB1-1_S84
-## FB1-1_S84_L007_R1_001.fastq.gz    FB1-1_S84_L007_R2_001.fastq.gz    FB1-1     S84     L007    FB1-1_S84_L007       FB1-1_S84
-## FB1-1_S84_L008_R1_001.fastq.gz    FB1-1_S84_L008_R2_001.fastq.gz    FB1-1     S84     L008    FB1-1_S84_L008       FB1-1_S84
-## FB1-2_S173_L002_R1_001.fastq.gz   FB1-2_S173_L002_R2_001.fastq.gz   FB1-2     S173    L002    FB1-2_S173_L002      FB1-2_S173
+##               File1                             File2              Snail_ID  Sample#  Lane#    Paired_name    
+## FB1-1_S84_L002_R1_001.fastq.gz    FB1-1_S84_L002_R2_001.fastq.gz    FB1-1     S84     L002    FB1-1_S84_L002   
+## FB1-1_S84_L007_R1_001.fastq.gz    FB1-1_S84_L007_R2_001.fastq.gz    FB1-1     S84     L007    FB1-1_S84_L007 
+## FB1-1_S84_L008_R1_001.fastq.gz    FB1-1_S84_L008_R2_001.fastq.gz    FB1-1     S84     L008    FB1-1_S84_L008
+## FB1-2_S173_L002_R1_001.fastq.gz   FB1-2_S173_L002_R2_001.fastq.gz   FB1-2     S173    L002    FB1-2_S173_L002
 ## ...
-## MP9-10_S26_L007_R1_001.fastq.gz   MP9-10_S26_L007_R2_001.fastq.gz   MP9-10    S26     L007    MP9-10_S26_L007      MP9-10_S26
-## MP9-10_S26_L008_R1_001.fastq.gz   MP9-10_S26_L008_R2_001.fastq.gz   MP9-10    S26     L008    MP9-10_S26_L008      MP9-10_S26
+## MP9-10_S26_L007_R1_001.fastq.gz   MP9-10_S26_L007_R2_001.fastq.gz   MP9-10    S26     L007    MP9-10_S26_L007
+## MP9-10_S26_L008_R1_001.fastq.gz   MP9-10_S26_L008_R2_001.fastq.gz   MP9-10    S26     L008    MP9-10_S26_L008
 
 #--------------------------------------------------------------------------------
 
@@ -155,16 +152,20 @@ O=$WORKING_FOLDER/bams_clean/${i}.srt.bam \
 SO=coordinate \
 VALIDATION_STRINGENCY=SILENT
 
-# Index with samtools
-samtools index $WORKING_FOLDER/bams_clean/${i}.srt.bam
-
 # Remove duplicates with picard
 # Notice that once a file has duplicates removed it is added the "rmdp" suffix
 java -Xmx$JAVAMEM -jar $PICARD MarkDuplicates \
 I=$WORKING_FOLDER/bams_clean/${i}.srt.bam \
 O=$WORKING_FOLDER/bams_clean/${i}.srt.rmdp.bam \
-M=$WORKING_FOLDER/bams_clean/${i}.dupstat.txt \
+M=$WORKING_FOLDER/mapping_stats/${i}.dupstat.txt \
 VALIDATION_STRINGENCY=SILENT REMOVE_DUPLICATES=true
+
+# Index with samtools
+samtools index $WORKING_FOLDER/bams_clean/${i}.srt.rmdp.bam
+
+#--------------------------------------------------------------------------------
+
+# Run QC on the bam file
 
 # Lets do QC on the bam file
 $qualimap bamqc \
@@ -172,13 +173,17 @@ $qualimap bamqc \
 -outdir $WORKING_FOLDER/bams_qualimap/Qualimap_${i} \
 --java-mem-size=$JAVAMEM
 
+#--------------------------------------------------------------------------------
+
+# Housekeeping
+
 # Clean intermediate files
 rm $WORKING_FOLDER/bams_clean/${i}.bam
 rm $WORKING_FOLDER/bams_clean/${i}.srt.bam
 
-# Housekeeping
-mv $WORKING_FOLDER/bams/${i}.dupstat.txt \
-$WORKING_FOLDER/mapping_stats
+# Move the dupstat to the mapping stats directory
+#mv $WORKING_FOLDER/bams/${i}.dupstat.txt \
+#$WORKING_FOLDER/mapping_stats
 
 #--------------------------------------------------------------------------------
 
