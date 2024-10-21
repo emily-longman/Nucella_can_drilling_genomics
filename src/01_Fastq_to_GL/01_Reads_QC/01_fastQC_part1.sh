@@ -110,7 +110,7 @@ echo -e $i "is now processing"; date
 
 # Lets do some QC on the reads
 fastqc $RAW_READS/${i} \
---outdir $WORKING_FOLDER/fastQC
+--outdir $WORKING_FOLDER/QC_reads/fastQC
 
 #--------------------------------------------------------------------------------
 # Inform that sample is done
