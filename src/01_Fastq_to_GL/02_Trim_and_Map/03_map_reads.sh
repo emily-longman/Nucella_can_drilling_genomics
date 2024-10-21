@@ -38,7 +38,6 @@
 # Load modules  
 spack load gcc@9.3.0
 spack load samtools@1.10
-
 bwa=/netfiles/nunezlab/Shared_Resources/Software/bwa-mem2-2.2.1_x64-linux/bwa-mem2.avx2
 
 #--------------------------------------------------------------------------------

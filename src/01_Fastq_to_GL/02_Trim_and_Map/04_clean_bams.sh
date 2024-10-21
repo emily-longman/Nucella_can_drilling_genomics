@@ -21,7 +21,7 @@
 #SBATCH --mem=60G 
 
 # Submit job array
-#SBATCH --array=1-2 #1-576%20
+#SBATCH --array=1-576%20
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/Clean_bams.%A_%a.out # Standard output
@@ -37,7 +37,6 @@
 
 # Load modules  
 spack load samtools@1.10
-
 PICARD=/netfiles/nunezlab/Shared_Resources/Software/picard/build/libs/picard.jar
 qualimap=/netfiles/nunezlab/Shared_Resources/Software/qualimap_v2.2.1/qualimap
 
