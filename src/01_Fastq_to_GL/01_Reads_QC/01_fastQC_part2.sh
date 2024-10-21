@@ -33,7 +33,7 @@
 #--------------------------------------------------------------------------------
 
 # This script will initiate a pipeline which will do some quality QC on the reads.
-# Due to the number of fastq files and array limits, the QC is broken up into two arrays 
+# Due to the number of fastq files and array limits, the QC is broken up into two scripts. 
 
 # Load modules 
 # Call fastqc package 
@@ -43,13 +43,13 @@ spack load fastqc@0.11.7
 
 #Define important file locations
 
-#RAW READS indicates the folder where the raw reads are stored.
+# RAW READS indicates the folder where the raw reads are stored.
 RAW_READS=/netfiles/pespenilab_share/Nucella/raw/Shortreads/All_shortreads
 
-#Working folder is core folder where this pipeline is being run.
+# Working folder is core folder where this pipeline is being run.
 WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL
 
-#Name of pipeline
+# Name of pipeline
 PIPELINE=fastQC
 
 #--------------------------------------------------------------------------------
@@ -57,7 +57,7 @@ PIPELINE=fastQC
 ## PREPARE GUIDE FILES
 ## Read guide files
 # This is a file with the name all the samples to be processed. One sample name per line with all the info.
-GUIDE_FILE=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL/Guide_Files/Guide_File_qc_part2.txt
+GUIDE_FILE=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL/guide_files/Guide_File_qc_part2.txt
 
 #Example: -- the headers are just for descriptive purposes. The actual file has no headers.
 ##               File               Snail_ID  Sample#  Lane# 
@@ -97,8 +97,7 @@ fi
 # Move to working directory
 cd $WORKING_FOLDER
 
-echo -e $i "is now processing"
-date
+echo -e $i "is now processing"; date
 
 # Lets do some QC on the reads
 fastqc $RAW_READS/${i} \
