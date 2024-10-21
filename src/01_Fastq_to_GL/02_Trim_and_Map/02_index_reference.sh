@@ -43,9 +43,9 @@ PICARD=/netfiles/nunezlab/Shared_Resources/Software/picard/build/libs/picard.jar
 #Define important file locations
 
 #This is the location where the reference genome is stored.
-REFERENCE_FOLDER=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_Aug2024
+REFERENCE_FOLDER=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_Oct2024/Crassostrea_mask
 #This is the path to the reference genome.
-REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_Aug2024/backbone_raw.fasta
+REFERENCE=$REFERENCE_FOLDER/N.canaliculata_assembly.fasta.masked
 
 #--------------------------------------------------------------------------------
 
