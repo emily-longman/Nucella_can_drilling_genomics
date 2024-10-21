@@ -32,7 +32,8 @@
 
 #--------------------------------------------------------------------------------
 
-# This script will map the reads with bwa mem.
+# This script will map reads to the masked reference genome using bwa mem. 
+# After reads have been mapped, they will be compressed into bam files.
 
 # Load modules  
 spack load gcc@9.3.0
@@ -44,16 +45,16 @@ bwa=/netfiles/nunezlab/Shared_Resources/Software/bwa-mem2-2.2.1_x64-linux/bwa-me
 
 #Define important file locations
 
-#RAW READS indicates the folder where the raw reads are stored.
+# RAW_READS indicates the folder where the raw reads are stored.
 RAW_READS=/netfiles/pespenilab_share/Nucella/raw/Shortreads/All_shortreads
 
-#Working folder is core folder where this pipeline is being run.
+# Working folder is core folder where this pipeline is being run.
 WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL
 
-#This is the location where the reference genome and all its indexes are stored.
+# This is the location where the reference genome and all its indexes are stored.
 REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_Aug2024/backbone_raw.fasta
 
-#Name of pipeline
+# Name of pipeline
 PIPELINE=Map_reads
 
 #--------------------------------------------------------------------------------
@@ -70,7 +71,7 @@ JAVAMEM=18G # Java memory
 ## Read guide files
 # This is a file with the name all the samples to be processed. One sample name per line with all the info.
 
-GUIDE_FILE=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL/Guide_Files/Guide_File_trim_map.txt
+GUIDE_FILE=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL/guide_files/Guide_File_trim_map.txt
 
 #Example: -- the headers are just for descriptive purposes. The actual file has no headers.
 ##               File1                             File2              Snail_ID  Sample#  Lane#    Paired_name    Bam_lanes_merged_name
@@ -92,16 +93,14 @@ echo ${i}
 
 # This part of the pipeline will generate log files to record warnings and completion status
 
-# Move to working directory
-cd $WORKING_FOLDER
-# Move to logs direcotry
-cd Logs
+# Move to logs directory
+cd $WORKING_FOLDER/logs
 
 echo $PIPELINE
 
 if [[ -e "${PIPELINE}.completion.log" ]]
 then echo "Completion log exist"; echo "Let's move on."; date
-else echo "Completion log doesnt exist. Let's fix that."; touch $WORKING_FOLDER/Logs/${PIPELINE}.completion.log; date
+else echo "Completion log doesnt exist. Let's fix that."; touch $WORKING_FOLDER/logs/${PIPELINE}.completion.log; date
 fi
 
 #--------------------------------------------------------------------------------
@@ -132,13 +131,6 @@ fi
 
 # Map reads to a reference
 
-# This part will map reads to the reference genome. After reads have been mapped, they will be compressed into bam files, 
-# sorted, and duplicates will be removed. I will also conduct an intermediary QC step with Qualimap. 
-# Because there are inherent QC steps here, I have avoided adding extra "warnings" in the log. 
-# Remember to take a look at the qualimap and the flagstat outputs to check for inconsistencies.
-
-# Start pipeline
-
 # Move to working directory
 cd $WORKING_FOLDER
 
@@ -157,6 +149,7 @@ $WORKING_FOLDER/trimmed_reads/${i}_R2_clean.fq.gz \
 samtools flagstat --threads $CPU \
 $WORKING_FOLDER/sams/${i}.sam \
 > $WORKING_FOLDER/mapping_stats/${i}.flagstats_raw.sam.txt
+# Remember to take a look at the flagstat outputs to check for inconsistencies.
 
 # Build bam files
 samtools view -b -q $QUAL --threads $CPU  \
@@ -168,6 +161,6 @@ $WORKING_FOLDER/sams/${i}.sam \
 
 # This part of the pipeline will notify the completion of run i. 
 
-echo ${i} " completed" >> $WORKING_FOLDER/Logs/${PIPELINE}.completion.log
+echo ${i} " completed" >> $WORKING_FOLDER/logs/${PIPELINE}.completion.log
 
 echo "pipeline completed" $(date)

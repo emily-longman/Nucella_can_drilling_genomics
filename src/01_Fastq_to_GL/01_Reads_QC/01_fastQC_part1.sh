@@ -43,7 +43,7 @@ spack load fastqc@0.11.7
 
 #Define important file locations
 
-# RAW READS indicates the folder where the raw reads are stored.
+# RAW_READS indicates the folder where the raw reads are stored.
 RAW_READS=/netfiles/pespenilab_share/Nucella/raw/Shortreads/All_shortreads
 
 # Working folder is core folder where this pipeline is being run.

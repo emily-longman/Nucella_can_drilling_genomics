@@ -91,7 +91,7 @@ then echo "Working logs folder exist"; echo "Let's move on."; date
 else echo "Working logs folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/logs; date
 fi
 
-# Move to logs direcotry
+# Move to logs directory
 cd $WORKING_FOLDER/logs
 
 echo $PIPELINE
@@ -166,6 +166,6 @@ $fastp \
 
 # This part of the pipeline will notify the completion of run i. 
 
-echo ${i} " completed" >> $WORKING_FOLDER/Logs/${PIPELINE}.completion.log
+echo ${i} " completed" >> $WORKING_FOLDER/logs/${PIPELINE}.completion.log
 
 echo "pipeline completed" $(date)
