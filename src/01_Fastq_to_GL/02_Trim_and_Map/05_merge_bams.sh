@@ -141,6 +141,11 @@ $qualimap bamqc \
 
 #--------------------------------------------------------------------------------
 
+# Index bams with samtools
+samtools index $WORKING_FOLDER/bams_merged/${i}.Lanes_merged.bam
+
+#--------------------------------------------------------------------------------
+
 # Inform that sample is done
 
 # This part of the pipeline will notify the completion of run i. 
