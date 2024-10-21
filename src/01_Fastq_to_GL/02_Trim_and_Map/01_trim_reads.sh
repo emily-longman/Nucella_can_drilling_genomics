@@ -150,11 +150,11 @@ $fastp \
 
 # i = read 1
 # I = read 2
-# o & O = outputs
-# outputs .json and html for qc
+# o & O = outputs (.json and html for qc)
 
-# Adapter trimming is enabled by default using overlap analysis, but for PE data you can also specify adapter sequence auto-detection by specifying --detect_adapter_for_pe
-# For read 1 of PE data, the front trimming settings are --trim_front1
+# For PE data you can specify adapter sequence auto-detection by specifying --detect_adapter_for_pe
+# For PE data the front trimming settings are --trim_front1
+### You can also do trimming on each read separately by specifying trim_front2; if not specified then trim_front2=trim_front1
 # Detect and trim polyG in read tails using --trim_poly_g
 # Per read cutting by quality options:
 ### --cut_right: Move a sliding window from front to tail, if meet one window with mean quality < threshold, drop the bases in the window and the right part, then stop
