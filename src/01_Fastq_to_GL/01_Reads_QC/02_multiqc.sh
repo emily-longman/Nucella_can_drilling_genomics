@@ -30,6 +30,7 @@
 #--------------------------------------------------------------------------------
 
 # This script will initiate a pipeline which will do some quality QC on the reads.
+# This script will use the ouput fastqc files produced in the prior step to generate a multiqc report. 
 
 # Load modules 
 # Call package (installed with conda)
@@ -44,13 +45,8 @@ conda activate multiqc
 
 #Define important file locations
 
-#RAW READS indicates the folder where the raw reads are stored.
-RAW_READS=/netfiles/pespenilab_share/Nucella/raw/Shortreads/All_shortreads
-
 #Working folder is core folder where this pipeline is being run.
 WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL
-
-FAST_QC_FOLDER=$WORKING_FOLDER/fastQC
 
 #Name of pipeline
 PIPELINE=multiqc
@@ -72,36 +68,35 @@ fi
 
 #--------------------------------------------------------------------------------
 
-# Run multiqc on the fastqc files
+# Run multiqc on the fastqc files.
+# First run multiqc on all of the reads. Subsequently run multiqc on each lane separately.
 
 # Move to working directory
 cd $WORKING_FOLDER
 
-# Lets do some QC on the reads
-
 # Run multiqc on all of the reads
-multiqc $FAST_QC_FOLDER \
+multiqc $WORKING_FOLDER/fastQC \
 -n multiqc_report_all.html \
 -o multiqc
 
-# Run multiqc on each of the lanes individually
+# Run multiqc on each lane individually
 
 # Run multiqc on L002 
-multiqc $FAST_QC_FOLDER \
+multiqc $WORKING_FOLDER/fastQC \
 -n multiqc_report_L002.html \
 --ignore "*L007*" \
 --ignore "*L008*" \
 -o multiqc
 
 # Run multiqc on L007
-multiqc $FAST_QC_FOLDER \
+multiqc $WORKING_FOLDER/fastQC \
 -n multiqc_report_L007.html \
 --ignore "*L002*" \
 --ignore "*L008*" \
 -o multiqc
 
 # Run multiqc on L008 
-multiqc $FAST_QC_FOLDER \
+multiqc $WORKING_FOLDER/fastQC \
 -n multiqc_report_L008.html \
 --ignore "*L002*" \
 --ignore "*L007*" \
