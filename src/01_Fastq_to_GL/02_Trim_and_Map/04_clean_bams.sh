@@ -181,10 +181,6 @@ $qualimap bamqc \
 rm $WORKING_FOLDER/bams_clean/${i}.bam
 rm $WORKING_FOLDER/bams_clean/${i}.srt.bam
 
-# Move the dupstat to the mapping stats directory
-#mv $WORKING_FOLDER/bams/${i}.dupstat.txt \
-#$WORKING_FOLDER/mapping_stats
-
 #--------------------------------------------------------------------------------
 
 # Inform that sample is done
