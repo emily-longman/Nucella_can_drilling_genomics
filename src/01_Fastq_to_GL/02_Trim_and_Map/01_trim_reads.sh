@@ -15,10 +15,10 @@
 #SBATCH --ntasks-per-node=6
 
 # Reserve walltime -- hh:mm:ss --30 hrs max
-#SBATCH --time=8:00:00 
+#SBATCH --time=1:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
-#SBATCH --mem=20G 
+#SBATCH --mem=10G 
 
 # Submit job array
 #SBATCH --array=1-576%20
@@ -41,13 +41,13 @@ fastp=/gpfs1/home/e/l/elongman/software/fastp
 
 #Define important file locations
 
-#RAW READS indicates the folder where the raw reads are stored.
+# RAW READS indicates the folder where the raw reads are stored.
 RAW_READS=/netfiles/pespenilab_share/Nucella/raw/Shortreads/All_shortreads
 
-#Working folder is core folder where this pipeline is being run.
+# Working folder is core folder where this pipeline is being run.
 WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL
 
-#Name of pipeline
+# Name of pipeline
 PIPELINE=Trim_reads
 
 #--------------------------------------------------------------------------------
@@ -56,7 +56,7 @@ PIPELINE=Trim_reads
 ## Read guide files
 # This is a file with the name all the samples to be processed. One sample name per line with all the info.
 
-GUIDE_FILE=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL/Guide_Files/Guide_File_trim_map.txt
+GUIDE_FILE=$WORKING_FOLDER/guide_files/Guide_File_trim_map.txt
 
 #Example: -- the headers are just for descriptive purposes. The actual file has no headers.
 ##               File1                             File2              Snail_ID  Sample#  Lane#    Paired_name    Bam_lanes_merged_name
@@ -74,7 +74,7 @@ GUIDE_FILE=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/
 i=`awk -F "\t" '{print $6}' $GUIDE_FILE | sed "${SLURM_ARRAY_TASK_ID}q;d"`
 read1=`awk -F "\t" '{print $1}' $GUIDE_FILE | sed "${SLURM_ARRAY_TASK_ID}q;d"`
 read2=`awk -F "\t" '{print $2}' $GUIDE_FILE | sed "${SLURM_ARRAY_TASK_ID}q;d"`
-echo ${i} "+" ${read1} "+" ${read2}
+echo "Sample i:" ${i} "Read 1:" ${read1} "Read 2:" ${read2}
 
 #--------------------------------------------------------------------------------
 
@@ -82,14 +82,23 @@ echo ${i} "+" ${read1} "+" ${read2}
 
 # Move to working directory
 cd $WORKING_FOLDER
+
+# This part of the script will check and generate, if necessary, all of the output folders used in the script
+
+# Create logs directory
+if [ -d "logs" ]
+then echo "Working logs folder exist"; echo "Let's move on."; date
+else echo "Working logs folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/logs; date
+fi
+
 # Move to logs direcotry
-cd Logs
+cd $WORKING_FOLDER/logs
 
 echo $PIPELINE
 
 if [[ -e "${PIPELINE}.completion.log" ]]
 then echo "Completion log exist"; echo "Let's move on."; date
-else echo "Completion log doesnt exist. Let's fix that."; touch $WORKING_FOLDER/Logs/${PIPELINE}.completion.log; date
+else echo "Completion log doesnt exist. Let's fix that."; touch $WORKING_FOLDER/logs/${PIPELINE}.completion.log; date
 fi
 
 #--------------------------------------------------------------------------------
@@ -106,9 +115,9 @@ then echo "Working trimmed_reads folder exist"; echo "Let's move on."; date
 else echo "Working trimmed_reads folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/trimmed_reads; date
 fi
 
-if [ -d "fastp_reports" ]
-then echo "Working fastp_reports folder exist"; echo "Let's move on."; date
-else echo "Working fastp_reports folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/fastp_reports; date
+if [ -d "trimmed_reads_reports" ]
+then echo "Working trimmed_reads_reports folder exist"; echo "Let's move on."; date
+else echo "Working trimmed_reads_reports folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/trimmed_reads_reports; date
 fi
 
 #--------------------------------------------------------------------------------
@@ -136,8 +145,8 @@ $fastp \
 --cut_right \
 --cut_right_window_size 6 \
 --qualified_quality_phred 20 \
---html $WORKING_FOLDER/fastp_reports/${i}_clean.html \
---json $WORKING_FOLDER/fastp_reports/${i}_clean.json
+--html $WORKING_FOLDER/trimmed_reads_reports/${i}_clean.html \
+--json $WORKING_FOLDER/trimmed_reads_reports/${i}_clean.json
 
 # i = read 1
 # I = read 2

@@ -43,12 +43,12 @@ conda activate multiqc
 
 #--------------------------------------------------------------------------------
 
-#Define important file locations
+# Define important file locations
 
-#Working folder is core folder where this pipeline is being run.
+# Working folder is core folder where this pipeline is being run.
 WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL
 
-#Name of pipeline
+# Name of pipeline
 PIPELINE=multiqc
 
 #--------------------------------------------------------------------------------
