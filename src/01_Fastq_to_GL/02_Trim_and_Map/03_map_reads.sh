@@ -45,9 +45,6 @@ bwa=/netfiles/nunezlab/Shared_Resources/Software/bwa-mem2-2.2.1_x64-linux/bwa-me
 
 #Define important file locations
 
-# RAW_READS indicates the folder where the raw reads are stored.
-RAW_READS=/netfiles/pespenilab_share/Nucella/raw/Shortreads/All_shortreads
-
 # Working folder is core folder where this pipeline is being run.
 WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL
 

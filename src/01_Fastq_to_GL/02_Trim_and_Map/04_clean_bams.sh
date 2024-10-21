@@ -93,16 +93,14 @@ echo ${i}
 
 # This part of the pipeline will generate log files to record warnings and completion status
 
-# Move to working directory
-cd $WORKING_FOLDER
-# Move to logs direcotry
-cd Logs
+# Move to logs directory
+cd $WORKING_FOLDER/logs
 
 echo $PIPELINE
 
 if [[ -e "${PIPELINE}.completion.log" ]]
 then echo "Completion log exist"; echo "Let's move on."; date
-else echo "Completion log doesnt exist. Let's fix that."; touch $WORKING_FOLDER/Logs/${PIPELINE}.completion.log; date
+else echo "Completion log doesnt exist. Let's fix that."; touch $WORKING_FOLDER/logs/${PIPELINE}.completion.log; date
 fi
 
 #--------------------------------------------------------------------------------
@@ -188,6 +186,6 @@ $WORKING_FOLDER/mapping_stats
 
 # This part of the pipeline will notify the completion of run i. 
 
-echo ${i} " completed" >> $WORKING_FOLDER/Logs/${PIPELINE}.completion.log
+echo ${i} " completed" >> $WORKING_FOLDER/logs/${PIPELINE}.completion.log
 
 echo "pipeline completed" $(date)
