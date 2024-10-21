@@ -61,10 +61,10 @@ GUIDE_FILE=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/
 
 #Example: -- the headers are just for descriptive purposes. The actual file has no headers.
 ##               File               Snail_ID  Sample#  Lane# 
-## HC5-10_140_L002_R1_001.fastq.gz   HC5-10    S140    L002
-## HC5-10_140_L002_R2_001.fastq.gz   HC5-10    S140    L002
-## HC5-10_140_L007_R1_001.fastq.gz   HC5-10    S140    L007
-## HC5-10_140_L007_R2_001.fastq.gz   HC5-10    S140    L007
+## HC5-10_S140_L002_R1_001.fastq.gz   HC5-10    S140    L002
+## HC5-10_S140_L002_R2_001.fastq.gz   HC5-10    S140    L002
+## HC5-10_S140_L007_R1_001.fastq.gz   HC5-10    S140    L007
+## HC5-10_S140_L007_R2_001.fastq.gz   HC5-10    S140    L007
 ## ...
 ## MP9-9_S191_L008_R1_001.fastq.gz   MP9-9    S191     L008
 ## MP9-9_S191_L008_R2_001.fastq.gz   MP9-9    S191     L008
