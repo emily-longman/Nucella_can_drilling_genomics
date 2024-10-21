@@ -15,7 +15,7 @@
 #SBATCH --ntasks-per-node=1
 
 # Reserve walltime -- hh:mm:ss --30 hrs max
-#SBATCH --time=8:00:00 
+#SBATCH --time=1:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
 #SBATCH --mem=60G 
@@ -32,7 +32,7 @@
 
 #--------------------------------------------------------------------------------
 
-# This script will gather all sample data across the many lanes of sequencing
+# This script will gather all sample data across the many lanes of sequencing.
 
 # Load modules  
 spack load samtools@1.10
@@ -41,18 +41,12 @@ qualimap=/netfiles/nunezlab/Shared_Resources/Software/qualimap_v2.2.1/qualimap
 
 #--------------------------------------------------------------------------------
 
-#Define important file locations
+# Define important file locations
 
-#Working folder is core folder where this pipeline is being run.
+# Working folder is core folder where this pipeline is being run.
 WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL
 
-#This is the location where the reference genome and all its indexes are stored.
-REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_Aug2024/backbone_raw.fasta
-
-#Path to the directory with the bams (filtered, sorted and duplicates removed). 
-BAMS=$WORKING_FOLDER/bams_clean
-
-#Name of pipeline
+# Name of pipeline
 PIPELINE=Merge_bams
 
 #--------------------------------------------------------------------------------
@@ -69,7 +63,7 @@ JAVAMEM=18G # Java memory
 ## Read guide files
 # This is a file with the name all the samples to be processed. One sample name per line with all the info.
 
-GUIDE_FILE=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL/Guide_Files/Guide_File_merge.txt
+GUIDE_FILE=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL/guide_files/Guide_File_merge.txt
 
 #Example: -- the headers are just for descriptive purposes. The actual file has no headers.
 ## Snail_ID  Sample#   Merged_name 1    Merged_name 2    Merged_name 3   Merged_bam_name
@@ -91,16 +85,14 @@ echo $i
 
 # This part of the pipeline will generate log files to record warnings and completion status
 
-# Move to working directory
-cd $WORKING_FOLDER
-# Move to logs direcotry
-cd Logs
+# Move to logs directory
+cd $WORKING_FOLDER/logs
 
 echo $PIPELINE
 
 if [[ -e "${PIPELINE}.completion.log" ]]
 then echo "Completion log exist"; echo "Let's move on."; date
-else echo "Completion log doesnt exist. Let's fix that."; touch $WORKING_FOLDER/Logs/${PIPELINE}.completion.log; date
+else echo "Completion log doesnt exist. Let's fix that."; touch $WORKING_FOLDER/logs/${PIPELINE}.completion.log; date
 fi
 
 #--------------------------------------------------------------------------------
@@ -128,16 +120,17 @@ fi
 
 # Here I will merge the bam outputs for the multiple lanes of sequencing. These will be named 'Lanes merged'
 
-echo "I will merge these files" $BAMS/${i}_*.srt.rmdp.bam
+echo "I will merge these files" $WORKING_FOLDER/bams_clean/${i}_*.srt.rmdp.bam
 
-#Make temporary linefile with list of input BAM files
-ls $BAMS/${i}_*.srt.rmdp.bam > ${i}.guide.txt
+# Make temporary linefile with list of input BAM files
+ls $WORKING_FOLDER/bams_clean/${i}_*.srt.rmdp.bam > ${i}.guide.txt
 
+# Merge the 3 sequencing lanes
 samtools merge \
 -b ${i}.guide.txt \
 $WORKING_FOLDER/bams_merged/${i}.Lanes_merged.bam
 
-#remove the temporary guide file
+# Remove the temporary guide file
 rm ${i}.guide.txt
 
 # Assess quality of final file
@@ -152,7 +145,7 @@ $qualimap bamqc \
 
 # This part of the pipeline will notify the completion of run i. 
 
-echo ${i} " completed" >> $WORKING_FOLDER/Logs/${PIPELINE}.completion.log
+echo ${i} " completed" >> $WORKING_FOLDER/logs/${PIPELINE}.completion.log
 
 echo "pipeline completed" $(date)
 
