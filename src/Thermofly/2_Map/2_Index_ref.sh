@@ -18,7 +18,7 @@ PICARD=/netfiles/nunezlab/Shared_Resources/Software/picard/build/libs/picard.jar
 #--------------------------------------------------------------------------------
 
 # Set folders and file locations
-ref=/netfiles/thermofly/GENOMES/basisetae/D.basisetae_nanopore.fasta.masked
+ref=/netfiles/thermofly/GENOMES/basisetae/D.basisetae_nanopore.fasta.masked.fa
 
 #--------------------------------------------------------------------------------
 

@@ -22,7 +22,7 @@ spack load angsd@0.933
 # Set folders and file locations
 working_folder=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/Thermofly
 meta=$working_folder/METADATA/Thermofly_metadata.tsv
-ref=/netfiles/thermofly/GENOMES/basisetae/D.basisetae_nanopore.fasta.masked
+ref=/netfiles/thermofly/GENOMES/basisetae/D.basisetae_nanopore.fasta.masked.fa
 script_folder=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/Thermofly
 bam_list=$working_folder/info/bam_filelist_reduced.list
 region_file=$working_folder/info/Thermofly_region_file.txt
