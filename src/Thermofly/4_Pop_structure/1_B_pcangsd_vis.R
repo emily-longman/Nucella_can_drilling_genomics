@@ -1,23 +1,13 @@
 # Perform a pca on the covariance matrix
 
-argv <- commandArgs(T)
-INPUT <- argv[1]
-BAM <- argv[2]
-META <- argv[3]
-
 install.packages(c('data.table', 'ggplot2'))
 library(data.table)
 library(ggplot2)
 library(ggpubr)
 
 # Load metadata
-meta_data<-fread("Thermofly_metadata.tsv", header=T)
-meta_data_bas<-meta_data[which(meta_data$species_initial=="bas"),]
-# Remove metadata for individuals with low coverage
-meta_data_bas_reduced <- meta_data_bas[-which(meta_data$sampleId =="D_bas.wild.US-HI-Ola.27_1_2023.w.DP_B_O_9.1"| 
-                                        meta_data$sampleId == "D_bas.wild.US-HI-Ola.27_1_2023.w.DP_B_O_12.1" |
-                                        meta_data$sampleId == "D_bas.wild.US-HI-Ola.27_1_2023.w.DP_B_O_13.1" |
-                                        meta_data$sampleId == "D_bas.wild.US-HI-Ola.27_1_2023.w.DP_B_O_15.1")]
+# Note: Make sure metadata order matches the bamlist used to produce the covariance matrix
+meta_data<-fread("Thermofly_D.basisetae.tsv", header=T)
 
 # Load cov matrix
 cov_mat <- as.matrix(read.table("Thermofly_SNPs_reduced_minInd_16_depth_4.cov")) 
@@ -32,7 +22,7 @@ for (i in 1 : nPC) {col_PC[i]<-paste0("PC",i)}
 colnames(pca.mat)<-c(col_PC)
 
 # Add rownames
-rownames(pca.mat)<-meta_data_bas_reduced$sampleId
+rownames(pca.mat)<-meta_data$sampleId
 
 # Two ways to calculate variance
 # Calculate varsum(eigen_mats$values[eigen_mats$values>=0]
@@ -52,12 +42,12 @@ kmeans_res<-kmeans(as.matrix(pca.mat[,1]), c(min(pca.mat[,1]), median(pca.mat[,1
 k_ss<-round(kmeans_res$betweenss/kmeans_res$totss,2)
 
 # Combine metadata and PCs
-data <- cbind(meta_data_bas_reduced, pca.mat[,1:4])
+data <- cbind(meta_data, pca.mat[,1:4])
 write.table(data, "Thermofly_basisetae_PCs.csv", col.names = T, row.names = F, quote = F, sep = "\t")
 
 #plot pca
 
-cols=c("#94D2BD", "#6d597a")
+cols=c("red", "skyblue")
 cols.all=c("pink", "red", "orange", "yellow", "green", "darkolivegreen3","darkgreen", "cyan", "skyblue",
            "blue", "darkblue", "purple", "darkorchid4", "darkkhaki", "grey", "brown", "black", "tan")
 
