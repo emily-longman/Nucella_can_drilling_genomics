@@ -12,13 +12,13 @@
 
 # Request nodes
 #SBATCH --nodes=1 
-#SBATCH --ntasks-per-node=1
+#SBATCH --ntasks-per-node=2
 
 # Reserve walltime -- hh:mm:ss --30 hrs max
-#SBATCH --time=24:00:00 
+#SBATCH --time=3:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
-#SBATCH --mem=500G 
+#SBATCH --mem=10G 
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/%x_%j.out # Standard output
@@ -29,43 +29,27 @@
 
 #--------------------------------------------------------------------------------
 
-# This script will calculate average coverage 
+# This script will calculate average coverage across the lane merged bams. 
 
 #Load modules 
 qualimap=/netfiles/nunezlab/Shared_Resources/Software/qualimap_v2.2.1/qualimap
 
 #--------------------------------------------------------------------------------
 
-#Working folder is core folder where this pipeline is being run.
+# Working folder is core folder where this pipeline is being run.
 WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL
 
 #--------------------------------------------------------------------------------
+
 # Define parameters
 JAVAMEM=18G # Java memory
-
-#--------------------------------------------------------------------------------
-
-# Move to working folder
-cd $WORKING_FOLDER
-
-# Generate output folder 
-if [ -d "qualimap_multi_bamqc" ]
-then
-echo "Working qualimap_multi_bamqc folder exist"
-echo "lets move on"
-else 
-echo "Folder doesnt exist. Lets fix that"
-mkdir qualimap_multi_bamqc
-fi
-
-OUTPUT=$WORKING_FOLDER/qualimap_multi_bamqc
 
 #--------------------------------------------------------------------------------
 
 ## Read guide files
 # This is a file with the name all the samples to be processed and the path to each Qualimap.
 
-GUIDE_FILE=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL/Guide_Files/Qualimap_bam_list.txt
+GUIDE_FILE=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL/guide_files/Qualimap_bam_list.txt
 
 #--------------------------------------------------------------------------------
 
