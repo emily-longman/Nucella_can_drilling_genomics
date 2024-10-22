@@ -1,7 +1,7 @@
 #!/usr/bin/env bash  
 #  
 #SBATCH -J pcangsd  
-#SBATCH -c 1  
+#SBATCH -c 5  
 #SBATCH -N 1 # on one node  
 #SBATCH -t 8:00:00   
 #SBATCH --mem 40G   
@@ -27,7 +27,7 @@ source $venv_name/bin/activate
 
 # Set folders and file locations
 working_folder=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/Thermofly
-ref=/netfiles/thermofly/GENOMES/basisetae/D.basisetae_nanopore.fasta.masked
+ref=/netfiles/thermofly/GENOMES/basisetae/D.basisetae_nanopore.fasta.masked.fa
 script_folder=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/Thermofly
 bam_list=$working_folder/info/bam_filelist_reduced.list
 
@@ -42,11 +42,11 @@ mkdir pcangsd
 cp $bam_list $working_folder/pcangsd
 
 pcangsd \
--b $working_folder/genotype_likelihoods/Thermofly_GL_reduced_minInd_16_depth_4.beagle.gz \
--o $working_folder/pcangsd/Thermofly_SNPs_reduced_minInd_16_depth_4 \
--t 1 
+-b $working_folder/genotype_likelihoods/Thermofly_GL_reduced_minInd_17_depth_6_minMaf_0.1.beagle.gz \
+-o $working_folder/pcangsd/Thermofly_SNPs_reduced_minInd_17_depth_6_minMaf_0.1 \
+-t 5 
 
-cov_mat=$working_folder/pcangsd/Thermofly_SNPs_reduced_minInd_16_depth_4.cov
+cov_mat=$working_folder/pcangsd/Thermofly_SNPs_reduced_minInd_17_depth_6_minMaf_0.1.cov
 
 #--------------------------------------------------------------------------------
 
