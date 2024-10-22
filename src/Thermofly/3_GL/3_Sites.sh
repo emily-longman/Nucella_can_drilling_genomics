@@ -33,7 +33,7 @@ mkdir sites
 #--------------------------------------------------------------------------------
 
 # Unzip maf file 
-#gunzip $working_folder/genotype_likelihoods/Thermofly_GL_reduced_minInd_16_depth_4.mafs.gz
+#gunzip $working_folder/genotype_likelihoods/Thermofly_GL_reduced_minInd_17_depth_6_minMaf_0.1.mafs.gz
 
 # Change script permissions 
 chmod 777 $script_folder/3_GL/3_Sites_list.R
