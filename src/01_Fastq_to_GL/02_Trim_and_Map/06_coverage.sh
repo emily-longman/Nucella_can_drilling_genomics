@@ -8,7 +8,7 @@
 #SBATCH --job-name=qualimap_multi_bamqc
 
 # Specify partition
-#SBATCH --partition=bigmem
+#SBATCH --partition=bluemoon
 
 # Request nodes
 #SBATCH --nodes=1 
