@@ -23,7 +23,7 @@ spack load angsd@0.933
 # Set folders and file locations
 working_folder=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/Thermofly
 meta=$working_folder/METADATA/Thermofly_metadata.tsv
-ref=/netfiles/thermofly/GENOMES/basisetae/D.basisetae_nanopore.fasta.masked
+ref=/netfiles/thermofly/GENOMES/basisetae/D.basisetae_nanopore.fasta.masked.fa
 region_file=$working_folder/sites/Thermofly_region_file.txt
 
 #--------------------------------------------------------------------------------
@@ -62,7 +62,7 @@ angsd \
 -sites $working_folder/sites/sites_maf \
 -rf $working_folder/sites/regions_maf \
 -remove_bads 1 -skipTriallelic 1 -uniqueOnly 1 -only_proper_pairs 1 -minMapQ 30 -minQ 20 -C 50 \
--minInd 5 -setMinDepthInd 4
+-minInd 6 -setMinDepthInd 6
 
 
 # Since  we use output for SFS to calculate FSTs/thetas then we don't want min MAF nor p-value filters
