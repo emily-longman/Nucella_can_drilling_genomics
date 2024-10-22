@@ -24,7 +24,6 @@ spack load angsd@0.933
 working_folder=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/Thermofly
 meta=$working_folder/METADATA/Thermofly_metadata.tsv
 ref=/netfiles/thermofly/GENOMES/basisetae/D.basisetae_nanopore.fasta.masked.fa
-region_file=$working_folder/sites/Thermofly_region_file.txt
 
 #--------------------------------------------------------------------------------
 
@@ -41,10 +40,9 @@ mkdir Tom
 
 #--------------------------------------------------------------------------------
 
-# Calculate saf for both sites - need different parameters since different number of ind in each
+# Calculate saf for both sites 
 
-
-#Tom's Trail (7 ind)
+#Tom's Trail 
 angsd \
 -b $working_folder/info/Tom_bam_filelist_reduced.list \
 -ref ${ref} -anc ${ref} \
