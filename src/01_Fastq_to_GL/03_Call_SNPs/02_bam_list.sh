@@ -14,7 +14,7 @@
 #SBATCH --nodes=1 
 #SBATCH --ntasks-per-node=11
 
-# Reserve walltime -- hh:mm:ss --7 day limit 
+# Reserve walltime -- hh:mm:ss
 #SBATCH --time=1:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
@@ -43,17 +43,17 @@ WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/proces
 cd $WORKING_FOLDER/bams_merged
 
 # Create bamlist for all Nucella samples
-ls -d "$PWD/"* > $WORKING_FOLDER/guide_files/Nucella_bam.list
+ls -d "$PWD/"*.bam > $WORKING_FOLDER/guide_files/Nucella_bam.list
 
 #--------------------------------------------------------------------------------
 
 # Make a list of bam files by collection site 
 
 # Create bamlist for HC
-ls -d "$PWD/"HC* > $WORKING_FOLDER/guide_files/HC_bam.list
+ls -d "$PWD/"HC*.bam > $WORKING_FOLDER/guide_files/HC_bam.list
 
 # Create bamlist for FB
-ls -d "$PWD/"FB* > $WORKING_FOLDER/guide_files/FB_bam.list
+ls -d "$PWD/"FB*.bam > $WORKING_FOLDER/guide_files/FB_bam.list
 
 # Create bamlist for MP
-ls -d "$PWD/"MP* > $WORKING_FOLDER/guide_files/MP_bam.list
+ls -d "$PWD/"MP*.bam > $WORKING_FOLDER/guide_files/MP_bam.list

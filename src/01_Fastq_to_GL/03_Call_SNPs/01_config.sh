@@ -45,18 +45,14 @@ BAMS_FOLDER=$WORKING_FOLDER/bams_merged
 # Define parameters that will be used in the following scripts
 
 # Filter : will keep SNP with minor allele freq above some proportion (over all individuals)
-MIN_MAF=0.01
+MIN_MAF=0.05
 
 # Filter : will keep positions with at least MIN_DEPTH reads for each individual 
 # This is not necessaily for all individuals, we consider a PERCENT_IND (percentage of individuals over all individuals in step 03, and within each pop at step 07)
 # Advice: For min depth use a value that is a bit below what you expected. 
 # Advice: For percent individual, avoid going below 50% and also consider the whole number of individuals. (it may makes sense to use 50% with 100 ind/pop, but you may want 90% with 9 ind/pop
-PERCENT_IND=0.50 
+PERCENT_IND=0.5
 MIN_DEPTH=0.1
-
-# Filter : min number of individuals to keep a site 
-# Currently set to 75% of 192
-MIN_IND=134
 
 # Filter: will keep SNP with at least a coverage of this factor multiplied by the number of ind - across all ind. 
 # Advice: we usually set it at 2-4 times the expected coverage to remove repeated regions
@@ -72,4 +68,4 @@ WINDOW_STEP=5000
 K_MIN=1
 
 # Maximum number of pop to consider for NGS admix
-K_MAX=5
+K_MAX=3

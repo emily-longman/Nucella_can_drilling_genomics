@@ -29,7 +29,7 @@
 
 #--------------------------------------------------------------------------------
 
-# This script will calculate genotype likelihoods of SNPs for all individuals
+# This script will calculate genotype likelihoods of SNPs for all individuals.
 
 #--------------------------------------------------------------------------------
 
@@ -39,22 +39,19 @@ spack load samtools@1.10
 
 #--------------------------------------------------------------------------------
 
-#Define important file locations
+# Define important file locations
 
-#Working folder is core folder where this pipeline is being run.
+# Working folder is core folder where this pipeline is being run.
 WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL
 
-#This is the location where the reference genome and all its indexes are stored.
-REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_Aug2024/backbone_raw.fasta
+# This is the location where the reference genome and all its indexes are stored.
+REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_Oct2024/Crassostrea_mask/N.canaliculata_assembly.fasta.masked
 
-#Scrips folder
+# Scripts folder.
 SCRIPT_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/01_Fastq_to_GL
 
-#Path to the directory with the lane merged bams (filtered, sorted and duplicates removed). 
-BAMS_FOLDER=$WORKING_FOLDER/bams_merged
-
-#Path to bam list
-BAM_LIST=$WORKING_FOLDER/info/Nucella_bam.list
+# Path to bam list.
+BAM_LIST=$WORKING_FOLDER/guide_files/Nucella_bam.list
 
 #--------------------------------------------------------------------------------
 
@@ -66,10 +63,10 @@ echo "using #CPUs ==" $NB_CPU
 
 # Prepare variables 
 
-#Use config file (this means you dont need to directly input minimum individual/depth parameters)
+# Use config file (this means you dont need to directly input minimum individual/depth parameters)
 source $SCRIPT_FOLDER/03_Call_SNPs/01_config.sh
 
-# Extract parameters using config file
+# Extract parameters from config file
 N_IND=$(wc -l $BAM_LIST | cut -d " " -f 1) 
 MIN_IND_FLOAT=$(echo "($N_IND * $PERCENT_IND)"| bc -l)
 MIN_IND=${MIN_IND_FLOAT%.*} 
