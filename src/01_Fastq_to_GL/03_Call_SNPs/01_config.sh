@@ -45,7 +45,7 @@ BAMS_FOLDER=$WORKING_FOLDER/bams_merged
 # Define parameters that will be used in the following scripts
 
 # Filter : will keep SNP with minor allele freq above some proportion (over all individuals)
-MIN_MAF=0.05
+MIN_MAF=0.01
 
 # Filter : will keep positions with at least MIN_DEPTH reads for each individual 
 # This is not necessaily for all individuals, we consider a PERCENT_IND (percentage of individuals over all individuals in step 03, and within each pop at step 07)
