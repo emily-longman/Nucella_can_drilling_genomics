@@ -29,27 +29,10 @@
 
 #--------------------------------------------------------------------------------
 
-#Define important file locations
+# Define important file locations
 
-#Working folder is core folder where this pipeline is being run.
+# Working folder is core folder where this pipeline is being run.
 WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL
-
-#Path to the directory with the lane merged bams (filtered, sorted and duplicates removed). 
-BAMS_FOLDER=$WORKING_FOLDER/bams_merged
-
-#--------------------------------------------------------------------------------
-
-# Move to working directory
-cd $WORKING_FOLDER
-
-# Generate Folders and files
-
-# This part of the script will check and generate, if necessary, all of the output folders used in the script
-
-if [ -d "info" ]
-then echo "Working info folder exist"; echo "Let's move on."; date
-else echo "Working info folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/info; date
-fi
 
 #--------------------------------------------------------------------------------
 
@@ -57,20 +40,20 @@ fi
 # This is a file with the name and full path of all the bam files to be processed.
 
 # Move to bams folder
-cd $BAMS_FOLDER
+cd $WORKING_FOLDER/bams_merged
 
 # Create bamlist for all Nucella samples
-ls -d "$PWD/"* > $WORKING_FOLDER/info/Nucella_bam.list
+ls -d "$PWD/"* > $WORKING_FOLDER/guide_files/Nucella_bam.list
 
 #--------------------------------------------------------------------------------
 
 # Make a list of bam files by collection site 
 
 # Create bamlist for HC
-ls -d "$PWD/"HC* > $WORKING_FOLDER/info/HC_bam.list
+ls -d "$PWD/"HC* > $WORKING_FOLDER/guide_files/HC_bam.list
 
 # Create bamlist for FB
-ls -d "$PWD/"FB* > $WORKING_FOLDER/info/FB_bam.list
+ls -d "$PWD/"FB* > $WORKING_FOLDER/guide_files/FB_bam.list
 
 # Create bamlist for MP
-ls -d "$PWD/"MP* > $WORKING_FOLDER/info/MP_bam.list
+ls -d "$PWD/"MP* > $WORKING_FOLDER/guide_files/MP_bam.list
