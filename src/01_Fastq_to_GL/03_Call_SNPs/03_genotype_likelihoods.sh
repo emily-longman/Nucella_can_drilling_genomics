@@ -8,17 +8,19 @@
 #SBATCH --job-name=Genotype_likelihoods
 
 # Specify partition
-#SBATCH --partition=bigmemwk
+#SBATCH --partition=week
 
 # Request nodes
 #SBATCH --nodes=1 
-#SBATCH --ntasks-per-node=10
 
 # Reserve walltime -- hh:mm:ss --7 day limit 
 #SBATCH --time=02-00:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
-#SBATCH --mem=200G 
+#SBATCH --mem=10G 
+
+# Request CPU
+#SBATCH --cpus-per-task=10
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/%x_%j.out # Standard output
@@ -56,7 +58,7 @@ BAM_LIST=$WORKING_FOLDER/guide_files/Nucella_bam.list
 #--------------------------------------------------------------------------------
 
 # Define parameters
-NB_CPU=40 #change accordingly in SLURM header
+NB_CPU=10 #change accordingly in SLURM header
 echo "using #CPUs ==" $NB_CPU
 
 #--------------------------------------------------------------------------------
