@@ -47,14 +47,13 @@ write.table(data, "Thermofly_basisetae_PCs.csv", col.names = T, row.names = F, q
 
 #plot pca
 
-cols=c("red", "skyblue")
+cols=c("blue", "red")
 
 ggscatter(data, x = "PC1", y = "PC2",
           color = "city") +
-  theme_bw(base_size = 13, base_family = "Arial") +
+  theme_bw(base_size = 18, base_family = "Arial") +
   theme(panel.background = element_blank(), 
         legend.background = element_blank(), 
-        panel.grid = element_blank(), 
         plot.background = element_blank(), 
         legend.text=element_text(size=rel(.7)), 
         axis.text = element_text(size=13), 
@@ -67,10 +66,9 @@ ggsave("Basisetae_PC1.PC2.jpeg", width = 8, height = 6, device='jpeg', dpi=300)
 
 ggscatter(data, x = "PC3", y = "PC4",
           color = "city") +
-  theme_bw(base_size = 13, base_family = "Arial") +
+  theme_bw(base_size = 18, base_family = "Arial") +
   theme(panel.background = element_blank(), 
         legend.background = element_blank(), 
-        panel.grid = element_blank(), 
         plot.background = element_blank(), 
         legend.text=element_text(size=rel(.7)), 
         axis.text = element_text(size=13), 
