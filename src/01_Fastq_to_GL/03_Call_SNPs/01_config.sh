@@ -56,7 +56,7 @@ MIN_DEPTH=0.1
 
 # Filter: will keep SNP with at least a coverage of this factor multiplied by the number of ind - across all ind. 
 # Advice: we usually set it at 2-4 times the expected coverage to remove repeated regions
-MAX_DEPTH_FACTOR=3
+MAX_DEPTH_FACTOR=1.5
 
 # Window size for sliding window FST & Thetas
 WINDOW=25000 
