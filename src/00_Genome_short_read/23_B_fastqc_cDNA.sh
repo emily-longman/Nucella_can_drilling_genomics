@@ -12,7 +12,7 @@
 
 # Request nodes
 #SBATCH --nodes=1 # on one node
-#SBATCH --ntasks-per-node=1  
+#SBATCH --ntasks-per-node=5  
 
 # Reserve walltime -- hh:mm:ss 
 #SBATCH --time=7-00:00:00 
@@ -47,9 +47,9 @@ RAW_READS=/netfiles/pespenilab_share/Nucella/raw/cDNA/Nucella.ONT.cDNA.barcode12
 cd $WORKING_FOLDER_SCRATCH
 
 # Make Quast directory 
-if [ -d "cDNA_fastqc" ]
-then echo "Working cDNA_fastqc folder exist"; echo "Let's move on."; date
-else echo "Working cDNA_fastqc folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/cDNA_fastqc; date
+if [ -d "cDNA_fastqc_barcode12" ]
+then echo "Working cDNA_fastqc_barcode12 folder exist"; echo "Let's move on."; date
+else echo "Working cDNA_fastqc_barcode12 folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/cDNA_fastqc_barcode12; date
 fi
 
 #--------------------------------------------------------------------------------
