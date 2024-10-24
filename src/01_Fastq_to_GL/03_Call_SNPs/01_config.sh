@@ -51,7 +51,7 @@ MIN_MAF=0.05
 # This is not necessaily for all individuals, we consider a PERCENT_IND (percentage of individuals over all individuals in step 03, and within each pop at step 07)
 # Advice: For min depth use a value that is a bit below what you expected. 
 # Advice: For percent individual, avoid going below 50% and also consider the whole number of individuals. (it may makes sense to use 50% with 100 ind/pop, but you may want 90% with 9 ind/pop
-PERCENT_IND=0.5
+PERCENT_IND=0.7
 MIN_DEPTH=0.1
 
 # Filter: will keep SNP with at least a coverage of this factor multiplied by the number of ind - across all ind. 
