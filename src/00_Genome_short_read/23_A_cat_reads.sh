@@ -41,5 +41,9 @@ cd $Nucella_netfiles/cDNA
 #--------------------------------------------------------------------------------
 
 # Concatenate reads into one fastq.gz file
-cat $Nucella_netfiles/cDNA/PROM0170_Sanford_cDNA_01102024/20240110_1712_3G_PAQ64735_daeddcc5/fastq_pass/*/*.fastq.gz \
-> $Nucella_netfiles/cDNA/Nucella.ONT.cDNA.fastq.gz
+#cat $Nucella_netfiles/cDNA/PROM0170_Sanford_cDNA_01102024/20240110_1712_3G_PAQ64735_daeddcc5/fastq_pass/*/*.fastq.gz \
+#> $Nucella_netfiles/cDNA/Nucella.ONT.cDNA.fastq.gz
+
+# Concatenate reads from barcode 12 (5' - GGTGCTG - CAGGTAGAAAGAAGCAGAATCGGA - TTAACCT - 3')
+cat $Nucella_netfiles/cDNA/PROM0170_Sanford_cDNA_01102024/20240110_1712_3G_PAQ64735_daeddcc5/fastq_pass/barcode12/*.fastq.gz \
+> $Nucella_netfiles/cDNA/Nucella.ONT.cDNA.barcode12.fastq.gz
