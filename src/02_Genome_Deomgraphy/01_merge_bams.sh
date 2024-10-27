@@ -44,7 +44,7 @@ qualimap=/netfiles/nunezlab/Shared_Resources/Software/qualimap_v2.2.1/qualimap
 WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/genome_demography
 
 # GL folder is folder where the bam.
-GL_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL
+BAM_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL/bams_clean
 
 #-------------------------------------------------------------------------------
 
@@ -60,40 +60,35 @@ then echo "Working bam folder exist"; echo "Let's move on."; date
 else echo "Working bam folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/bam; date
 fi
 
+if [ -d "bam_qualimap" ]
+then echo "Working bam_qualimap folder exist"; echo "Let's move on."; date
+else echo "Working bam_qualimap folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/bam_qualimap; date
+fi
+
 #--------------------------------------------------------------------------------
 
 # I will merge all of the bam files produced in the fastq to GL pipeline into one bam file
 
 # Make temporary linefile with list of input BAM files
-ls $GL_FOLDER/bams_clean/*.srt.rmdp.bam > $WORKING_FOLDER/N.can.guide.txt
-
-
-
-
-
-
-# CONTINUE BELOW!
-
-
-
+ls $BAM_FOLDER/*.srt.rmdp.bam > $WORKING_FOLDER/N.can.guide.txt
 
 # Merge the 3 sequencing lanes
 samtools merge \
--b ${i}.guide.txt \
-$WORKING_FOLDER/bams_merged/${i}.Lanes_merged.bam
+-b $WORKING_FOLDER/N.can.guide.txt \
+$WORKING_FOLDER/bam/N.can.bam
 
 # Remove the temporary guide file
-rm ${i}.guide.txt
+rm $WORKING_FOLDER/N.can.guide.txt
 
 # Assess quality of final file
 $qualimap bamqc \
--bam $WORKING_FOLDER/bams_merged/${i}.Lanes_merged.bam \
--outdir $WORKING_FOLDER/bams_merged_qualimap/Qualimap_LaneMerged_${i} \
+-bam $WORKING_FOLDER/bam/N.can.bam \
+-outdir $WORKING_FOLDER/bam_qualimap \
 --java-mem-size=$JAVAMEM
 
 #--------------------------------------------------------------------------------
 
 # Index bams with samtools
-samtools index $WORKING_FOLDER/bams_merged/${i}.Lanes_merged.bam
+samtools index $WORKING_FOLDER/bam/N.can.bam
 
 #--------------------------------------------------------------------------------
