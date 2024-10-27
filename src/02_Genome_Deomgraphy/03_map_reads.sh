@@ -5,20 +5,22 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=Cat_reads
+#SBATCH --job-name=Map_all_reads
 
 # Specify partition
 #SBATCH --partition=bluemoon
 
 # Request nodes
 #SBATCH --nodes=1 
-#SBATCH --ntasks-per-node=1
 
 # Reserve walltime -- hh:mm:ss --30 hrs max
 #SBATCH --time=20:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
-#SBATCH --mem=10G 
+#SBATCH --mem=20G 
+
+# Request CPU
+#SBATCH --cpus-per-task=10
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/%x_%j.out # Standard output
@@ -29,16 +31,7 @@
 
 #--------------------------------------------------------------------------------
 
-# This script will cat the raw reads together. 
+# Map all raw reads. 
 
 #--------------------------------------------------------------------------------
 
-#Define important file locations
-
-# RAW READS indicates the folder where the raw reads are stored.
-RAW_READS=/netfiles/pespenilab_share/Nucella/raw/Shortreads/All_shortreads
-
-#--------------------------------------------------------------------------------
-
-# Concatenate reads into one fastq.gz file ("N.can.BMR.short.reads.all.fastq.gz")
-cat $RAW_READS/*Rfastq.gz > /netfiles/pespenilab_share/Nucella/raw/Shortreads/N.can.BMR.short.reads.all.fastq.gz
