@@ -62,14 +62,14 @@ source $venv_name/bin/activate
 #Working folder is core folder where this pipeline is being run.
 WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL
 
-#This is the location where the reference genome and all its indexes are stored.
-REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_Aug2024/backbone_raw.fasta
-
 #Scripts folder
 SCRIPT_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/01_Fastq_to_GL
 
-#Path to bam list
-BAM_LIST=$WORKING_FOLDER/info/Nucella_bam.list
+#This is the location where the reference genome and all its indexes are stored.
+REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_Oct2024/Crassostrea_mask/N.canaliculata_assembly.fasta.masked
+
+# Path to bam list.
+BAM_LIST=$WORKING_FOLDER/guide_files/Nucella_bam.list
 
 #--------------------------------------------------------------------------------
 
@@ -81,7 +81,7 @@ echo "using #CPUs ==" $SLURM_CPUS_ON_NODE
 
 # Prepare variables 
 
-#Use config file (this means you dont need to directly input minimum individual/depth parameters)
+# Use config file (this means you dont need to directly input minimum individual/depth parameters)
 source $SCRIPT_FOLDER/03_Call_SNPs/01_config.sh
 
 #--------------------------------------------------------------------------------
@@ -98,7 +98,6 @@ then echo "Working pcangsd folder exist"; echo "Let's move on."; date
 else echo "Working pcangsd folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/pcangsd; date
 fi
 
-##NOTE: Ideally, change the output folder to the results folder in the github. I just scp the output over
 
 #--------------------------------------------------------------------------------
 
@@ -109,8 +108,8 @@ cp $BAM_LIST $WORKING_FOLDER/pcangsd
 echo "Analyse covariance matrix on all individuals"
 
 pcangsd \
--b $WORKING_FOLDER/genotype_likelihoods_all/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_maxdepth"$MAX_DEPTH_FACTOR".beagle.gz \
--o $WORKING_FOLDER/pcangsd/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_maxdepth"$MAX_DEPTH_FACTOR" \
+-b $WORKING_FOLDER/genotype_likelihoods_all//Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6.beagle.gz \
+-o $WORKING_FOLDER/pcangsd/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6 \
 -t $CPU 
 
 # PCAngsd accepts either genotype likelihoods in Beagle format generated from BAM files using ANGSD
