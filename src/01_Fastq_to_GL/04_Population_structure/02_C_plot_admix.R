@@ -1,6 +1,6 @@
 ## Plotting with Zoon plot_admix R code
 
-source("/Users/emilylongman/Documents/GitHub/Nucella_can_drilling_genomics/src/01_Fastq_to_GL/04_Population_structure/04_C_plot_admix_function.R")
+source("/Users/emilylongman/Documents/GitHub/Nucella_can_drilling_genomics/src/01_Fastq_to_GL/04_Population_structure/02_C_plot_admix_function.R")
 
 #### K=2
 dir=("/Users/emilylongman/Documents/GitHub/Nucella_can_drilling_genomics/results/ngs_admix/K_output/") # path to input files
