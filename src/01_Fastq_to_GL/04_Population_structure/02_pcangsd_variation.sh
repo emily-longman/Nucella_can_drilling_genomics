@@ -20,6 +20,9 @@
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
 #SBATCH --mem=65G 
 
+# Request CPU
+#SBATCH --cpus-per-task=1
+
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/%x_%j.out # Standard output
 
@@ -63,15 +66,23 @@ source $venv_name/bin/activate
 WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL
 
 #This is the location where the reference genome and all its indexes are stored.
-REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_Aug2024/backbone_raw.fasta
+REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_Oct2024/Crassostrea_mask/N.canaliculata_assembly.fasta.masked
 
-#Input folder is genotype likelihoods from ANGSD
-INPUT=$WORKING_FOLDER/genotype_likelihoods_all
+# Path to bam list.
+BAM_LIST=$WORKING_FOLDER/guide_files/Nucella_bam.list
 
 #--------------------------------------------------------------------------------
+
 # Define parameters
-CPU=$SLURM_CPUS_ON_NODE
+CPU=1
 echo "using #CPUs ==" $SLURM_CPUS_ON_NODE
+
+#--------------------------------------------------------------------------------
+
+# Prepare variables 
+
+# Use config file (this means you dont need to directly input minimum individual/depth parameters)
+source $SCRIPT_FOLDER/03_Call_SNPs/01_config.sh
 
 #--------------------------------------------------------------------------------
 
@@ -87,23 +98,17 @@ then echo "Working pcangsd folder exist"; echo "Let's move on."; date
 else echo "Working pcangsd folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/pcangsd; date
 fi
 
-#Output folder
-OUTPUT=$WORKING_FOLDER/pcangsd
-
-##NOTE: Ideally, change the output folder to the results folder in the github. I just scp the output over
-
 #--------------------------------------------------------------------------------
 
 # Make a copy of the list of bam files for all the Nucella samples and place in the output directory. You'll need this later for making figures.
-cp ${INPUT}/Nucella_bam_lower_minInd.list ${OUTPUT}
+cp $BAM_LIST $WORKING_FOLDER/pcangsd
 
 # Then, run PCA and admixture scores with pcangsd:
-SUFFIX="Nucella_poly_covmatrix_lower_minInd_60perc"
 
 echo "Analyse covariance matrix on all individuals"
 
-pcangsd -b ${INPUT}/Nucella_SNPs_all_lower_minInd.beagle.gz \
--o ${OUTPUT}/${SUFFIX} \
+pcangsd -b $WORKING_FOLDER/genotype_likelihoods_all/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6.beagle.gz \
+-o $WORKING_FOLDER/pcangsd/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6 \
 -t $CPU 
 
 # PCAngsd accepts either genotype likelihoods in Beagle format generated from BAM files using ANGSD
@@ -111,7 +116,7 @@ pcangsd -b ${INPUT}/Nucella_SNPs_all_lower_minInd.beagle.gz \
 # --admix : Individual admixture proportions and ancestral allele frequencies can be estimated assuming K ancestral populations using an accelerated mini-batch NMF method.
 
 echo "Transform covariance matrix into PCA"
-COV_MAT=${OUTPUT}/${SUFFIX}.cov
+COV_MAT=$WORKING_FOLDER/pcangsd/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6.cov
 
 #--------------------------------------------------------------------------------
 
