@@ -35,25 +35,21 @@
 
 # Index genome w/ STAR
 
-# Fastqc
+# Index genome using STAR
+$STAR --runThreadN 1 \
+--runMode genomeGenerate \
+--genomeDir Nucella_noGFF \
+--genomeFastaFiles $REFERENCE 
 
-# Trim
-
+# Map cDNA with STAR
 
 STAR=/netfiles/nunezlab/Shared_Resources/Software/STAR-2.7.11b/bin/Linux_x86_64_static
 
 
-
+# STAR can align reads in a continuous streaming mode, which makes it compatible with novel sequencing technologies such as the one recently announced by Oxford Nanopore Technologies
 
 
 STAR=/netfiles/nunezlab/Shared_Resources/Software/STAR-2.7.11b/bin/Linux_x86_64_static/STAR
 
 WORKING_FOLDER=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/short_read_assembly
 REFERENCE=$WORKING_FOLDER/rename_scaffolds/N.canaliculata_assembly.fasta
-
-
-# Index genome using STAR
-$STAR --runThreadN 1 \
---runMode genomeGenerate \
---genomeDir Nucella_noGFF \
---genomeFastaFiles $REFERENCE 
