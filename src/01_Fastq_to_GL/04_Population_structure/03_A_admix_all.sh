@@ -39,11 +39,11 @@ NGSadmix=/gpfs1/home/e/l/elongman/software/NGSadmix
 #Working folder is core folder where this pipeline is being run.
 WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL
 
-#This is the location where the reference genome and all its indexes are stored.
-REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_Aug2024/backbone_raw.fasta
-
 #Scripts folder
 SCRIPT_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/01_Fastq_to_GL
+
+#This is the location where the reference genome and all its indexes are stored.
+REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_Oct2024/Crassostrea_mask/N.canaliculata_assembly.fasta.masked
 
 #--------------------------------------------------------------------------------
 
@@ -51,13 +51,15 @@ SCRIPT_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/01_Fastq
 NB_CPU=10 #change accordingly in SLURM header
 echo "using #CPUs ==" $NB_CPU
 
-#Use config file (this means you dont need to directly input minimum individual/depth parameters)
+#--------------------------------------------------------------------------------
+
+# Prepare variables 
+
+# Use config file (this means you dont need to directly input minimum individual/depth parameters)
 source $SCRIPT_FOLDER/03_Call_SNPs/01_config.sh
 
-#Min number of pop to consider for NGS admix
-K_MIN=1
-#Maximum number of pop to consider for NGS admix
-K_MAX=5
+echo $K_MIN
+echo $K_MAX
 
 #--------------------------------------------------------------------------------
 
@@ -90,7 +92,7 @@ for i in $(seq $K_MIN $K_MAX)
 do 
 echo $i
 $NGSadmix -P $NB_CPU \
--likes $WORKING_FOLDER/genotype_likelihoods_all/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_maxdepth"$MAX_DEPTH_FACTOR".beagle.gz \
--minMaf $MIN_MAF -K $i -o $WORKING_FOLDER/ngs_admix/K_output/Nucella_all_maf_K{$i}_run{$j}
+-likes $WORKING_FOLDER/genotype_likelihoods_all/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6.beagle.gz \
+-minMaf $MIN_MAF -K $i -o $WORKING_FOLDER/ngs_admix/K_output/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6_K{$i}_run{$j}
 done
 done
