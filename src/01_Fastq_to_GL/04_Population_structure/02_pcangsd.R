@@ -12,7 +12,7 @@ dir(find_root(has_file("README.md")))
 
 dir(find_root_file("results", criterion = has_file("README.md")))
 # Set relative path from root
-rel_path_from_root <- find_root_file("results", "stats", "pcangsd", criterion = has_file("README.md"))
+rel_path_from_root <- find_root_file("results", "pcangsd", criterion = has_file("README.md"))
 
 # List files in this folder to make sure you're in the right spot.
 list.files(rel_path_from_root)
@@ -29,7 +29,7 @@ library(ggplot2)
 library(ggpubr)
 
 # Load data
-COV <- as.matrix(read.table("Nucella_poly_covmatrix.cov")) # Read in the genetic covariance matrix
+COV <- as.matrix(read.table("Nucella_SNPs_maf0.05_pctind0.5_mindepth0.2_maxdepth2_pval1e6.cov")) # Read in the genetic covariance matrix
 
 # Extract the principal components from the COV matrix
 PCA <- eigen(COV) 
@@ -79,7 +79,7 @@ ggscatter(data, x = "V1", y = "V2",
   labs(x = paste0("PC1: (",var[1]*100,"%)"), y = paste0("PC2: (",var[2]*100,"%)")) +
   scale_color_manual(values=c(cols), name="Source population") +
   guides(colour = guide_legend(nrow = 2))
-
+ggsave("N.canaliculata_Collection_site.jpeg", width = 8, height = 6, device='jpeg', dpi=300)
 
 
 cols2=c("#94D2BD", "#6d597a")
@@ -99,6 +99,7 @@ ggscatter(data, x = "V1", y = "V2",
   labs(x = paste0("PC1: (",var[1]*100,"%)"), y = paste0("PC2: (",var[2]*100,"%)")) +
   scale_color_manual(values=c(cols2), name="Source population") +
   guides(colour = guide_legend(nrow = 2))
+ggsave("N.canaliculata_Drilled_Binary_PC1_PC2.jpeg", width = 8, height = 6, device='jpeg', dpi=300)
 
 ggscatter(data, x = "V1", y = "V3",
           color = "Drilled.Binary",
@@ -115,6 +116,7 @@ ggscatter(data, x = "V1", y = "V3",
   labs(x = paste0("PC1: (",var[1]*100,"%)"), y = paste0("PC3: (",var[3]*100,"%)")) +
   scale_color_manual(values=c(cols2), name="Source population") +
   guides(colour = guide_legend(nrow = 2))
+ggsave("N.canaliculata_Drilled_Binary_PC1_PC3.jpeg", width = 8, height = 6, device='jpeg', dpi=300)
 
 
 cols3=c("#377eB8","#EE9B00","#94D2BD","#AE2012", "#6d597a", "#7EA16B")
@@ -122,7 +124,7 @@ cols3=c("#377eB8","#EE9B00","#94D2BD","#AE2012", "#6d597a", "#7EA16B")
 ggscatter(data, x = "V1", y = "V2",
           color = "Total.Drilled",
           mean.point = TRUE,
-          star.plot = TRUE) +
+          star.plot = T) +
   theme_bw(base_size = 13, base_family = "Times") +
   theme(panel.background = element_blank(), 
         legend.background = element_blank(), 
@@ -134,4 +136,5 @@ ggscatter(data, x = "V1", y = "V2",
   labs(x = paste0("PC1: (",var[1]*100,"%)"), y = paste0("PC2: (",var[2]*100,"%)")) +
   scale_color_manual(values=c(cols3), name="Source population") +
   guides(colour = guide_legend(nrow = 2))
+ggsave("N.canaliculata_Total_Drilled_PC1_PC3.jpeg", width = 8, height = 6, device='jpeg', dpi=300)
 
