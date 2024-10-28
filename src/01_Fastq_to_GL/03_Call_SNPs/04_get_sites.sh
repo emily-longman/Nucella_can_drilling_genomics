@@ -79,9 +79,9 @@ fi
 echo "From the maf file, extract a list of SNP chr, position, major all, minor all"
 
 # Unzip maf file if haven't already done so
-#gunzip $WORKING_FOLDER/genotype_likelihoods_all/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_maxdepth"$MAX_DEPTH_FACTOR".mafs.gz
+#gunzip /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL/genotype_likelihoods_all/Nucella_SNPs_maf0.05_pctind0.5_mindepth0.2_maxdepth2_pval1e6.mafs.gz
 
-INFILE=$WORKING_FOLDER/genotype_likelihoods_all/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR".mafs
+INFILE=$WORKING_FOLDER/genotype_likelihoods_all/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6.mafs
 OUTFILE_sites=$WORKING_FOLDER/sites_info/sites_all_maf
 OUTFILE_regions=$WORKING_FOLDER/sites_info/regions_all_maf
 
