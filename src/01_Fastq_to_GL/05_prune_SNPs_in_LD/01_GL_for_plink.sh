@@ -34,22 +34,19 @@ spack load angsd@0.933
 
 #--------------------------------------------------------------------------------
 
-#Define important file locations
+# Define important file locations
 
-#Working folder is core folder where this pipeline is being run.
+# Working folder is core folder where this pipeline is being run.
 WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL
 
-#This is the location where the reference genome and all its indexes are stored.
-REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_Aug2024/backbone_raw.fasta
+# This is the location where the reference genome and all its indexes are stored.
+REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_Oct2024/Crassostrea_mask/N.canaliculata_assembly.fasta.masked
 
-#Path to the directory with the lane merged bams (filtered, sorted and duplicates removed). 
-BAMS_FOLDER=$WORKING_FOLDER/bams_merged
-
-#Path to directory with scripts for pipeline
+# Scripts folder.
 SCRIPT_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/01_Fastq_to_GL
 
-#Path to bam list
-BAM_LIST=$WORKING_FOLDER/info/Nucella_bam.list
+# Path to bam list.
+BAM_LIST=$WORKING_FOLDER/guide_files/Nucella_bam.list
 
 # SNP Regions
 REGIONS="-rf $WORKING_FOLDER/sites_info/regions_all_maf"
@@ -60,7 +57,18 @@ REGIONS="-rf $WORKING_FOLDER/sites_info/regions_all_maf"
 NB_CPU=40 #change accordingly in SLURM header
 echo "using #CPUs ==" $NB_CPU
 
+#--------------------------------------------------------------------------------
+
+# Prepare variables 
+
+# Use config file (this means you dont need to directly input minimum individual/depth parameters)
 source $SCRIPT_FOLDER/03_Call_SNPs/01_config.sh
+
+# Extract parameters from config file
+N_IND=$(wc -l $BAM_LIST | cut -d " " -f 1) 
+MIN_IND_FLOAT=$(echo "($N_IND * $PERCENT_IND)"| bc -l)
+MIN_IND=${MIN_IND_FLOAT%.*} 
+MAX_DEPTH=$(echo "($N_IND * $MAX_DEPTH_FACTOR)" |bc -l)
 
 #--------------------------------------------------------------------------------
 
@@ -91,7 +99,8 @@ angsd \
 -doPlink 2 -doMaf 1 -doCounts 1 \
 -remove_bads 1 -skipTriallelic 1 -uniqueOnly 1 -only_proper_pairs 1 -minMapQ 30 -minQ 20 -C 50 $REGIONS \
 -minInd $MIN_IND -minMaf $MIN_MAF -setMaxDepth $MAX_DEPTH \
--out $WORKING_FOLDER/plink/Nucella_all_maf"$MIN_MAF"_pctind"$PERCENT_IND"_maxdepth"$MAX_DEPTH_FACTOR" 
+-out $WORKING_FOLDER/plink/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6 
 
 # nQueueSize -50  Maximum number of queud elements
 # Notice the extra minus in the -dogeno -4 argument, this will suppress the -doGeno output.
+# postCutoff: Call only a genotype with a posterior above this threshold.
