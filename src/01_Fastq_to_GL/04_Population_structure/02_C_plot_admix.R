@@ -36,6 +36,7 @@ setwd(results_path_from_root)
 
 # Load packages
 library(colorspace)
+library(RColorBrewer)
 
 # ================================================================================== #
 
