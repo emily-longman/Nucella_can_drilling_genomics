@@ -71,7 +71,7 @@ nanoq \
 -o $WORKING_FOLDER_SCRATCH/cDNA_trim/Nucella.ONT.cDNA.barcode12_clean.fastq.gz \
 -l 1000 \
 -q 10 \
--S 20 \
+-S 10 \
 -j
 
 # Minimum read length (-l)
