@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=fastqc_cDNA
+#SBATCH --job-name=trim_cDNA
 
 # Specify partition
 #SBATCH --partition=week
