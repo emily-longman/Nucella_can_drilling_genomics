@@ -29,10 +29,13 @@
 
 #--------------------------------------------------------------------------------
 
-#Define important file locations
+# Define important file locations
 
-#Working folder is core folder where this pipeline is being run.
+# Working folder is core folder where this pipeline is being run.
 WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL
+
+# Results folder
+RESULTS_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/results/stats
 
 #--------------------------------------------------------------------------------
 
@@ -41,3 +44,9 @@ cd $WORKING_FOLDER/ngs_admix
 
 # Loop through the log files to create one output file - identify which value is the lowest for each K - plot that "fopt.gz" for each K
 (for log in `ls K_output/*.log`; do grep -Po 'like=\K[^ ]+' $log; done) > $WORKING_FOLDER/ngs_admix/logfile
+
+#--------------------------------------------------------------------------------
+
+# Make copy of pcangsd directory and move to results directory for graphing
+
+cp -r ngs_admix $RESULTS_FOLDER
