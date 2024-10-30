@@ -66,7 +66,7 @@ WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/proces
 SCRIPT_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/01_Fastq_to_GL
 
 # Results folder
-SCRIPT_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/results
+RESULTS_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/results
 
 # This is the location where the reference genome and all its indexes are stored.
 REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_Oct2024/Crassostrea_mask/N.canaliculata_assembly.fasta.masked
@@ -121,6 +121,12 @@ pcangsd \
 
 echo "Transform covariance matrix into PCA"
 COV_MAT=$WORKING_FOLDER/pcangsd/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_maxdepth"$MAX_DEPTH_FACTOR".cov
+
+#--------------------------------------------------------------------------------
+
+# Make copy of pcangsd directory and move to results directory for graphing
+
+cp -r pcangsd $RESULTS_FOLDER
 
 #--------------------------------------------------------------------------------
 
