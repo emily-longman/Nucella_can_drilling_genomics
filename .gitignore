@@ -9,6 +9,7 @@
 scratch/*
 data/raw/*
 data/processed/*
+results/stats/*
 slurmOutput/*
 
 # Specific files extensions to ignore

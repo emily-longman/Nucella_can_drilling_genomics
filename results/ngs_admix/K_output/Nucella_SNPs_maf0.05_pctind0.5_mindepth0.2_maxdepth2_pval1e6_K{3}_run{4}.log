@@ -1,9 +1,0 @@
-Input: lname=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL/genotype_likelihoods_all/Nucella_SNPs_maf0.05_pctind0.5_mindepth0.2_maxdepth2_pval1e6.beagle.gz nPop=3, fname=(null) qname=(null) outfiles=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL/ngs_admix/K_output/Nucella_SNPs_maf0.05_pctind0.5_mindepth0.2_maxdepth2_pval1e6_K{3}_run{4}
-Setup: seed=1730163656 nThreads=10 method=1
-Convergence: maxIter=2000 tol=0.000010 tolLike50=0.100000 dymBound=0
-Filters: misTol=0.050000 minMaf=0.050000 minLrt=0.000000 minInd=0
-Input file has dim: nsites=280768 nind=192
-Input file has dim (AFTER filtering): nsites=280768 nind=192
-	[ALL done] cpu-time used =  5328.47 sec
-	[ALL done] walltime used =  1440.00 sec
-best like=-48050899.033191 after 2000 iterations

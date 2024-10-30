@@ -1,9 +1,0 @@
-Input: lname=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/Thermofly/genotype_likelihoods/Thermofly_GL_reduced_minInd_16_depth_4.beagle.gz nPop=2, fname=(null) qname=(null) outfiles=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/Thermofly/ngs_admix/K_output/Thermofly_GL_reduced_minInd_16_depth_4_maf_K{2}_run{7}
-Setup: seed=1729209826 nThreads=6 method=1
-Convergence: maxIter=2000 tol=0.000010 tolLike50=0.100000 dymBound=0
-Filters: misTol=0.050000 minMaf=0.000000 minLrt=0.000000 minInd=0
-Input file has dim: nsites=751372 nind=18
-Input file has dim (AFTER filtering): nsites=751372 nind=18
-	[ALL done] cpu-time used =  117.46 sec
-	[ALL done] walltime used =  37.00 sec
-best like=-8183640.435465 after 200 iterations
