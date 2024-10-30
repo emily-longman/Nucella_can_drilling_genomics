@@ -1,5 +1,8 @@
 # PCAngsd
 
+# Clear memory
+rm(list=ls()) 
+
 # ================================================================================== #
 
 # Note: to run script move the covmatrix to the pcangsd folder in results > stats
@@ -10,26 +13,28 @@ library(rprojroot)
 # List all files and directories below the root
 dir(find_root(has_file("README.md")))
 
-dir(find_root_file("results", criterion = has_file("README.md")))
-# Set relative path from root
-rel_path_from_root <- find_root_file("results", "pcangsd", criterion = has_file("README.md"))
+# Get metadata
+metdata_path_from_root <- find_root_file("results", criterion = has_file("README.md"))
+setwd(metdata_path_from_root) # Set working directory as path from root
+samples <- read.csv("Metadata.csv", header=T)
 
+# Set relative path of results directory from root
+dir(find_root_file("results", criterion = has_file("README.md")))
+rel_path_from_root <- find_root_file("results", "stats", "pcangsd", criterion = has_file("README.md"))
 # List files in this folder to make sure you're in the right spot.
 list.files(rel_path_from_root)
+
 # Set working directory as path from root
 setwd(rel_path_from_root)
 
 # ================================================================================== #
-
-# Clear memory
-rm(list=ls()) 
 
 # Load packages
 library(ggplot2)
 library(ggpubr)
 
 # Load data
-COV <- as.matrix(read.table("Nucella_SNPs_maf0.05_pctind0.5_mindepth0.2_maxdepth2_pval1e6.cov")) # Read in the genetic covariance matrix
+COV <- as.matrix(read.table("Nucella_SNPs_maf0.05_pctind0.5_mindepth0.3_maxdepth2_pval1e6.cov")) # Read in the genetic covariance matrix
 
 # Extract the principal components from the COV matrix
 PCA <- eigen(COV) 
@@ -55,19 +60,17 @@ metadata <- read.csv("Metadata.csv", header=T)
 str(metadata)
 metadata$Total.Drilled <- as.character(metadata$Total.Drilled)
 
-## A more beautiful PCA plot using ggplot :)
+## Graph PCA using ggplot
 
 data=as.data.frame(PCA$vectors)
 data=data[,c(1:10)]
 data= cbind(data, metadata)
 
 cols=c("#377eB8","#EE9B00", "#7EA16B")
-#cols=c("#377eB8","#EE9B00","#0A9396","#94D2BD","#FFCB69","#005f73","#E26D5C","#AE2012", "#6d597a", "#7EA16B","#d4e09b", "gray70")
 
 ggscatter(data, x = "V1", y = "V2",
           color = "Site",
-          mean.point = TRUE,
-          star.plot = TRUE) +
+          ellipse = T, ellipse.level = 0.95, ellipse.alpha = 0) +
   theme_bw(base_size = 13, base_family = "Times") +
   theme(panel.background = element_blank(), 
         legend.background = element_blank(), 
@@ -77,17 +80,15 @@ ggscatter(data, x = "V1", y = "V2",
         axis.text = element_text(size=13), 
         legend.position = "bottom") +
   labs(x = paste0("PC1: (",var[1]*100,"%)"), y = paste0("PC2: (",var[2]*100,"%)")) +
-  scale_color_manual(values=c(cols), name="Source population") +
-  guides(colour = guide_legend(nrow = 2))
-ggsave("N.canaliculata_Collection_site.jpeg", width = 8, height = 6, device='jpeg', dpi=300)
+  scale_color_manual(values=c(cols)) 
+ggsave("N.canaliculata_Collection_site_PC1_PC2.jpeg", width = 8, height = 6, device='jpeg', dpi=300)
 
 
 cols2=c("#94D2BD", "#6d597a")
 
 ggscatter(data, x = "V1", y = "V2",
           color = "Drilled.Binary",
-          mean.point = TRUE,
-          star.plot = TRUE) +
+          ellipse = T, ellipse.level = 0.95, ellipse.alpha = 0) +
   theme_bw(base_size = 13, base_family = "Times") +
   theme(panel.background = element_blank(), 
         legend.background = element_blank(), 
@@ -97,14 +98,12 @@ ggscatter(data, x = "V1", y = "V2",
         axis.text = element_text(size=13), 
         legend.position = "bottom") +
   labs(x = paste0("PC1: (",var[1]*100,"%)"), y = paste0("PC2: (",var[2]*100,"%)")) +
-  scale_color_manual(values=c(cols2), name="Source population") +
-  guides(colour = guide_legend(nrow = 2))
+  scale_color_manual(values=c(cols2)) 
 ggsave("N.canaliculata_Drilled_Binary_PC1_PC2.jpeg", width = 8, height = 6, device='jpeg', dpi=300)
 
 ggscatter(data, x = "V1", y = "V3",
           color = "Drilled.Binary",
-          mean.point = TRUE,
-          star.plot = TRUE) +
+          ellipse = T, ellipse.level = 0.95, ellipse.alpha = 0) +
   theme_bw(base_size = 13, base_family = "Times") +
   theme(panel.background = element_blank(), 
         legend.background = element_blank(), 
@@ -114,8 +113,7 @@ ggscatter(data, x = "V1", y = "V3",
         axis.text = element_text(size=13), 
         legend.position = "bottom") +
   labs(x = paste0("PC1: (",var[1]*100,"%)"), y = paste0("PC3: (",var[3]*100,"%)")) +
-  scale_color_manual(values=c(cols2), name="Source population") +
-  guides(colour = guide_legend(nrow = 2))
+  scale_color_manual(values=c(cols2)) 
 ggsave("N.canaliculata_Drilled_Binary_PC1_PC3.jpeg", width = 8, height = 6, device='jpeg', dpi=300)
 
 
@@ -123,8 +121,7 @@ cols3=c("#377eB8","#EE9B00","#94D2BD","#AE2012", "#6d597a", "#7EA16B")
 
 ggscatter(data, x = "V1", y = "V2",
           color = "Total.Drilled",
-          mean.point = TRUE,
-          star.plot = T) +
+          ellipse = T, ellipse.level = 0.95, ellipse.alpha = 0) +
   theme_bw(base_size = 13, base_family = "Times") +
   theme(panel.background = element_blank(), 
         legend.background = element_blank(), 
@@ -134,7 +131,6 @@ ggscatter(data, x = "V1", y = "V2",
         axis.text = element_text(size=13), 
         legend.position = "bottom") +
   labs(x = paste0("PC1: (",var[1]*100,"%)"), y = paste0("PC2: (",var[2]*100,"%)")) +
-  scale_color_manual(values=c(cols3), name="Source population") +
-  guides(colour = guide_legend(nrow = 2))
-ggsave("N.canaliculata_Total_Drilled_PC1_PC3.jpeg", width = 8, height = 6, device='jpeg', dpi=300)
+  scale_color_manual(values=c(cols3)) 
+ggsave("N.canaliculata_Total_Drilled_PC1_PC2.jpeg", width = 8, height = 6, device='jpeg', dpi=300)
 
