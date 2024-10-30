@@ -59,13 +59,16 @@ source $venv_name/bin/activate
 
 # Define important file locations
 
-#Working folder is core folder where this pipeline is being run.
+# Working folder is core folder where this pipeline is being run.
 WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL
 
-#Scripts folder
+# Scripts folder
 SCRIPT_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/01_Fastq_to_GL
 
-#This is the location where the reference genome and all its indexes are stored.
+# Results folder
+SCRIPT_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/results
+
+# This is the location where the reference genome and all its indexes are stored.
 REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_Oct2024/Crassostrea_mask/N.canaliculata_assembly.fasta.masked
 
 # Path to bam list.
