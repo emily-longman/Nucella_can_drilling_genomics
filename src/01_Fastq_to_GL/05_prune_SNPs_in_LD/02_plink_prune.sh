@@ -82,8 +82,10 @@ fi
 # (i.e., it will generate pruned subset of markers that are in approximate linkage equilibrium with each other, writing the IDs to plink.prune.in, and the IDs of all excluded variants to plink.prune.out
 $plink --tped $WORKING_FOLDER/plink/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6.tped \
 --tfam $WORKING_FOLDER/plink/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6.tfam \
---indep-pairwise $WINDOW_PLINK $STEP $R --allow-extra-chr \
+--indep-pairwise $WINDOW_PLINK $STEP $R \
 --out $WORKING_FOLDER/plink/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6.R2.pruned
+
+# --allow-extra-chr 
 
 # Variant pruning with indep-pairwise requires 3 parameters: 
 # 1) a window size in variant count 
