@@ -48,4 +48,4 @@ WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/proces
 
 echo "Index sites with angsd"
 
-angsd sites index $WORKING_FOLDER/sites_info/sites_all_maf_R2.pruned
+angsd sites index $WORKING_FOLDER/sites_info/sites_all_maf_pruned
