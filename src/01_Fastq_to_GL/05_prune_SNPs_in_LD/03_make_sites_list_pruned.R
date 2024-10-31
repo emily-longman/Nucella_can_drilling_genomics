@@ -1,10 +1,11 @@
-#this R script pextract the pruned SNPs to make a list of sites for subsequent analysis in angsd
+# This workflow will extract the pruned SNPs to make a list of sites for subsequent analysis in angsd
 
 argv <- commandArgs(T)
 INPUT_plink <- argv[1]
 INPUT_angsd <- argv[2]
 
 install.packages("dplyr")
+69
 library(dplyr)
 
 pruned<-read.table(INPUT_plink)
