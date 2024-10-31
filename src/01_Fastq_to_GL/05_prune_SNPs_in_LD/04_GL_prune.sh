@@ -98,12 +98,11 @@ angsd \
 -ref ${REFERENCE} -anc ${REFERENCE} \
 -P $NB_CPU \
 -nQueueSize 50 \
--GL 2 -doMajorMinor 1 -doGeno -4 -doPost 1 -postCutoff 0.8 \
--doPlink 2 -doMaf 1 -doCounts 1 \
--remove_bads 1 -skipTriallelic 1 -uniqueOnly 1 -only_proper_pairs 1 -minMapQ 30 -minQ 20 -C 50 $REGIONS \
--minInd $MIN_IND -minMaf $MIN_MAF -setMaxDepth $MAX_DEPTH \
--out $WORKING_FOLDER/plink/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6 
+-doMaf 1 -doSaf 1 -GL 2 -doGlf 2 -doMajorMinor 3 -doGeno 2 -doPost 1 -doBcf 1 \
+-remove_bads 1 -skipTriallelic 1 -uniqueOnly 1 -only_proper_pairs 1 -minMapQ 30 -minQ 20 -C 50 \
+-minInd 48 \
+-sites $WORKING_FOLDER/sites_info/sites_all_maf_pruned \
+-rf $WORKING_FOLDER/sites_info/regions_all_maf \
+-out $WORKING_FOLDER/genotype_likelihoods_all_pruned/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6_pruned 
 
-# nQueueSize -50  Maximum number of queud elements
-# Notice the extra minus in the -dogeno -4 argument, this will suppress the -doGeno output.
-# postCutoff: Call only a genotype with a posterior above this threshold.
+# Note reduced minInd at this stage to 25%
