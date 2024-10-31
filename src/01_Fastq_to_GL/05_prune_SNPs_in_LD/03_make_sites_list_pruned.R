@@ -5,7 +5,7 @@ INPUT_plink <- argv[1]
 INPUT_angsd <- argv[2]
 
 install.packages("dplyr")
-69
+69 #set lib
 library(dplyr)
 
 pruned<-read.table(INPUT_plink)
