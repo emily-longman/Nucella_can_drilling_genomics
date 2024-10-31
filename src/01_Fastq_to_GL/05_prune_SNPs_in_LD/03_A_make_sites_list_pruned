@@ -1,0 +1,70 @@
+# This workflow will extract the pruned SNPs to make a list of sites for subsequent analysis in angsd
+
+#--------------------------------------------------------------------------------
+
+# Load modules 
+module load R/4.4.0
+
+#--------------------------------------------------------------------------------
+
+# Define important file locations
+
+# Working folder is core folder where this pipeline is being run.
+WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL
+
+# Scripts folder.
+SCRIPT_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/01_Fastq_to_GL
+
+#--------------------------------------------------------------------------------
+
+# Prepare variables 
+
+# Use config file  
+source $SCRIPT_FOLDER/03_Call_SNPs/01_config.sh
+
+#--------------------------------------------------------------------------------
+
+# Copy pruned sites list to "sites_info" directory
+cp $WORKING_FOLDER/plink/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6.R2.pruned.prune.in \
+$WORKING_FOLDER/sites_info
+
+# Change directory
+cd $WORKING_FOLDER/sites_info
+
+#--------------------------------------------------------------------------------
+
+#Open R in VACC
+R 
+
+#--------------------------------------------------------------------------------
+
+
+# Install and load dplyr
+install.packages(c("dplyr", "data.table"))
+library(dplyr)
+library(data.table)
+
+#--------------------------------------------------------------------------------
+
+# Read in pruned sites
+pruned<-read.table("Nucella_SNPs_maf0.05_pctind0.5_mindepth0.3_maxdepth2_pval1e6.R2.pruned.prune.in")
+head(pruned)
+colnames(pruned)<-"LG_pos"
+
+# Read in pre-pruned sites list
+sites<-read.table("sites_all_maf")
+head(sites)
+sites$LG_pos<-paste0(sites[,1],"_", sites[,2])
+
+# Join 
+sites_pruned<-inner_join(sites, pruned)
+
+print(paste("there is a total of ", dim(sites)[1], "sites"))
+print(paste("we keep ", dim(sites_pruned)[1], "pruned sites"))
+
+write.table(sites_pruned[,1:4], "sites_all_maf_pruned", col.names=F, row.names=F, quote=F, sep="\t")
+
+#--------------------------------------------------------------------------------
+
+# Quit R
+q()
