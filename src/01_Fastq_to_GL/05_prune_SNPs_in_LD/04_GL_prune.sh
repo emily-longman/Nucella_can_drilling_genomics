@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=GL_for_plink
+#SBATCH --job-name=GL_pruned
 
 # Specify partition
 #SBATCH --partition=week
@@ -91,21 +91,7 @@ fi
 
 #--------------------------------------------------------------------------------
 
-# Get list of pruned sites
-
-# Use R script to format the list of LD-pruned sites, then have angsd index it
-
-INPUT_plink=$WORKING_FOLDER/plink/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6.R2.pruned.prune.in
-INPUT_angsd=$WORKING_FOLDER/sites_info/sites_all_maf
-
-#Rscript Rscripts/make_site_list_pruned.r "$INPUT_plink" "$INPUT_angsd"
-angsd sites index "$INPUT_angsd"_R2.pruned
-
-#--------------------------------------------------------------------------------
-
 # Calculate the MAF and GL, with Plink output for LD pruning
-
-# create solo script for bam list
 
 angsd \
 -b $BAM_LIST \

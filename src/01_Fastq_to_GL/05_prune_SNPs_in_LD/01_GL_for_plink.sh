@@ -90,8 +90,6 @@ fi
 
 # Calculate the MAF and GL, with Plink output for LD pruning
 
-# create solo script for bam list
-
 angsd \
 -b $BAM_LIST \
 -ref ${REFERENCE} -anc ${REFERENCE} \
