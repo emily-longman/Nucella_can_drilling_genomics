@@ -36,7 +36,7 @@
 
 #--------------------------------------------------------------------------------
 
-# Call package 
+# Call package (https://github.com/lh3/minimap2)
 minimap2=/gpfs1/home/e/l/elongman/software/minimap2-2.28_x64-linux/minimap2
  
 #--------------------------------------------------------------------------------
@@ -60,7 +60,7 @@ cd $WORKING_FOLDER_SCRATCH
 
 if [ -d "cDNA_sam" ]
 then echo "Working cDNA_sam folder exist"; echo "Let's move on."; date
-else echo "Working cDNA_sam folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/cDNA_sam; date
+else echo "Working cDNA_sam folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/cDNA_sam; date
 fi
 
 #--------------------------------------------------------------------------------
