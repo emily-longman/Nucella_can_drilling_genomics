@@ -15,7 +15,7 @@
 #SBATCH --ntasks-per-node=1  
 
 # Reserve walltime -- hh:mm:ss 
-#SBATCH --time=6-00:00:00 
+#SBATCH --time=7-00:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
 #SBATCH --mem=60G
@@ -32,24 +32,41 @@
 
 #--------------------------------------------------------------------------------
 
+# Map cDNA to reference genome using minimap2.
 
-# Index genome w/ STAR
+#--------------------------------------------------------------------------------
 
-# Index genome using STAR
-$STAR --runThreadN 1 \
---runMode genomeGenerate \
---genomeDir Nucella_noGFF \
---genomeFastaFiles $REFERENCE 
+# Call package 
+minimap2=/gpfs1/home/e/l/elongman/software/minimap2-2.28_x64-linux/minimap2
+ 
+#--------------------------------------------------------------------------------
 
-# Map cDNA with STAR
+#Define important file locations
 
-STAR=/netfiles/nunezlab/Shared_Resources/Software/STAR-2.7.11b/bin/Linux_x86_64_static
+# Working folder is core folder where this pipeline is being run.
+WORKING_FOLDER_SCRATCH=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly
 
+# This is the location where the reference genome and all its indexes are stored.
+REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_Oct2024/Crassostrea_mask/N.canaliculata_assembly.fasta.masked
 
-# STAR can align reads in a continuous streaming mode, which makes it compatible with novel sequencing technologies such as the one recently announced by Oxford Nanopore Technologies
+#--------------------------------------------------------------------------------
 
+# Generate Folders and files
 
-STAR=/netfiles/nunezlab/Shared_Resources/Software/STAR-2.7.11b/bin/Linux_x86_64_static/STAR
+# Move to working directory
+cd $WORKING_FOLDER_SCRATCH
 
-WORKING_FOLDER=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/short_read_assembly
-REFERENCE=$WORKING_FOLDER/rename_scaffolds/N.canaliculata_assembly.fasta
+# This part of the script will check and generate, if necessary, all of the output folders used in the script
+
+if [ -d "cDNA_sam" ]
+then echo "Working cDNA_sam folder exist"; echo "Let's move on."; date
+else echo "Working cDNA_sam folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/cDNA_sam; date
+fi
+
+#--------------------------------------------------------------------------------
+
+# Index and map cDNA to genome w/ minimap2
+$minimap2 -ax map-ont \
+$REFERENCE \
+$WORKING_FOLDER_SCRATCH/cDNA_trim/Nucella.ONT.cDNA.barcode12_clean.fastq.gz \
+> $$WORKING_FOLDER_SCRATCH/cDNA_sam/Nucella.cDNA.sam
