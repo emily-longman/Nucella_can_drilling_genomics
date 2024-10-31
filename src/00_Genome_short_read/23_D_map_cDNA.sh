@@ -69,4 +69,4 @@ fi
 $minimap2 -ax map-ont \
 $REFERENCE \
 $WORKING_FOLDER_SCRATCH/cDNA_trim/Nucella.ONT.cDNA.barcode12_clean.fastq.gz \
-> $$WORKING_FOLDER_SCRATCH/cDNA_sam/Nucella.cDNA.sam
+> $WORKING_FOLDER_SCRATCH/cDNA_sam/Nucella.cDNA.sam
