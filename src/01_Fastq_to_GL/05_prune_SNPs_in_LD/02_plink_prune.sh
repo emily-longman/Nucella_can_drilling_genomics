@@ -36,12 +36,15 @@ plink=/gpfs1/home/e/l/elongman/software/plink-1.07-x86_64/plink
 
 #--------------------------------------------------------------------------------
 
-#Define important file locations
+# Define important file locations
 
-#Working folder is core folder where this pipeline is being run.
+# Working folder is core folder where this pipeline is being run.
 WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL
 
 SCRIPT_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/01_Fastq_to_GL
+
+# Path to bam list.
+BAM_LIST=$WORKING_FOLDER/guide_files/Nucella_bam.list
 
 #--------------------------------------------------------------------------------
 
@@ -49,7 +52,7 @@ SCRIPT_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/01_Fastq
 
 source $SCRIPT_FOLDER/03_Call_SNPs/01_config.sh
 
-N_IND=$(wc -l $WORKING_FOLDER/info/Nucella_bam.list | cut -d " " -f 1)
+N_IND=$(wc -l $BAM_LIST | cut -d " " -f 1)
 MIN_IND_FLOAT=$(echo "($N_IND * $PERCENT_IND)"| bc -l)
 MIN_IND=${MIN_IND_FLOAT%.*} 
 MAX_DEPTH=$(echo "($N_IND * $MAX_DEPTH_FACTOR)" |bc -l)
@@ -77,7 +80,7 @@ fi
 
 # Use plink to do LD based pruning 
 # (i.e., it will generate pruned subset of markers that are in approximate linkage equilibrium with each other, writing the IDs to plink.prune.in, and the IDs of all excluded variants to plink.prune.out
-plink --tped $WORKING_FOLDER/plink/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6.tped \
+$plink --tped $WORKING_FOLDER/plink/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6.tped \
 --tfam $WORKING_FOLDER/plink/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6.tfam \
 --indep-pairwise $WINDOW_PLINK $STEP $R --allow-extra-chr --threads 5 \
 --out $WORKING_FOLDER/plink/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6.R2.pruned
