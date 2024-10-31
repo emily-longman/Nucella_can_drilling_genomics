@@ -76,6 +76,9 @@ chmod 777 $SCRIPT_FOLDER/05_prune_SNPs_in_LD/03_make_sites_list_pruned.R
 
 # Get list of pruned sites
 
+# Change directory
+cd $WORKING_FOLDER/sites_info
+
 # Use R script to format the list of LD-pruned sites
 
 INPUT_plink=$WORKING_FOLDER/plink/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6.R2.pruned.prune.in
