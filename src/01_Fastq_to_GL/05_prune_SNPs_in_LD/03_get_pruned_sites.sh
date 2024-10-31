@@ -90,4 +90,6 @@ Rscript $SCRIPT_FOLDER/05_prune_SNPs_in_LD/03_make_sites_list_pruned.R "$INPUT_p
 
 # Use angsd to index pruned site list
 
-angsd sites index "$INPUT_angsd"_R2.pruned
+echo "Index sites with angsd"
+
+#angsd sites index "$INPUT_angsd"_R2.pruned

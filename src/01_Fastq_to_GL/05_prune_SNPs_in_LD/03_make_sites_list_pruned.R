@@ -4,7 +4,7 @@ argv <- commandArgs(T)
 INPUT_plink <- argv[1]
 INPUT_angsd <- argv[2]
 
-lib.EKL<-/gpfs1/home/e/l/elongman/R/x86_64-pc-linux-gnu-library/4.4/00LOCK-dplyr/00new/dplyr/libs
+lib.EKL<-gpfs1/home/e/l/elongman/R/x86_64-pc-linux-gnu-library/4.4/00LOCK-dplyr/00new/dplyr/libs
 
 # Install dplyr
 install.packages("dplyr",lib=lib.SQL)
