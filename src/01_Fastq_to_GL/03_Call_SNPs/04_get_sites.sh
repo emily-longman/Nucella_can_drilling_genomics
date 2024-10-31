@@ -90,4 +90,5 @@ chmod 777 $SCRIPT_FOLDER/03_Call_SNPs/04_make_sites_list_maxdepth.R
 
 Rscript $SCRIPT_FOLDER/03_Call_SNPs/04_make_sites_list_maxdepth.R "$INFILE" "$OUTFILE_sites" "$OUTFILE_regions"
 
+# Index sites with angsd
 angsd sites index $OUTFILE_sites
