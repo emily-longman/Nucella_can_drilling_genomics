@@ -72,8 +72,6 @@ MIN_IND=${MIN_IND_FLOAT%.*}
 MAX_DEPTH=$(echo "($N_IND * $MAX_DEPTH_FACTOR)" |bc -l)
 
 echo "Calculate the SAF, MAF and GL for all individuals listed in Nucella_bam.list"
-echo "Keep loci with at least one read for n individuals = $MIN_IND, which is $PERCENT_IND % of total $N_IND individuals"
-echo "Filter on allele frequency = $MIN_MAF"
 
 #--------------------------------------------------------------------------------
 
