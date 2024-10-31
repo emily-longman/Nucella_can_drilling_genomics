@@ -49,7 +49,7 @@ source("/Users/emilylongman/Documents/GitHub/Nucella_can_drilling_genomics/src/0
 npops=2 #npops (i,e., number of groups) = K
 
 # Look at log file to find which has lowest 
-inName="Nucella_SNPs_maf0.05_pctind0.5_mindepth0.2_maxdepth2_pval1e6_K{2}_run{3}.qopt" # name of the input file to plot, output of ngsAdmix or ADMIXTURE run
+inName="Nucella_SNPs_maf0.05_pctind0.5_mindepth0.3_maxdepth2_pval1e6_K{2}_run{10}.qopt" # name of the input file to plot, output of ngsAdmix or ADMIXTURE run
 
 ########### 
 
@@ -77,6 +77,7 @@ colors=sequential_hcl(3, palette = "TealGrn") # Number of colors you want and th
 
 # Plot
 ords=plotAdmixture(data=in.tbl,npops=npops,grouping.method="distance",vshift=0.1, colors = colors)
+ggsave("N.canaliculata_Admixture_K=2_Drilled.jpeg", width = 8, height = 6, device='jpeg', dpi=300)
 
 ########### 
 
@@ -104,6 +105,7 @@ colors=sequential_hcl(3, palette = "TealGrn") # Number of colors you want and th
 
 # Plot
 ords=plotAdmixture(data=in.tbl,npops=npops,grouping.method="distance",vshift=0.1, colors = colors)
+ggsave("N.canaliculata_Admixture_K=1=2_Site.jpeg", width = 8, height = 6, device='jpeg', dpi=300)
 
 # ================================================================================== #
 
@@ -112,7 +114,7 @@ ords=plotAdmixture(data=in.tbl,npops=npops,grouping.method="distance",vshift=0.1
 npops=3 #npops (i,e., number of groups) = K
 
 # Look at log file to find which has lowest 
-inName="Nucella_SNPs_maf0.05_pctind0.5_mindepth0.2_maxdepth2_pval1e6_K{3}_run{4}.qopt" # name of the input file to plot, output of ngsAdmix or ADMIXTURE run
+inName="Nucella_SNPs_maf0.05_pctind0.5_mindepth0.3_maxdepth2_pval1e6_K{3}_run{5}.qopt" # name of the input file to plot, output of ngsAdmix or ADMIXTURE run
 
 ########### 
 
@@ -140,6 +142,7 @@ colors=sequential_hcl(3, palette = "TealGrn") # Number of colors you want and th
 
 # Plot
 ords=plotAdmixture(data=in.tbl,npops=npops,grouping.method="distance",vshift=0.1, colors = colors)
+ggsave("N.canaliculata_Admixture_K=3_Drilled.jpeg", width = 8, height = 6, device='jpeg', dpi=300)
 
 ########### 
 
@@ -167,4 +170,5 @@ colors=sequential_hcl(3, palette = "TealGrn") # Number of colors you want and th
 
 # Plot
 ords=plotAdmixture(data=in.tbl,npops=npops,grouping.method="distance",vshift=0.1, colors = colors)
+ggsave("N.canaliculata_Admixture_K=3_Site.jpeg", width = 8, height = 6, device='jpeg', dpi=300)
 
