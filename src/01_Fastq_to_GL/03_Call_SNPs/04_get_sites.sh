@@ -44,19 +44,19 @@ module load R/4.4.0
 
 #--------------------------------------------------------------------------------
 
-#Define important file locations
+# Define important file locations
 
-#Working folder is core folder where this pipeline is being run.
+# Working folder is core folder where this pipeline is being run.
 WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL
 
-#Scripts folder is where all relevant scripts for the pipeline are stored.
+# Scripts folder is where all relevant scripts for the pipeline are stored.
 SCRIPT_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/01_Fastq_to_GL
 
 #--------------------------------------------------------------------------------
 
 # Prepare variables 
 
-#Use config file (this means you dont need to directly input minimum individual/depth parameters)
+# Use config file (this means you dont need to directly input minimum individual/depth parameters)
 source $SCRIPT_FOLDER/03_Call_SNPs/01_config.sh
 
 #--------------------------------------------------------------------------------

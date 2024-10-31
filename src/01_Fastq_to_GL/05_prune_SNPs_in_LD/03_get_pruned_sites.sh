@@ -28,10 +28,13 @@
 
 #--------------------------------------------------------------------------------
 
-# This script will use all bam files to calculate saf, maf and genotype likelihoods on pruned SNP list
+# This script will get a list of the scaffold and positions of LD-pruned SNPs.
+
+#--------------------------------------------------------------------------------
 
 #Load modules 
 spack load angsd@0.933
+module load R/4.4.0
 
 #--------------------------------------------------------------------------------
 
@@ -40,37 +43,34 @@ spack load angsd@0.933
 # Working folder is core folder where this pipeline is being run.
 WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL
 
-# This is the location where the reference genome and all its indexes are stored.
-REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_Oct2024/Crassostrea_mask/N.canaliculata_assembly.fasta.masked
-
 # Scripts folder.
 SCRIPT_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/01_Fastq_to_GL
-
-# Path to bam list.
-BAM_LIST=$WORKING_FOLDER/guide_files/Nucella_bam.list
-
-#--------------------------------------------------------------------------------
-
-# Define parameters
-NB_CPU=10 #change accordingly in SLURM header
-echo "using #CPUs ==" $NB_CPU
 
 #--------------------------------------------------------------------------------
 
 # Prepare variables 
 
-# Use config file (this means you dont need to directly input minimum individual/depth parameters)
+# Use config file  
 source $SCRIPT_FOLDER/03_Call_SNPs/01_config.sh
-
-# Extract parameters from config file
-N_IND=$(wc -l $BAM_LIST | cut -d " " -f 1) 
-MIN_IND_FLOAT=$(echo "($N_IND * $PERCENT_IND)"| bc -l)
-MIN_IND=${MIN_IND_FLOAT%.*} 
-MAX_DEPTH=$(echo "($N_IND * $MAX_DEPTH_FACTOR)" |bc -l)
 
 #--------------------------------------------------------------------------------
 
+# Generate Folders and files
 
+# Move to working directory
+cd $WORKING_FOLDER
+
+# This part of the script will check and generate, if necessary, all of the output folders used in the script
+
+if [ -d "sites_info" ]
+then echo "Working sites_info folder exist"; echo "Let's move on."; date
+else echo "Working sites_info folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/sites_info; date
+fi
+
+#--------------------------------------------------------------------------------
+
+# Change permissions for script 
+chmod 777 $SCRIPT_FOLDER/05_prune_SNPs_in_LD/03_make_sites_list_pruned.R
 
 #--------------------------------------------------------------------------------
 
@@ -81,7 +81,7 @@ MAX_DEPTH=$(echo "($N_IND * $MAX_DEPTH_FACTOR)" |bc -l)
 INPUT_plink=$WORKING_FOLDER/plink/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6.R2.pruned.prune.in
 INPUT_angsd=$WORKING_FOLDER/sites_info/sites_all_maf
 
-Rscript Rscripts/make_site_list_pruned.r "$INPUT_plink" "$INPUT_angsd"
+Rscript $SCRIPT_FOLDER/05_prune_SNPs_in_LD/03_make_sites_list_pruned.R "$INPUT_plink" "$INPUT_angsd"
 
 #--------------------------------------------------------------------------------
 
