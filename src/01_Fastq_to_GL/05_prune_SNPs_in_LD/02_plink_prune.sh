@@ -12,13 +12,15 @@
 
 # Request nodes
 #SBATCH --nodes=1 
-#SBATCH --ntasks-per-node=11
 
 # Reserve walltime -- hh:mm:ss --7 day limit 
-#SBATCH --time=2:00:00 
+#SBATCH --time=10:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
 #SBATCH --mem=20G 
+
+# Request CPU
+#SBATCH --cpus-per-task=5
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/%x_%j.out # Standard output
@@ -52,7 +54,8 @@ MIN_IND_FLOAT=$(echo "($N_IND * $PERCENT_IND)"| bc -l)
 MIN_IND=${MIN_IND_FLOAT%.*} 
 MAX_DEPTH=$(echo "($N_IND * $MAX_DEPTH_FACTOR)" |bc -l)
 
-WINDOW=25
+# Additional parameters for plink
+WINDOW_PLINK=25
 STEP=10
 R=0.5
 
@@ -72,8 +75,15 @@ fi
 
 #--------------------------------------------------------------------------------
 
-# NOTE: NOT UPDATED YET!
-plink --tped angsd/plink/all_plink_maf"$MIN_MAF"_pctind"$PERCENT_IND"_maxdepth"$MAX_DEPTH_FACTOR".tped \
---tfam angsd/plink/all_plink_maf"$MIN_MAF"_pctind"$PERCENT_IND"_maxdepth"$MAX_DEPTH_FACTOR".tfam \
---indep-pairwise $WINDOW $STEP $R --allow-extra-chr \
---out angsd/plink/all_plink_maf"$MIN_MAF"_pctind"$PERCENT_IND"_maxdepth"$MAX_DEPTH_FACTOR".R2.pruned --threads 1 
+# Use plink to do LD based pruning 
+# (i.e., it will generate pruned subset of markers that are in approximate linkage equilibrium with each other, writing the IDs to plink.prune.in, and the IDs of all excluded variants to plink.prune.out
+plink --tped $WORKING_FOLDER/plink/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6.tped \
+--tfam $WORKING_FOLDER/plink/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6.tfam \
+--indep-pairwise $WINDOW_PLINK $STEP $R --allow-extra-chr --threads 5 \
+--out $WORKING_FOLDER/plink/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6.R2.pruned
+
+# Variant pruning with indep-pairwise requires 3 parameters: 
+# 1) a window size in variant count 
+# 2) a variant count to shift the window at the end of each step 
+# 3) a pairwise r2 threshold (at each step, pairs of variants in the current window with squared correlation greater than the threshold are noted, and variants are greedily pruned from the window until no such pairs remain)
+
