@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=angsd_admix
+#SBATCH --job-name=angsd_admix_pruned
 
 # Specify partition
 #SBATCH --partition=bluemoon
@@ -14,11 +14,11 @@
 #SBATCH --nodes=1 
 #SBATCH --ntasks-per-node=10
 
-# Reserve walltime -- hh:mm:ss --7 day limit 
-#SBATCH --time=10:00:00 
+# Reserve walltime -- hh:mm:ss 
+#SBATCH --time=7:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
-#SBATCH --mem=5G 
+#SBATCH --mem=3G 
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/%x_%j.out # Standard output
@@ -41,9 +41,6 @@ WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/proces
 
 #Scripts folder
 SCRIPT_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/01_Fastq_to_GL
-
-#This is the location where the reference genome and all its indexes are stored.
-REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_Oct2024/Crassostrea_mask/N.canaliculata_assembly.fasta.masked
 
 #--------------------------------------------------------------------------------
 
@@ -70,16 +67,16 @@ cd $WORKING_FOLDER
 
 # This part of the script will check and generate, if necessary, all of the output folders used in the script
 
-if [ -d "ngs_admix" ]
-then echo "Working ngs_admix folder exist"; echo "Let's move on."; date
-else echo "Working ngs_admix folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/ngs_admix; date
+if [ -d "ngs_admix_pruned" ]
+then echo "Working ngs_admix_pruned folder exist"; echo "Let's move on."; date
+else echo "Working ngs_admix_pruned folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/ngs_admix_pruned; date
 fi
 
-cd $WORKING_FOLDER/ngs_admix
+cd $WORKING_FOLDER/ngs_admix_pruned
 
 if [ -d "K_output" ]
 then echo "Working K_output folder exist"; echo "Let's move on."; date
-else echo "Working K_output folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/ngs_admix/K_output; date
+else echo "Working K_output folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/ngs_admix_pruned/K_output; date
 fi
 
 #--------------------------------------------------------------------------------
@@ -92,7 +89,7 @@ for i in $(seq $K_MIN $K_MAX)
 do 
 echo $i
 $NGSadmix -P $NB_CPU \
--likes $WORKING_FOLDER/genotype_likelihoods_all/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6.beagle.gz \
--minMaf $MIN_MAF -K $i -o $WORKING_FOLDER/ngs_admix/K_output/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6_K{$i}_run{$j}
+-likes $WORKING_FOLDER/genotype_likelihoods_all_pruned/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6_pruned.beagle.gz \
+-minMaf $MIN_MAF -K $i -o $WORKING_FOLDER/ngs_admix/K_output/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6_pruned_K{$i}_run{$j}
 done
 done
