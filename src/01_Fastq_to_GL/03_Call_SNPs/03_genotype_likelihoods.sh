@@ -136,4 +136,4 @@ angsd \
 # -minMaf: Keep only sites with minor allele freq > some proportion
 # -setMaxDepth: Keep SNPs with a maximum total depth 
 
-# -SNP_pval 1e-4: Keep only site highly likely to be polymorphic (SNPs)
+# -SNP_pval 1e-6: Keep only site highly likely to be polymorphic (SNPs)
