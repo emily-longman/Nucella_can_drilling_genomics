@@ -98,7 +98,7 @@ fi
 #--------------------------------------------------------------------------------
 
 # Make a copy of the list of bam files for all the Nucella samples and place in the output directory. You'll need this later for making figures.
-cp $BAM_LIST $WORKING_FOLDER/pcangsd
+cp $BAM_LIST $WORKING_FOLDER/pcangsd_pruned
 
 # Then, run PCA and admixture scores with pcangsd:
 echo "Analyse covariance matrix on all individuals"
