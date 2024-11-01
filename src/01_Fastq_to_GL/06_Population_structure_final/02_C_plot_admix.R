@@ -1,0 +1,174 @@
+## Plotting with Zoon plot_admix R code
+
+# Clear memory
+rm(list=ls()) 
+
+# ================================================================================== #
+
+# Note: to run script move the ngs_admix folder in results 
+
+# Set path as main Github repo
+library(rprojroot)
+
+# List all files and directories below the root
+dir(find_root(has_file("README.md")))
+
+# Get metadata
+metdata_path_from_root <- find_root_file("results", criterion = has_file("README.md"))
+setwd(metdata_path_from_root) # Set working directory as path from root
+samples <- read.csv("Metadata.csv", header=T)
+
+# Set relative path of results directory from root
+dir(find_root_file("results", criterion = has_file("README.md")))
+results_path_from_root <- find_root_file("results", "stats", "ngs_admix", "K_output", criterion = has_file("README.md"))
+# List files in this folder to make sure you're in the right spot.
+list.files(results_path_from_root)
+
+# Set working directory as path from root
+setwd(results_path_from_root)
+
+# ================================================================================== #
+
+# Look at log file produced in step "02_B_admix_all". Identify which K has lowest likelihood.  
+# Further, if curious, plot the iteration for a given K with the lowest likelihood
+
+# ================================================================================== #
+
+# Load packages
+library(colorspace)
+library(RColorBrewer)
+
+# ================================================================================== #
+
+# Get R plot admix function
+source("/Users/emilylongman/Documents/GitHub/Nucella_can_drilling_genomics/src/01_Fastq_to_GL/04_Population_structure/02_C_plot_admix_function.R")
+
+# ================================================================================== #
+
+#### Set K=2
+npops=2 #npops (i,e., number of groups) = K
+
+# Look at log file to find which has lowest 
+inName="Nucella_SNPs_maf0.05_pctind0.5_mindepth0.3_maxdepth2_pval1e6_K{2}_run{10}.qopt" # name of the input file to plot, output of ngsAdmix or ADMIXTURE run
+
+########### 
+
+# Look at Binary Drilling
+
+# Read in table
+tbl=read.table(inName, sep="", header = F) # read in the dataframe from NGSadmix that has % likelihood clustering
+
+# Get metadata
+i2p=samples[,c(1,4)] # select the sample name and population name columns
+names(i2p)=c("ind","drilled") # give column names
+row.names(i2p)=i2p$ind # give row names
+
+# Make row names aline with pop dataframe
+row.names(tbl)= i2p$ind 
+
+# Merge admix and pop data
+in.tbl<-transform(merge(tbl,i2p,by=0), row.names=Row.names, Row.names=NULL) 
+
+# Make pop into factor (otherwise will be plotted based in alphabetical order)
+in.tbl$pop=factor(in.tbl$drilled, levels=c("Drilled","Not.Drilled"))
+
+# Indicate colors
+colors=sequential_hcl(3, palette = "TealGrn") # Number of colors you want and then pallete style
+
+# Plot
+ords=plotAdmixture(data=in.tbl,npops=npops,grouping.method="distance",vshift=0.1, colors = colors)
+ggsave("N.canaliculata_Admixture_K=2_Drilled.jpeg", width = 8, height = 6, device='jpeg', dpi=300)
+
+########### 
+
+# Look at Collection Source
+
+# Read in table
+tbl=read.table(inName, sep="", header = F) # read in the dataframe from NGSadmix that has % likelihood clustering
+
+# Get metadata
+i2p=samples[,c(1,2)] # select the sample name and population name columns
+names(i2p)=c("ind","source") # give column names
+row.names(i2p)=i2p$ind # give row names
+
+# Make row names aline with pop dataframe
+row.names(tbl)= i2p$ind 
+
+# Merge admix and pop data
+in.tbl<-transform(merge(tbl,i2p,by=0), row.names=Row.names, Row.names=NULL) 
+
+# Make source into factor (otherwise will be plotted based in alphabetical order)
+in.tbl$pop=factor(in.tbl$source, levels=c("FB", "HC", "MP"))
+
+# Indicate colors
+colors=sequential_hcl(3, palette = "TealGrn") # Number of colors you want and then pallete style
+
+# Plot
+ords=plotAdmixture(data=in.tbl,npops=npops,grouping.method="distance",vshift=0.1, colors = colors)
+ggsave("N.canaliculata_Admixture_K=1=2_Site.jpeg", width = 8, height = 6, device='jpeg', dpi=300)
+
+# ================================================================================== #
+
+
+#### Set K=3
+npops=3 #npops (i,e., number of groups) = K
+
+# Look at log file to find which has lowest 
+inName="Nucella_SNPs_maf0.05_pctind0.5_mindepth0.3_maxdepth2_pval1e6_K{3}_run{5}.qopt" # name of the input file to plot, output of ngsAdmix or ADMIXTURE run
+
+########### 
+
+# Look at Binary Drilling
+
+# Read in table
+tbl=read.table(inName, sep="", header = F) # read in the dataframe from NGSadmix that has % likelihood clustering
+
+# Get metadata
+i2p=samples[,c(1,4)] # select the sample name and population name columns
+names(i2p)=c("ind","drilled") # give column names
+row.names(i2p)=i2p$ind # give row names
+
+# Make row names aline with pop dataframe
+row.names(tbl)= i2p$ind 
+
+# Merge admix and pop data
+in.tbl<-transform(merge(tbl,i2p,by=0), row.names=Row.names, Row.names=NULL) 
+
+# Make pop into factor (otherwise will be plotted based in alphabetical order)
+in.tbl$pop=factor(in.tbl$drilled, levels=c("Drilled","Not.Drilled"))
+
+# Indicate colors
+colors=sequential_hcl(3, palette = "TealGrn") # Number of colors you want and then pallete style
+
+# Plot
+ords=plotAdmixture(data=in.tbl,npops=npops,grouping.method="distance",vshift=0.1, colors = colors)
+ggsave("N.canaliculata_Admixture_K=3_Drilled.jpeg", width = 8, height = 6, device='jpeg', dpi=300)
+
+########### 
+
+# Look at Collection Source
+
+# Read in table
+tbl=read.table(inName, sep="", header = F) # read in the dataframe from NGSadmix that has % likelihood clustering
+
+# Get metadata
+i2p=samples[,c(1,2)] # select the sample name and population name columns
+names(i2p)=c("ind","source") # give column names
+row.names(i2p)=i2p$ind # give row names
+
+# Make row names aline with pop dataframe
+row.names(tbl)= i2p$ind 
+
+# Merge admix and pop data
+in.tbl<-transform(merge(tbl,i2p,by=0), row.names=Row.names, Row.names=NULL) 
+
+# Make source into factor (otherwise will be plotted based in alphabetical order)
+in.tbl$pop=factor(in.tbl$source, levels=c("FB", "HC", "MP"))
+
+# Indicate colors
+colors=sequential_hcl(3, palette = "TealGrn") # Number of colors you want and then pallete style
+
+# Plot
+ords=plotAdmixture(data=in.tbl,npops=npops,grouping.method="distance",vshift=0.1, colors = colors)
+ggsave("N.canaliculata_Admixture_K=3_Site.jpeg", width = 8, height = 6, device='jpeg', dpi=300)
+
