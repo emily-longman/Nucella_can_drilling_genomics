@@ -90,6 +90,6 @@ do
 echo $i
 $NGSadmix -P $NB_CPU \
 -likes $WORKING_FOLDER/genotype_likelihoods_all_pruned/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6_pruned.beagle.gz \
--minMaf $MIN_MAF -K $i -o $WORKING_FOLDER/ngs_admix/K_output/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6_pruned_K{$i}_run{$j}
+-minMaf $MIN_MAF -K $i -o $WORKING_FOLDER/ngs_admix_pruned/K_output/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6_pruned_K{$i}_run{$j}
 done
 done
