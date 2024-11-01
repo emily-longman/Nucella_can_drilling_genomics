@@ -65,12 +65,6 @@ WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/proces
 # Scripts folder
 SCRIPT_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/01_Fastq_to_GL
 
-# Results folder
-RESULTS_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/results/stats
-
-# This is the location where the reference genome and all its indexes are stored.
-REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_Oct2024/Crassostrea_mask/N.canaliculata_assembly.fasta.masked
-
 # Path to bam list.
 BAM_LIST=$WORKING_FOLDER/guide_files/Nucella_bam.list
 
@@ -96,11 +90,10 @@ cd $WORKING_FOLDER
 
 # This part of the script will check and generate, if necessary, all of the output folders used in the script
 
-if [ -d "pcangsd" ]
-then echo "Working pcangsd folder exist"; echo "Let's move on."; date
-else echo "Working pcangsd folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/pcangsd; date
+if [ -d "pcangsd_pruned" ]
+then echo "Working pcangsd_pruned folder exist"; echo "Let's move on."; date
+else echo "Working pcangsd_pruned folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/pcangsd_pruned; date
 fi
-
 
 #--------------------------------------------------------------------------------
 
@@ -110,9 +103,10 @@ cp $BAM_LIST $WORKING_FOLDER/pcangsd
 # Then, run PCA and admixture scores with pcangsd:
 echo "Analyse covariance matrix on all individuals"
 
+# Use the pruned input file in beagle format for the pca
 pcangsd \
--b $WORKING_FOLDER/genotype_likelihoods_all//Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6.beagle.gz \
--o $WORKING_FOLDER/pcangsd/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6 \
+-b $WORKING_FOLDER/genotype_likelihoods_all_pruned/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6_pruned.beagle.gz \
+-o $WORKING_FOLDER/pcangsd_pruned/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6_pruned \
 -t $CPU 
 
 # PCAngsd accepts either genotype likelihoods in Beagle format generated from BAM files using ANGSD
@@ -120,13 +114,7 @@ pcangsd \
 # --admix : Individual admixture proportions and ancestral allele frequencies can be estimated assuming K ancestral populations using an accelerated mini-batch NMF method.
 
 echo "Transform covariance matrix into PCA"
-COV_MAT=$WORKING_FOLDER/pcangsd/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_maxdepth"$MAX_DEPTH_FACTOR".cov
-
-#--------------------------------------------------------------------------------
-
-# Make copy of pcangsd directory and move to results directory for graphing
-
-cp -r pcangsd $RESULTS_FOLDER
+COV_MAT=$WORKING_FOLDER/pcangsd_pruned/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6_pruned.cov
 
 #--------------------------------------------------------------------------------
 

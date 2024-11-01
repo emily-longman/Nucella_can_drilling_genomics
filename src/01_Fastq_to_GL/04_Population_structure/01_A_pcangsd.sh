@@ -65,12 +65,6 @@ WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/proces
 # Scripts folder
 SCRIPT_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/01_Fastq_to_GL
 
-# Results folder
-RESULTS_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/results/stats
-
-# This is the location where the reference genome and all its indexes are stored.
-REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_Oct2024/Crassostrea_mask/N.canaliculata_assembly.fasta.masked
-
 # Path to bam list.
 BAM_LIST=$WORKING_FOLDER/guide_files/Nucella_bam.list
 
@@ -111,7 +105,7 @@ cp $BAM_LIST $WORKING_FOLDER/pcangsd
 echo "Analyse covariance matrix on all individuals"
 
 pcangsd \
--b $WORKING_FOLDER/genotype_likelihoods_all//Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6.beagle.gz \
+-b $WORKING_FOLDER/genotype_likelihoods_all/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6.beagle.gz \
 -o $WORKING_FOLDER/pcangsd/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6 \
 -t $CPU 
 
@@ -121,12 +115,6 @@ pcangsd \
 
 echo "Transform covariance matrix into PCA"
 COV_MAT=$WORKING_FOLDER/pcangsd/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_maxdepth"$MAX_DEPTH_FACTOR".cov
-
-#--------------------------------------------------------------------------------
-
-# Make copy of pcangsd directory and move to results directory for graphing
-
-cp -r pcangsd $RESULTS_FOLDER
 
 #--------------------------------------------------------------------------------
 
