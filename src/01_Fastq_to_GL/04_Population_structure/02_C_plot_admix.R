@@ -1,4 +1,4 @@
-## Plotting with Zoon plot_admix R code
+## Plotting with plot_admix_function.R code
 
 # Clear memory
 rm(list=ls()) 
@@ -35,6 +35,8 @@ setwd(results_path_from_root)
 # ================================================================================== #
 
 # Load packages
+library(stringr)
+library(ggplot2)
 library(colorspace)
 library(RColorBrewer)
 
@@ -45,11 +47,121 @@ source("/Users/emilylongman/Documents/GitHub/Nucella_can_drilling_genomics/src/0
 
 # ================================================================================== #
 
+# Choose K using two methods - maximum likelihood and CLUMPAK
+
+# ================================================================================== #
+
+# Identify the list of log files
+data <- list.files(pattern = ".log", full.names = T)
+
+# Use lapply to read in all our log files at once
+bigData<-lapply(1:30, FUN = function(i) readLines(data[i]))
+
+# Extract the line that starts with "b" from each file and return it as a list
+foundset<-sapply(1:30, FUN= function(x) bigData[[x]][which(str_sub(bigData[[x]], 1, 1) == 'b')])
+
+# Extract the first number in the string. Do this with the function sub
+as.numeric( sub("\\D*(\\d+).*", "\\1", foundset) )
+
+# Make a dataframe with an index 1:3, this corresponds to our K values
+logs <- data.frame(K = rep(1:3, each=10))
+
+# Add to it our likelihood values
+logs$like<-as.vector(as.numeric( sub("\\D*(\\d+).*", "\\1", foundset) ))
+
+# Calculate our delta K and probability
+tapply(logs$like, logs$K, FUN= function(x) mean(abs(x))/sd(abs(x)))
+
+# --> choose K value with highest maximum likelihood
+
+# ================================================================================== #
+
+# Get K with CLUMPAK (https://clumpak.tau.ac.il/bestK.html)
+# However, since all K=1 have the same likelihood can't use CLUMPAK 
+# "Cannot calculate best k because Standard deviation of 'Ln Prob of Data' for K=1 is zero."
+
+# Change path to load in log file
+results_path_from_root <- find_root_file("results", "stats", "ngs_admix", criterion = has_file("README.md"))
+setwd(results_path_from_root)
+
+# Import logfile & convert to CLUMPAK format
+logs <- as.data.frame(read.table("logfile"))
+
+# Add K
+logs$K <- c(rep("1", 10), rep("2", 10), rep("3", 10))
+
+# Write table
+write.table(logs[, c(2, 1)], "logfile_formatted", row.names = F, col.names = F, quote = F)
+
+# --> The re-formatted logfile can be used with Clumpak to determine your most likely K.
+# Upload the file - check log probability table file
+
+# ================================================================================== #
+
+# Change path for subsequent graphing
+
+# Set relative path of results directory from root
+results_path_from_root <- find_root_file("results", "stats", "ngs_admix", "K_output", criterion = has_file("README.md"))
+setwd(results_path_from_root)
+
+# ================================================================================== #
+
+# Graph using two methods - barplots and plotAdmixture code
+# For visualization purposes graph K=2 and K=3
+
+# ================================================================================== #
+
+### Visualize NGSadmix output with structure plots
+
+# K=2
+
+# Read in a qopt file. It is formatted such that there is one row for each individual and one column for the percentage of admixture for each of the K's
+q<-read.table("Nucella_SNPs_maf0.05_pctind0.5_mindepth0.3_maxdepth2_pval1e6_K{2}_run{3}.qopt")
+
+# Indicate colors
+colors=sequential_hcl(2, palette = "TealGrn") # Number of colors you want and then pallete style
+
+barplot(t(q),
+        col=colors, #change colors to number of K
+        names=samples$Site,
+        las=2,
+        space=0,
+        border=NA,
+        xlab="Individuals",
+        ylab="Admixture proportions for K=2 pruned")
+abline(v = c(59, 127), lty = 5, lwd = 2, col = "black")
+ggsave("/Users/emilylongman/Documents/GitHub/Nucella_can_drilling_genomics/results/stats/ngs_admix/N.canaliculata_Admixture_K=2_Site_barplot.jpeg", width = 8, height = 6, device='jpeg', dpi=300)
+
+####### 
+
+# K=3
+
+# Read in a qopt file. It is formatted such that there is one row for each individual and one column for the percentage of admixture for each of the K's
+q<-read.table("Nucella_SNPs_maf0.05_pctind0.5_mindepth0.3_maxdepth2_pval1e6_K{3}_run{4}.qopt")
+
+# Indicate colors
+colors=sequential_hcl(3, palette = "TealGrn") # Number of colors you want and then pallete style
+
+barplot(t(q),
+        col=colors, 
+        names=samples$Site,
+        las=2,
+        space=0,
+        border=NA,
+        xlab="Individuals",
+        ylab="Admixture proportions for K=2 pruned")
+abline(v = c(59, 127), lty = 5, lwd = 2, col = "white")
+ggsave("/Users/emilylongman/Documents/GitHub/Nucella_can_drilling_genomics/results/stats/ngs_admix/N.canaliculata_Admixture_K=3_Site_barplot.jpeg", width = 8, height = 6, device='jpeg', dpi=300)
+
+# ================================================================================== #
+
+# Graph using plotAdmixture script
+
 #### Set K=2
 npops=2 #npops (i,e., number of groups) = K
 
 # Look at log file to find which has lowest 
-inName="Nucella_SNPs_maf0.05_pctind0.5_mindepth0.3_maxdepth2_pval1e6_K{2}_run{10}.qopt" # name of the input file to plot, output of ngsAdmix or ADMIXTURE run
+inName="Nucella_SNPs_maf0.05_pctind0.5_mindepth0.3_maxdepth2_pval1e6_K{2}_run{3}.qopt" # name of the input file to plot, output of ngsAdmix or ADMIXTURE run
 
 ########### 
 
@@ -77,7 +189,7 @@ colors=sequential_hcl(3, palette = "TealGrn") # Number of colors you want and th
 
 # Plot
 ords=plotAdmixture(data=in.tbl,npops=npops,grouping.method="distance",vshift=0.1, colors = colors)
-ggsave("N.canaliculata_Admixture_K=2_Drilled.jpeg", width = 8, height = 6, device='jpeg', dpi=300)
+ggsave("/Users/emilylongman/Documents/GitHub/Nucella_can_drilling_genomics/results/stats/ngs_admix/N.canaliculata_Admixture_K=2_Drilled.jpeg", width = 8, height = 6, device='jpeg', dpi=300)
 
 ########### 
 
@@ -105,7 +217,7 @@ colors=sequential_hcl(3, palette = "TealGrn") # Number of colors you want and th
 
 # Plot
 ords=plotAdmixture(data=in.tbl,npops=npops,grouping.method="distance",vshift=0.1, colors = colors)
-ggsave("N.canaliculata_Admixture_K=1=2_Site.jpeg", width = 8, height = 6, device='jpeg', dpi=300)
+ggsave("/Users/emilylongman/Documents/GitHub/Nucella_can_drilling_genomics/results/stats/ngs_admix/N.canaliculata_Admixture_K=2_Site.jpeg", width = 8, height = 6, device='jpeg', dpi=300)
 
 # ================================================================================== #
 
@@ -114,7 +226,7 @@ ggsave("N.canaliculata_Admixture_K=1=2_Site.jpeg", width = 8, height = 6, device
 npops=3 #npops (i,e., number of groups) = K
 
 # Look at log file to find which has lowest 
-inName="Nucella_SNPs_maf0.05_pctind0.5_mindepth0.3_maxdepth2_pval1e6_K{3}_run{5}.qopt" # name of the input file to plot, output of ngsAdmix or ADMIXTURE run
+inName="Nucella_SNPs_maf0.05_pctind0.5_mindepth0.3_maxdepth2_pval1e6_K{3}_run{4}.qopt" # name of the input file to plot, output of ngsAdmix or ADMIXTURE run
 
 ########### 
 
@@ -142,7 +254,7 @@ colors=sequential_hcl(3, palette = "TealGrn") # Number of colors you want and th
 
 # Plot
 ords=plotAdmixture(data=in.tbl,npops=npops,grouping.method="distance",vshift=0.1, colors = colors)
-ggsave("N.canaliculata_Admixture_K=3_Drilled.jpeg", width = 8, height = 6, device='jpeg', dpi=300)
+ggsave("/Users/emilylongman/Documents/GitHub/Nucella_can_drilling_genomics/results/stats/ngs_admix/N.canaliculata_Admixture_K=3_Drilled.jpeg", width = 8, height = 6, device='jpeg', dpi=300)
 
 ########### 
 
@@ -170,5 +282,4 @@ colors=sequential_hcl(3, palette = "TealGrn") # Number of colors you want and th
 
 # Plot
 ords=plotAdmixture(data=in.tbl,npops=npops,grouping.method="distance",vshift=0.1, colors = colors)
-ggsave("N.canaliculata_Admixture_K=3_Site.jpeg", width = 8, height = 6, device='jpeg', dpi=300)
-
+ggsave("/Users/emilylongman/Documents/GitHub/Nucella_can_drilling_genomics/results/stats/ngs_admix/N.canaliculata_Admixture_K=3_Site.jpeg", width = 8, height = 6, device='jpeg', dpi=300)
