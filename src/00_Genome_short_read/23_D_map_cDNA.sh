@@ -38,7 +38,9 @@
 
 # Call package (https://github.com/lh3/minimap2)
 minimap2=/gpfs1/home/e/l/elongman/software/minimap2-2.28_x64-linux/minimap2
- 
+
+# Tried also installing graphmap but had problems.  
+
 #--------------------------------------------------------------------------------
 
 #Define important file locations
