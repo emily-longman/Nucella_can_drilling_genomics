@@ -62,7 +62,14 @@ sites_pruned<-inner_join(sites, pruned)
 print(paste("there is a total of ", dim(sites)[1], "sites"))
 print(paste("we keep ", dim(sites_pruned)[1], "pruned sites"))
 
+### GO BACK TO THIS!!!!
+sites_pruned_order <- sites_pruned[order(sites_pruned[,1]),]
+sites_pruned_order[,1] <-as.factor(sites_pruned_order[,1])
+regions_order<-levels(sites_pruned[,1])
+#### JUST MODIFIED IN BETWEEN - NEED TO GET REGIONS LIST
+
 write.table(sites_pruned[,1:4], "sites_all_maf_pruned", col.names=F, row.names=F, quote=F, sep="\t")
+write.table(regions_order, "regions_all_maf_pruned", row.names=F, col.names=F, sep="\t", quote=F)
 
 #--------------------------------------------------------------------------------
 
