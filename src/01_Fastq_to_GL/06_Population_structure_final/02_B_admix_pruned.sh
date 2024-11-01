@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=angsd_admix_out
+#SBATCH --job-name=angsd_admix_out_pruned
 
 # Specify partition
 #SBATCH --partition=bluemoon
@@ -37,7 +37,7 @@ WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/proces
 #--------------------------------------------------------------------------------
 
 # Change directory to output
-cd $WORKING_FOLDER/ngs_admix
+cd $WORKING_FOLDER/ngs_admix_pruned
 
 # Loop through the log files to create one output file - identify which value is the lowest for each K - plot that "fopt.gz" for each K
-(for log in `ls K_output/*.log`; do grep -Po 'like=\K[^ ]+' $log; done) > $WORKING_FOLDER/ngs_admix/logfile
+(for log in `ls K_output/*.log`; do grep -Po 'like=\K[^ ]+' $log; done) > $WORKING_FOLDER/ngs_admix_pruned/logfile
