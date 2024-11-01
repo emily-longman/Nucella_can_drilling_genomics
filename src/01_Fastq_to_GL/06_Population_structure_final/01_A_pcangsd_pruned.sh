@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=pcangsd_final_SNPs
+#SBATCH --job-name=pcangsd_pruned
 
 # Specify partition
 #SBATCH --partition=bluemoon
