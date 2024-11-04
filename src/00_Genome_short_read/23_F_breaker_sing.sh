@@ -8,14 +8,14 @@
 #SBATCH --job-name=breaker_sing
 
 # Specify partition
-#SBATCH --partition=bluemoon
+#SBATCH --partition=week
 
 # Request nodes
 #SBATCH --nodes=1 
 #SBATCH --ntasks-per-node=2
 
 # Reserve walltime -- hh:mm:ss --7 day limit 
-#SBATCH --time=24:00:00 
+#SBATCH --time=6-00:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
 #SBATCH --mem=30G 
@@ -69,7 +69,7 @@ cd $SCRIPTS_FOLDER
 export BRAKER_SIF=$SCRIPTS_FOLDER/23_breaker_sing/braker3.sif
 
 # Change permissions for associated script
-chmod +x 23_E_breaker.sh
+chmod +x 23_F_breaker.sh
 
 # Use the singularity to run angsd
-singularity exec $SCRIPTS_FOLDER/23_breaker_sing/braker3.sif $SCRIPTS_FOLDER/23_E_breaker.sh
+singularity exec $SCRIPTS_FOLDER/23_breaker_sing/braker3.sif $SCRIPTS_FOLDER/23_F_breaker.sh
