@@ -39,14 +39,37 @@ SCRIPTS_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/00_Geno
 
 #--------------------------------------------------------------------------------
 
+# Generate Folders and files
+
+# Move to working directory
+cd $SCRIPTS_FOLDER
+
+# This part of the script will check and generate, if necessary, all of the output folders used in the script
+
+if [ -d "23_breaker_sing" ]
+then echo "Working 23_breaker_sing folder exist"; echo "Let's move on."; date
+else echo "Working 23_breaker_sing folder doesnt exist. Let's fix that."; mkdir $SCRIPTS_FOLDER/23_breaker_sing; date
+fi
+
+#--------------------------------------------------------------------------------
+
+# Change directory
+cd $SCRIPTS_FOLDER/23_breaker_sing
+
+# Build the sif-file for the braker singularity (https://hub.docker.com/r/teambraker/braker3)
+
+#singularity build braker3.sif docker://teambraker/braker3:latest
+
+#--------------------------------------------------------------------------------
+
 # Change directory
 cd $SCRIPTS_FOLDER
 
 # Export path to braker sif
-export BRAKER_SIF=$SCRIPTS_FOLDER/braker3.sif
+export BRAKER_SIF=$SCRIPTS_FOLDER/23_breaker_sing/braker3.sif
 
 # Change permissions for associated script
-chmod +x 23_breaker.sh
+chmod +x 23_E_breaker.sh
 
 # Use the singularity to run angsd
-singularity exec $SCRIPTS_FOLDER/braker3.sif $SCRIPTS_FOLDER/23_breaker.sh
+singularity exec $SCRIPTS_FOLDER/23_breaker_sing/braker3.sif $SCRIPTS_FOLDER/23_E_breaker.sh

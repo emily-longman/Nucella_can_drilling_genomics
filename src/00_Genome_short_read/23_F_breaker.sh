@@ -29,20 +29,24 @@
 
 #--------------------------------------------------------------------------------
 
+# Load modules
+module load singularity/3.7.1
+
+#--------------------------------------------------------------------------------
+
 #Define important file locations
 
 # Working folder is core folder where this pipeline is being run.
 WORKING_FOLDER_SCRATCH=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly
 
-#This is the location where the reference genome. (note: copied a final version from pilon to repeatmasker directory)
-REFERENCE=$WORKING_FOLDER_SCRATCH/repeatmasker/polished_assembly.fasta
-#Will need to update...
+#This is the location of the reference genome.
+REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_Oct2024/Crassostrea_mask/N.canaliculata_assembly.fasta.masked
 
 #Working folder is core folder where this pipeline is being run.
 SCRIPTS_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/00_Genome_short_read
 
 # Export path to braker sif
-export BRAKER_SIF=$SCRIPTS_FOLDER/braker3.sif
+export BRAKER_SIF=$SCRIPTS_FOLDER/23_breaker_sing/braker3.sif
 
 #--------------------------------------------------------------------------------
 
