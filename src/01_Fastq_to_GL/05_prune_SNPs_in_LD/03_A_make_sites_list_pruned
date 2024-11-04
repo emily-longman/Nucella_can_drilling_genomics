@@ -49,27 +49,29 @@ library(data.table)
 # Read in pruned sites
 pruned<-read.table("Nucella_SNPs_maf0.05_pctind0.5_mindepth0.3_maxdepth2_pval1e6.R2.pruned.prune.in")
 head(pruned)
-colnames(pruned)<-"LG_pos"
+colnames(pruned)<-"NC_pos"
 
 # Read in pre-pruned sites list
 sites<-read.table("sites_all_maf")
 head(sites)
-sites$LG_pos<-paste0(sites[,1],"_", sites[,2])
+# Create new sites column that matches format of pruned sites 
+sites$NC_pos<-paste0(sites[,1],"_", sites[,2])
 
-# Join 
+# Join by NC_post
 sites_pruned<-inner_join(sites, pruned)
 
 print(paste("there is a total of ", dim(sites)[1], "sites"))
 print(paste("we keep ", dim(sites_pruned)[1], "pruned sites"))
 
-### GO BACK TO THIS!!!!
-sites_pruned_order <- sites_pruned[order(sites_pruned[,1]),]
-sites_pruned_order[,1] <-as.factor(sites_pruned_order[,1])
-regions_order<-levels(sites_pruned[,1])
-#### JUST MODIFIED IN BETWEEN - NEED TO GET REGIONS LIST
-
 write.table(sites_pruned[,1:4], "sites_all_maf_pruned", col.names=F, row.names=F, quote=F, sep="\t")
-write.table(regions_order, "regions_all_maf_pruned", row.names=F, col.names=F, sep="\t", quote=F)
+
+### GO BACK TO THIS!!!!
+
+regions_pruned<-sites_pruned
+regions_pruned[,1]<-as.factor(regions_pruned[,1])
+regions_order_pruned<-levels(regions_pruned[,1])
+
+write.table(regions_order_pruned, "regions_all_maf_pruned", row.names=F, col.names=F, sep="\t", quote=F)
 
 #--------------------------------------------------------------------------------
 

@@ -127,18 +127,6 @@ angsd \
 -rf $WORKING_FOLDER/sites_info/regions_all_maf_pruned \
 -out $WORKING_FOLDER/genotype_likelihoods_by_site/${i}/${i}_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR" 
 
-
-angsd \
--b 02_info/"$i".bam.filelist \
--anc 03_genome/Lottia_gigantea.Lotgi1.dna.toplevel.fa \
--P $NB_CPU -nQueueSize 50 \
--doMaf 1 -dosaf 1 -GL 2 -doMajorMinor 3 -doCounts 1 \
--uniqueOnly 1 -remove_bads 1 -only_proper_pairs 1 -skipTriallelic 1 -minMapQ 30 -minQ 20 \
--minInd 10 -setMinDepthInd 4 \
--sites 02_info/sites_all_maf0.05_pctind0.5_maxdepth30 \
--rf 02_info/regions_all_maf0.05_pctind0.5_maxdepth30 \
--out angsd/06_saf_maf_by_pop/"$i"/"$i"_maf"$MIN_MAF"_pctind"$PERCENT_IND"_maxdepth"$MAX_DEPTH_FACTOR"
-
 # -P: number of threads
 
 # -doMaf 1: estimate allele frequencies
