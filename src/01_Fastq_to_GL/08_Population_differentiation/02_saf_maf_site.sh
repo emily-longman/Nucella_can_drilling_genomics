@@ -34,13 +34,12 @@
 
 #--------------------------------------------------------------------------------
 
-# This script will calculate saf and maf of SNPs (allele frequencies) for each collection site.
+# This script will calculate saf and maf for each collection site using the subset bam lists (i.e., each collection sites has n=59).
 
 #--------------------------------------------------------------------------------
 
 #Load modules 
 spack load angsd@0.933
-spack load samtools@1.10
 
 #--------------------------------------------------------------------------------
 
@@ -77,7 +76,7 @@ echo ${i}
 source $SCRIPT_FOLDER/03_Call_SNPs/01_config.sh
 
 # Extract parameters from config file
-N_IND=$(wc -l $WORKING_FOLDER/guide_files/${i}_bam.list | cut -d " " -f 1) 
+N_IND=$(wc -l $WORKING_FOLDER/guide_files/${i}_bam_subset.list | cut -d " " -f 1) 
 MIN_IND_FLOAT=$(echo "($N_IND * $PERCENT_IND)"| bc -l)
 MIN_IND=${MIN_IND_FLOAT%.*} 
 MAX_DEPTH=$(echo "($N_IND * $MAX_DEPTH_FACTOR)" |bc -l)
@@ -106,34 +105,31 @@ fi
 
 #--------------------------------------------------------------------------------
 
-# Start pipeline
-
-# Specifically calculate the SAF, MAF and GL for all individuals listed in each bam list.
+# Calculate SAF and MAF for all individuals listed in each subset bam list.
 
 # Move back to working directory
 cd $WORKING_FOLDER
 
+echo "Working on collection site ${i}, with $N_IND individuals. Will use the sites file provided"
+echo "Will filter for sites with at least one read in $MIN_IND individuals, which is $PERCENT_IND of the total."
+
 # Generate GL's for polymorphic sites for each Nucella collection location
 # Since we will use the output for SFS and calculating FSTs/thetas, then we don't want min MAF, p-value filters
 angsd \
--b $WORKING_FOLDER/guide_files/${i}_bam.list \
+-b $WORKING_FOLDER/guide_files/${i}_bam_subset.list \
 -ref ${REFERENCE} -anc ${REFERENCE} \
 -P $NB_CPU \
--nQueueSize 50 \
--doMaf 1 -doSaf 1 -GL 2 -doMajorMinor 3 -doCounts 1 \
--remove_bads 1 -skipTriallelic 1 -uniqueOnly 1 -only_proper_pairs 1 -minMapQ 30 -minQ 20 \
+-doMaf 1 -doSaf 1 -GL 2 -doMajorMinor 1 \
+-remove_bads 1 -skipTriallelic 1 -uniqueOnly 1 -only_proper_pairs 1 -minMapQ 30 -minQ 20 -C 50 \
 -minInd $MIN_IND -setMinDepthInd $MIN_DEPTH \
--sites $WORKING_FOLDER/sites_info/sites_all_maf_pruned \
--rf $WORKING_FOLDER/sites_info/regions_all_maf_pruned \
--out $WORKING_FOLDER/genotype_likelihoods_by_site/${i}/${i}_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR" 
+-out $WORKING_FOLDER/genotype_likelihoods_by_site/${i}/${i}_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_subset 
 
 # -P: number of threads
 
 # -doMaf 1: estimate allele frequencies
 # -doSaf 1: estimate the SFS and/or neutrality tests genotype calling
 # -GL 2: estimate genotype likelihoods (GL) using the GATK formula
-# -doMajorMinor 3: use major and minor from a file
-# -doCounts 1: calculate various counts statistics
+# -doMajorMinor 1: infer major and minor from GL
 
 # -remove_bads 1: remove reads flagged as ‘bad’ by samtools
 # -skipTriallelic 1: don’t use sites with >2 alleles
@@ -141,5 +137,7 @@ angsd \
 # -only_proper_pairs 1: Include only proper pairs (pairs of read with both mates mapped correctly)
 # -minMapQ 30: threshold for minimum read mapping quality (Phred)
 # -minQ 20: threshold for minimum base quality (Phred)
+# -C 50: enforce downgrading of map quality if contains excessive mismatches
 
 # -minInd: min number of individuals to keep a site
+# -setMinDepthInd: min read depth for an individual to count towards a site
