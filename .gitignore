@@ -4,7 +4,6 @@
 .RData
 .Ruserdata
 .DS_store
-.sif
 
 # Directories with large data files
 scratch/*
@@ -15,3 +14,4 @@ slurmOutput/*
 
 # Specific files extensions to ignore
 *.out
+*.sif
