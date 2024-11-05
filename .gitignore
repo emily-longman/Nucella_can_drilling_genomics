@@ -4,6 +4,7 @@
 .RData
 .Ruserdata
 .DS_store
+.sif
 
 # Directories with large data files
 scratch/*
