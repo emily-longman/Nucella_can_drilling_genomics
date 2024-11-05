@@ -32,17 +32,18 @@
 
 #--------------------------------------------------------------------------------
 
-# Convert sam to bam for cDNA.
+# This script with sort and remove duplicates in the the bam file for cDNA, then index it.
 
 #--------------------------------------------------------------------------------
 
 # Load modules  
-spack load gcc@9.3.0
 spack load samtools@1.10
+PICARD=/netfiles/nunezlab/Shared_Resources/Software/picard/build/libs/picard.jar
+qualimap=/netfiles/nunezlab/Shared_Resources/Software/qualimap_v2.2.1/qualimap
 
 #--------------------------------------------------------------------------------
 
-#Define important file locations
+# Define important file locations
 
 # Working folder is core folder where this pipeline is being run.
 WORKING_FOLDER_SCRATCH=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly
@@ -66,25 +67,39 @@ cd $WORKING_FOLDER_SCRATCH
 
 # This part of the script will check and generate, if necessary, all of the output folders used in the script
 
-if [ -d "mapping_stats" ]
-then echo "Working mapping_stats folder exist"; echo "Let's move on."; date
-else echo "Working mapping_stats folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/mapping_stats; date
-fi
-
-if [ -d "cDNA_bam" ]
-then echo "Working cDNA_bam folder exist"; echo "Let's move on."; date
-else echo "Working cDNA_bam folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/cDNA_bam; date
+if [ -d "cDNA_bam_qualimap" ]
+then echo "Working cDNA_bam_qualimap folder exist"; echo "Let's move on."; date
+else echo "Working cDNA_bam_qualimap folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/cDNA_bam_qualimap; date
 fi
 
 #--------------------------------------------------------------------------------
 
-# Extract summary stats on sam
-samtools flagstat --threads $CPU \
-$WORKING_FOLDER_SCRATCH/cDNA_sam/Nucella.cDNA.sam \
-> $WORKING_FOLDER_SCRATCH/mapping_stats/Nucella.cDNA.flagstats.sam.txt
-# Remember to take a look at the flagstat outputs to check for inconsistencies.
+# Sort with picard
+# Notice that once the file has been sorted it is added the "srt" suffix
+java -Xmx$JAVAMEM -jar $PICARD SortSam \
+I=$WORKING_FOLDER_SCRATCH/cDNA_bam/Nucella.cDNA.bam \
+O=$WORKING_FOLDER_SCRATCH/cDNA_bam/Nucella.cDNA.srt.bam \
+SO=coordinate \
+VALIDATION_STRINGENCY=SILENT
 
-# Build bam files
-samtools view -b --threads $CPU  \
-$WORKING_FOLDER_SCRATCH/cDNA_sam/Nucella.cDNA.sam \
-> $WORKING_FOLDER_SCRATCH/cDNA_bam/Nucella.cDNA.bam
+
+# Remove duplicates with picard
+# Notice that once the file has duplicates removed it is added the "rmdp" suffix
+java -Xmx$JAVAMEM -jar $PICARD MarkDuplicates \
+I=$WORKING_FOLDER_SCRATCH/cDNA_bam/Nucella.cDNA.srt.bam \
+O=$WORKING_FOLDER_SCRATCH/cDNA_bam/Nucella.cDNA.srt.rmdp.bam \
+M=$WORKING_FOLDER_SCRATCH/mapping_stats/Nucella.cDNA.dupstat.txt \
+VALIDATION_STRINGENCY=SILENT REMOVE_DUPLICATES=true
+
+# Index with samtools
+samtools index $WORKING_FOLDER_SCRATCH/cDNA_bam/Nucella.cDNA.srt.rmdp.bam
+
+#--------------------------------------------------------------------------------
+
+# Run QC on the bam file
+
+# Lets do QC on the bam file
+$qualimap bamqc \
+-bam $WORKING_FOLDER_SCRATCH/cDNA_bam/Nucella.cDNA.srt.rmdp.bam \
+-outdir $WORKING_FOLDER_SCRATCH/cDNA_bam_qualimap/Qualimap_Nucella.cDNA \
+--java-mem-size=$JAVAMEM

@@ -46,19 +46,24 @@ cd $SCRIPTS_FOLDER
 
 # This part of the script will check and generate, if necessary, all of the output folders used in the script
 
-if [ -d "23_breaker_sing" ]
-then echo "Working 23_breaker_sing folder exist"; echo "Let's move on."; date
-else echo "Working 23_breaker_sing folder doesnt exist. Let's fix that."; mkdir $SCRIPTS_FOLDER/23_breaker_sing; date
+if [ -d "23_breaker_singularity" ]
+then echo "Working 23_breaker_singularity folder exist"; echo "Let's move on."; date
+else echo "Working 23_breaker_singularity folder doesnt exist. Let's fix that."; mkdir $SCRIPTS_FOLDER/23_breaker_singularity; date
 fi
 
 #--------------------------------------------------------------------------------
 
 # Change directory
-cd $SCRIPTS_FOLDER/23_breaker_sing
+cd $SCRIPTS_FOLDER/23_breaker_singularity
 
 # Build the sif-file for the braker singularity (https://hub.docker.com/r/teambraker/braker3)
 
 #singularity build braker3.sif docker://teambraker/braker3:latest
+
+# Test with: 
+# singularity exec -B $PWD:$PWD braker3.sif cp /opt/BRAKER/example/singularity-tests/test1.sh . # Get test script
+# export BRAKER_SIF=$SCRIPTS_FOLDER/23_breaker_singularity/braker3.sif
+# bash test1.sh
 
 #--------------------------------------------------------------------------------
 
