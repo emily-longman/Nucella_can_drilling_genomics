@@ -35,6 +35,8 @@
 #--------------------------------------------------------------------------------
 
 # This script will calculate saf and maf of SNPs (allele frequencies) for each collection site.
+# THIS SCRIPT MATCHES ERICA's and Claire Merot's pipeline. They do it before doing fst, but that makes no sense becuase they don't actually use this input for fst 
+# Claire's pipeline says this is used for doing selection analyses later
 
 #--------------------------------------------------------------------------------
 
@@ -136,12 +138,10 @@ angsd \
 # -doCounts 1: calculate various counts statistics
 
 # -remove_bads 1: remove reads flagged as ‘bad’ by samtools
-# -baq 1: estimates base alignment qualities for bases around indels
 # -skipTriallelic 1: don’t use sites with >2 alleles
 # -uniqueOnly 1: Remove reads that have multiple best hits
 # -only_proper_pairs 1: Include only proper pairs (pairs of read with both mates mapped correctly)
 # -minMapQ 30: threshold for minimum read mapping quality (Phred)
 # -minQ 20: threshold for minimum base quality (Phred)
-# -C 50: enforce downgrading of map quality if contains excessive mismatches
 
 # -minInd: min number of individuals to keep a site
