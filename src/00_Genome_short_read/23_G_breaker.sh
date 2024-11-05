@@ -12,7 +12,7 @@
 
 # Request nodes
 #SBATCH --nodes=1 
-#SBATCH --ntasks-per-node=4
+#SBATCH --ntasks-per-node=8
 
 # Reserve walltime -- hh:mm:ss --7 day limit 
 #SBATCH --time=6-00:00:00 
@@ -46,7 +46,7 @@ REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_O
 SCRIPTS_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/00_Genome_short_read
 
 # Export path to braker sif
-export BRAKER_SIF=$SCRIPTS_FOLDER/23_breaker_sing/braker3.sif
+export BRAKER_SIF=$SCRIPTS_FOLDER/23_breaker_singularity/braker3.sif
 
 #--------------------------------------------------------------------------------
 
@@ -65,5 +65,7 @@ fi
 #--------------------------------------------------------------------------------
 
 # Execute breaker
-braker.pl --species=Nucella_canaliculata --genome=$REFERENCE \
---bam=file1.bam
+braker.pl \
+--species=Nucella_canaliculata \
+--genome=$REFERENCE \
+--bam=$WORKING_FOLDER_SCRATCH/cDNA_bam/Nucella.cDNA.srt.rmdp.bam
