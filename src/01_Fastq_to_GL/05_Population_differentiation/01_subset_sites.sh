@@ -69,4 +69,4 @@ cd $WORKING_FOLDER/guide_files
 site_bamlist=$WORKING_FOLDER/guide_files/${i}_bam.list
 site_name=${i}
 
-Rscript $SCRIPT_FOLDER/08_Population_differentiation/01_subset_sites.R "$site_bamlist" "$site_name" 
+Rscript $SCRIPT_FOLDER/05_Population_differentiation/01_subset_sites.R "$site_bamlist" "$site_name" 
