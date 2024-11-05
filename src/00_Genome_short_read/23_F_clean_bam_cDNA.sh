@@ -18,7 +18,7 @@
 #SBATCH --time=30:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
-#SBATCH --mem=5G
+#SBATCH --mem=60G
 
 # Request CPU
 #SBATCH --cpus-per-task=6
@@ -56,7 +56,7 @@ REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_O
 # Define parameters
 CPU=6
 echo "using #CPUs ==" $CPU
-JAVAMEM=18G # Java memory
+JAVAMEM=30G # Java memory
 
 #--------------------------------------------------------------------------------
 
