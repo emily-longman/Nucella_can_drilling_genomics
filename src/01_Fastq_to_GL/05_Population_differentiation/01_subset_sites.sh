@@ -52,7 +52,7 @@ SCRIPT_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/01_Fastq
 #--------------------------------------------------------------------------------
 
 # Establish the array
-# This is a file with the names of the collection sites. 
+# This is a file with the names of the collection sites.  
 arr=("FB" "HC" "MP")
 i="${arr[$SLURM_ARRAY_TASK_ID]}"
 echo ${i}

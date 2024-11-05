@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=sfs_site
+#SBATCH --job-name=sfs_sites
 
 # Specify partition
 #SBATCH --partition=week
@@ -22,11 +22,8 @@
 # Request CPU
 #SBATCH --cpus-per-task=10
 
-# Submit job array
-#SBATCH --array=0-2
-
 # Name output of this job using %x=job-name and %j=job-id
-#SBATCH --output=./slurmOutput/%x.%A_%a.out # Standard output
+#SBATCH --output=./slurmOutput/%x.%j.out # Standard output
 
 # Receive emails when job begins and ends or fails
 #SBATCH --mail-type=ALL
@@ -34,7 +31,7 @@
 
 #--------------------------------------------------------------------------------
 
-# This script will calculate site frequency spectrums (sfs) for each collection site.
+# This script will calculate the 2d site frequency spectrums (sfs) and Fst for each collection site pair.
 
 #--------------------------------------------------------------------------------
 
@@ -63,10 +60,8 @@ echo "using #CPUs ==" $NB_CPU
 #--------------------------------------------------------------------------------
 
 # Establish the array
-# This is a file with the names. 
+# This is a file with the names of the collection sites. 
 arr=("FB" "HC" "MP")
-i="${arr[$SLURM_ARRAY_TASK_ID]}"
-echo ${i}
 
 #--------------------------------------------------------------------------------
 
@@ -74,11 +69,6 @@ echo ${i}
 
 # Use config file (this means you dont need to directly input minimum individual/depth parameters)
 source $SCRIPT_FOLDER/03_Call_SNPs/01_config.sh
-
-# Extract parameters from config file - number of individuals varies among collection sites - obtain from the bam list 
-N_IND=$(wc -l $WORKING_FOLDER/guide_files/${i}_bam.list | cut -d " " -f 1) 
-MIN_IND_FLOAT=$(echo "($N_IND * $PERCENT_IND)"| bc -l)
-MIN_IND=${MIN_IND_FLOAT%.*} 
 
 #--------------------------------------------------------------------------------
 
@@ -94,60 +84,35 @@ then echo "Working fst folder exist"; echo "Let's move on."; date
 else echo "Working fst folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/fst; date
 fi
 
-# Change directory
-cd $WORKING_FOLDER/fst
-
-if [ -d "${i}" ]
-then echo "Working ${i} folder exist"; echo "Let's move on."; date
-else echo "Working ${i} folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/fst/${i}; date
-fi
-
 #--------------------------------------------------------------------------------
 
-### CHANGE BELOW
+# Create site frequency spectrums for each site pair
 
-# Calculate the saf for each collection site (since we are ultimately making SFS, we con't want to have maf of p-value filters).
+# Number of sites
+num_sites="${#arr[@]}" # Length of elements in array
 
-angsd \
--b $WORKING_FOLDER/guide_files/${i}_bam.list \
--ref ${REFERENCE} -anc ${REFERENCE} \
--P $NB_CPU \
--nQueueSize 50 \
--doMaf 1 -doSaf 1 -GL 2 -doMajorMinor 3 -doCounts 1 \
--remove_bads 1 -skipTriallelic 1 -uniqueOnly 1 -only_proper_pairs 1 -minMapQ 30 -minQ 20 \
--minInd $MIN_IND -setMinDepthInd $MIN_DEPTH \
--sites $WORKING_FOLDER/sites_info/sites_all_maf_pruned \
--rf $WORKING_FOLDER/sites_info/regions_all_maf_pruned \
--out $WORKING_FOLDER/genotype_likelihoods_by_site/${i}/${i}_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR" 
+# Estimate pairwise FST for all populations listed
 
+for i in "${!arr[@]}"; do
+for j in "${!arr[@]}"; do
+if [ "$i" -lt "$j" ]; then
+site1=${arr[i]}
+site2=${arr[j]}
+echo "Fst between $site1 and $site2"
+echo "site 1:" "$site1" 
+echo "site 2:" "$site2"
 
-angsd -P $NB_CPU -nQueueSize 50 \
--doMaf 1 -dosaf 1 -doMajorMinor 1 -GL 2 \
--anc 03_genome/Lottia_gigantea.Lotgi1.dna.toplevel.fa \
--uniqueOnly 1 -remove_bads 1 -skipTriallelic 1 -only_proper_pairs 1 -minInd $MIN_IND -minMapQ 30 -minQ 20 \
--b 02_info/"$i".bam.filelist -out angsd/07_fst_by_pop_pair/$GROUP/"$i"_saf
+echo "Calculate the 2dsfs priors"
 
-angsd -P $NB_CPU -nQueueSize 50 \
--doMaf 1 -dosaf 1 -GL 2 -doMajorMinor 3 -doCounts 1 \
--anc 03_genome/Lottia_gigantea.Lotgi1.dna.toplevel.fa \
--minMapQ 30 -minQ 20 -uniqueOnly 1 -remove_bads 1 -only_proper_pairs 1 -skipTriallelic 1 -minInd 10 -setMinDepthInd 4 \
--sites 02_info/sites_all_maf0.05_pctind0.5_maxdepth30 \
--rf 02_info/regions_all_maf0.05_pctind0.5_maxdepth30 \
--b 02_info/"$i".bam.filelist -out angsd/06_saf_maf_by_pop/"$i"/"$i"_maf"$MIN_MAF"_pctind"$PERCENT_IND"_maxdepth"$MAX_DEPTH_FACTOR"
+realSFS  \
+$WORKING_FOLDER/genotype_likelihoods_by_site/${site1}/${site1}_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_subset.saf.idx \ 
+$WORKING_FOLDER/genotype_likelihoods_by_site/${site2}/${site2}_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_subset.saf.idx \ 
+-P $NB_CPU -maxIter 30 -fold 1 \
+> $WORKING_FOLDER/fst/"$site1"_"$site2"_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_subset
 
-# -P: number of threads
+fi
+done
+done
 
-# -doMaf 1: estimate allele frequencies
-# -doSaf 1: estimate the SFS and/or neutrality tests genotype calling
-# -GL 2: estimate genotype likelihoods (GL) using the GATK formula
-# -doMajorMinor 3: use major and minor from a file
-# -doCounts 1: calculate various counts statistics
-
-# -remove_bads 1: remove reads flagged as ‘bad’ by samtools
-# -skipTriallelic 1: don’t use sites with >2 alleles
-# -uniqueOnly 1: Remove reads that have multiple best hits
-# -only_proper_pairs 1: Include only proper pairs (pairs of read with both mates mapped correctly)
-# -minMapQ 30: threshold for minimum read mapping quality (Phred)
-# -minQ 20: threshold for minimum base quality (Phred)
-
-# -minInd: min number of individuals to keep a site
+# -maxIter: maximum number of iterations in the EM algorithm
+# -fold 1: estimate the folded SFS (need to do if you don't have an ancestral state)
