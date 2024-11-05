@@ -71,10 +71,10 @@ cd $SCRIPTS_FOLDER/23_breaker_singularity
 cd $SCRIPTS_FOLDER
 
 # Export path to braker sif
-export BRAKER_SIF=$SCRIPTS_FOLDER/23_breaker_sing/braker3.sif
+export BRAKER_SIF=$SCRIPTS_FOLDER/23_breaker_singularity/braker3.sif
 
 # Change permissions for associated script
-chmod +x 23_F_breaker.sh
+chmod +x 23_G_breaker.sh
 
 # Use the singularity to run angsd
-singularity exec $SCRIPTS_FOLDER/23_breaker_sing/braker3.sif $SCRIPTS_FOLDER/23_F_breaker.sh
+singularity exec $SCRIPTS_FOLDER/23_breaker_singularity/braker3.sif $SCRIPTS_FOLDER/23_G_breaker.sh

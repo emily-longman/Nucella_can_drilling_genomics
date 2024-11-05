@@ -7,7 +7,7 @@
 #SBATCH --mem 8G   
 #SBATCH -o ./slurmOutput/myarray.%A_%a.out  
 #SBATCH -p bluemoon  
-#SBATCH --array=1-22 
+#SBATCH --array=1-22
 
 #--------------------------------------------------------------------------------
 
@@ -24,6 +24,10 @@ FIL1=$(cat ${meta} | awk -F '\t' '{print $24}' |  sed '1d' | sed "${SLURM_ARRAY_
 FIL2=$(cat ${meta} | awk -F '\t' '{print $25}' |  sed '1d' | sed "${SLURM_ARRAY_TASK_ID}q;d")
 
 SAMP_NAME=$(cat ${meta} | awk -F '\t' '{print $1}' |  sed '1d' | sed "${SLURM_ARRAY_TASK_ID}q;d")
+
+echo $FIL1
+echo $FIL2
+echo $SAMP_NAME
 
 #--------------------------------------------------------------------------------
 
