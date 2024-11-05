@@ -59,10 +59,14 @@ echo ${i}
 
 #--------------------------------------------------------------------------------
 
+# Change working directory
+cd $WORKING_FOLDER/guide_files
+
 # Randomly subset bam file lists
 # FB has 59 individuals - thus subset the other two bamlists to also have 59 individuals
 
+# Input files
+site_bamlist=$WORKING_FOLDER/guide_files/${i}_bam.list
 site_name=${i}
-site=$WORKING_FOLDER/guide_files/${i}_bam.list
 
-Rscript $SCRIPT_FOLDER/08_Population_differentiation/01_subset_sites.R "$site_name" "$site" 
+Rscript $SCRIPT_FOLDER/08_Population_differentiation/01_subset_sites.R "$site_bamlist" "$site_name" 
