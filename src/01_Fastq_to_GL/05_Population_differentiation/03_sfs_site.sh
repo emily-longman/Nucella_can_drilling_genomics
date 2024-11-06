@@ -114,5 +114,7 @@ fi
 done
 done
 
+# Note: Change permissions on .saf.idx files
+
 # -maxIter: maximum number of iterations in the EM algorithm
 # -fold 1: estimate the folded SFS (need to do if you don't have an ancestral state)
