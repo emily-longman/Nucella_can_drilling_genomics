@@ -50,19 +50,8 @@ export BRAKER_SIF=$SCRIPTS_FOLDER/23_breaker_singularity/braker3.sif
 
 #--------------------------------------------------------------------------------
 
-# Generate Folders and files
-
 # Move to working directory
 cd $WORKING_FOLDER_SCRATCH
-
-# This part of the script will check and generate, if necessary, all of the output folders used in the script
-
-if [ -d "breaker" ]
-then echo "Working breaker folder exist"; echo "Let's move on."; date
-else echo "Working breaker folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/breaker; date
-fi
-
-#--------------------------------------------------------------------------------
 
 # Execute breaker
 braker.pl \
