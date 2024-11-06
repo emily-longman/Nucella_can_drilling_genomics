@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=Fst
+#SBATCH --job-name=Fst_R
 
 # Specify partition
 #SBATCH --partition=bluemoon
@@ -29,7 +29,6 @@
 #--------------------------------------------------------------------------------
 
 # This script will do the second step in calculating the 2d site frequency spectrums (sfs) and Fst for each collection site pair.
-# More specifically it will sum
 
 #--------------------------------------------------------------------------------
 
@@ -64,7 +63,7 @@ source $SCRIPT_FOLDER/03_Call_SNPs/01_config.sh
 
 #--------------------------------------------------------------------------------
 
-# Create site frequency spectrums for each site pair
+# Sum the sfs for each site pair
 
 # Number of sites
 num_sites="${#arr[@]}" # Length of elements in array
