@@ -29,6 +29,7 @@
 #--------------------------------------------------------------------------------
 
 # This script will do the second step in calculating the 2d site frequency spectrums (sfs) and Fst for each collection site pair.
+# More specifically it will sum
 
 #--------------------------------------------------------------------------------
 
