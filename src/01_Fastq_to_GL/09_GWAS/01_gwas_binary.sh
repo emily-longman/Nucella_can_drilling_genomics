@@ -8,7 +8,7 @@
 #SBATCH --job-name=gwas_bin
 
 # Specify partition
-#SBATCH --partition=bluemoon
+#SBATCH --partition=week
 
 # Request nodes
 #SBATCH --nodes=1 
