@@ -57,7 +57,7 @@ SCRIPT_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/01_Fastq
 #--------------------------------------------------------------------------------
 
 # Move to working directory
-cd $SCRIPTS_FOLDER
+cd $SCRIPT_FOLDER/06_Inbreeding_coefficients
 
 # If you haven't already done so, get sif 
 #singularity pull shub://seedpcseed/metaerg:latest
