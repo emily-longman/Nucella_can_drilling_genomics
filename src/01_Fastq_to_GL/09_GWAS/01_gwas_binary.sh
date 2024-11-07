@@ -54,6 +54,9 @@ SCRIPT_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/01_Fastq
 # Phenotype data: this file must be a single column with phenotype coded as 0 or 1, each line is one individual in the same order as bamfile.
 PHENO=$WORKING_FOLDER/guide_files/Phenotype_Drilled_Binary.txt
 
+# Path to bam list.
+BAM_LIST=$WORKING_FOLDER/guide_files/Nucella_bam.list
+
 #--------------------------------------------------------------------------------
 
 # Define parameters
