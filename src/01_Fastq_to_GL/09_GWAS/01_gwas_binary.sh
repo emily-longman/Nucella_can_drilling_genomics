@@ -31,7 +31,7 @@
 
 #--------------------------------------------------------------------------------
 
-# This script will calculate per site Fst (i.e., it will acutally calculate Fst for each pairwise comparison).
+# This script will do a gwas using binary phenotypic data. 
 
 #--------------------------------------------------------------------------------
 
@@ -82,9 +82,31 @@ cd $WORKING_FOLDER
 
 # This part of the script will check and generate, if necessary, all of the output folders used in the script
 
-if [ -d "genotype_likelihoods_all" ]
-then echo "Working genotype_likelihoods_all folder exist"; echo "Let's move on."; date
-else echo "Working genotype_likelihoods_all folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/genotype_likelihoods_all; date
+if [ -d "GWAS" ]
+then echo "Working GWAS folder exist"; echo "Let's move on."; date
+else echo "Working GWAS folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/GWAS; date
 fi
 
 #--------------------------------------------------------------------------------
+
+# Perform GWAS on all samples 
+
+angsd \
+-b $BAM_LIST \
+-P $NB_CPU \
+-nQueueSize 50 \
+-ybin $PHENO -doAsso 2 -GL 2 \
+-doMaf 1 -doMajorMinor 1 -doCounts 1 -doPost 1 \
+-remove_bads 1 -minMapQ 30 -minQ 20 \
+-minInd $MIN_IND -setMinDepthInd $MIN_DEPTH -minMaf $MIN_MAF -setMaxDepth $MAX_DEPTH \
+-rf $WORKING_FOLDER/sites_info/regions_all_maf_pruned \
+-out $WORKING_FOLDER/genotype_likelihoods_all_pruned/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR".binary.gwas
+
+# yBin: File containing binary phenotypic data 
+# -doAsso 2: Score Test
+# -GL 2: estimate genotype likelihoods (GL) using the GATK formula
+
+# -doMaf 1: estimate allele frequencies
+# -doMajorMinor 1: infer the major/minor using different approaches
+# -doCounts 1: calculate various counts statistics
+# -doPost 1: estimate the posterior genotype probability based on the allele frequency as a prior
