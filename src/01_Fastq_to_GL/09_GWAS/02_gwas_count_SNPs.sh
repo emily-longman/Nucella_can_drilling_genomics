@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=gwas_bin
+#SBATCH --job-name=gwas_bin_SNPs
 
 # Specify partition
 #SBATCH --partition=week
@@ -31,7 +31,7 @@
 
 #--------------------------------------------------------------------------------
 
-# This script will do a gwas using binary phenotypic data. 
+# This script will do a gwas using count phenotypic data of (i.e., the number of mussels drilled per snail). 
 # Based on a generalized linear framework which also allows for quantitative traits and binary and for including additional covariates, using genotype posteriors.
 
 #--------------------------------------------------------------------------------
@@ -53,7 +53,7 @@ REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_O
 SCRIPT_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/01_Fastq_to_GL
 
 # Phenotype data: this file must be a single column with phenotype coded as 0 or 1, each line is one individual in the same order as bamfile.
-PHENO=$WORKING_FOLDER/guide_files/Phenotype_Drilled_Binary.txt
+PHENO=$WORKING_FOLDER/guide_files/Phenotype_Drilled_Count.txt
 
 # Path to bam list.
 BAM_LIST=$WORKING_FOLDER/guide_files/Nucella_bam.list
@@ -93,18 +93,19 @@ fi
 
 #--------------------------------------------------------------------------------
 
-# Perform GWAS on all samples using binary phenotypic data.
+# Perform GWAS on all samples using count phenotypic data.
 
 angsd \
 -b $BAM_LIST \
 -P $NB_CPU \
 -nQueueSize 50 \
--yBin $PHENO -doAsso 2 -GL 2 \
+-yCount $PHENO -doAsso 2 -GL 2 \
 -doMaf 1 -doMajorMinor 1 -doCounts 1 -doPost 1 \
 -remove_bads 1 -minMapQ 30 -minQ 20 \
 -minInd $MIN_IND -setMinDepthInd $MIN_DEPTH -minMaf $MIN_MAF -setMaxDepth $MAX_DEPTH \
+-sites $WORKING_FOLDER/sites_info/sites_all_maf_pruned \
 -rf $WORKING_FOLDER/sites_info/regions_all_maf_pruned \
--out $WORKING_FOLDER/GWAS/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR".binary.gwas
+-out $WORKING_FOLDER/GWAS/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR".binary.SNPs.gwas
 
 # -yBin: File containing binary phenotypic data 
 # -doAsso 2: Score Test
@@ -114,4 +115,3 @@ angsd \
 # -doMajorMinor 1: infer the major/minor using different approaches
 # -doCounts 1: calculate various counts statistics
 # -doPost 1: estimate the posterior genotype probability based on the allele frequency as a prior
-# If you use the score statistics -doAsso 2 then calculate the posterior using the allele frequency as prior (-doPost 1).
