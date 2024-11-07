@@ -20,7 +20,7 @@
 #SBATCH --mem=10G 
 
 # Request CPU
-#SBATCH --cpus-per-task=4
+#SBATCH --cpus-per-task=5
 
 # Submit job array
 #SBATCH --array=0-2
@@ -39,16 +39,7 @@
 #--------------------------------------------------------------------------------
 
 #Load modules 
-module load gcc/gcc5.4.0
-spack load zlib@1.2.11%gcc@8.4.0
-
-module load gsl/2.7.1
-spack load zlib@1.2.11%gcc@8.4.0
-spack load gsl@2.5
-
-# Can't install ngsTools
-
-# HAVEN"T UPDATED BELOW
+module load singularity/3.7.1
 
 #--------------------------------------------------------------------------------
 
@@ -66,7 +57,7 @@ SCRIPT_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/01_Fastq
 #--------------------------------------------------------------------------------
 
 # Define parameters
-NB_CPU=10 #change accordingly in SLURM header
+NB_CPU=5 #change accordingly in SLURM header
 echo "using #CPUs ==" $NB_CPU
 
 #--------------------------------------------------------------------------------
@@ -90,9 +81,6 @@ MIN_IND_FLOAT=$(echo "($N_IND * $PERCENT_IND)"| bc -l)
 MIN_IND=${MIN_IND_FLOAT%.*} 
 MAX_DEPTH=$(echo "($N_IND * $MAX_DEPTH_FACTOR)" |bc -l)
 
-echo "Calculate the SAF, MAF and GL for all individuals listed in ${i}_bam.list using the sites file provided"
-echo "Filter for sites with at least one read in $MIN_IND individuals,  which is $PERCENT_IND % of the total"
-
 #--------------------------------------------------------------------------------
 
 # Generate Folders and files
@@ -102,57 +90,28 @@ cd $WORKING_FOLDER
 
 # This part of the script will check and generate, if necessary, all of the output folders used in the script
 
-if [ -d "genotype_likelihoods_by_site" ]
-then echo "Working genotype_likelihoods_by_site folder exist"; echo "Let's move on."; date
-else echo "Working genotype_likelihoods_by_site folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/genotype_likelihoods_by_site; date
-fi
-
-# Change directory
-cd $WORKING_FOLDER/genotype_likelihoods_by_site
-
-if [ -d "${i}" ]
-then echo "Working ${i} folder exist"; echo "Let's move on."; date
-else echo "Working ${i} folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/genotype_likelihoods_by_site/${i}; date
+if [ -d "ngsF" ]
+then echo "Working ngsF folder exist"; echo "Let's move on."; date
+else echo "Working ngsF folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/ngsF; date
 fi
 
 #--------------------------------------------------------------------------------
 
 # Start pipeline
 
-# Specifically calculate the SAF, MAF and GL for all individuals listed in each bam list.
+# Run ngsTools/ngsF for all population listed
+# Run in two steps: run a faster preliminary/approximated method then use the output for the slower/main algorithm
 
-# Move back to working directory
-cd $WORKING_FOLDER
+echo "Calculating inbreeding for site/population:" ${i}
 
-# Generate GL's for polymorphic sites for all Nucella samples
-angsd \
--b $WORKING_FOLDER/guide_files/${i}_bam.list \
--ref ${REFERENCE} -anc ${REFERENCE} \
--P $NB_CPU \
--nQueueSize 50 \
--doMaf 1 -doSaf 1 -GL 2 -doGlf 3 -doMajorMinor 1 -doCounts 1 \
--remove_bads 1 -baq 1 -skipTriallelic 1 -uniqueOnly 1 -only_proper_pairs 1 -minMapQ 30 -minQ 20 -C 50 \
--minInd $MIN_IND -SNP_pval 1e-6 \
--out $WORKING_FOLDER/genotype_likelihoods_by_site/${i}/${i}_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_inbreed 
+# Calculate the number of sites 
+NSITES=$((`zcat $WORKING_FOLDER/genotype_likelihoods_by_site/${i}/${i}_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_inbreed.mafs.gz | wc -l`-1))
+echo $NSITES "sites for collection site/population" ${i} "with" $N_IND "individuals"
 
-# -P: number of threads
-
-# -doMaf 1: estimate allele frequencies
-# -doSaf 1: estimate the SFS and/or neutrality tests genotype calling
-# -GL 2: estimate genotype likelihoods (GL) using the GATK formula
-# -doGlf 3: gives us the output as beagle binary
-# -doMajorMinor 1: infer the major/minor using different approaches
-# -doCounts 1: calculate various counts statistics
-
-# -remove_bads 1: remove reads flagged as ‘bad’ by samtools
-# -baq 1: estimates base alignment qualities for bases around indels
-# -skipTriallelic 1: don’t use sites with >2 alleles
-# -uniqueOnly 1: Remove reads that have multiple best hits
-# -only_proper_pairs 1: Include only proper pairs (pairs of read with both mates mapped correctly)
-# -minMapQ 30: threshold for minimum read mapping quality (Phred)
-# -minQ 20: threshold for minimum base quality (Phred)
-# -C 50: enforce downgrading of map quality if contains excessive mismatches
-
-# -minInd: min number of individuals to keep a site
-
-# -SNP_pval 1e-6: Keep only site highly likely to be polymorphic (SNPs)
+# Preliminary search
+zcat $WORKING_FOLDER/genotype_likelihoods_by_site/${i}/${i}_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_inbreed.mafs.gz \
+| NGStools/ngsF --n_ind $N_IND --n_sites $NSITES --glf - --out $WORKING_FOLDER/ngsF/${i}/${i}.approx_indF --approx_EM --init_values u --n_threads 5
+	
+# Calc inbreeding
+zcat $WORKING_FOLDER/genotype_likelihoods_by_site/${i}/${i}_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_inbreed.mafs.gz \
+| NGStools/ngsF --n_ind $N_IND --n_sites $NSITES --glf - --out $WORKING_FOLDER/ngsF/${i}/${i}.indF --init_values $WORKING_FOLDER/ngsF/${i}/${i}.approx_indF.pars --n_threads 5 
