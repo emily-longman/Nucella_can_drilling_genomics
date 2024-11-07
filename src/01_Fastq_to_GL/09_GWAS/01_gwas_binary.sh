@@ -89,7 +89,7 @@ fi
 
 #--------------------------------------------------------------------------------
 
-# Perform GWAS on all samples 
+# Perform GWAS on all samples using binary phenotypic data.
 
 angsd \
 -b $BAM_LIST \
