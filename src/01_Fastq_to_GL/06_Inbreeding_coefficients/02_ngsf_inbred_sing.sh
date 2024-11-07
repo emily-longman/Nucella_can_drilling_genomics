@@ -61,6 +61,7 @@ cd $SCRIPT_FOLDER/06_Inbreeding_coefficients
 
 # If you haven't already done so, get sif 
 #singularity pull shub://seedpcseed/metaerg:latest
+# This singularity is actually for the MetaErg pipeline
 
 #--------------------------------------------------------------------------------
 

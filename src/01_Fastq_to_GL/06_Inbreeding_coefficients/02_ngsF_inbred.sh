@@ -38,11 +38,6 @@
 
 #--------------------------------------------------------------------------------
 
-#Load modules 
-module load singularity/3.7.1
-
-#--------------------------------------------------------------------------------
-
 # Define important file locations
 
 # Working folder is core folder where this pipeline is being run.
@@ -63,7 +58,7 @@ echo "using #CPUs ==" $NB_CPU
 #--------------------------------------------------------------------------------
 
 # Establish the array
-# This is a file with the names . 
+# This is a file with the names. 
 arr=("FB" "HC" "MP")
 i="${arr[$SLURM_ARRAY_TASK_ID]}"
 echo ${i}
