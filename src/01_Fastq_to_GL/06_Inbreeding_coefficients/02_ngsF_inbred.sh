@@ -35,11 +35,18 @@
 #--------------------------------------------------------------------------------
 
 # This script will calculate inbreeding coefficients with ngsF (https://github.com/fgvieira/ngsF/tree/master)
+# Call package (installed with conda)
+module load python3.11-anaconda/2023.09-0
+source ${ANACONDA_ROOT}/etc/profile.d/conda.sh
+#conda create --name ngsTools #If you haven't already done so, create and name the environment
+conda activate ngsTools #activate the environment
+#conda install -c bioconda multiqc # If you haven't already done so, install the program---- no conda for ngsTools
 
-#--------------------------------------------------------------------------------
 
-#Load modules 
-module load singularity/3.7.1
+# Load modules
+module load gcc/gcc5.4.0 
+zlib=/gpfs1/home/e/l/elongman/software/zlib-1.2.7
+gsl=/gpfs1/home/e/l/elongman/software/
 
 #--------------------------------------------------------------------------------
 
@@ -63,7 +70,7 @@ echo "using #CPUs ==" $NB_CPU
 #--------------------------------------------------------------------------------
 
 # Establish the array
-# This is a file with the names . 
+# This is a file with the names. 
 arr=("FB" "HC" "MP")
 i="${arr[$SLURM_ARRAY_TASK_ID]}"
 echo ${i}

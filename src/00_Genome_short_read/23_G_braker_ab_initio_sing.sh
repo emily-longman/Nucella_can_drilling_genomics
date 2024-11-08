@@ -46,15 +46,15 @@ cd $SCRIPTS_FOLDER
 
 # This part of the script will check and generate, if necessary, all of the output folders used in the script
 
-if [ -d "23_breaker_singularity" ]
-then echo "Working 23_breaker_singularity folder exist"; echo "Let's move on."; date
-else echo "Working 23_breaker_singularity folder doesnt exist. Let's fix that."; mkdir $SCRIPTS_FOLDER/23_breaker_singularity; date
+if [ -d "23_braker_singularity" ]
+then echo "Working 23_braker_singularity folder exist"; echo "Let's move on."; date
+else echo "Working 23_braker_singularity folder doesnt exist. Let's fix that."; mkdir $SCRIPTS_FOLDER/23_braker_singularity; date
 fi
 
 #--------------------------------------------------------------------------------
 
 # Change directory
-cd $SCRIPTS_FOLDER/23_breaker_singularity
+cd $SCRIPTS_FOLDER/23_braker_singularity
 
 # Build the sif-file for the braker singularity (https://hub.docker.com/r/teambraker/braker3)
 
@@ -71,10 +71,10 @@ cd $SCRIPTS_FOLDER/23_breaker_singularity
 cd $SCRIPTS_FOLDER
 
 # Export path to braker sif
-export BRAKER_SIF=$SCRIPTS_FOLDER/23_breaker_singularity/braker3.sif
+export BRAKER_SIF=$SCRIPTS_FOLDER/23_braker_singularity/braker3.sif
 
 # Change permissions for associated script
-chmod +x 23_G_breaker.sh
+chmod +x 23_G_braker_ab_initio.sh
 
 # Use the singularity to run angsd
-singularity exec $SCRIPTS_FOLDER/23_breaker_singularity/braker3.sif $SCRIPTS_FOLDER/23_G_breaker.sh
+singularity exec $SCRIPTS_FOLDER/23_braker_singularity/braker3.sif $SCRIPTS_FOLDER/23_G_braker_ab_initio.sh

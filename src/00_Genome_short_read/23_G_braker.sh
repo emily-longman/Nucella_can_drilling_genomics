@@ -46,7 +46,7 @@ REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_O
 SCRIPTS_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/00_Genome_short_read
 
 # Export path to braker sif
-export BRAKER_SIF=$SCRIPTS_FOLDER/23_breaker_singularity/braker3.sif
+export BRAKER_SIF=$SCRIPTS_FOLDER/23_braker_singularity/braker3.sif
 
 #--------------------------------------------------------------------------------
 
