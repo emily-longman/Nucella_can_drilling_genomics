@@ -53,7 +53,7 @@ export BRAKER_SIF=$SCRIPTS_FOLDER/23_braker_singularity/braker3.sif
 # Move to working directory
 cd $WORKING_FOLDER_SCRATCH
 
-# Execute breaker
+# Execute breaker in ab inition method (In this mode, GeneMark-ES is trained on the genome sequence, alone)
 braker.pl \
 --species=Nucella_canaliculata \
 --genome=$REFERENCE \
