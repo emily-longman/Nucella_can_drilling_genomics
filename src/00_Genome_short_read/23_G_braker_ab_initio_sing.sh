@@ -74,7 +74,7 @@ cd $SCRIPTS_FOLDER
 export BRAKER_SIF=$SCRIPTS_FOLDER/23_braker_singularity/braker3.sif
 
 # Change permissions for associated script
-chmod +x 23_G_braker.sh
+chmod +x 23_G_braker_ab_initio.sh
 
 # Use the singularity to run angsd
-singularity exec $SCRIPTS_FOLDER/23_braker_singularity/braker3.sif $SCRIPTS_FOLDER/23_G_braker.sh
+singularity exec $SCRIPTS_FOLDER/23_braker_singularity/braker3.sif $SCRIPTS_FOLDER/23_G_braker_ab_initio.sh
