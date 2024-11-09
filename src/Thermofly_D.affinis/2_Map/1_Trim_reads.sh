@@ -24,7 +24,7 @@ echo ${SLURM_ARRAY_TASK_ID}
 
 # Set folders and file locations
 working_folder=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/Thermofly_D_affinis/
-meta=/netfiles/thermofly/METADATA/Thermofly_metadata.vNov6.2024.tsv
+meta=$working_folder/METADATA/Thermofly_metadata.vNov6.2024.tsv
 
 #--------------------------------------------------------------------------------
 
@@ -46,8 +46,6 @@ mkdir fastp_reports
 mkdir cleaned_reads
 
 #--------------------------------------------------------------------------------
-
-
 
 # Use fastp to do some light trimming
 echo ${SAMP_NAME} "Trimming reads"
