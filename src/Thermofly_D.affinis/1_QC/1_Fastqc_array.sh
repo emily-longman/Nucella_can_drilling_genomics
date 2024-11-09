@@ -5,7 +5,7 @@
 #SBATCH -N 1 # on one node  
 #SBATCH -t 4:00:00   
 #SBATCH --mem 8G   
-#SBATCH -o ./slurmOutput/myarray.%A_%a.out  
+#SBATCH -o ./slurmOutput/%x.%A_%a.out  
 #SBATCH -p bluemoon  
 #SBATCH --array=239-278
 
@@ -15,7 +15,7 @@ echo ${SLURM_ARRAY_TASK_ID}
 
 # Set folders and file locations
 working_folder=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/Thermofly_D_affinis/
-meta=/netfiles/thermofly/METADATA/Thermofly_metadata.vNov6.2024.tsv
+meta=$working_folder/METADATA/Thermofly_metadata.vNov6.2024.tsv
 
 #--------------------------------------------------------------------------------
 
