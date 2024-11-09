@@ -7,7 +7,7 @@
 #SBATCH --mem 20G   
 #SBATCH -o ./slurmOutput/%x.%A_%a.out
 #SBATCH -p bluemoon
-#SBATCH --array=1-22
+#SBATCH --array=239-278
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=emily.longman@uvm.edu 
 
@@ -23,8 +23,8 @@ fastp=/netfiles/thermofly/shared_software/fastp
 echo ${SLURM_ARRAY_TASK_ID}
 
 # Set folders and file locations
-working_folder=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/Thermofly
-meta=$working_folder/METADATA/Thermofly_metadata.tsv
+working_folder=/netfiles/thermofly/D_affinis
+meta=/netfiles/thermofly/METADATA/Thermofly_metadata.vNov6.2024.tsv
 
 #--------------------------------------------------------------------------------
 
