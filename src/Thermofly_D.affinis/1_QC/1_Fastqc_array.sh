@@ -8,6 +8,8 @@
 #SBATCH -o ./slurmOutput/%x.%A_%a.out  
 #SBATCH -p bluemoon  
 #SBATCH --array=239-278
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=emily.longman@uvm.edu 
 
 #--------------------------------------------------------------------------------
 
