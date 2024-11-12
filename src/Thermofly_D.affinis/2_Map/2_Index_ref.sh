@@ -1,6 +1,6 @@
 #!/usr/bin/env bash  
 #  
-#SBATCH -J Index_ref  
+#SBATCH -J Index_ref_D.affinis 
 #SBATCH -c 6  
 #SBATCH -N 1 # on one node  
 #SBATCH -t 8:00:00   
@@ -18,11 +18,11 @@ PICARD=/netfiles/nunezlab/Shared_Resources/Software/picard/build/libs/picard.jar
 #--------------------------------------------------------------------------------
 
 # Set folders and file locations
-ref=/netfiles/thermofly/GENOMES/basisetae/D.basisetae_nanopore.fasta.masked.fa
+ref=/netfiles/thermofly/GENOMES/affinis/D.affinis.rm.fasta.masked
 
 #--------------------------------------------------------------------------------
 
-cd /netfiles/thermofly/GENOMES/basisetae
+cd /netfiles/thermofly/GENOMES/affinis
 
 # Index reference
 

@@ -12,7 +12,7 @@
 
 # Set folders and file locations
 working_folder=/netfiles/thermofly/D_affinis
-meta=/netfiles/thermofly/METADATA/Thermofly_metadata.vNov6.2024.tsv
+meta=/netfiles/thermofly/METADATA/Thermofly_metadata.vNov11.2024.tsv
 
 #--------------------------------------------------------------------------------
 
