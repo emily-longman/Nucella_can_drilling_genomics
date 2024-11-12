@@ -7,7 +7,7 @@
 #SBATCH --mem 20G   
 #SBATCH -o ./slurmOutput/%x.%A_%a.out  
 #SBATCH -p bluemoon  
-#SBATCH --array=1-22
+#SBATCH --array=239-278%20
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=emily.longman@uvm.edu 
 
@@ -25,9 +25,9 @@ bwa=/netfiles/nunezlab/Shared_Resources/Software/bwa-mem2-2.2.1_x64-linux/bwa-me
 echo ${SLURM_ARRAY_TASK_ID}
 
 # Set folders and file locations
-working_folder=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/Thermofly
-meta=$working_folder/METADATA/Thermofly_metadata.tsv
-ref=/netfiles/thermofly/GENOMES/basisetae/D.basisetae_nanopore.fasta.masked.fa
+working_folder=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/Thermofly_D_affinis/
+meta=/netfiles/thermofly/METADATA/Thermofly_metadata.vNov11.2024.tsv
+ref=/netfiles/thermofly/GENOMES/affinis/D.affinis.rm.fasta.masked
 
 #--------------------------------------------------------------------------------
 
