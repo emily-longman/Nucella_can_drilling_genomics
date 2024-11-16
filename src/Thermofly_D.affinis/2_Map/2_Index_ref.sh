@@ -15,6 +15,9 @@ spack load samtools@1.10
 bwa=/netfiles/nunezlab/Shared_Resources/Software/bwa-mem2-2.2.1_x64-linux/bwa-mem2.avx2
 PICARD=/netfiles/nunezlab/Shared_Resources/Software/picard/build/libs/picard.jar
 
+#bwa=/netfiles/thermofly/shared_software/bwa-mem2-2.2.1_x64-linux/bwa-mem2.avx2
+#PICARD=/netfiles/thermofly/shared_software/picard/build/libs/picard.jar
+
 #--------------------------------------------------------------------------------
 
 # Set folders and file locations
