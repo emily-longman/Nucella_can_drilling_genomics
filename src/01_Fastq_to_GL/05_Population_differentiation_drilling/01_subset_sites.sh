@@ -66,7 +66,7 @@ cd $WORKING_FOLDER/guide_files
 # Drilled has 75 individuals, while Not Drilled has 117 - thus subset the Not Drilled bamlists to also have 75 individuals
 
 # Input files
-Drilling_bamlist=$WORKING_FOLDER/guide_files/Nucella_bam_${i}.list.txt
+Drilling_bamlist=$WORKING_FOLDER/guide_files/Nucella_bam_${i}.list
 Drilling_group=${i}
 
 Rscript $SCRIPT_FOLDER/05_Population_differentiation_drilling/01_subset_sites.R "$Drilling_bamlist" "$Drilling_group" 
