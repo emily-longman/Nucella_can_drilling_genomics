@@ -103,7 +103,6 @@ angsd \
 -doMaf 1 -doMajorMinor 1 -doCounts 1 -doPost 1 \
 -remove_bads 1 -minMapQ 30 -minQ 20 \
 -minInd $MIN_IND -setMinDepthInd $MIN_DEPTH -minMaf $MIN_MAF -setMaxDepth $MAX_DEPTH \
--Pvalue 1 \
 -rf $WORKING_FOLDER/sites_info/regions_all_maf_pruned \
 -out $WORKING_FOLDER/GWAS/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR".binary.gwas
 
