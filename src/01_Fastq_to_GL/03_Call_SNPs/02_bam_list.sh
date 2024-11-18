@@ -29,10 +29,18 @@
 
 #--------------------------------------------------------------------------------
 
+#Load modules 
+module load R/4.4.0
+
+#--------------------------------------------------------------------------------
+
 # Define important file locations
 
 # Working folder is core folder where this pipeline is being run.
 WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL
+
+# Scripts folder.
+SCRIPT_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/01_Fastq_to_GL
 
 #--------------------------------------------------------------------------------
 
@@ -57,3 +65,14 @@ ls -d "$PWD/"FB*.bam > $WORKING_FOLDER/guide_files/FB_bam.list
 
 # Create bamlist for MP
 ls -d "$PWD/"MP*.bam > $WORKING_FOLDER/guide_files/MP_bam.list
+
+#--------------------------------------------------------------------------------
+
+# Change working directory
+cd $WORKING_FOLDER/guide_files
+
+# Input files
+bamlist=$WORKING_FOLDER/guide_files/Nucella_bam.list
+metadata=$WORKING_FOLDER/guide_files/Metadata.csv
+
+Rscript $SCRIPT_FOLDER/03_Call_SNPs/02_bam_list.R "$bamlist" "$metadata" 
