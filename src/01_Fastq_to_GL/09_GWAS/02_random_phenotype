@@ -1,0 +1,18 @@
+## This script will generate a random phenotype list 
+
+# Working folder is core folder where this pipeline is being run.
+WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL
+
+cd $WORKING_FOLDER/guide_files
+
+# Modify in R
+module load R/4.4.0
+
+# Open R
+R
+
+# Make a vector with 192 rows with just 1's and 0's
+Phenotype_Random <- sample(c(1,0), 192, replace=T)
+
+# Write this guide files directory
+write.table(Phenotype_Random, "Phenotype_Random.txt", row.names = F, col.names = F)
