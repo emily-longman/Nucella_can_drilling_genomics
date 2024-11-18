@@ -20,7 +20,7 @@
 #SBATCH --mem=2G 
 
 # Submit job array
-#SBATCH --array=0-2
+#SBATCH --array=0-1
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/%x.%A_%a.out # Standard output
@@ -53,7 +53,7 @@ SCRIPT_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/01_Fastq
 
 # Establish the array
 # This is a file with the names of the collection sites.  
-arr=("FB" "HC" "MP")
+arr=("Drilled" "Not.Drilled")
 i="${arr[$SLURM_ARRAY_TASK_ID]}"
 echo ${i}
 
@@ -63,10 +63,10 @@ echo ${i}
 cd $WORKING_FOLDER/guide_files
 
 # Randomly subset bam file lists
-# FB has 59 individuals - thus subset the other two bamlists to also have 59 individuals
+# Drilled has 75 individuals, while Not Drilled has 117 - thus subset the Not Drilled bamlists to also have 75 individuals
 
 # Input files
-site_bamlist=$WORKING_FOLDER/guide_files/${i}_bam.list
-site_name=${i}
+Drilling_bamlist=$WORKING_FOLDER/guide_files/Nucella_bam_${i}.list.txt
+Drilling_group=${i}
 
-Rscript $SCRIPT_FOLDER/05_Population_differentiation/01_subset_sites.R "$site_bamlist" "$site_name" 
+Rscript $SCRIPT_FOLDER/05_Population_differentiation_drilling/01_subset_sites.R "$Drilling_bamlist" "$Drilling_group" 
