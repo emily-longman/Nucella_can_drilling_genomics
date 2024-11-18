@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=sfs_sites
+#SBATCH --job-name=sfs_drilling
 
 # Specify partition
 #SBATCH --partition=week
@@ -31,7 +31,7 @@
 
 #--------------------------------------------------------------------------------
 
-# This script will calculate the 2d site frequency spectrums (sfs) and Fst for each collection site pair.
+# This script will calculate the 2d site frequency spectrums (sfs) and Fst for Not.Drilled vs Drilled.
 
 #--------------------------------------------------------------------------------
 
@@ -60,8 +60,7 @@ echo "using #CPUs ==" $NB_CPU
 #--------------------------------------------------------------------------------
 
 # Establish the array
-# This is a file with the names of the collection sites. 
-arr=("FB" "HC" "MP")
+arr=("Drilled" "Not.Drilled")
 
 #--------------------------------------------------------------------------------
 
@@ -79,16 +78,16 @@ cd $WORKING_FOLDER
 
 # This part of the script will check and generate, if necessary, all of the output folders used in the script
 
-if [ -d "fst" ]
-then echo "Working fst folder exist"; echo "Let's move on."; date
-else echo "Working fst folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/fst; date
+if [ -d "fst_drilling" ]
+then echo "Working fst_drilling folder exist"; echo "Let's move on."; date
+else echo "Working fst_drilling folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/fst_drilling; date
 fi
 
 #--------------------------------------------------------------------------------
 
-# Create site frequency spectrums for each site pair
+# Create site frequency spectrums for each drilling group pair
 
-# Number of sites
+# Number of drilling groups
 num_sites="${#arr[@]}" # Length of elements in array
 
 # Estimate pairwise FST for all populations listed
@@ -96,19 +95,19 @@ num_sites="${#arr[@]}" # Length of elements in array
 for i in "${!arr[@]}"; do
 for j in "${!arr[@]}"; do
 if [ "$i" -lt "$j" ]; then
-site1=${arr[i]}
-site2=${arr[j]}
-echo "Fst between $site1 and $site2"
-echo "site 1:" "$site1" 
-echo "site 2:" "$site2"
+group1=${arr[i]}
+group2=${arr[j]}
+echo "Fst between $group1 and $group2"
+echo "group 1:" "$group1" 
+echo "group 2:" "$group2"
 
 echo "Calculate the 2dsfs priors"
 
 realSFS \
-$WORKING_FOLDER/genotype_likelihoods_by_site/${site1}/${site1}_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_subset.saf.idx \
-$WORKING_FOLDER/genotype_likelihoods_by_site/${site2}/${site2}_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_subset.saf.idx \
+$WORKING_FOLDER/genotype_likelihoods_by_drilling/${group1}/${group1}_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_subset.saf.idx \
+$WORKING_FOLDER/genotype_likelihoods_by_drilling/${group2}/${group2}_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_subset.saf.idx \
 -P $NB_CPU -maxIter 30 -fold 1 \
-> $WORKING_FOLDER/fst/"$site1"_"$site2"_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_subset
+> $WORKING_FOLDER/fst_drilling/"$group1"_"$group2"_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_subset
 
 fi
 done

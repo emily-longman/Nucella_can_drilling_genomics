@@ -60,7 +60,6 @@ echo "using #CPUs ==" $NB_CPU
 #--------------------------------------------------------------------------------
 
 # Establish the array
-# This is a file with the names of the collection sites. 
 arr=("FB" "HC" "MP")
 
 #--------------------------------------------------------------------------------
