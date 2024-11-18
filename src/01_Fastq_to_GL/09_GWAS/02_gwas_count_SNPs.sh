@@ -115,3 +115,7 @@ angsd \
 # -doMajorMinor 1: infer the major/minor using different approaches
 # -doCounts 1: calculate various counts statistics
 # -doPost 1: estimate the posterior genotype probability based on the allele frequency as a prior
+
+#--------------------------------------------------------------------------------
+
+# After complete, gunzip the .lrt0.gz output file 

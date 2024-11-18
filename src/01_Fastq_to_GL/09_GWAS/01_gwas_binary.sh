@@ -115,3 +115,7 @@ angsd \
 # -doCounts 1: calculate various counts statistics
 # -doPost 1: estimate the posterior genotype probability based on the allele frequency as a prior
 # If you use the score statistics -doAsso 2 then calculate the posterior using the allele frequency as prior (-doPost 1).
+
+#--------------------------------------------------------------------------------
+
+# After complete, gunzip the .lrt0.gz output file 
