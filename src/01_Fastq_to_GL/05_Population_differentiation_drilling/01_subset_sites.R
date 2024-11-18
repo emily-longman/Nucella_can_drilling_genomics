@@ -1,17 +1,17 @@
 # This R script will subset the bamfile lists so that the sites have the same sample size (i.e., n = 59)
 
 argv <- commandArgs(T)
-site_bamlist <- argv[1]
-site_name <- argv[2]
+Drilling_bamlist <- argv[1]
+Drilling_group <- argv[2]
 
 # Read in bamlist
-site_bamlist<-read.table(site_bamlist, header=F)
-n_site<-dim(site_bamlist)[1]
+Drilling_bamlist<-read.table(Drilling_bamlist, header=F)
+n_group<-dim(Drilling_bamlist)[1]
 
-# Need to sample for 59 individuals
-n_ind <- 59
+# Need to sample for 75 individuals
+n_ind <- 75
 
-bam_list <- site_bamlist[sample(n_site, 59, replace=F),]
+bam_list <- Drilling_bamlist[sample(n_group, 75, replace=F),]
 
 # Write subset bam list 
-write.table(bam_list, paste(site_name, "_bam_subset.list", sep = ""), col.names = FALSE, row.names = FALSE, quote = FALSE)
+write.table(bam_list, paste("Nucella_bam_", Drilling_group, "_subset.list", sep = ""), col.names = FALSE, row.names = FALSE, quote = FALSE)
