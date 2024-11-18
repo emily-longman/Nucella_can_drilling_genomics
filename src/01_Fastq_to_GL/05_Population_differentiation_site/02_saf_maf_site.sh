@@ -110,7 +110,7 @@ fi
 # Move back to working directory
 cd $WORKING_FOLDER
 
-echo "Working on collection site ${i}, with $N_IND individuals. Will use the sites file provided"
+echo "Working on collection site ${i}, with $N_IND individuals."
 echo "Will filter for sites with at least one read in $MIN_IND individuals, which is $PERCENT_IND of the total."
 
 # Generate GL's for polymorphic sites for each Nucella collection location

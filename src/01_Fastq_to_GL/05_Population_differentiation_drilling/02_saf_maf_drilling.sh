@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=saf_maf_site
+#SBATCH --job-name=saf_maf_drilling
 
 # Specify partition
 #SBATCH --partition=week
@@ -23,7 +23,7 @@
 #SBATCH --cpus-per-task=10
 
 # Submit job array
-#SBATCH --array=0-2
+#SBATCH --array=0-1
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/%x.%A_%a.out # Standard output
@@ -34,7 +34,7 @@
 
 #--------------------------------------------------------------------------------
 
-# This script will calculate saf and maf for each collection site using the subset bam lists (i.e., each collection sites has n=59).
+# This script will calculate saf and maf for each bamlist (drilled and not drilled) using the subset bam lists (i.e., each group has n=75).
 
 #--------------------------------------------------------------------------------
 
@@ -62,9 +62,8 @@ echo "using #CPUs ==" $NB_CPU
 
 #--------------------------------------------------------------------------------
 
-# Establish the array
-# This is a file with the names of the collection sites. 
-arr=("FB" "HC" "MP")
+# Establish the array  
+arr=("Drilled" "Not.Drilled")
 i="${arr[$SLURM_ARRAY_TASK_ID]}"
 echo ${i}
 
@@ -76,7 +75,7 @@ echo ${i}
 source $SCRIPT_FOLDER/03_Call_SNPs/01_config.sh
 
 # Extract parameters from config file
-N_IND=$(wc -l $WORKING_FOLDER/guide_files/${i}_bam_subset.list | cut -d " " -f 1) 
+N_IND=$(wc -l $WORKING_FOLDER/guide_files/Nucella_bam_${i}_subset.list | cut -d " " -f 1) 
 MIN_IND_FLOAT=$(echo "($N_IND * $PERCENT_IND)"| bc -l)
 MIN_IND=${MIN_IND_FLOAT%.*} 
 MAX_DEPTH=$(echo "($N_IND * $MAX_DEPTH_FACTOR)" |bc -l)
@@ -90,17 +89,17 @@ cd $WORKING_FOLDER
 
 # This part of the script will check and generate, if necessary, all of the output folders used in the script
 
-if [ -d "genotype_likelihoods_by_site" ]
-then echo "Working genotype_likelihoods_by_site folder exist"; echo "Let's move on."; date
-else echo "Working genotype_likelihoods_by_site folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/genotype_likelihoods_by_site; date
+if [ -d "genotype_likelihoods_by_drilling" ]
+then echo "Working genotype_likelihoods_by_drilling folder exist"; echo "Let's move on."; date
+else echo "Working genotype_likelihoods_by_drilling folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/genotype_likelihoods_by_drilling; date
 fi
 
 # Change directory
-cd $WORKING_FOLDER/genotype_likelihoods_by_site
+cd $WORKING_FOLDER/genotype_likelihoods_by_drilling
 
 if [ -d "${i}" ]
 then echo "Working ${i} folder exist"; echo "Let's move on."; date
-else echo "Working ${i} folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/genotype_likelihoods_by_site/${i}; date
+else echo "Working ${i} folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/genotype_likelihoods_by_drilling/${i}; date
 fi
 
 #--------------------------------------------------------------------------------
@@ -110,19 +109,19 @@ fi
 # Move back to working directory
 cd $WORKING_FOLDER
 
-echo "Working on collection site ${i}, with $N_IND individuals. Will use the sites file provided"
+echo "Working on group ${i}, with $N_IND individuals."
 echo "Will filter for sites with at least one read in $MIN_IND individuals, which is $PERCENT_IND of the total."
 
-# Generate GL's for polymorphic sites for each Nucella collection location
+# Generate GL's for polymorphic sites for each Nucella drilling group 
 # Since we will use the output for SFS and calculating FSTs/thetas, then we don't want min MAF, p-value filters
 angsd \
--b $WORKING_FOLDER/guide_files/${i}_bam_subset.list \
+-b $WORKING_FOLDER/guide_files/Nucella_bam_${i}_subset.list \
 -ref ${REFERENCE} -anc ${REFERENCE} \
 -P $NB_CPU \
 -doMaf 1 -doSaf 1 -GL 2 -doMajorMinor 1 \
 -remove_bads 1 -skipTriallelic 1 -uniqueOnly 1 -only_proper_pairs 1 -minMapQ 30 -minQ 20 -C 50 \
 -minInd $MIN_IND -setMinDepthInd $MIN_DEPTH \
--out $WORKING_FOLDER/genotype_likelihoods_by_site/${i}/${i}_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_subset
+-out $WORKING_FOLDER/genotype_likelihoods_by_drilling/${i}/${i}_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_subset
 
 # -P: number of threads
 
