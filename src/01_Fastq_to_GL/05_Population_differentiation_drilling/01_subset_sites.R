@@ -1,4 +1,4 @@
-# This R script will subset the bamfile lists so that the sites have the same sample size (i.e., n = 59)
+# This R script will subset the bamfile lists so that the bam lists for drilling will have the same sample size (i.e., n = 75)
 
 argv <- commandArgs(T)
 Drilling_bamlist <- argv[1]
