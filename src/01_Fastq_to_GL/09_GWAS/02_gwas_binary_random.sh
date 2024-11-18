@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=gwas_bin
+#SBATCH --job-name=gwas_bin_random
 
 # Specify partition
 #SBATCH --partition=week
