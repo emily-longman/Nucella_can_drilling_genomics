@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=subset_sites
+#SBATCH --job-name=subset_drilling
 
 # Specify partition
 #SBATCH --partition=bluemoon
@@ -69,4 +69,4 @@ cd $WORKING_FOLDER/guide_files
 Drilling_bamlist=$WORKING_FOLDER/guide_files/Nucella_bam_${i}.list
 Drilling_group=${i}
 
-Rscript $SCRIPT_FOLDER/05_Population_differentiation_drilling/01_subset_sites.R "$Drilling_bamlist" "$Drilling_group" 
+Rscript $SCRIPT_FOLDER/05_Population_differentiation_drilling/01_subset_drilling.R "$Drilling_bamlist" "$Drilling_group" 
