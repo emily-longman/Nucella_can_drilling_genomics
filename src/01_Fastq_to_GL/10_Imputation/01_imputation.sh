@@ -52,6 +52,9 @@ REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_O
 # Scripts folder.
 SCRIPT_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/01_Fastq_to_GL
 
+# Path to bam list.
+BAM_LIST=$WORKING_FOLDER/guide_files/Nucella_bam.list
+
 #--------------------------------------------------------------------------------
 
 # Define parameters
@@ -89,6 +92,4 @@ fi
 
 # Run imputation
 
-java -Xmx15000m -jar $beagle \
-like=$WORKING_FOLDER/genotype_likelihoods_all_pruned/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6_pruned.beagle.gz \
-out=$WORKING_FOLDER/imputation/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6_pruned_imputation
+java -Xmx15000m -jar $beagle like=$WORKING_FOLDER/genotype_likelihoods_all_pruned/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6_pruned.beagle.gz out=$WORKING_FOLDER/imputation/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6_pruned_imputation
