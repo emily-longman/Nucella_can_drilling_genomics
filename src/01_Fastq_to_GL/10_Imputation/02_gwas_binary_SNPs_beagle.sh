@@ -100,7 +100,7 @@ fi
 angsd \
 -beagle $WORKING_FOLDER/imputation/Nucella_SNPs_maf0.05_pctind0.5_mindepth0.3_maxdepth2_pval1e6_pruned_imputation.Nucella_SNPs_maf0.05_pctind0.5_mindepth0.3_maxdepth2_pval1e6_pruned.beagle.gz.gprobs.gz \
 -P $NB_CPU \
--fai /netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_Oct2024/Crassostrea_mask/N.canaliculata_assembly.fasta.masked.fai \ 
+-fai /netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_Oct2024/Crassostrea_mask/N.canaliculata_assembly.fasta.masked.fai \
 -yBin $PHENO -doAsso 2 \
 -doMaf 4 \
 -out $WORKING_FOLDER/GWAS/Nucella_imputation.binary.gwas
