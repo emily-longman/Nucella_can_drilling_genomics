@@ -35,18 +35,10 @@
 #--------------------------------------------------------------------------------
 
 # This script will calculate inbreeding coefficients with ngsF (https://github.com/fgvieira/ngsF/tree/master)
-# Call package (installed with conda)
-module load python3.11-anaconda/2023.09-0
-source ${ANACONDA_ROOT}/etc/profile.d/conda.sh
-#conda create --name ngsTools #If you haven't already done so, create and name the environment
-conda activate ngsTools #activate the environment
-#conda install -c bioconda multiqc # If you haven't already done so, install the program---- no conda for ngsTools
-
 
 # Load modules
-module load gcc/gcc5.4.0 
-zlib=/gpfs1/home/e/l/elongman/software/zlib-1.2.7
-gsl=/gpfs1/home/e/l/elongman/software/
+module load singularity/3.7.1
+module load ngstools
 
 #--------------------------------------------------------------------------------
 
@@ -117,8 +109,8 @@ echo $NSITES "sites for collection site/population" ${i} "with" $N_IND "individu
 
 # Preliminary search
 zcat $WORKING_FOLDER/genotype_likelihoods_by_site/${i}/${i}_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_inbreed.mafs.gz \
-| NGStools/ngsF --n_ind $N_IND --n_sites $NSITES --glf - --out $WORKING_FOLDER/ngsF/${i}/${i}.approx_indF --approx_EM --init_values u --n_threads 5
+| singularity run $NGS ngsF --n_ind $N_IND --n_sites $NSITES --glf - --out $WORKING_FOLDER/ngsF/${i}/${i}.approx_indF --approx_EM --init_values u --n_threads 5
 	
 # Calc inbreeding
 zcat $WORKING_FOLDER/genotype_likelihoods_by_site/${i}/${i}_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_inbreed.mafs.gz \
-| NGStools/ngsF --n_ind $N_IND --n_sites $NSITES --glf - --out $WORKING_FOLDER/ngsF/${i}/${i}.indF --init_values $WORKING_FOLDER/ngsF/${i}/${i}.approx_indF.pars --n_threads 5 
+| singularity run $NGS ngsF --n_ind $N_IND --n_sites $NSITES --glf - --out $WORKING_FOLDER/ngsF/${i}/${i}.indF --init_values $WORKING_FOLDER/ngsF/${i}/${i}.approx_indF.pars --n_threads 5 
