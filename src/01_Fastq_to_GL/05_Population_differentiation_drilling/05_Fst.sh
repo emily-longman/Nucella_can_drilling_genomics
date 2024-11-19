@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=Fst
+#SBATCH --job-name=Fst_drilling
 
 # Specify partition
 #SBATCH --partition=bluemoon
@@ -28,7 +28,7 @@
 
 #--------------------------------------------------------------------------------
 
-# This script will calculate per site Fst (i.e., it will acutally calculate Fst for each pairwise comparison).
+# This script will calculate Fst (i.e., it will calculate Fst for each pairwise comparison).
 
 #--------------------------------------------------------------------------------
 
@@ -57,8 +57,7 @@ echo "using #CPUs ==" $NB_CPU
 #--------------------------------------------------------------------------------
 
 # Establish the array
-# This is a file with the names of the collection sites. 
-arr=("FB" "HC" "MP")
+arr=("Drilled" "Not.Drilled")
 
 #--------------------------------------------------------------------------------
 
@@ -81,36 +80,36 @@ num_sites="${#arr[@]}" # Length of elements in array
 for i in "${!arr[@]}"; do
 for j in "${!arr[@]}"; do
 if [ "$i" -lt "$j" ]; then
-site1=${arr[i]}
-site2=${arr[j]}
-echo "Fst between $site1 and $site2"
-echo "site 1:" "$site1" 
-echo "site 2:" "$site2"
+group1=${arr[i]}
+group2=${arr[j]}
+echo "Fst between $group1 and $group2"
+echo "group 1:" "$group1" 
+echo "group 2:" "$group2"
 
-echo "Compute per-site FST indexes"
+echo "Compute per-group FST indexes"
 realSFS fst index \
-$WORKING_FOLDER/genotype_likelihoods_by_site/${site1}/${site1}_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_subset.saf.idx \
-$WORKING_FOLDER/genotype_likelihoods_by_site/${site2}/${site2}_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_subset.saf.idx \
--sfs $WORKING_FOLDER/fst/"$site1"_"$site2"_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_subset.2dsfs \
--P $NB_CPU -fold 1 -fstout $WORKING_FOLDER/fst/"$site1"_"$site2"_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_subset_nMAF
+$WORKING_FOLDER/genotype_likelihoods_by_drilling/${group1}/${group1}_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_subset.saf.idx \
+$WORKING_FOLDER/genotype_likelihoods_by_drilling/${group2}/${group2}_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_subset.saf.idx \
+-sfs $WORKING_FOLDER/fst_drilling/"$group1"_"$group2"_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_subset.2dsfs \
+-P $NB_CPU -fold 1 -fstout $WORKING_FOLDER/fst_drilling/"$group1"_"$group2"_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_subset_nMAF
 
 echo "Print SFS priori for each position"
 realSFS fst print \
-$WORKING_FOLDER/fst/"$site1"_"$site2"_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_subset_nMAF.fst.idx \
+$WORKING_FOLDER/fst_drilling/"$group1"_"$group2"_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_subset_nMAF.fst.idx \
 -P $NB_CPU \
-> $WORKING_FOLDER/fst/"$site1"_"$site2"_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_subset_nMAF.bypos.sfs
+> $WORKING_FOLDER/fst/"$group1"_"$group2"_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_subset_nMAF.bypos.sfs
 		
 echo "Get the global estimate of FST throughout the genome"
 realSFS fst stats \
-$WORKING_FOLDER/fst/"$site1"_"$site2"_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_subset_nMAF.fst.idx \
+$WORKING_FOLDER/fst_drilling/"$group1"_"$group2"_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_subset_nMAF.fst.idx \
 -P $NB_CPU \
-> $WORKING_FOLDER/fst/"$site1"_"$site2"_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_subset_nMAF.fst
+> $WORKING_FOLDER/fst_drilling/"$group1"_"$group2"_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_subset_nMAF.fst
 		
 echo "Calculate FST by sliding window, window size=$WINDOW and step=$WINDOW_STEP, as given in A_01_config.sh"
 realSFS fst stats2 \
-$WORKING_FOLDER/fst/"$site1"_"$site2"_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_subset_nMAF.fst.idx \
+$WORKING_FOLDER/fst_drilling/"$group1"_"$group2"_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_subset_nMAF.fst.idx \
 -win $WINDOW -step $WINDOW_STEP -P $NB_CPU \
-> $WORKING_FOLDER/fst/"$site1"_"$site2"_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_subset_nMAF.slidingwindow
+> $WORKING_FOLDER/fst_drilling/"$group1"_"$group2"_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_subset_nMAF.slidingwindow
 
 fi
 done
