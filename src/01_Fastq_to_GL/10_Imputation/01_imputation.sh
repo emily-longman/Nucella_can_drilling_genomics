@@ -38,11 +38,10 @@
 
 #Load modules 
 module load openjdk/21.0.3
-#beagle=/gpfs1/home/e/l/elongman/software/beagle.29Oct24.c8e.jar #https://faculty.washington.edu/browning/beagle/beagle.html#download
 beagle=/gpfs1/home/e/l/elongman/software/beagle.jar 
 
 # Note:While Beagle versions up to 4.0 allowed for imputation to be performed based on genotype likelihoods, later versions require genotypes as input, which may introduce errors for low-coverage data in which genotypes cannot be confidently called. 
-
+# https://faculty.washington.edu/browning/beagle/beagle_3.3.2_31Oct11.pdf
 #--------------------------------------------------------------------------------
 
 # Define important file locations
