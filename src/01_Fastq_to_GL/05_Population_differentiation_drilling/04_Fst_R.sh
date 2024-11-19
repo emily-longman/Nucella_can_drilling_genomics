@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=Fst_R
+#SBATCH --job-name=Fst_R_drilling
 
 # Specify partition
 #SBATCH --partition=bluemoon
@@ -51,8 +51,7 @@ SCRIPT_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/01_Fastq
 #--------------------------------------------------------------------------------
 
 # Establish the array
-# This is a file with the names of the collection sites. 
-arr=("FB" "HC" "MP")
+arr=("Drilled" "Not.Drilled")
 
 #--------------------------------------------------------------------------------
 
@@ -73,15 +72,15 @@ num_sites="${#arr[@]}" # Length of elements in array
 for i in "${!arr[@]}"; do
 for j in "${!arr[@]}"; do
 if [ "$i" -lt "$j" ]; then
-site1=${arr[i]}
-site2=${arr[j]}
-echo "Fst between $site1 and $site2"
-echo "site 1:" "$site1" 
-echo "site 2:" "$site2"
+group1=${arr[i]}
+group2=${arr[j]}
+echo "Fst between $group1 and $group2"
+echo "group 1:" "$group1" 
+echo "group 2:" "$group2"
 
-file=$WORKING_FOLDER/fst/"$site1"_"$site2"_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_subset
+file=$WORKING_FOLDER/fst_drilling/"$group1"_"$group2"_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_subset
 
-Rscript $SCRIPT_FOLDER/05_Population_differentiation/04_Fst.R "$file"
+Rscript $SCRIPT_FOLDER/05_Population_differentiation_drilling/04_Fst.R "$file"
 
 fi
 done

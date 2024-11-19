@@ -51,7 +51,6 @@ SCRIPT_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/01_Fastq
 #--------------------------------------------------------------------------------
 
 # Establish the array
-# This is a file with the names of the collection sites. 
 arr=("FB" "HC" "MP")
 
 #--------------------------------------------------------------------------------
@@ -81,7 +80,7 @@ echo "site 2:" "$site2"
 
 file=$WORKING_FOLDER/fst/"$site1"_"$site2"_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_subset
 
-Rscript $SCRIPT_FOLDER/05_Population_differentiation/04_Fst.R "$file"
+Rscript $SCRIPT_FOLDER/05_Population_differentiation_site/04_Fst.R "$file"
 
 fi
 done
