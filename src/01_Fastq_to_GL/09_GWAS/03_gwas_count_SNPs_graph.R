@@ -29,12 +29,7 @@ setwd(results_path_from_root)
 # ================================================================================== #
 
 # Load packages
-library(qqman)
-
-# ================================================================================== #
-
-# Get R manhattan plot function (https://github.com/pcgoddard/Burchardlab_Tutorials/wiki/GGplot2-Manhattan-Plot-Function)
-source("/Users/emilylongman/Documents/GitHub/Nucella_can_drilling_genomics/src/01_Fastq_to_GL/09_GWAS/02_gwas_graphing.R")
+library(qqman) #https://cran.r-project.org/web/packages/qqman/vignettes/qqman.html
 
 # ================================================================================== #
 
