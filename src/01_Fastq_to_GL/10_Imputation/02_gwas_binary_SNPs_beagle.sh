@@ -97,10 +97,8 @@ fi
 # Perform GWAS on all samples using binary phenotypic data.
 # Imputation has been shown to greatly improve the accuracy of GWA studies
 
-angsd -doMaf 4 -beagle salmon_chr2_19ind.BEAGLE.PL.gz -yBin phenobin -doAsso 2 -fai Salmon.fai
-
 angsd \
--beagle $WORKING_FOLDER/genotype_likelihoods_all_pruned/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6_pruned.beagle.gz \
+-beagle $WORKING_FOLDER/imputation/Nucella_SNPs_maf0.05_pctind0.5_mindepth0.3_maxdepth2_pval1e6_pruned_imputation.Nucella_SNPs_maf0.05_pctind0.5_mindepth0.3_maxdepth2_pval1e6_pruned.beagle.gz.gprobs.gz \
 -P $NB_CPU \
 -fai N.canaliculata_assembly.fasta.masked.fai \ 
 -yBin $PHENO -doAsso 2 \
