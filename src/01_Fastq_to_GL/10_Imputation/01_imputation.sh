@@ -37,6 +37,7 @@
 #--------------------------------------------------------------------------------
 
 #Load modules 
+module load openjdk/21.0.3
 beagle=/gpfs1/home/e/l/elongman/software/beagle.29Oct24.c8e.jar #https://faculty.washington.edu/browning/beagle/beagle.html#download
 
 #--------------------------------------------------------------------------------
