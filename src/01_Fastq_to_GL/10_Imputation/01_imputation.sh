@@ -38,7 +38,10 @@
 
 #Load modules 
 module load openjdk/21.0.3
-beagle=/gpfs1/home/e/l/elongman/software/beagle.29Oct24.c8e.jar #https://faculty.washington.edu/browning/beagle/beagle.html#download
+#beagle=/gpfs1/home/e/l/elongman/software/beagle.29Oct24.c8e.jar #https://faculty.washington.edu/browning/beagle/beagle.html#download
+beagle=/gpfs1/home/e/l/elongman/software/beagle.jar 
+
+# Note:While Beagle versions up to 4.0 allowed for imputation to be performed based on genotype likelihoods, later versions require genotypes as input, which may introduce errors for low-coverage data in which genotypes cannot be confidently called. 
 
 #--------------------------------------------------------------------------------
 
@@ -93,4 +96,4 @@ fi
 
 # Run imputation
 
-java -Xmx15000m -jar $beagle like=$WORKING_FOLDER/genotype_likelihoods_all_pruned/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6_pruned.beagle.gz out=$WORKING_FOLDER/imputation/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6_pruned_imputation
+java -jar $beagle like=$WORKING_FOLDER/genotype_likelihoods_all_pruned/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6_pruned.beagle.gz out=$WORKING_FOLDER/imputation/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6_pruned_imputation
