@@ -107,10 +107,17 @@ echo "Calculating inbreeding for site/population:" ${i}
 NSITES=$((`zcat $WORKING_FOLDER/genotype_likelihoods_by_site/${i}/${i}_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_inbreed.mafs.gz | wc -l`-1))
 echo $NSITES "sites for collection site/population" ${i} "with" $N_IND "individuals"
 
+# Unzip .glf.gz file if you haven't already done so
+#gunzip $WORKING_FOLDER/genotype_likelihoods_by_site/${i}/${i}_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_inbreed.glf.gz 
+
 # Preliminary search
-zcat $WORKING_FOLDER/genotype_likelihoods_by_site/${i}/${i}_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_inbreed.glf.gz \
-| singularity run $NGS ngsF --n_ind $N_IND --n_sites $NSITES --glf - --out $WORKING_FOLDER/ngsF/${i}/${i}.approx_indF --approx_EM --init_values u --n_threads 5
+singularity run $NGS ngsF \
+--n_ind $N_IND --n_sites $NSITES \
+--glf $WORKING_FOLDER/genotype_likelihoods_by_site/${i}/${i}_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_inbreed.glf \
+--out $WORKING_FOLDER/ngsF/${i}/${i}.approx_indF --approx_EM --init_values u --n_threads 5
 	
 # Calc inbreeding
-zcat $WORKING_FOLDER/genotype_likelihoods_by_site/${i}/${i}_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_inbreed.glf.gz \
-| singularity run $NGS ngsF --n_ind $N_IND --n_sites $NSITES --glf - --out $WORKING_FOLDER/ngsF/${i}/${i}.indF --init_values $WORKING_FOLDER/ngsF/${i}/${i}.approx_indF.pars --n_threads 5 
+singularity run $NGS ngsF \
+--n_ind $N_IND --n_sites $NSITES \
+--glf $WORKING_FOLDER/genotype_likelihoods_by_site/${i}/${i}_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_inbreed.glf \
+--out $WORKING_FOLDER/ngsF/${i}/${i}.indF --init_values $WORKING_FOLDER/ngsF/${i}/${i}.approx_indF.pars --n_threads 5 
