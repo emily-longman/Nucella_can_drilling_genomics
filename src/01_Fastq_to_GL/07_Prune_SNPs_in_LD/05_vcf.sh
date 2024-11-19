@@ -31,7 +31,7 @@
 
 #--------------------------------------------------------------------------------
 
-# This script will use all bam files to calculate saf, maf and genotype likelihoods on pruned SNP list
+# This script will generate a vcf output. 
 
 #Load modules 
 spack load angsd@0.933
@@ -89,7 +89,7 @@ fi
 
 #--------------------------------------------------------------------------------
 
-# Calculate the MAF and GL, with Plink output for LD pruning
+# Generate a vcf output
 
 angsd \
 -b $BAM_LIST \
@@ -103,4 +103,4 @@ angsd \
 -rf $WORKING_FOLDER/sites_info/regions_all_maf \
 -out $WORKING_FOLDER/vcf/Nucella_SNPs_maf"$MIN_MAF"_pctind"0.75"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pruned
 
-# Note reduced minInd at this stage to 25%
+# -doVcf 1: gives a vcf output - simply a wrapper around -gl -dopost -domajorminor -domaf
