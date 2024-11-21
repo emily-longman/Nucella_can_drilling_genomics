@@ -74,7 +74,7 @@ source $SCRIPT_FOLDER/03_Call_SNPs/01_config.sh
 # Extract parameters from config file
 #N_IND=$(wc -l $BAM_LIST | cut -d " " -f 1) 
 #MIN_IND_FLOAT=$(echo "($N_IND * $PERCENT_IND)"| bc -l)
-MIN_IND=144
+MIN_IND=115
 MAX_DEPTH=$(echo "($N_IND * $MAX_DEPTH_FACTOR)" |bc -l)
 
 #--------------------------------------------------------------------------------
@@ -105,7 +105,7 @@ angsd \
 -minInd $MIN_IND -setMinDepthInd $MIN_DEPTH -minMaf $MIN_MAF -setMaxDepth $MAX_DEPTH \
 -sites $WORKING_FOLDER/sites_info/sites_all_maf_pruned \
 -rf $WORKING_FOLDER/sites_info/regions_all_maf_pruned \
--out $WORKING_FOLDER/GWAS/Nucella_SNPs_maf"$MIN_MAF"_pctind"0.75"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR".binary.SNPs.gwas
+-out $WORKING_FOLDER/GWAS/Nucella_SNPs_maf"$MIN_MAF"_pctind"0.6"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR".binary.SNPs.gwas
 
 # -yBin: File containing binary phenotypic data 
 # -doAsso 2: Score Test
