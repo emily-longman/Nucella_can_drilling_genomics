@@ -34,44 +34,43 @@ library(qqman)
 # ================================================================================== #
 
 # Load data 
-data.binary.SNP <- read.table("Nucella_SNPs_maf0.05_pctind0.5_mindepth0.3_maxdepth2.binary.gwas.lrt0", header = T, sep = "\t")
-str(data.binary.SNP)
+data.binary.0.65.SNP <- read.table("Nucella_SNPs_maf0.05_pctind0.65_mindepth0.3_maxdepth2.binary.SNPs.gwas.lrt0", header = T, sep = "\t")
+str(data.binary.0.65.SNP)
 
 # Create unique Chromosome number 
-Chr.unique <- unique(data.binary.SNP$Chromosome)
-data.binary.SNP$CHR <- as.numeric(factor(data.binary.SNP$Chromosome, levels = Chr.unique))
+Chr.unique <- unique(data.binary.0.65.SNP$Chromosome)
+data.binary.0.65.SNP$CHR <- as.numeric(factor(data.binary.0.65.SNP$Chromosome, levels = Chr.unique))
 
 # Clean data
 # Remove LRT values that are -999 (i.e., Sites that fails one of the filters) and are negative
-data.binary.SNP.filt <- data.binary.SNP[-c(which(data.binary.SNP$LRT == -999), which(data.binary.SNP$LRT <= 0)), ]
+data.binary.0.65.SNP.filt <- data.binary.0.65.SNP[-c(which(data.binary.0.65.SNP$LRT == -999), which(data.binary.0.65.SNP$LRT <= 0)), ]
 
-hist(data.binary.SNP.filt$LRT, breaks = 50)
+hist(data.binary.0.65.SNP.filt$LRT, breaks = 50)
 
 # ================================================================================== #
 
 # Prepare data
 
 # Name each SNP 
-data.binary.SNP.filt$SNP <- paste("r", 1:length(data.binary.SNP.filt$Chromosome), sep="")
+data.binary.0.65.SNP.filt$SNP <- paste("r", 1:length(data.binary.0.65.SNP.filt$Chromosome), sep="")
 
 # Name each BP 
-data.binary.SNP.filt$BP <- data.binary.SNP.filt$Position
+data.binary.0.65.SNP.filt$BP <- data.binary.0.65.SNP.filt$Position
 
 # Get pvalues
-data.binary.SNP.filt$P <- pchisq(data.binary.SNP.filt$LRT, df=1, lower=F)
+data.binary.0.65.SNP.filt$P <- pchisq(data.binary.0.65.SNP.filt$LRT, df=1, lower=F)
 
 # ================================================================================== #
 
 # Make manhattan plot
-manhattan(data.binary.SNP.filt, chr="CHR", bp="Position", p="P")
+manhattan(data.binary.0.65.SNP.filt, chr="CHR", bp="Position", p="P")
 
 # Look at qq-plot of pvalues to check model fit
-qqnorm(data.binary.SNP.filt$P)
+qqnorm(data.binary.0.65.SNP.filt$P)
 
 # ================================================================================== #
 
-# Make a list of the candidate loci
-candidates <- data.binary.SNP.filt[which(data.binary.SNP.filt$LRT > 20),]$SNP
+
 
 
 
