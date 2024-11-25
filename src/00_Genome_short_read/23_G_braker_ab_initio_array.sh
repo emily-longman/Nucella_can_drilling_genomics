@@ -5,20 +5,23 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=breaker
+#SBATCH --job-name=breaker_array
 
 # Specify partition
 #SBATCH --partition=week
 
 # Request nodes
 #SBATCH --nodes=1 
-#SBATCH --ntasks-per-node=16
+#SBATCH --ntasks-per-node=8
 
 # Reserve walltime -- hh:mm:ss --7 day limit 
-#SBATCH --time=6-00:00:00 
+#SBATCH --time=1-00:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
 #SBATCH --mem=30G
+
+# Submit job array
+#SBATCH --array=1-631%30
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/%x_%j.out # Standard output
@@ -28,6 +31,14 @@
 #SBATCH --mail-user=emily.longman@uvm.edu 
 
 #--------------------------------------------------------------------------------
+
+# This script will annotate the soft masked genome. However, given the large size of the genome, the length of time exceeds run limits on the VACC. 
+# Thus, to make the process more manageable, the genome is broken up into individual scaffolds then braker is run on each scaffold.
+# To do this utilize both an array and a while loop. 
+# The previous script produced a guide file that groups scaffolds into 30 scaffold chunks, for a total of 631 partitions.
+# For each partition, this script will loop over each scaffold name, break the genome and bam file into that scaffold then clean that scaffold.
+
+
 
 # Load modules
 module load singularity/3.7.1
@@ -39,8 +50,8 @@ module load singularity/3.7.1
 # Working folder is core folder where this pipeline is being run.
 WORKING_FOLDER_SCRATCH=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly
 
-#This is the location of the reference genome.
-REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_Oct2024/Crassostrea_mask/N.canaliculata_assembly.fasta.masked
+#This is the location of the soft-masked reference genome.
+REFERENCE=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly/N.canaliculata_assembly.fasta.softmasked
 
 #Working folder is core folder where this pipeline is being run.
 SCRIPTS_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/00_Genome_short_read
@@ -57,4 +68,4 @@ cd $WORKING_FOLDER_SCRATCH
 braker.pl \
 --species=Nucella_canaliculata \
 --genome=$REFERENCE \
---threads 16 
+--bam=$WORKING_FOLDER_SCRATCH/cDNA_bam/Nucella.cDNA.srt.rmdp.bam
