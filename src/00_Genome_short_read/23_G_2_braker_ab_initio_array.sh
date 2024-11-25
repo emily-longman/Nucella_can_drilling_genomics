@@ -85,6 +85,55 @@ guide_file=$WORKING_FOLDER_SCRATCH/scaffold_names_array.txt
 
 #--------------------------------------------------------------------------------
 
+# Determine partition to process 
+
+# Echo slurm array task ID
+echo ${SLURM_ARRAY_TASK_ID}
+
+# Using the guide file, extract the scaffold names associated based on the Slurm array task ID for a given partition
+awk '$2=='${SLURM_ARRAY_TASK_ID}'' $guide_file | awk '{print $1}' > partition.names.${SLURM_ARRAY_TASK_ID}.txt
+
+#--------------------------------------------------------------------------------
+
+# For the scaffolds in a given partition, generate a bam file and genome segement for each scaffold then polish each piece. 
+
+# Cat file of scaffold names and start while loop
+cat partition.names.${SLURM_ARRAY_TASK_ID}.txt | \
+while read scaffold 
+do echo ${scaffold}
+
+# Break up the bam file into each scaffold
+samtools view -b ${BAM} ${scaffold} > ${scaffold}.bam
+# Index the bam file
+samtools index ${scaffold}.bam
+
+# Break up the genome into each scaffold
+grep -EA 1 "^>${scaffold}$" ${REFERENCE} > ${scaffold}.fasta
+
+# Use pilon to polish the genome 
+java -Xmx49G -jar $PILONJAR \
+--genome ${scaffold}.fasta \
+--frags ${scaffold}.bam \
+--diploid \
+--output ${scaffold}.polished \
+--outdir $WORKING_FOLDER_SCRATCH/pilon/polished_genome_round_5
+# --frags for paired-end sequencing of DNA fragments, such as Illumina paired-end reads of fragment size <1000bp.
+
+# Note: the output of pilon is interleaved (i.e., the DNA sequence is in chunks of 80bps a line), 
+# you need to switch them to put all of the sequences on one line 
+
+$seqtk seq ${scaffold}.polished.fasta > $WORKING_FOLDER_SCRATCH/pilon/polished_genome_round_5/scaffolds/${scaffold}.polished.fasta
+
+# Housekeeping - remove intermediate files
+rm ${scaffold}.bam
+rm ${scaffold}.bam.bai
+rm ${scaffold}.fasta
+rm ${scaffold}.polished.fasta
+
+done
+
+
+
 
 # Move to working directory
 cd $WORKING_FOLDER_SCRATCH/braker_ab_initio
