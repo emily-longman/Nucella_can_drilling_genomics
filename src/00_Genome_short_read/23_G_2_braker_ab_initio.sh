@@ -12,7 +12,7 @@
 
 # Request nodes
 #SBATCH --nodes=1 
-#SBATCH --ntasks-per-node=16
+#SBATCH --ntasks-per-node=20
 
 # Reserve walltime -- hh:mm:ss --7 day limit 
 #SBATCH --time=6-00:00:00 
@@ -40,7 +40,7 @@ module load singularity/3.7.1
 WORKING_FOLDER_SCRATCH=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly
 
 #This is the location of the reference genome.
-REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_Oct2024/Crassostrea_mask/N.canaliculata_assembly.fasta.masked
+REFERENCE=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly/N.canaliculata_assembly.fasta.softmasked
 
 #Working folder is core folder where this pipeline is being run.
 SCRIPTS_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/00_Genome_short_read
@@ -57,4 +57,4 @@ cd $WORKING_FOLDER_SCRATCH
 braker.pl \
 --species=Nucella_canaliculata \
 --genome=$REFERENCE \
---threads 16 
+--threads 20 
