@@ -21,7 +21,7 @@
 #SBATCH --mem=30G
 
 # Submit job array
-#SBATCH --array=1-631%30
+#SBATCH --array=1 #1-631%30
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/%x_%j.out # Standard output
@@ -37,8 +37,6 @@
 # To do this utilize both an array and a while loop. 
 # The previous script produced a guide file that groups scaffolds into 30 scaffold chunks, for a total of 631 partitions.
 # For each partition, this script will loop over each scaffold name, break the genome and bam file into that scaffold then clean that scaffold.
-
-
 
 # Load modules
 module load singularity/3.7.1
@@ -61,11 +59,38 @@ export BRAKER_SIF=$SCRIPTS_FOLDER/23_braker_singularity/braker3.sif
 
 #--------------------------------------------------------------------------------
 
+# Generate Folders and files
+
 # Move to working directory
-cd $WORKING_FOLDER_SCRATCH
+cd $WORKING_FOLDER_SCRATCH/braker_ab_initio
+
+if [ -d "braker_ab_initio" ]
+then echo "Working braker_ab_initio folder exist"; echo "Let's move on."; date
+else echo "Working braker_ab_initio folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/braker_ab_initio; date
+fi
+
+#--------------------------------------------------------------------------------
+
+## Import master partition file 
+guide_file=$WORKING_FOLDER_SCRATCH/scaffold_names_array.txt
+
+#Example: -- the headers are just for descriptive purposes. The actual file has no headers. (dimensions: 2, 18919; 631 partitions)
+# Scaffold name       # Partition
+# Backbone_10001              1
+# Backbone_10003              1
+# Backbone_10004              1
+# Backbone_10005              1
+# Backbone_10006              1
+# ....
+
+#--------------------------------------------------------------------------------
+
+
+# Move to working directory
+cd $WORKING_FOLDER_SCRATCH/braker_ab_initio
 
 # Execute breaker in ab inition method (In this mode, GeneMark-ES is trained on the genome sequence, alone)
 braker.pl \
 --species=Nucella_canaliculata \
 --genome=$REFERENCE \
---bam=$WORKING_FOLDER_SCRATCH/cDNA_bam/Nucella.cDNA.srt.rmdp.bam
+--threads N 
