@@ -39,8 +39,6 @@
 # Call package (https://github.com/lh3/minimap2)
 minimap2=/gpfs1/home/e/l/elongman/software/minimap2-2.28_x64-linux/minimap2
 
-# Tried also installing graphmap but had problems.  
-
 #--------------------------------------------------------------------------------
 
 #Define important file locations
@@ -49,7 +47,7 @@ minimap2=/gpfs1/home/e/l/elongman/software/minimap2-2.28_x64-linux/minimap2
 WORKING_FOLDER_SCRATCH=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly
 
 # This is the location where the reference genome and all its indexes are stored.
-REFERENCE=/netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_Oct2024/Crassostrea_mask/N.canaliculata_assembly.fasta.masked
+REFERENCE=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly/Base_Genome_Softmask/N.canaliculata_assembly.fasta.softmasked
 
 #--------------------------------------------------------------------------------
 

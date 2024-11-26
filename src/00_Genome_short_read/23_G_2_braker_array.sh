@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=breaker_array
+#SBATCH --job-name=braker_array
 
 # Specify partition
 #SBATCH --partition=week
@@ -59,6 +59,7 @@ export BRAKER_SIF=$SCRIPTS_FOLDER/23_braker_singularity/braker3.sif
 
 #--------------------------------------------------------------------------------
 
+
 # Generate Folders and files
 
 # Move to working directory
@@ -67,6 +68,14 @@ cd $WORKING_FOLDER_SCRATCH
 if [ -d "braker" ]
 then echo "Working braker folder exist"; echo "Let's move on."; date
 else echo "Working braker folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/braker; date
+fi
+
+# Move to working directory
+cd $WORKING_FOLDER_SCRATCH/braker
+
+if [ -d "braker_array" ]
+then echo "Working braker_array folder exist"; echo "Let's move on."; date
+else echo "Working braker_array folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/braker/braker_array; date
 fi
 
 #--------------------------------------------------------------------------------
@@ -136,7 +145,7 @@ done
 
 
 # Move to working directory
-cd $WORKING_FOLDER_SCRATCH/braker_ab_initio
+cd $WORKING_FOLDER_SCRATCH/braker/braker_array
 
 # Execute breaker 
 braker.pl \
