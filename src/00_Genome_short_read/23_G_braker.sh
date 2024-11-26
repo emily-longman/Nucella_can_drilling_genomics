@@ -50,11 +50,32 @@ export BRAKER_SIF=$SCRIPTS_FOLDER/23_braker_singularity/braker3.sif
 
 #--------------------------------------------------------------------------------
 
+# Generate Folders and files
+
 # Move to working directory
 cd $WORKING_FOLDER_SCRATCH
+
+if [ -d "braker" ]
+then echo "Working braker folder exist"; echo "Let's move on."; date
+else echo "Working braker folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/braker; date
+fi
+
+# Move to working directory
+cd $WORKING_FOLDER_SCRATCH
+
+if [ -d "braker_test" ]
+then echo "Working braker_test folder exist"; echo "Let's move on."; date
+else echo "Working braker_test folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/braker_test; date
+fi
+
+#--------------------------------------------------------------------------------
+
+# Move to working directory
+cd $$WORKING_FOLDER_SCRATCH/braker/braker_test
 
 # Execute breaker
 braker.pl \
 --species=Nucella_canaliculata \
 --genome=$REFERENCE \
+--threads 20 \
 --bam=$WORKING_FOLDER_SCRATCH/cDNA_bam/Nucella.cDNA.srt.rmdp.bam

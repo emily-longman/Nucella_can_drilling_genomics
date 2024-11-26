@@ -12,7 +12,7 @@
 
 # Request nodes
 #SBATCH --nodes=1 
-#SBATCH --ntasks-per-node=8
+#SBATCH --ntasks-per-node=20
 
 # Reserve walltime -- hh:mm:ss --7 day limit 
 #SBATCH --time=1-00:00:00 
@@ -62,11 +62,11 @@ export BRAKER_SIF=$SCRIPTS_FOLDER/23_braker_singularity/braker3.sif
 # Generate Folders and files
 
 # Move to working directory
-cd $WORKING_FOLDER_SCRATCH/braker_ab_initio
+cd $WORKING_FOLDER_SCRATCH
 
-if [ -d "braker_ab_initio" ]
-then echo "Working braker_ab_initio folder exist"; echo "Let's move on."; date
-else echo "Working braker_ab_initio folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/braker_ab_initio; date
+if [ -d "braker" ]
+then echo "Working braker folder exist"; echo "Let's move on."; date
+else echo "Working braker folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/braker; date
 fi
 
 #--------------------------------------------------------------------------------
@@ -138,8 +138,9 @@ done
 # Move to working directory
 cd $WORKING_FOLDER_SCRATCH/braker_ab_initio
 
-# Execute breaker in ab inition method (In this mode, GeneMark-ES is trained on the genome sequence, alone)
+# Execute breaker 
 braker.pl \
 --species=Nucella_canaliculata \
 --genome=$REFERENCE \
---threads N 
+--threads 20 \
+--bam=$WORKING_FOLDER_SCRATCH/cDNA_bam/Nucella.cDNA.srt.rmdp.bam
