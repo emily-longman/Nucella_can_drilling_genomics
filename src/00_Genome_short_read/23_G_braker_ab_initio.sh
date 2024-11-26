@@ -60,10 +60,19 @@ then echo "Working braker folder exist"; echo "Let's move on."; date
 else echo "Working braker folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/braker; date
 fi
 
-#--------------------------------------------------------------------------------
-
 # Move to working directory
 cd $WORKING_FOLDER_SCRATCH/braker
+
+if [ -d "braker_ab_initio" ]
+then echo "Working braker_ab_initio folder exist"; echo "Let's move on."; date
+else echo "Working braker_ab_initio folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/braker/braker_ab_initio; date
+fi
+
+#--------------------------------------------------------------------------------
+
+
+# Move to working directory
+cd $WORKING_FOLDER_SCRATCH/braker/braker_ab_initio
 
 # Execute breaker in ab inition method (In this mode, GeneMark-ES is trained on the genome sequence, alone)
 braker.pl \
