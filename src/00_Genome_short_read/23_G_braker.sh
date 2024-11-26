@@ -71,7 +71,7 @@ fi
 #--------------------------------------------------------------------------------
 
 # Move to working directory
-cd $$WORKING_FOLDER_SCRATCH/braker/braker_test
+cd $WORKING_FOLDER_SCRATCH/braker/braker_test
 
 # Execute breaker
 braker.pl \
