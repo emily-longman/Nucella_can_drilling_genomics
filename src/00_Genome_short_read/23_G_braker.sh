@@ -65,7 +65,7 @@ cd $WORKING_FOLDER_SCRATCH/braker
 
 if [ -d "braker_test" ]
 then echo "Working braker_test folder exist"; echo "Let's move on."; date
-else echo "Working braker_test folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/braker_test; date
+else echo "Working braker_test folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/braker/braker_test; date
 fi
 
 #--------------------------------------------------------------------------------
@@ -75,7 +75,7 @@ cd $WORKING_FOLDER_SCRATCH/braker/braker_test
 
 # Execute breaker
 braker.pl \
---species=Nucella_canaliculata \
+--species=Nucella_canaliculata_cDNA \
 --genome=$REFERENCE \
 --threads 20 \
 --bam=$WORKING_FOLDER_SCRATCH/cDNA_bam/Nucella.cDNA.srt.rmdp.bam
