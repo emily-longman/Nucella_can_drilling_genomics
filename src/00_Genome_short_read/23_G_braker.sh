@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=breaker
+#SBATCH --job-name=braker
 
 # Specify partition
 #SBATCH --partition=week
