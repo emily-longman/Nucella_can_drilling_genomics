@@ -75,7 +75,7 @@ cd $WORKING_FOLDER_SCRATCH/braker/braker_test
 
 # Execute breaker
 braker.pl \
---species=Nucella_canaliculata_cDNA \
+--species=Nucella_canaliculata_cDNA_bam \
 --genome=$REFERENCE \
 --threads 20 \
 --bam=$WORKING_FOLDER_SCRATCH/cDNA_bam/Nucella.cDNA.srt.rmdp.bam
