@@ -35,11 +35,12 @@
 # This script will annotate the soft masked genome. However, given the large size of the genome, the length of time exceeds run limits on the VACC. 
 # Thus, to make the process more manageable, the genome is broken up into individual scaffolds then braker is run on each scaffold.
 # To do this utilize both an array and a while loop. 
-# The previous script produced a guide file that groups scaffolds into 30 scaffold chunks, for a total of 631 partitions.
+# The previous script produced a guide file that groups scaffolds into 1900 scaffold chunks, for a total of 10 partitions.
 # For each partition, this script will loop over each scaffold name, break the genome and bam file into that scaffold then clean that scaffold.
 
 # Load modules
 module load singularity/3.7.1
+spack load samtools@1.10
 
 #--------------------------------------------------------------------------------
 
@@ -53,6 +54,9 @@ REFERENCE=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/s
 
 #Working folder is core folder where this pipeline is being run.
 SCRIPTS_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/00_Genome_short_read
+
+# This is the location of the cleaned and indexed bams
+BAM=$WORKING_FOLDER_SCRATCH/cDNA_bam/Nucella.cDNA.srt.rmdp.bam
 
 # Export path to braker sif
 export BRAKER_SIF=$SCRIPTS_FOLDER/23_braker_singularity/braker3.sif
@@ -83,7 +87,7 @@ fi
 ## Import master partition file 
 guide_file=$WORKING_FOLDER_SCRATCH/scaffold_names_array.txt
 
-#Example: -- the headers are just for descriptive purposes. The actual file has no headers. (dimensions: 2, 18919; 631 partitions)
+#Example: -- the headers are just for descriptive purposes. The actual file has no headers. (dimensions: 2, 18919; 10 partitions)
 # Scaffold name       # Partition
 # Backbone_10001              1
 # Backbone_10003              1
@@ -104,12 +108,21 @@ awk '$2=='${SLURM_ARRAY_TASK_ID}'' $guide_file | awk '{print $1}' > partition.na
 
 #--------------------------------------------------------------------------------
 
-# For the scaffolds in a given partition, generate a bam file and genome segement for each scaffold then polish each piece. 
+# Change directory 
+cd $WORKING_FOLDER_SCRATCH/braker/braker_array
+
+# For the contigs in a given partition, generate a bam file and genome segement for each chunk then run braker on that chunk. 
+
+# Break bam file based on the paritions
+samtools view -bh ${BAM} cat partition.names.${SLURM_ARRAY_TASK_ID}.txt | tr "\n" " " > output.bam
+
+...
 
 # Cat file of scaffold names and start while loop
 cat partition.names.${SLURM_ARRAY_TASK_ID}.txt | \
 while read scaffold 
 do echo ${scaffold}
+
 
 # Break up the bam file into each scaffold
 samtools view -b ${BAM} ${scaffold} > ${scaffold}.bam
@@ -118,6 +131,13 @@ samtools index ${scaffold}.bam
 
 # Break up the genome into each scaffold
 grep -EA 1 "^>${scaffold}$" ${REFERENCE} > ${scaffold}.fasta
+
+# Execute breaker 
+braker.pl \
+--species=Nucella_canaliculata_cDNA_array \
+--genome=$REFERENCE \
+--threads 20 \
+--bam=$WORKING_FOLDER_SCRATCH/cDNA_bam/Nucella.cDNA.srt.rmdp.bam
 
 # Use pilon to polish the genome 
 java -Xmx49G -jar $PILONJAR \
@@ -131,8 +151,6 @@ java -Xmx49G -jar $PILONJAR \
 # Note: the output of pilon is interleaved (i.e., the DNA sequence is in chunks of 80bps a line), 
 # you need to switch them to put all of the sequences on one line 
 
-$seqtk seq ${scaffold}.polished.fasta > $WORKING_FOLDER_SCRATCH/pilon/polished_genome_round_5/scaffolds/${scaffold}.polished.fasta
-
 # Housekeeping - remove intermediate files
 rm ${scaffold}.bam
 rm ${scaffold}.bam.bai
@@ -140,16 +158,3 @@ rm ${scaffold}.fasta
 rm ${scaffold}.polished.fasta
 
 done
-
-
-
-
-# Move to working directory
-cd $WORKING_FOLDER_SCRATCH/braker/braker_array
-
-# Execute breaker 
-braker.pl \
---species=Nucella_canaliculata \
---genome=$REFERENCE \
---threads 20 \
---bam=$WORKING_FOLDER_SCRATCH/cDNA_bam/Nucella.cDNA.srt.rmdp.bam

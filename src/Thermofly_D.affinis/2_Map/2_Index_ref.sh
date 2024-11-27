@@ -21,7 +21,7 @@ PICARD=/netfiles/nunezlab/Shared_Resources/Software/picard/build/libs/picard.jar
 #--------------------------------------------------------------------------------
 
 # Set folders and file locations
-ref=/netfiles/thermofly/GENOMES/affinis/D.affinis.rm.fasta.masked
+ref=/netfiles/thermofly/GENOMES/supergenome_affinis/supergenome.aff.alg.atha.masked.fasta
 
 #--------------------------------------------------------------------------------
 
