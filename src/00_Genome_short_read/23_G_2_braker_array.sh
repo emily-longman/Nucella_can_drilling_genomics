@@ -113,10 +113,10 @@ cd $WORKING_FOLDER_SCRATCH/braker/braker_array
 
 # For the contigs in a given partition, generate a bam file and genome segement for each chunk then run braker on that chunk. 
 
-# Break bam file based on the paritions
-samtools view -bh ${BAM} cat partition.names.${SLURM_ARRAY_TASK_ID}.txt | tr "\n" " " > output.bam
+$content='cat partition.names.${SLURM_ARRAY_TASK_ID}.txt'
 
-...
+# Break bam file based on the paritions
+samtools view -bh ${BAM} $(cat partition.names.${SLURM_ARRAY_TASK_ID}.txt) | tr "\n" " " > output.bam
 
 # Cat file of scaffold names and start while loop
 cat partition.names.${SLURM_ARRAY_TASK_ID}.txt | \

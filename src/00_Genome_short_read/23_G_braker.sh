@@ -63,15 +63,15 @@ fi
 # Move to working directory
 cd $WORKING_FOLDER_SCRATCH/braker
 
-if [ -d "braker_test" ]
-then echo "Working braker_test folder exist"; echo "Let's move on."; date
-else echo "Working braker_test folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/braker/braker_test; date
+if [ -d "braker_cDNA" ]
+then echo "Working braker_cDNA folder exist"; echo "Let's move on."; date
+else echo "Working braker_cDNA folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER_SCRATCH/braker/braker_cDNA; date
 fi
 
 #--------------------------------------------------------------------------------
 
 # Move to working directory
-cd $WORKING_FOLDER_SCRATCH/braker/braker_test
+cd $WORKING_FOLDER_SCRATCH/braker/braker_cDNA
 
 # Execute breaker
 braker.pl \
