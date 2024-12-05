@@ -68,8 +68,10 @@ data.count.SNP.filt$P <- pchisq(data.count.SNP.filt$LRT, df=1, lower=F)
 # ================================================================================== #
 
 # Make manhattan plot
+manhattan(data.count.SNP.filt, chr="CHR", bp="Position", p="P", ylim = c(0, 350), xlab = "Position")
+
 manhattan(data.count.SNP.filt, chr="CHR", bp="Position", p="P", 
-          ylim = c(0, 350), cex = 0.6, suggestiveline = F, genomewideline = F, xlab = "Position")
+          ylim = c(0, 350), cex = 0.6, suggestiveline = T, genomewideline = T, xlab = "Position")
 
 # Look at qq-plot of pvalues to check model fit
 qqnorm(data.count.SNP.filt$P)
