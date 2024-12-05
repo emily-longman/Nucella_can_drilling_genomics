@@ -71,7 +71,7 @@ qqnorm(data.binary.SNP.filt$P)
 # ================================================================================== #
 
 # Make a list of the candidate loci
-candidates <- data.binary.SNP.filt[which(data.binary.SNP.filt$LRT > 20),]$SNP
+#candidates <- data.binary.SNP.filt[which(data.binary.SNP.filt$LRT > 20),]$SNP
 
 
 
