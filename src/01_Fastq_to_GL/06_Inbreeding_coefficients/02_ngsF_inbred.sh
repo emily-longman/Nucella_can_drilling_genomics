@@ -94,6 +94,14 @@ then echo "Working ngsF folder exist"; echo "Let's move on."; date
 else echo "Working ngsF folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/ngsF; date
 fi
 
+# Change directory
+cd $WORKING_FOLDER/ngsF
+
+if [ -d "${i}" ]
+then echo "Working ${i} folder exist"; echo "Let's move on."; date
+else echo "Working ${i} folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/ngsF/${i}; date
+fi
+
 #--------------------------------------------------------------------------------
 
 # Start pipeline
