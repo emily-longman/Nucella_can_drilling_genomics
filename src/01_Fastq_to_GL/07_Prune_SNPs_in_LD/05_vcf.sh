@@ -5,16 +5,16 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=vcf
+#SBATCH --job-name=bcf_to_vcf
 
 # Specify partition
-#SBATCH --partition=week
+#SBATCH --partition=bluemoon
 
 # Request nodes
 #SBATCH --nodes=1 
 
 # Reserve walltime -- hh:mm:ss --7 day limit 
-#SBATCH --time=2-00:00:00 
+#SBATCH --time=10:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
 #SBATCH --mem=20G 
@@ -31,10 +31,10 @@
 
 #--------------------------------------------------------------------------------
 
-# This script will use all bam files to generate a vcf
+# This script will convert a bcf to a vcf
 
 #Load modules 
-spack load angsd@0.933
+spack load bcftools@1.10.2 
 
 #--------------------------------------------------------------------------------
 
@@ -65,12 +65,9 @@ echo "using #CPUs ==" $NB_CPU
 # Use config file (this means you dont need to directly input minimum individual/depth parameters)
 source $SCRIPT_FOLDER/03_Call_SNPs/01_config.sh
 
-# Reduce minInd at this stage to 25%
-PERC_IND=0.25
-
 # Extract parameters from config file
 N_IND=$(wc -l $BAM_LIST | cut -d " " -f 1) 
-MIN_IND_FLOAT=$(echo "($N_IND * $PERC_IND)"| bc -l)
+MIN_IND_FLOAT=$(echo "($N_IND * $PERCENT_IND)"| bc -l)
 MIN_IND=${MIN_IND_FLOAT%.*} 
 MAX_DEPTH=$(echo "($N_IND * $MAX_DEPTH_FACTOR)" |bc -l)
 
@@ -90,18 +87,8 @@ fi
 
 #--------------------------------------------------------------------------------
 
-# Generate a vcf file for follow-up analyses
+# Convert bcf to vcf
 
-angsd \
--b $BAM_LIST \
--ref ${REFERENCE} -anc ${REFERENCE} \
--P $NB_CPU \
--nQueueSize 50 \
--doMaf 1 -doSaf 1 -GL 2 -doGlf 2 -doMajorMinor 3 -doGeno 2 -doCounts 1 -doPost 1 -doVcf 1 -postCutoff 0.8 \
--remove_bads 1 -skipTriallelic 1 -uniqueOnly 1 -only_proper_pairs 1 -minMapQ 30 -minQ 20 -C 50 \
--minInd $MIN_IND -setMaxDepth $MAX_DEPTH \
--sites $WORKING_FOLDER/sites_info/sites_all_maf_pruned \
--rf $WORKING_FOLDER/sites_info/regions_all_maf \
--out $WORKING_FOLDER/vcf_pruned/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6_pruned
-
-# Note reduced minInd at this stage to 25%
+bcftools convert -O v \
+-o $WORKING_FOLDER/vcf_pruned/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6_pruned.vcf \
+$WORKING_FOLDER/genotype_likelihoods_all_pruned/Nucella_SNPs_maf0.05_pctind0.5_mindepth0.3_maxdepth2_pval1e6_pruned.bcf
