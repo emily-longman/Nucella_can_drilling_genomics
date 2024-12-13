@@ -10,6 +10,7 @@ scratch/*
 data/raw/*
 data/processed/*
 results/stats/*
+results/genome_annotation/*
 slurmOutput/*
 
 # Specific files extensions to ignore
