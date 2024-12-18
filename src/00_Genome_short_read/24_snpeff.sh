@@ -39,11 +39,11 @@
 #awk '/^>/ {$0=$1} 1' N.canaliculata_assembly.fasta.softmasked > sequences.fa
 #gzip sequences.fa
 
-# Move gtf file, rename and gzip
+# Move gtf file to directory and rename
 #scp braker.gtf /netfiles/pespenilab_share/Nucella/processed/N.can_genome_Dec2024/
 #mv braker.gtf genes.gtf
 
-# Use gtf to create gff 
+# Convert gtf to gff 
 #perl /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/00_Genome_short_read/24_gtf_to_gff.pl \
 #< /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly/braker/braker_cDNA/braker/braker.gtf \
 #-o myfile.gff
@@ -51,7 +51,6 @@
 # Move gff and rename
 #scp myfile.gff /netfiles/pespenilab_share/Nucella/processed/N.can_genome_Dec2024/
 #mv myfile.gff N.can.gff
-
 
 # Create protein file
 #module load singularity
@@ -63,6 +62,9 @@
 # gzip protein file
 #gzip N.can.protein.fa
 
+# Move SNPeff config file to directory
+# Add Nucella directory to end 
+
 #--------------------------------------------------------------------------------
 
 # Build directory
@@ -70,7 +72,7 @@
 # Load SNPeff
 module load snpeff
 
-# Move SNPeff config file over
+# Define important file locations
 datdir=/netfiles/pespenilab_share/Nucella/processed
 param=/netfiles/pespenilab_share/Nucella/processed/N.can_genome_Dec2024/snpEff.config
 
@@ -78,10 +80,12 @@ snpeff build -dataDir $datdir -c $param  -gtf22 -v N.can_genome_Dec2024
 
 #--------------------------------------------------------------------------------
 
-# Running 
+# Run SNPeff
 
+# Load SNPeff
 #module load snpeff
 
+# Define important file locations
 #vcf=...
 #datdir=/netfiles/pespenilab_share/Nucella/processed
 #param=/netfiles/pespenilab_share/Nucella/processed/N.can_genome_Dec2024/snpEff.config
