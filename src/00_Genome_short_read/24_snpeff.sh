@@ -63,8 +63,11 @@
 # gzip protein file
 #gzip N.can.protein.fa
 
+#--------------------------------------------------------------------------------
 
-# Loda SNPeff
+# Build directory
+
+# Load SNPeff
 module load snpeff
 
 # Move SNPeff config file over
@@ -73,6 +76,7 @@ param=/netfiles/pespenilab_share/Nucella/processed/N.can_genome_Dec2024/snpEff.c
 
 snpeff build -dataDir $datdir -c $param  -gtf22 -v N.can_genome_Dec2024
 
+#--------------------------------------------------------------------------------
 
 # Running 
 
