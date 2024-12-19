@@ -121,11 +121,15 @@ echo $NSITES "sites for collection site/population" ${i} "with" $N_IND "individu
 # Preliminary search (i.e., run the approximated method to get some reasonable estimates of the parameters)
 singularity run $NGS ngsF \
 --n_ind $N_IND --n_sites $NSITES \
+--max_iters 1500 \
+--min_iters 10 \
 --glf $WORKING_FOLDER/genotype_likelihoods_by_site/${i}/${i}_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_inbreed.glf \
 --out $WORKING_FOLDER/ngsF/${i}/${i}.approx_indF --approx_EM --init_values u --n_threads 5
 	
 # Calc inbreeding (i.e., use the output from the preliminary search as initial values for the main (and slower) algorithm)
 singularity run $NGS ngsF \
 --n_ind $N_IND --n_sites $NSITES \
+--max_iters 1500 \
+--min_iters 10 \
 --glf $WORKING_FOLDER/genotype_likelihoods_by_site/${i}/${i}_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_inbreed.glf \
 --out $WORKING_FOLDER/ngsF/${i}/${i}.indF --init_values $WORKING_FOLDER/ngsF/${i}/${i}.approx_indF.pars --n_threads 5 
