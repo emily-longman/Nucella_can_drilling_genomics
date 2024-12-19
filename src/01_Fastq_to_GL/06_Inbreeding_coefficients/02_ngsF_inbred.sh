@@ -132,4 +132,4 @@ singularity run $NGS ngsF \
 --max_iters 1500 \
 --min_iters 10 \
 --glf $WORKING_FOLDER/genotype_likelihoods_by_site/${i}/${i}_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_inbreed.glf \
---out $WORKING_FOLDER/ngsF/${i}/${i}.indF --init_values $WORKING_FOLDER/ngsF/${i}/${i}.approx_indF.pars --n_threads 5 
+--out $WORKING_FOLDER/ngsF/${i}/${i}.indF --init_values $WORKING_FOLDER/ngsF/${i}/${i}.approx_indF.pars --n_threads 5
