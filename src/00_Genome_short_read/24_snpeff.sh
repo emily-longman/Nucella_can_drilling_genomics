@@ -57,7 +57,7 @@
 #cd /netfiles/nunezlab/Shared_Resources/Software/AGAT
 #singularity run agat_1.0.0--pl5321hdfd78af_0.sif
 #agat_sp_extract_sequences.pl --gff /netfiles/pespenilab_share/Nucella/processed/N.can_genome_Dec2024/N.can.gff \
-#-f /netfiles/pespenilab_share/Nucella/processed/N.can_genome_Dec2024/N.canaliculata_assembly.fasta.softmasked -p -o /netfiles/pespenilab_share/Nucella/processed/N.can_genome_Dec2024/N.can.protein.fa
+#-f /netfiles/pespenilab_share/Nucella/processed/N.can_genome_Dec2024/N.canaliculata_assembly.fasta.softmasked -p -o /netfiles/pespenilab_share/Nucella/processed/N.can_genome_Dec2024/protein.fa
 
 # Move SNPeff config file to directory and add Nucella directory (N.can_genome_Dec2024) to end of script
 
