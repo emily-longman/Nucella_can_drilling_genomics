@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #
-# format convert a gtf file
+# format convert a gtf file (https://github.com/nextgenusfs/augustus/blob/master/scripts/gtf2gff.pl)
 #
 # Mario Stanke, 1.2.2010, mario.stanke@uni-greifswald.de
 use strict;

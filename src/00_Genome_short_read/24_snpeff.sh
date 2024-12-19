@@ -43,7 +43,7 @@
 #scp braker.gtf /netfiles/pespenilab_share/Nucella/processed/N.can_genome_Dec2024/
 #mv braker.gtf genes.gtf
 
-# Convert gtf to gff 
+# Convert gtf to gff. Get script from: https://github.com/nextgenusfs/augustus/blob/master/scripts/gtf2gff.pl
 #perl /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/00_Genome_short_read/24_gtf_to_gff.pl \
 #< /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly/braker/braker_cDNA/braker/braker.gtf \
 #-o myfile.gff
@@ -52,18 +52,14 @@
 #scp myfile.gff /netfiles/pespenilab_share/Nucella/processed/N.can_genome_Dec2024/
 #mv myfile.gff N.can.gff
 
-# Create protein file
+# Create protein file using AGAT
 #module load singularity
 #cd /netfiles/nunezlab/Shared_Resources/Software/AGAT
 #singularity run agat_1.0.0--pl5321hdfd78af_0.sif
 #agat_sp_extract_sequences.pl --gff /netfiles/pespenilab_share/Nucella/processed/N.can_genome_Dec2024/N.can.gff \
 #-f /netfiles/pespenilab_share/Nucella/processed/N.can_genome_Dec2024/N.canaliculata_assembly.fasta.softmasked -p -o /netfiles/pespenilab_share/Nucella/processed/N.can_genome_Dec2024/N.can.protein.fa
 
-# gzip protein file
-#gzip N.can.protein.fa
-
-# Move SNPeff config file to directory
-# Add Nucella directory to end 
+# Move SNPeff config file to directory and add Nucella directory (N.can_genome_Dec2024) to end of script
 
 #--------------------------------------------------------------------------------
 
