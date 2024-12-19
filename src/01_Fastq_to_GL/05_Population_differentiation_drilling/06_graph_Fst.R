@@ -34,12 +34,15 @@ library(ggplot2)
 
 # Load data 
 data <- read.table("Drilled_Not.Drilled_maf0.05_pctind0.5_mindepth0.3_maxdepth2_subset_nMAF.slidingwindow", header = T, row.names=NULL)
+# Fix column names
+colnames(data) <- c("region", "chr", "midPos", "Nsites", "Fst")
 
 # Create unique Chromosome number 
-Chr.unique <- unique(data$region)
-data$CHR.unique <- as.numeric(factor(data$region, levels = Chr.unique))
+Chr.unique <- unique(data$chr)
+data$CHR.unique <- as.numeric(factor(data$chr, levels = Chr.unique))
 
-ggplot(data, aes(y=Nsites, x=CHR.unique)) + 
+# Graph Fst against chromosome 
+ggplot(data, aes(y=Fst, x=CHR.unique)) + 
   geom_point(col="black", alpha=0.8, size=1.3) + 
   ylab("Window Fst") + xlab("Position") +
   theme_bw()
