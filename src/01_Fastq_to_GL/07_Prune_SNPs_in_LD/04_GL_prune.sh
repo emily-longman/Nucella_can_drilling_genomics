@@ -67,7 +67,8 @@ source $SCRIPT_FOLDER/03_Call_SNPs/01_config.sh
 
 # Extract parameters from config file
 N_IND=$(wc -l $BAM_LIST | cut -d " " -f 1) 
-MIN_IND_FLOAT=$(echo "($N_IND * $PERCENT_IND)"| bc -l)
+PERC_IND=0.25 # Lower percent ind to 25% for subsequent analyses
+MIN_IND_FLOAT=$(echo "($N_IND * $PERC_IND)"| bc -l)
 MIN_IND=${MIN_IND_FLOAT%.*} 
 MAX_DEPTH=$(echo "($N_IND * $MAX_DEPTH_FACTOR)" |bc -l)
 
@@ -98,9 +99,9 @@ angsd \
 -nQueueSize 50 \
 -doMaf 1 -doSaf 1 -GL 2 -doGlf 2 -doMajorMinor 3 -doGeno 2 -doPost 1 -doBcf 1 \
 -remove_bads 1 -skipTriallelic 1 -uniqueOnly 1 -only_proper_pairs 1 -minMapQ 30 -minQ 20 -C 50 \
--minInd 48 \
+-minInd $MIN_IND \
 -sites $WORKING_FOLDER/sites_info/sites_all_maf_pruned \
 -rf $WORKING_FOLDER/sites_info/regions_all_maf \
--out $WORKING_FOLDER/genotype_likelihoods_all_pruned/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6_pruned
+-out $WORKING_FOLDER/genotype_likelihoods_all_pruned/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERC_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6_pruned
 
 # Note reduced minInd at this stage to 25%
