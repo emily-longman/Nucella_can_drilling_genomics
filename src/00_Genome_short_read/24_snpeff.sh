@@ -67,12 +67,19 @@
 #cd /netfiles/pespenilab_share/Nucella/processed
 #mkdir N.can_genome_Dec2024
 
-# Re-save genome as name of directory .fa
+# Re-save genome as name of directory .fa and as sequences.fa
+#scp /netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_Oct2024/Crassostrea_softmask/N.canaliculata_assembly.fasta.softmasked /netfiles/pespenilab_share/Nucella/processed/N.can_genome_Dec2024
+#cd /netfiles/pespenilab_share/Nucella/processed/N.can_genome_Dec2024
 #mv N.canaliculata_assembly.fasta.softmasked N.can_genome_Dec2024.fa
+#chmod 777 N.can_genome_Dec2024.fa
+#scp /netfiles/pespenilab_share/Nucella/processed/Base_Genome/Base_Genome_Oct2024/Crassostrea_softmask/N.canaliculata_assembly.fasta.softmasked /netfiles/pespenilab_share/Nucella/processed/N.can_genome_Dec2024
+#mv N.canaliculata_assembly.fasta.softmasked sequences.fa
+#chmod 777 sequences.fa
 
 # Move gtf file to directory and rename to "genes.gtf"
 #scp braker.gtf /netfiles/pespenilab_share/Nucella/processed/N.can_genome_Dec2024/
 #mv braker.gtf genes.gtf
+#chmod 777 genes.gtf
 
 # Build directory
 
@@ -80,7 +87,7 @@
 module load snpeff
 
 # Define important file locations
-datdir=/netfiles/pespenilab_share/Nucella/processed/
+datdir=/netfiles/pespenilab_share/Nucella/processed
 param=/netfiles/pespenilab_share/Nucella/processed/N.can_genome_Dec2024/snpEff.config
 
 snpeff build -dataDir $datdir -c $param  -gtf22 -v N.can_genome_Dec2024
