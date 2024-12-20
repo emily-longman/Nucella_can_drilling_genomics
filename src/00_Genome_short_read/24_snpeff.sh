@@ -90,7 +90,7 @@ module load snpeff
 datdir=/netfiles/pespenilab_share/Nucella/processed
 param=/netfiles/pespenilab_share/Nucella/processed/N.can_genome_Dec2024/snpEff.config
 
-snpeff build -dataDir $datdir -c $param  -gtf22 -v N.can_genome_Dec2024
+snpeff build -dataDir $datdir -c $param  -gtf22 -noCheckCds -v N.can_genome_Dec2024
 
 #--------------------------------------------------------------------------------
 
