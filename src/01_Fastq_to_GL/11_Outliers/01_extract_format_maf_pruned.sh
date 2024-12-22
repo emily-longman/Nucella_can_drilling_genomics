@@ -91,7 +91,7 @@ fi
 #--------------------------------------------------------------------------------
 
 # Change working directory
-cd outliers
+cd $WORKING_FOLDER
 
 # Input files - all from config 
 
