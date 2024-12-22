@@ -14,7 +14,7 @@ library(dplyr, lib="/gpfs1/home/e/l/elongman/R/x86_64-pc-linux-gnu-library/4.4")
 
 argv <- commandArgs(T)
 MIN_MAF <- argv[1]
-PERCENT_IND <- argv[2]
+PERC_IND <- argv[2]
 ANGSD_PATH<- argv[3]
 MAX_DEPTH_FACTOR<-argv[4]
 
@@ -30,7 +30,7 @@ npop<-dim(pop)[1]
 pop_group<-"group" #unlist(strsplit(unlist(strsplit(POP,"/"))[2],".txt"))
 
 # Join by chromosome and position the sites and the frequencies in each population
-print("join by chromsoome and position the sites and the frequencies in each group/pop")
+print("join by chromosome and position the sites and the frequencies in each group/pop")
 MAFall<-sites
 for (i in 1:npop)
   {
