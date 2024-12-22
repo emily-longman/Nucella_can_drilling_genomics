@@ -15,7 +15,8 @@ library(dplyr, lib="/gpfs1/home/e/l/elongman/R/x86_64-pc-linux-gnu-library/4.4")
 argv <- commandArgs(T)
 MIN_MAF <- argv[1]
 PERC_IND <- argv[2]
-ANGSD_PATH<- argv[3]
+#ANGSD_PATH<- argv[3]
+MIN_DEPTH<-argv[3]
 MAX_DEPTH_FACTOR<-argv[4]
 
 # ================================================================================== #
