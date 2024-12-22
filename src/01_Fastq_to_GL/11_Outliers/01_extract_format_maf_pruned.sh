@@ -50,7 +50,6 @@ SCRIPT_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/01_Fastq
 source $SCRIPT_FOLDER/03_Call_SNPs/01_config.sh
 
 # Extract parameters from config file
-# Extract parameters from config file
 N_IND=$(wc -l $BAM_LIST | cut -d " " -f 1) 
 PERC_IND=0.25 # Lower percent ind to 25% for subsequent analyses
 MIN_IND_FLOAT=$(echo "($N_IND * $PERC_IND)"| bc -l)
@@ -92,11 +91,8 @@ fi
 #--------------------------------------------------------------------------------
 
 # Change working directory
-cd $WORKING_FOLDER
+cd outliers
 
-# Input files
-# If you haven't already done so, unzip maf file.
-#gunzip $WORKING_FOLDER/genotype_likelihoods_all_pruned/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERC_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6_pruned.mafs.gz
-MIN_MAF=$WORKING_FOLDER/genotype_likelihoods_all_pruned/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERC_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6_pruned.mafs
+# Input files - all from config 
 
-Rscript $SCRIPT_FOLDER/11_Baypass/01_extract_format_maf_pruned.R "$MIN_MAF" "$PERC_IND" "$MAX_DEPTH_FACTOR"
+Rscript $SCRIPT_FOLDER/11_Outliers/01_extract_format_maf_pruned.R "$MIN_MAF" "$PERC_IND" "$MAX_DEPTH_FACTOR"
