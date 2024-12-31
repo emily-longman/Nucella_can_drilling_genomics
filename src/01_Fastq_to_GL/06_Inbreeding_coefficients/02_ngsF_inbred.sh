@@ -108,6 +108,7 @@ fi
 
 # Run ngsTools/ngsF for all population listed
 # Run in two steps: run a faster preliminary/approximated method then use the output for the slower/main algorithm
+# Note: ngsF runs 10 repeats of the analysis to prevent convergence to local maxima
 
 echo "Calculating inbreeding for site/population:" ${i}
 
