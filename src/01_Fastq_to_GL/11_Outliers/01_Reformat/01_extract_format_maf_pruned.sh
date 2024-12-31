@@ -42,6 +42,9 @@ WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/proces
 # Scripts folder.
 SCRIPT_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/01_Fastq_to_GL
 
+# Path to bam list.
+BAM_LIST=$WORKING_FOLDER/guide_files/Nucella_bam.list
+
 #--------------------------------------------------------------------------------
 
 # Prepare variables 
@@ -70,22 +73,22 @@ then echo "Working outliers folder exist"; echo "Let's move on."; date
 else echo "Working outliers folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/outliers; date
 fi
 
-# Change directory to outliers
+# Change directory to outliers and make directories for each outlier analysis
 cd outliers
 
 if [ -d "baypass" ]
 then echo "Working baypass folder exist"; echo "Let's move on."; date
-else echo "Working baypass folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/baypass; date
+else echo "Working baypass folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/outliers/baypass; date
 fi
 
 if [ -d "lfmm" ]
 then echo "Working lfmm folder exist"; echo "Let's move on."; date
-else echo "Working lfmm folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/lfmm; date
+else echo "Working lfmm folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/outliers/lfmm; date
 fi
 
 if [ -d "rda" ]
 then echo "Working rda folder exist"; echo "Let's move on."; date
-else echo "Working rda folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/rda; date
+else echo "Working rda folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/outliers/rda; date
 fi
 
 #--------------------------------------------------------------------------------
