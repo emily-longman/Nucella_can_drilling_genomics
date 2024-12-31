@@ -39,9 +39,25 @@ baypass=/gpfs1/home/e/l/elongman/software/baypass_public/sources/g_baypass
 # Working folder is core folder where this pipeline is being run.
 WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL
 
+# Scripts folder.
+SCRIPT_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/01_Fastq_to_GL
+
+# Path to bam list.
+BAM_LIST=$WORKING_FOLDER/guide_files/Nucella_bam.list
+
 #--------------------------------------------------------------------------------
 
 # Prepare variables 
+
+# Use config file (this means you dont need to directly input minimum individual/depth parameters)
+source $SCRIPT_FOLDER/03_Call_SNPs/01_config.sh
+
+# Extract parameters from config file
+N_IND=$(wc -l $BAM_LIST | cut -d " " -f 1) 
+PERC_IND=0.25 # Lower percent ind to 25% for subsequent analyses
+MIN_IND_FLOAT=$(echo "($N_IND * $PERC_IND)"| bc -l)
+MIN_IND=${MIN_IND_FLOAT%.*} 
+MAX_DEPTH=$(echo "($N_IND * $MAX_DEPTH_FACTOR)" |bc -l)
 
 # Number of groups/populations
 npop=2
@@ -50,5 +66,5 @@ npop=2
 
 # Run baypass
 $baypass -npop $npop \
--gfile $WORKING_FOLDER/Outliers/baypass/by_group_0.05_pctind0.25_maxdepth2.mafs.pruned.baypass \
+-gfile $WORKING_FOLDER/outliers/baypass/by_group_"$MIN_MAF"_pctind"$PERCENT_IND"_maxdepth"$MAX_DEPTH_FACTOR".mafs.pruned.baypass \
 -outprefix Drilling_r2 -npilot 100 -nthreads 5
