@@ -66,5 +66,5 @@ npop=2
 
 # Run baypass
 $baypass -npop $npop \
--gfile $WORKING_FOLDER/outliers/baypass/by_group_"$MIN_MAF"_pctind"$PERCENT_IND"_maxdepth"$MAX_DEPTH_FACTOR".mafs.pruned.baypass \
+-gfile $WORKING_FOLDER/outliers/baypass/by_group_"$MIN_MAF"_pctind"$PERC_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR".mafs.pruned.baypass \
 -outprefix Drilling_r2 -npilot 100 -nthreads 5
