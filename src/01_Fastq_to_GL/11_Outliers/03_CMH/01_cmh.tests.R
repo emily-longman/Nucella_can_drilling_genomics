@@ -35,10 +35,10 @@ library(qvalue)
 
 # ================================================================================== #
 
-#read baypass input file
+# Read baypass input file
 bpass.in<- read.table("by_group_0.05_pctind0.25_mindepth0.3_maxdepth2.mafs.pruned.baypass", header=F)
 
-#transform (rows=pops, cols=inds)
+# Transform (rows=pops, cols=inds)
 cmh.in <- t(bpass.in)
 dim(cmh.in)
 
