@@ -75,7 +75,7 @@ for (i in 1:npop)
 	BayPass_matrix[,(2*i)]<- round((1-MAFall[,4+(2*i-1)])*2*MAFall[,5+(2*i-1)],0)
 	}
 head(BayPass_matrix)
-write.table(BayPass_matrix, paste0("Outliers/baypass/by_",pop_group,"_",MIN_MAF,"_pctind",PERC_IND,"_mindepth",MIN_DEPTH,"_maxdepth",MAX_DEPTH_FACTOR,".mafs.pruned.baypass"), quote=F, row.names = F, col.names = F)
+write.table(BayPass_matrix, paste0("outliers/baypass/by_",pop_group,"_",MIN_MAF,"_pctind",PERC_IND,"_mindepth",MIN_DEPTH,"_maxdepth",MAX_DEPTH_FACTOR,".mafs.pruned.baypass"), quote=F, row.names = F, col.names = F)
 
 # ================================================================================== #
 
@@ -90,8 +90,8 @@ rownames(maf_matrix)<-paste(MAFall$chromo, MAFall$position, sep="_")
 head(maf_matrix)
 
 # Write table for lfmm
-write.table(t(maf_matrix), paste0("Outliers/lfmm/by_",pop_group,"_",MIN_MAF,"_pctind",PERC_IND,".lfmm"), quote=F, row.names = F, col.names = F)
+write.table(t(maf_matrix), paste0("outliers/lfmm/by_",pop_group,"_",MIN_MAF,"_pctind",PERC_IND,".lfmm"), quote=F, row.names = F, col.names = F)
 
 
 # Write table for rda add rownames
-write.table(maf_matrix, paste0("Outliers/rda/by_",pop_group,"_",MIN_MAF,"_pctind",PERC_IND,".mafs.rda"), quote=F)
+write.table(maf_matrix, paste0("outliers/rda/by_",pop_group,"_",MIN_MAF,"_pctind",PERC_IND,".mafs.rda"), quote=F)
