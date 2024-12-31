@@ -29,6 +29,8 @@ setwd(results_path_from_root)
 # ================================================================================== #
 
 library(ggplot2)
+library(data.table)
+library(foreach)
 
 # ================================================================================== #
 
@@ -46,3 +48,18 @@ ggplot(data, aes(y=Fst, x=CHR.unique)) +
   geom_point(col="black", alpha=0.8, size=1.3) + 
   ylab("Window Fst") + xlab("Position") +
   theme_bw()
+
+# ================================================================================== #
+
+# Rank-normalize Fst values
+
+data.rn <- data
+data.rn$rn_fst <- rank(data$Fst)/length(data$Fst)
+data.rn$rn_fst_r <- rank(data$Fst, ties="random")/length(data$Fst)
+
+# Window analysis
+
+win.bp <- 25000
+step.bp <- 5000
+
+
