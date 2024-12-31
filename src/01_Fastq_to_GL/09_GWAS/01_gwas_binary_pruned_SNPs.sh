@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=gwas_binary_SNPs
+#SBATCH --job-name=gwas_binary_pruned_SNPs
 
 # Specify partition
 #SBATCH --partition=week
@@ -103,9 +103,9 @@ angsd \
 -doMaf 1 -doMajorMinor 1 -doCounts 1 -doPost 1 \
 -remove_bads 1 -minMapQ 30 -minQ 20 \
 -minInd $MIN_IND -setMinDepthInd $MIN_DEPTH -minMaf $MIN_MAF -setMaxDepth $MAX_DEPTH \
--sites $WORKING_FOLDER/sites_info/sites_all_maf \
--rf $WORKING_FOLDER/sites_info/regions_all_maf \
--out $WORKING_FOLDER/GWAS/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR".binary.all.SNPs.gwas
+-sites $WORKING_FOLDER/sites_info/sites_all_maf_pruned \
+-rf $WORKING_FOLDER/sites_info/regions_all_maf_pruned \
+-out $WORKING_FOLDER/GWAS/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR".binary.SNPs.gwas
 
 # -yBin: File containing binary phenotypic data 
 # -doAsso 2: Score Test
