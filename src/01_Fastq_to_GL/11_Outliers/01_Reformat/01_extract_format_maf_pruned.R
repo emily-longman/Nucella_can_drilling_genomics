@@ -16,8 +16,8 @@ argv <- commandArgs(T)
 MIN_MAF <- argv[1]
 PERC_IND <- argv[2]
 #ANGSD_PATH<- argv[3]
-MIN_DEPTH<-argv[3]
-MAX_DEPTH_FACTOR<-argv[4]
+MIN_DEPTH <- argv[3]
+MAX_DEPTH_FACTOR <- argv[4]
 
 # ================================================================================== #
 
@@ -37,7 +37,7 @@ for (i in 1:npop)
   {
     pi<-pop[i,1]
     MAFi<-read.delim(paste0("genotype_likelihoods_drilling_pruned/",pi,"_SNPs_maf",MIN_MAF,"_pctind",PERC_IND,"_mindepth",MIN_DEPTH,"_maxdepth",MAX_DEPTH_FACTOR,"_pval1e6_pruned.mafs"), header=T)
-    MAFi<-MAFi[,c(1,2,6,7)]
+    MAFi<-MAFi[,c(1,2,7,8)]
     colnames(MAFi)<-c("chromo", "position", paste("freq", pi, sep=""),paste("n", pi, sep=""))
     head(MAFi)
     MAFall<-left_join(MAFall, MAFi, by=c("chromo", "position"))
