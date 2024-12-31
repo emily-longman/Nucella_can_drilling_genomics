@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=gwas_count_SNPs
+#SBATCH --job-name=gwas_count_pruned_SNPs
 
 # Specify partition
 #SBATCH --partition=week
