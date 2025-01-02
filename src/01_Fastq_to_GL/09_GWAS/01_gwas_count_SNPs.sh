@@ -105,7 +105,7 @@ angsd \
 -minInd $MIN_IND -setMinDepthInd $MIN_DEPTH -minMaf $MIN_MAF -setMaxDepth $MAX_DEPTH \
 -sites $WORKING_FOLDER/sites_info/sites_all_maf \
 -rf $WORKING_FOLDER/sites_info/regions_all_maf \
--out $WORKING_FOLDER/GWAS/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR".count.SNPs.gwas
+-out $WORKING_FOLDER/GWAS/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR".count.all.SNPs.gwas
 
 # -yBin: File containing binary phenotypic data 
 # -doAsso 2: Score Test
