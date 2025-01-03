@@ -25,9 +25,9 @@ sites<-read.table("sites_info/sites_all_maf_pruned", header=F)
 colnames(sites)<-c("chromo", "position", "major", "minor")
 
 # Read pop file (list of population names - i.e., Drilled, Not.Drilled)
-pop<-read.table("guide_files/Phenotype_Drilling_groups.txt", header=F)
+pop<-read.table("guide_files/Phenotype_Site_groups.txt", header=F)
 npop<-dim(pop)[1]
-pop_group<-"group" #unlist(strsplit(unlist(strsplit(POP,"/"))[2],".txt"))
+pop_group<-"site" #unlist(strsplit(unlist(strsplit(POP,"/"))[2],".txt"))
 
 # Join by chromosome and position the sites and the frequencies in each population
 print("join by chromosome and position the sites and the frequencies in each group/pop")
@@ -35,7 +35,7 @@ MAFall<-sites
 for (i in 1:npop)
   {
     pi<-pop[i,1]
-    MAFi<-read.delim(paste0("genotype_likelihoods_drilling_pruned/",pi,"_SNPs_maf",MIN_MAF,"_pctind",PERC_IND,"_mindepth",MIN_DEPTH,"_maxdepth",MAX_DEPTH_FACTOR,"_pval1e6_pruned.mafs"), header=T)
+    MAFi<-read.delim(paste0("genotype_likelihoods_site_pruned/",pi,"_SNPs_maf",MIN_MAF,"_pctind",PERC_IND,"_mindepth",MIN_DEPTH,"_maxdepth",MAX_DEPTH_FACTOR,"_pval1e6_pruned.mafs"), header=T)
     MAFi<-MAFi[,c(1,2,7,8)]
     colnames(MAFi)<-c("chromo", "position", paste("freq", pi, sep=""),paste("n", pi, sep=""))
     head(MAFi)
@@ -57,9 +57,9 @@ print(paste("total number of snp kept because they were covered in all populatio
 # ================================================================================== #
 
 # Write the mafs in all pops/groups
-write.table(MAFall, paste0("genotype_likelihoods_drilling_pruned/by_",pop_group,"_",MIN_MAF,"_pctind",PERC_IND,"_mindepth",MIN_DEPTH,"_maxdepth",MAX_DEPTH_FACTOR,".pruned.mafs"), quote=F, sep=" ")
+write.table(MAFall, paste0("genotype_likelihoods_site_pruned/by_",pop_group,"_",MIN_MAF,"_pctind",PERC_IND,"_mindepth",MIN_DEPTH,"_maxdepth",MAX_DEPTH_FACTOR,".pruned.mafs"), quote=F, sep=" ")
 # Write the list of SNP infered in all populations
-write.table(MAFall[,1:4], paste0("genotype_likelihoods_drilling_pruned/by_",pop_group,"_",MIN_MAF,"_pctind",PERC_IND,"_mindepth",MIN_DEPTH,"_maxdepth",MAX_DEPTH_FACTOR,".pruned.snps"), quote=F, sep=" ")
+write.table(MAFall[,1:4], paste0("genotype_likelihoods_site_pruned/by_",pop_group,"_",MIN_MAF,"_pctind",PERC_IND,"_mindepth",MIN_DEPTH,"_maxdepth",MAX_DEPTH_FACTOR,".pruned.snps"), quote=F, sep=" ")
 
 # ================================================================================== #
 
