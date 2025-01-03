@@ -35,6 +35,7 @@ library(dplyr)
 
 # ================================================================================== #
 
+# UPDATE WITH NEW lrt file - this one included regions
 # Load data 
 data.binary <- read.table("Nucella_SNPs_maf0.05_pctind0.5_mindepth0.3_maxdepth2.binary.gwas.lrt0", header = T, sep = "\t")
 str(data.binary)

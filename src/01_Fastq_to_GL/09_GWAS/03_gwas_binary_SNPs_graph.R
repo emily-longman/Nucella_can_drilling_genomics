@@ -30,11 +30,15 @@ setwd(results_path_from_root)
 
 # Load packages
 library(qqman)
+library(ggplot2)
+library(data.table)
+library(tidyverse)
+library(foreach)
 
 # ================================================================================== #
 
 # Load data 
-data.binary.SNP <- read.table("Nucella_SNPs_maf0.05_pctind0.5_mindepth0.3_maxdepth2.binary.gwas.lrt0", header = T, sep = "\t")
+data.binary.SNP <- read.table("Nucella_SNPs_maf0.05_pctind0.5_mindepth0.3_maxdepth2.binary.SNPs.gwas.lrt0", header = T, sep = "\t")
 str(data.binary.SNP)
 
 # Create unique Chromosome number 
@@ -70,9 +74,158 @@ qqnorm(data.binary.SNP.filt$P)
 
 # ================================================================================== #
 
-# Make a list of the candidate loci
-#candidates <- data.binary.SNP.filt[which(data.binary.SNP.filt$LRT > 20),]$SNP
+# Make manhattan plot prettier (https://r-graph-gallery.com/101_Manhattan_plot.html)
+
+data.binary.SNP.filt.graph <- data.binary.SNP.filt %>% 
+  
+  # Compute chromosome size
+  group_by(CHR) %>% 
+  summarise(chr_len=max(Position)) %>% 
+  
+  # Calculate cumulative position of each chromosome
+  mutate(tot=cumsum(chr_len)-chr_len) %>%
+  select(-chr_len) %>%
+  
+  # Add this info to the initial dataset
+  left_join(data.binary.SNP.filt, ., by=c("CHR"="CHR")) %>%
+  
+  # Add a cumulative position of each SNP
+  arrange(CHR, Position) %>%
+  mutate(Position.cummulative=Position+tot)
+
+#axisdf = data.binary.filt.graph %>%
+#  group_by(CHR) %>%
+#  summarize(center=(max(Positioncum) + min(Positioncum) ) / 2 )
+
+ggplot(data.binary.SNP.filt.graph, aes(x=Position.cummulative, y=-log10(P))) +
+  # Show all points
+  geom_point( aes(color=as.factor(CHR)), alpha=0.8, size=1.3) +
+  scale_color_manual(values = rep(c("grey", "skyblue"), 5534 )) +
+  # custom X axis:
+  #scale_x_continuous(label = axisdf$CHR, breaks= axisdf$center ) +
+  scale_y_continuous(limits=c(0, 6), expand = c(0, 0) ) + # remove space between plot area and x axis
+  # Custom the theme:
+  theme_bw() +
+  theme( 
+    legend.position="none",
+    panel.border = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank()
+  )
+
+# ================================================================================== #
+
+# Rank-normalize p-values
+
+data.binary.SNP.filt.rn <- data.binary.SNP.filt
+data.binary.SNP.filt.rn$rank <- rank(data.binary.SNP.filt$P)
+Lp <- length(data.binary.SNP.filt.rn$P)
+data.binary.SNP.filt.rn$rn_p_r <- data.binary.SNP.filt.rn$rank/Lp
+
+
+ggplot(data.binary.SNP.filt.rn, aes(y=-log10(rn_p_r), x=CHR)) + 
+  geom_point(col="black", alpha=0.8, size=1.3) + 
+  ylab("-log(p)") + xlab("Position") +
+  theme_bw()
+
+# ================================================================================== #
+
+# Window analysis
+
+# Define windows
+win.bp <- 1e5
+step.bp <- 5e4
+
+# Create windows (note: only windows with the number of SNPs in that window >= 30)
+wins <- foreach(chr.i=unique(data.binary.SNP.filt.rn$Chromosome),
+                .combine="rbind", 
+                .errorhandling="remove")%do%{
+                  
+                  message(chr.i)
+                  
+                  tmp <- data.binary.SNP.filt.rn %>%
+                    filter(Chromosome == chr.i)
+                  
+                  S=dim(tmp)[1]
+                  
+                  if(S >= 30){
+                    o =
+                      data.table(chr=chr.i,
+                                 S=dim(tmp)[1],
+                                 start=seq(from=min(tmp$Position), to=max(tmp$Position)-win.bp, by=step.bp),
+                                 end=seq(from=min(tmp$Position), to=max(tmp$Position)-win.bp, by=step.bp) + win.bp)
+                    return(o)
+                    
+                  }   
+                  else {message("fails S filter")}
+                }
+
+wins[,i:=1:dim(wins)[1]]
+dim(wins)
+
+# ================================================================================== #
+
+
+# Start the summarization process
+win.out <- foreach(win.i=1:dim(wins)[1], 
+                   .errorhandling = "remove",
+                   .combine = "rbind"
+)%do%{
+  
+  message(paste(win.i, dim(wins)[1], sep=" / "))
+  
+  
+  win.tmp <- data.binary.SNP.filt.rn %>%
+    filter(chr == wins[win.i]$chr) %>%
+    filter(Position >= wins[win.i]$start & Position <= wins[win.i]$end)
+  
+  pr.i <- c(0.05)
+  
+  win.tmp %>% 
+    filter(!is.na(rn_fst_r)) %>%
+    summarise(chr = wins[win.i]$chr,
+              pos_mean = mean(midPos),
+              pos_mean = mean(midPos),
+              pos_min = min(midPos),
+              pos_max = max(midPos),
+              win=win.i,
+              pr=pr.i,
+              rnp.pr=c(mean(rn_fst_r<=pr.i)),
+              rnp.binom.p=c(binom.test(sum(rn_fst_r<=pr.i), 
+                                       length(rn_fst_r), pr.i)$p.value),
+              max.fst=max(Fst),
+              nSNPs = n(),
+              sum.rnp=sum(rn_fst_r<=pr.i),
+    )  -> win.out
+}
+
+# Graph 
+
+win.out %>%
+  ggplot(aes(
+    x=max.fst,
+    y=-log10(rnp.binom.p)
+  )) + geom_point() + 
+  geom_hline(yintercept = -log10(0.05))
+
+
+win.out %>%
+  ggplot(aes(
+    x=pos_mean,
+    y=-log10(rnp.binom.p)
+  )) + geom_point() + geom_hline(yintercept = -log10(0.05)) + theme_bw()
 
 
 
+# Create unique Chromosome number 
+Chr.unique <- unique(win.out$chr)
+win.out$Chr.unique <- as.numeric(factor(win.out$chr, levels = Chr.unique))
 
+ggplot(win.out, aes(y=-log10(rnp.binom.p), x=Chr.unique)) + 
+  geom_point(col="black", alpha=0.8, size=1.3) + 
+  geom_hline(yintercept = -log10(0.05), color="red") +
+  theme_bw()
+
+
+
+# ================================================================================== #
