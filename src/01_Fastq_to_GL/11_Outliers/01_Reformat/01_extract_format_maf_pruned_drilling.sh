@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=extract_format_maf_pruned
+#SBATCH --job-name=extract_format_maf_pruned_drilling
 
 # Specify partition
 #SBATCH --partition=bluemoon
@@ -98,4 +98,4 @@ cd $WORKING_FOLDER
 
 # Input files - all from config 
 
-Rscript $SCRIPT_FOLDER/11_Outliers/01_Reformat/01_extract_format_maf_pruned.R "$MIN_MAF" "$PERC_IND" "$MIN_DEPTH" "$MAX_DEPTH_FACTOR"
+Rscript $SCRIPT_FOLDER/11_Outliers/01_Reformat/01_extract_format_maf_pruned_drilling.R "$MIN_MAF" "$PERC_IND" "$MIN_DEPTH" "$MAX_DEPTH_FACTOR"
