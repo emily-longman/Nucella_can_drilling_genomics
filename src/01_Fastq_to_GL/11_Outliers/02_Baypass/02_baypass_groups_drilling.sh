@@ -5,14 +5,14 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=baypass_1
+#SBATCH --job-name=baypass_2_groups_drilling
 
 # Specify partition
 #SBATCH --partition=bluemoon
 
 # Request nodes
 #SBATCH --nodes=1 
-#SBATCH --ntasks-per-node=5
+#SBATCH --ntasks-per-node=10
 
 # Reserve walltime -- hh:mm:ss
 #SBATCH --time=3:00:00 
@@ -29,8 +29,8 @@
 
 #--------------------------------------------------------------------------------
 
-# This script is the first step in running baypass on the snail data. 
-# Primarily, it will use the gfile produced in step 01_reformat to generate the omega file that is subsequently used in the later scripts.
+# This script will run baypass on the snail data. 
+# It will use the gfile produced in step 01_reformat and the omega file produced in step 02_Baypass/01_baypass.sh  
 
 #Load modules 
 module load gcc/10.5.0
@@ -71,7 +71,8 @@ npop=2
 # Move to baypass directory
 cd $WORKING_FOLDER/outliers/baypass
 
-# Run baypass - this will generate the omega file which will be used in the subsequent scripts
+# Run baypass using omega file 
 $baypass -npop $npop \
 -gfile $WORKING_FOLDER/outliers/baypass/by_group_"$MIN_MAF"_pctind"$PERC_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR".mafs.pruned.baypass \
--outprefix Drilling_r2 -npilot 100 -nthreads 5
+-omegafile $WORKING_FOLDER/outliers/baypass/Drilling_r2_mat_omega.out \
+-outprefix Drilling_r2.output -nthreads 10
