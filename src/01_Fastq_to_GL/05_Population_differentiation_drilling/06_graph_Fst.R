@@ -41,10 +41,10 @@ colnames(data) <- c("region", "chr", "midPos", "Nsites", "Fst")
 
 # Create unique Chromosome number 
 Chr.unique <- unique(data$chr)
-data$CHR.unique <- as.numeric(factor(data$chr, levels = Chr.unique))
+data$chr.unique <- as.numeric(factor(data$chr, levels = Chr.unique))
 
 # Graph Fst against chromosome 
-ggplot(data, aes(y=Fst, x=CHR.unique)) + 
+ggplot(data, aes(y=Fst, x=chr.unique)) + 
   geom_point(col="black", alpha=0.8, size=1.3) + 
   ylab("Window Fst") + xlab("Position") +
   theme_bw()
@@ -58,10 +58,12 @@ data.rn$rank <- rank(-data$Fst)
 Lfst <- length(data$Fst)
 data.rn$rn_fst_r <- data.rn$rank/Lfst
 
-ggplot(data.rn, aes(y=-log10(rn_fst_r), x=CHR.unique)) + 
+ggplot(data.rn, aes(y=-log10(rn_fst_r), x=chr.unique)) + 
   geom_point(col="black", alpha=0.8, size=1.3) + 
   ylab("Window Fst") + xlab("Position") +
   theme_bw()
+
+# ================================================================================== #
 
 # Window analysis
 
@@ -69,6 +71,7 @@ win.bp <- 25000
 step.bp <- 5000
 
 
+# Create windows (note: only windows with the number of SNPs in that window >= 30)
 wins <- foreach(chr.i=unique(data.rn$chr),
                 .combine="rbind", 
                 .errorhandling="remove")%do%{
@@ -96,13 +99,10 @@ wins[,i:=1:dim(wins)[1]]
 ####
 dim(wins)
 
-
-####
-
+# ================================================================================== #
 
 ### start the summarization process
 win.out <- foreach(win.i=1:dim(wins)[1], 
-#win.out <- foreach(win.i=1:10000, 
                    .errorhandling = "remove",
                    .combine = "rbind"
 )%do%{
@@ -135,10 +135,27 @@ win.out <- foreach(win.i=1:dim(wins)[1],
   }
 
 
-
 win.out %>%
   ggplot(aes(
     x=max.fst,
     y=-log10(rnp.binom.p)
   )) + geom_point() + 
   geom_hline(yintercept = -log10(0.05))
+
+
+win.out %>%
+ggplot(aes(
+  x=pos_mean,
+  y=-log10(rnp.binom.p)
+)) + geom_point() + geom_hline(yintercept = -log10(0.05)) + theme_bw()
+
+
+
+# Create unique Chromosome number 
+Chr.unique <- unique(win.out$chr)
+win.out$Chr.unique <- as.numeric(factor(win.out$chr, levels = Chr.unique))
+
+ggplot(win.out, aes(y=-log10(rnp.binom.p), x=Chr.unique)) + 
+  geom_point(col="black", alpha=0.8, size=1.3) + 
+  geom_hline(yintercept = -log10(0.05), color="red") +
+  theme_bw()

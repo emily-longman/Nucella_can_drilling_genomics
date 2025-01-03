@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=baypass_1
+#SBATCH --job-name=1baypass_2
 
 # Specify partition
 #SBATCH --partition=bluemoon
@@ -29,8 +29,7 @@
 
 #--------------------------------------------------------------------------------
 
-# This script is the first step in running baypass on the snail data. 
-# Primarily, it will use the gfile produced in step 01_reformat to generate the omega file that is subsequently used in the later scripts.
+# This script will run baypass on the snail data. It will 
 
 #Load modules 
 module load gcc/10.5.0
