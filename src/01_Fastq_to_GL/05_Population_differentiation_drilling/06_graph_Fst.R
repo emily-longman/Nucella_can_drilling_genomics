@@ -135,7 +135,6 @@ win.out <- foreach(win.i=1:dim(wins)[1],
     )  -> win.out
   }
 
-
 # Graph 
 
 win.out %>%
