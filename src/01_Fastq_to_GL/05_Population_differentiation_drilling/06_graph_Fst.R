@@ -136,6 +136,8 @@ win.out <- foreach(win.i=1:dim(wins)[1],
   }
 
 
+# Graph 
+
 win.out %>%
   ggplot(aes(
     x=max.fst,
@@ -278,3 +280,29 @@ win.out <- foreach(win.i=1:dim(wins)[1],
     )  -> win.out
 }
 
+
+# Graph 
+win.out %>%
+  ggplot(aes(
+    x=max.fst,
+    y=-log10(rnp.binom.p)
+  )) + geom_point() + 
+  geom_hline(yintercept = -log10(0.05))
+
+
+win.out %>%
+  ggplot(aes(
+    x=pos_mean,
+    y=-log10(rnp.binom.p)
+  )) + geom_point() + geom_hline(yintercept = -log10(0.05)) + theme_bw()
+
+
+
+# Create unique Chromosome number 
+Chr.unique <- unique(win.out$chr)
+win.out$Chr.unique <- as.numeric(factor(win.out$chr, levels = Chr.unique))
+
+ggplot(win.out, aes(y=-log10(rnp.binom.p), x=Chr.unique)) + 
+  geom_point(col="black", alpha=0.8, size=1.3) + 
+  geom_hline(yintercept = -log10(0.05), color="red") +
+  theme_bw()
