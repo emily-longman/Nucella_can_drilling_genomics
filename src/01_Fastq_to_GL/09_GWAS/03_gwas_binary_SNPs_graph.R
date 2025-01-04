@@ -136,21 +136,22 @@ ggplot(data.binary.SNP.filt.rn, aes(y=-log10(rn_p_r), x=CHR)) +
 win.bp <- 1e5
 step.bp <- 5e4
 
+
 # Create windows (note: only windows with the number of SNPs in that window >= 30)
-wins <- foreach(chr.i=unique(data.binary.SNP.filt.rn$Chromosome),
+wins <- foreach(Chromosome.i=unique(data.binary.SNP.filt.rn$Chromosome),
                 .combine="rbind", 
                 .errorhandling="remove")%do%{
                   
                   message(chr.i)
                   
                   tmp <- data.binary.SNP.filt.rn %>%
-                    filter(Chromosome == chr.i)
+                    filter(Chromosome == Chromosome.i)
                   
                   S=dim(tmp)[1]
                   
-                  if(S >= 30){
+                  if(S >= 5){
                     o =
-                      data.table(chr=chr.i,
+                      data.table(Chromosome=Chromosome.i,
                                  S=dim(tmp)[1],
                                  start=seq(from=min(tmp$Position), to=max(tmp$Position)-win.bp, by=step.bp),
                                  end=seq(from=min(tmp$Position), to=max(tmp$Position)-win.bp, by=step.bp) + win.bp)
@@ -176,26 +177,26 @@ win.out <- foreach(win.i=1:dim(wins)[1],
   
   
   win.tmp <- data.binary.SNP.filt.rn %>%
-    filter(chr == wins[win.i]$chr) %>%
+    filter(Chromosome == wins[win.i]$Chromosome) %>%
     filter(Position >= wins[win.i]$start & Position <= wins[win.i]$end)
   
   pr.i <- c(0.05)
   
   win.tmp %>% 
-    filter(!is.na(rn_fst_r)) %>%
-    summarise(chr = wins[win.i]$chr,
-              pos_mean = mean(midPos),
-              pos_mean = mean(midPos),
-              pos_min = min(midPos),
-              pos_max = max(midPos),
+    filter(!is.na(rn_p_r)) %>%
+    summarise(Chromosome = wins[win.i]$Chromosome,
+              pos_mean = mean(Position),
+              pos_mean = mean(Position),
+              pos_min = min(Position),
+              pos_max = max(Position),
               win=win.i,
               pr=pr.i,
-              rnp.pr=c(mean(rn_fst_r<=pr.i)),
-              rnp.binom.p=c(binom.test(sum(rn_fst_r<=pr.i), 
-                                       length(rn_fst_r), pr.i)$p.value),
-              max.fst=max(Fst),
+              rnp.pr=c(mean(rn_p_r<=pr.i)),
+              rnp.binom.p=c(binom.test(sum(rn_p_r<=pr.i), 
+                                       length(rn_p_r), pr.i)$p.value),
+              max.p=max(p),
               nSNPs = n(),
-              sum.rnp=sum(rn_fst_r<=pr.i),
+              sum.rnp=sum(rn_p_r<=pr.i),
     )  -> win.out
 }
 
@@ -203,7 +204,7 @@ win.out <- foreach(win.i=1:dim(wins)[1],
 
 win.out %>%
   ggplot(aes(
-    x=max.fst,
+    x=max.p,
     y=-log10(rnp.binom.p)
   )) + geom_point() + 
   geom_hline(yintercept = -log10(0.05))
@@ -218,8 +219,8 @@ win.out %>%
 
 
 # Create unique Chromosome number 
-Chr.unique <- unique(win.out$chr)
-win.out$Chr.unique <- as.numeric(factor(win.out$chr, levels = Chr.unique))
+Chr.unique <- unique(win.out$Chromosome)
+win.out$Chr.unique <- as.numeric(factor(win.out$Chromosome, levels = Chr.unique))
 
 ggplot(win.out, aes(y=-log10(rnp.binom.p), x=Chr.unique)) + 
   geom_point(col="black", alpha=0.8, size=1.3) + 

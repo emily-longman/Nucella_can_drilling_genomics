@@ -131,7 +131,7 @@ singularity run $NGS ngsF \
 # Calc inbreeding (i.e., use the output from the preliminary search as initial values for the main (and slower) algorithm)
 singularity run $NGS ngsF \
 --n_ind $N_IND --n_sites $NSITES \
---min_epsilon 1e-06 \
+--min_epsilon 1e-05 \
 --glf $WORKING_FOLDER/genotype_likelihoods_by_site/${i}/${i}_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_inbreed.glf \
 --out $WORKING_FOLDER/ngsF/${i}/${i}.indF \
 --init_values $WORKING_FOLDER/ngsF/${i}/${i}.approx_indF.pars --n_threads 10
