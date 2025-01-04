@@ -114,6 +114,6 @@ angsd \
 -minInd $MIN_IND \
 -sites $WORKING_FOLDER/sites_info/sites_all_maf_pruned \
 -rf $WORKING_FOLDER/sites_info/regions_all_maf \
--out $WORKING_FOLDER/genotype_likelihoods_drilling_pruned/${i}_SNPs_maf"$MIN_MAF"_pctind"$PERC_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6_pruned
+-out $WORKING_FOLDER/genotype_likelihoods_site_pruned/${i}_SNPs_maf"$MIN_MAF"_pctind"$PERC_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6_pruned
 
 # Note reduced minInd at this stage to 25%
