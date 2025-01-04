@@ -5,14 +5,14 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=baypass_2_groups_drilling
+#SBATCH --job-name=baypass_1_site_drilling
 
 # Specify partition
 #SBATCH --partition=bluemoon
 
 # Request nodes
 #SBATCH --nodes=1 
-#SBATCH --ntasks-per-node=10
+#SBATCH --ntasks-per-node=5
 
 # Reserve walltime -- hh:mm:ss
 #SBATCH --time=3:00:00 
@@ -29,8 +29,8 @@
 
 #--------------------------------------------------------------------------------
 
-# This script will run baypass on the snail data. 
-# It will use the gfile produced in step 01_reformat and the omega file produced in step 02_Baypass/01_baypass.sh  
+# This script is the first step in running baypass on the snail data. 
+# Primarily, it will use the gfile produced in step 01_reformat to generate the omega file that is subsequently used in the later scripts.
 
 #Load modules 
 module load gcc/10.5.0
@@ -59,20 +59,19 @@ source $SCRIPT_FOLDER/03_Call_SNPs/01_config.sh
 # Extract parameters from config file
 N_IND=$(wc -l $BAM_LIST | cut -d " " -f 1) 
 PERC_IND=0.25 # Lower percent ind to 25% for subsequent analyses
-MIN_IND_FLOAT=$(echo "($N_IND * $PERC_IND)"| bc -l)
-MIN_IND=${MIN_IND_FLOAT%.*} 
 MAX_DEPTH=$(echo "($N_IND * $MAX_DEPTH_FACTOR)" |bc -l)
 
 # Number of groups/populations
-npop=2
+npop=3
 
 #--------------------------------------------------------------------------------
 
 # Move to baypass directory
 cd $WORKING_FOLDER/outliers/baypass
 
-# Run baypass using omega file 
+# Run baypass - this will generate the omega file which will be used in the subsequent scripts
 $baypass -npop $npop \
--gfile $WORKING_FOLDER/outliers/baypass/by_group_"$MIN_MAF"_pctind"$PERC_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR".mafs.pruned.baypass \
--omegafile $WORKING_FOLDER/outliers/baypass/Drilling_r2_mat_omega.out \
--outprefix Drilling_r2.output -nthreads 10
+-gfile $WORKING_FOLDER/outliers/baypass/by_site_"$MIN_MAF"_pctind"$PERC_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR".mafs.pruned.baypass \
+-outprefix Site_r2 -npilot 100 -nthreads 5
+
+# npilot - number of pilot runs used ot adjust the parameters of MCMS proposal distributions of parameters updated through a Metropolis-Hastings algorithm (default is 20)

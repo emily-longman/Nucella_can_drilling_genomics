@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=baypass_1_groups_drilling
+#SBATCH --job-name=baypass_1_drilling
 
 # Specify partition
 #SBATCH --partition=bluemoon
