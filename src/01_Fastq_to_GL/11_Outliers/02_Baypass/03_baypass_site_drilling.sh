@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=baypass_2_site
+#SBATCH --job-name=baypass_3_site_drilling
 
 # Specify partition
 #SBATCH --partition=bluemoon
@@ -31,6 +31,7 @@
 
 # This script will run baypass on the snail data. 
 # It will use the gfile produced in step 01_reformat and the omega file produced in step 02_Baypass/01_baypass_site.sh  
+# In comparison to step 2, this script will also use a contrast file with information about the drilling ability of the snails
 
 #Load modules 
 module load gcc/10.5.0
@@ -58,11 +59,20 @@ source $SCRIPT_FOLDER/03_Call_SNPs/01_config.sh
 
 # Extract parameters from config file
 N_IND=$(wc -l $BAM_LIST | cut -d " " -f 1) 
-PERC_IND=0.25 # Lower percent ind to 25% for subsequent analyses
+MIN_IND_FLOAT=$(echo "($N_IND * $PERCENT_IND)"| bc -l)
+MIN_IND=${MIN_IND_FLOAT%.*} 
 MAX_DEPTH=$(echo "($N_IND * $MAX_DEPTH_FACTOR)" |bc -l)
 
 # Number of groups/populations
 npop=3
+
+#--------------------------------------------------------------------------------
+
+# Read contrast data file
+# This is a file that will be used to perofrm analysis of association with binary traits. 
+# The data is encoded such that membership of the first group is 1 (i.e., snail that driled) and the alternative group is -1 (i.e., snails that didn't drill).
+
+CONTRASTS_FILE=$WORKING_FOLDER/outliers/baypass/Contrasts_file.txt
 
 #--------------------------------------------------------------------------------
 
