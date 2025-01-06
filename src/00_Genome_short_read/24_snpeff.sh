@@ -91,17 +91,3 @@ datdir=/netfiles/pespenilab_share/Nucella/processed
 param=/netfiles/pespenilab_share/Nucella/processed/N.can_genome_Dec2024/snpEff.config
 
 snpeff build -dataDir $datdir -c $param  -gtf22 -noCheckCds -v N.can_genome_Dec2024
-
-#--------------------------------------------------------------------------------
-
-# Run SNPeff
-
-# Load SNPeff
-#module load snpeff
-
-# Define important file locations
-#vcf=/gpfs1/home/e/l/elongman/scratch/Nucella_can_drilling_genomics/data/processed/fastq_to_GL/vcf_pruned/Nucella_SNPs_maf0.05_pctind0.5_mindepth0.3_maxdepth2_pval1e6_pruned.vcf
-#datdir=/netfiles/pespenilab_share/Nucella/processed
-#param=/netfiles/pespenilab_share/Nucella/processed/N.can_genome_Dec2024/snpEff.config
-
-#snpeff -c $param -dataDir $datdir N.can_genome_Dec2024 $vcf > file.ann.vcf
