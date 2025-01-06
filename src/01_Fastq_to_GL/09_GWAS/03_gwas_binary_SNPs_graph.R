@@ -29,7 +29,7 @@ setwd(results_path_from_root)
 # ================================================================================== #
 
 # Load packages
-library(qqman)
+library(qqman) #https://cran.r-project.org/web/packages/qqman/vignettes/qqman.html
 library(ggplot2)
 library(data.table)
 library(tidyverse)
@@ -38,7 +38,10 @@ library(foreach)
 # ================================================================================== #
 
 # Load data 
-data.binary.SNP <- read.table("Nucella_SNPs_maf0.05_pctind0.5_mindepth0.3_maxdepth2.binary.SNPs.gwas.lrt0", header = T, sep = "\t")
+# All SNPs
+data.binary.SNP <- read.table("Nucella_SNPs_maf0.05_pctind0.5_mindepth0.3_maxdepth2.binary.all.SNPs.gwas.lrt0", header = T, sep = "\t")
+# Pruned SNP list
+#data.binary.SNP <- read.table("Nucella_SNPs_maf0.05_pctind0.5_mindepth0.3_maxdepth2.binary.SNPs.gwas.lrt0", header = T, sep = "\t")
 str(data.binary.SNP)
 
 # Create unique Chromosome number 
@@ -47,13 +50,21 @@ data.binary.SNP$CHR <- as.numeric(factor(data.binary.SNP$Chromosome, levels = Ch
 
 # Clean data
 # Remove LRT values that are -999 (i.e., Sites that fails one of the filters) and are negative
+# Percent of SNPs that fail filter: 48% for full SNP list
+dim(data.binary.SNP[-c(which(data.binary.SNP$LRT == -999), which(data.binary.SNP$LRT <= 0)),])[1]/dim(data.binary.SNP)[1]
+# Remove sites that fail filter
 data.binary.SNP.filt <- data.binary.SNP[-c(which(data.binary.SNP$LRT == -999), which(data.binary.SNP$LRT <= 0)), ]
+# Number of sites remaining: 92375 for full SNP list
+dim(data.binary.SNP.filt)[1]
 
 hist(data.binary.SNP.filt$LRT, breaks = 50)
 
+# How many SNPs are on each contig:
+data.chr.sum <- as.data.frame(table(data.binary.SNP.filt$CHR))
+
 # ================================================================================== #
 
-# Prepare data
+# Prepare data for graphing using qqman package
 
 # Name each SNP 
 data.binary.SNP.filt$SNP <- paste("r", 1:length(data.binary.SNP.filt$Chromosome), sep="")
@@ -66,11 +77,22 @@ data.binary.SNP.filt$P <- pchisq(data.binary.SNP.filt$LRT, df=1, lower=F)
 
 # ================================================================================== #
 
+# Graph data using qqman package
+
 # Make manhattan plot
 manhattan(data.binary.SNP.filt, chr="CHR", bp="Position", p="P")
 
+# Note: genome-wide significance default:  -log10(5e-8) 
+# Note: the suggestive line default: -log10(1e-5)
+# Typically the genome-wide significance line corresponds to Bonferonni-corrected p-value namely 0.05 divided by the number of SNPs tested
+
+# Regraph adding my own genome-wide significance line
+manhattan(data.binary.SNP.filt, chr="CHR", bp="Position", p="P", 
+          ylim=c(0,7), suggestiveline = F, genomewideline = F, xlab="Position")
+abline(h=-log10(0.05/dim(data.binary.SNP.filt)[1]), col="red")
+
 # Look at qq-plot of pvalues to check model fit
-qqnorm(data.binary.SNP.filt$P)
+qq(data.binary.SNP.filt$P)
 
 # ================================================================================== #
 
@@ -93,14 +115,11 @@ data.binary.SNP.filt.graph <- data.binary.SNP.filt %>%
   arrange(CHR, Position) %>%
   mutate(Position.cummulative=Position+tot)
 
-#axisdf = data.binary.filt.graph %>%
-#  group_by(CHR) %>%
-#  summarize(center=(max(Positioncum) + min(Positioncum) ) / 2 )
 
 ggplot(data.binary.SNP.filt.graph, aes(x=Position.cummulative, y=-log10(P))) +
   # Show all points
   geom_point( aes(color=as.factor(CHR)), alpha=0.8, size=1.3) +
-  scale_color_manual(values = rep(c("grey", "skyblue"), 5534 )) +
+  scale_color_manual(values = rep(c("grey", "skyblue"), dim(data.binary.SNP.filt)[1] )) +
   # custom X axis:
   #scale_x_continuous(label = axisdf$CHR, breaks= axisdf$center ) +
   scale_y_continuous(limits=c(0, 6), expand = c(0, 0) ) + # remove space between plot area and x axis
@@ -125,7 +144,7 @@ data.binary.SNP.filt.rn$rn_p_r <- data.binary.SNP.filt.rn$rank/Lp
 
 ggplot(data.binary.SNP.filt.rn, aes(y=-log10(rn_p_r), x=CHR)) + 
   geom_point(col="black", alpha=0.8, size=1.3) + 
-  ylab("-log(p)") + xlab("Position") +
+  ylab("-log10(rn_p)") + xlab("Position") +
   theme_bw()
 
 # ================================================================================== #
@@ -136,13 +155,16 @@ ggplot(data.binary.SNP.filt.rn, aes(y=-log10(rn_p_r), x=CHR)) +
 win.bp <- 1e5
 step.bp <- 5e4
 
+# How many SNPs are on each contig:
+ggplot(data.chr.sum, aes(x=Freq)) + geom_density() + xlim(0,150)
+# Use this information to determine level to filter for number of SNPs in a given window
 
-# Create windows (note: only windows with the number of SNPs in that window >= 30)
+# Create windows (note: only windows with the number of SNPs in that window >= 5)
 wins <- foreach(Chromosome.i=unique(data.binary.SNP.filt.rn$Chromosome),
                 .combine="rbind", 
                 .errorhandling="remove")%do%{
                   
-                  message(chr.i)
+                  message(Chromosome.i)
                   
                   tmp <- data.binary.SNP.filt.rn %>%
                     filter(Chromosome == Chromosome.i)
@@ -165,7 +187,6 @@ wins[,i:=1:dim(wins)[1]]
 dim(wins)
 
 # ================================================================================== #
-
 
 # Start the summarization process
 win.out <- foreach(win.i=1:dim(wins)[1], 
@@ -194,29 +215,15 @@ win.out <- foreach(win.i=1:dim(wins)[1],
               rnp.pr=c(mean(rn_p_r<=pr.i)),
               rnp.binom.p=c(binom.test(sum(rn_p_r<=pr.i), 
                                        length(rn_p_r), pr.i)$p.value),
-              max.p=max(p),
+              max.p=max(P),
               nSNPs = n(),
               sum.rnp=sum(rn_p_r<=pr.i),
     )  -> win.out
 }
 
+# ================================================================================== #
+
 # Graph 
-
-win.out %>%
-  ggplot(aes(
-    x=max.p,
-    y=-log10(rnp.binom.p)
-  )) + geom_point() + 
-  geom_hline(yintercept = -log10(0.05))
-
-
-win.out %>%
-  ggplot(aes(
-    x=pos_mean,
-    y=-log10(rnp.binom.p)
-  )) + geom_point() + geom_hline(yintercept = -log10(0.05)) + theme_bw()
-
-
 
 # Create unique Chromosome number 
 Chr.unique <- unique(win.out$Chromosome)
@@ -228,5 +235,3 @@ ggplot(win.out, aes(y=-log10(rnp.binom.p), x=Chr.unique)) +
   theme_bw()
 
 
-
-# ================================================================================== #
