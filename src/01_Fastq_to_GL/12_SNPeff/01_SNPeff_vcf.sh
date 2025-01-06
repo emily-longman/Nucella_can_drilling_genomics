@@ -68,4 +68,8 @@ fi
 
 # Run SNPeff on the vcf file
 
+# Change directory
+cd $WORKING_FOLDER/SNPeff
+
+# Run SNPeff
 snpeff -c $param -dataDir $datdir N.can_genome_Dec2024 $vcf > $WORKING_FOLDER/SNPeff/Nucella_SNPs.pruned.annotate.vcf
