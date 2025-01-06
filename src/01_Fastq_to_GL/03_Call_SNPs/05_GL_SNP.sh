@@ -101,6 +101,6 @@ angsd \
 -minInd $MIN_IND \
 -sites $WORKING_FOLDER/sites_info/sites_all_maf \
 -rf $WORKING_FOLDER/sites_info/regions_all_maf \
--out $WORKING_FOLDER/genotype_likelihoods_all_SNPs/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6_pruned
+-out $WORKING_FOLDER/genotype_likelihoods_all_SNPs/Nucella_SNPs_maf"$MIN_MAF"_pctind"$PERCENT_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR"_pval1e6
 
 # Note reduced minInd at this stage to 25%
