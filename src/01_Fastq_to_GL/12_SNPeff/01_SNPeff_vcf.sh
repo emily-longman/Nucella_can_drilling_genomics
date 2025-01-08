@@ -42,7 +42,8 @@ module load snpeff
 WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL
 
 # vcf is the vcf input file
-vcf=/gpfs1/home/e/l/elongman/scratch/Nucella_can_drilling_genomics/data/processed/fastq_to_GL/vcf_pruned/Nucella_SNPs_maf0.05_pctind0.5_mindepth0.3_maxdepth2_pval1e6_pruned.vcf
+vcf=/gpfs1/home/e/l/elongman/scratch/Nucella_can_drilling_genomics/data/processed/fastq_to_GL/vcf/Nucella_SNPs_maf0.05_pctind0.5_mindepth0.3_maxdepth2_pval1e6.vcf
+#vcf=/gpfs1/home/e/l/elongman/scratch/Nucella_can_drilling_genomics/data/processed/fastq_to_GL/vcf_pruned/Nucella_SNPs_maf0.05_pctind0.5_mindepth0.3_maxdepth2_pval1e6_pruned.vcf
 
 # datadir is the directory where SNPeff directory was built
 datdir=/netfiles/pespenilab_share/Nucella/processed
@@ -72,4 +73,5 @@ fi
 cd $WORKING_FOLDER/SNPeff
 
 # Run SNPeff
-snpeff -c $param -dataDir $datdir N.can_genome_Dec2024 $vcf > $WORKING_FOLDER/SNPeff/Nucella_SNPs.pruned.annotate.vcf
+snpeff -c $param -dataDir $datdir N.can_genome_Dec2024 $vcf > $WORKING_FOLDER/SNPeff/Nucella_SNPs.annotate.vcf
+#snpeff -c $param -dataDir $datdir N.can_genome_Dec2024 $vcf > $WORKING_FOLDER/SNPeff/Nucella_SNPs.pruned.annotate.vcf

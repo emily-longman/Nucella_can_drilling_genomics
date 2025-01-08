@@ -1,4 +1,4 @@
-## Plotting with plot_admix_function.R code
+# Plot GWAS results
 
 # Clear memory
 rm(list=ls()) 
@@ -201,7 +201,7 @@ win.out <- foreach(win.i=1:dim(wins)[1],
     filter(Chromosome == wins[win.i]$Chromosome) %>%
     filter(Position >= wins[win.i]$start & Position <= wins[win.i]$end)
   
-  pr.i <- c(0.05)
+  pr.i <- c(0.01)
   
   win.tmp %>% 
     filter(!is.na(rn_p_r)) %>%
@@ -231,7 +231,46 @@ win.out$Chr.unique <- as.numeric(factor(win.out$Chromosome, levels = Chr.unique)
 
 ggplot(win.out, aes(y=-log10(rnp.binom.p), x=Chr.unique)) + 
   geom_point(col="black", alpha=0.8, size=1.3) + 
-  geom_hline(yintercept = -log10(0.05), color="red") +
+  geom_hline(yintercept = -log10(0.01), color="red") +
   theme_bw()
+
+# Graph based on position
+ggplot(win.out, aes(y=-log10(rnp.binom.p), x=pos_mean/1e6)) + 
+  geom_point(col="black", alpha=0.8, size=1.3) + 
+  geom_hline(yintercept = -log10(0.01), color="red") +
+  theme_bw()
+
+
+# ================================================================================== #
+
+
+# Identify contigs with highly significant rnp p
+win.out.sig <- win.out[which(-log10(win.out$rnp.binom.p)>-log10(0.01)),]
+
+
+# Graph contigs with two significant windows
+ggplot(data.binary.SNP.filt.rn[which(data.binary.SNP.filt.rn$Chromosome=="Backbone_2549"),], 
+       aes(x=Position/1e6, y=-log10(P))) + 
+  geom_line() + theme_classic() + 
+  geom_hline(yintercept=-log10(0.01), color="red", linetype="dashed")
+
+ggplot(data.binary.SNP.filt.rn[which(data.binary.SNP.filt.rn$Chromosome=="ntLink_22"),], 
+       aes(x=Position/1e6, y=-log10(P))) + 
+  geom_line() + theme_classic() + 
+  geom_hline(yintercept=-log10(0.01), color="red", linetype="dashed")
+
+ggplot(data.binary.SNP.filt.rn[which(data.binary.SNP.filt.rn$Chromosome=="ntLink_4575"),], 
+       aes(x=Position/1e6, y=-log10(P))) + 
+  geom_line() + theme_classic() + 
+  geom_hline(yintercept=-log10(0.01), color="red", linetype="dashed")
+
+ggplot(data.binary.SNP.filt.rn[which(data.binary.SNP.filt.rn$Chromosome=="ntLink_6065"),], 
+       aes(x=Position/1e6, y=-log10(P))) + 
+  geom_line() + theme_classic() + 
+  geom_hline(yintercept=-log10(0.01), color="red", linetype="dashed")
+
+
+
+
 
 

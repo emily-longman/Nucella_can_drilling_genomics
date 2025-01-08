@@ -83,4 +83,5 @@ cd $WORKING_FOLDER/outliers/baypass
 $baypass -npop $npop \
 -gfile $WORKING_FOLDER/outliers/baypass/by_site_"$MIN_MAF"_pctind"$PERC_IND"_mindepth"$MIN_DEPTH"_maxdepth"$MAX_DEPTH_FACTOR".mafs.pruned.baypass \
 -omegafile $WORKING_FOLDER/outliers/baypass/Site_r2_mat_omega.out \
+-contrastfile $WORKING_FOLDER/outliers/baypass/Contrasts_file.txt \
 -outprefix Site_r2.output -nthreads 10

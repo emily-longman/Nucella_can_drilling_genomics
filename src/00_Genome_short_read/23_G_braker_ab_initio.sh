@@ -74,7 +74,7 @@ fi
 # Move to working directory
 cd $WORKING_FOLDER_SCRATCH/braker/braker_ab_initio
 
-# Execute breaker in ab inition method (In this mode, GeneMark-ES is trained on the genome sequence, alone)
+# Execute braker in ab inition method (In this mode, GeneMark-ES is trained on the genome sequence, alone)
 braker.pl \
 --species=Nucella_canaliculata_ab_initio \
 --genome=$REFERENCE \

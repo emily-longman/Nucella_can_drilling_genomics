@@ -1,4 +1,4 @@
-## Plotting with plot_admix_function.R code
+# Plot GWAS results
 
 # Clear memory
 rm(list=ls()) 
