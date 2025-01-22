@@ -24,7 +24,7 @@ echo ${SLURM_ARRAY_TASK_ID}
 
 # Set folders and file locations
 working_folder=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/Thermofly
-meta=$working_folder/METADATA/Thermofly_metadata.tsv
+meta=$working_folder/METADATA/Thermofly_metadata.vNov11.2024.tsv
 
 #--------------------------------------------------------------------------------
 
