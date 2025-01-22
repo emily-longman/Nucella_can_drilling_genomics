@@ -6,7 +6,7 @@
 #SBATCH -t 4:00:00   
 #SBATCH --mem 8G   
 #SBATCH -o ./slurmOutput/myarray.%A_%a.out  
-#SBATCH -p bluemoon  
+#SBATCH -p general  
 #SBATCH --array=1-22
 
 #--------------------------------------------------------------------------------

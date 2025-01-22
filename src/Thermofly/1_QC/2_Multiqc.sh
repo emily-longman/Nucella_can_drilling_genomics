@@ -6,7 +6,7 @@
 #SBATCH -t 4:00:00   
 #SBATCH --mem 8G   
 #SBATCH --output=./slurmOutput/%x_%j.out
-#SBATCH -p bluemoon  
+#SBATCH -p general  
 
 #--------------------------------------------------------------------------------
 
