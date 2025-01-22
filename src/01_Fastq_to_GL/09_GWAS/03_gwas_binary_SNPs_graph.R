@@ -153,7 +153,7 @@ ggplot(data.binary.SNP.filt.rn, aes(y=-log10(rn_p_r), x=CHR)) +
 
 # Define windows
 win.bp <- 1e5
-step.bp <- 5e4
+step.bp <- 5e8
 
 # How many SNPs are on each contig:
 ggplot(data.chr.sum, aes(x=Freq)) + geom_density() + xlim(0,150)
@@ -249,25 +249,21 @@ win.out.sig <- win.out[which(-log10(win.out$rnp.binom.p)>-log10(0.01)),]
 
 
 # Graph contigs with two significant windows
-ggplot(data.binary.SNP.filt.rn[which(data.binary.SNP.filt.rn$Chromosome=="Backbone_2549"),], 
+ggplot(data.binary.SNP.filt.rn[which(data.binary.SNP.filt.rn$Chromosome=="ntLink_5618"),], 
        aes(x=Position/1e6, y=-log10(P))) + 
   geom_line() + theme_classic() + 
-  geom_hline(yintercept=-log10(0.01), color="red", linetype="dashed")
+  geom_hline(yintercept=-log10(0.01), color="red", linetype="dashed") + ggtitle("ntLink_5618")
 
-ggplot(data.binary.SNP.filt.rn[which(data.binary.SNP.filt.rn$Chromosome=="ntLink_22"),], 
+ggplot(data.binary.SNP.filt.rn[which(data.binary.SNP.filt.rn$Chromosome=="ntLink_241"),], 
        aes(x=Position/1e6, y=-log10(P))) + 
   geom_line() + theme_classic() + 
-  geom_hline(yintercept=-log10(0.01), color="red", linetype="dashed")
+  geom_hline(yintercept=-log10(0.01), color="red", linetype="dashed") + ggtitle("ntLink_241")
 
 ggplot(data.binary.SNP.filt.rn[which(data.binary.SNP.filt.rn$Chromosome=="ntLink_4575"),], 
        aes(x=Position/1e6, y=-log10(P))) + 
   geom_line() + theme_classic() + 
   geom_hline(yintercept=-log10(0.01), color="red", linetype="dashed")
 
-ggplot(data.binary.SNP.filt.rn[which(data.binary.SNP.filt.rn$Chromosome=="ntLink_6065"),], 
-       aes(x=Position/1e6, y=-log10(P))) + 
-  geom_line() + theme_classic() + 
-  geom_hline(yintercept=-log10(0.01), color="red", linetype="dashed")
 
 
 

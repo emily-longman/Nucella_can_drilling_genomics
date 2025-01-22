@@ -6,7 +6,7 @@
 #SBATCH -t 8:00:00   
 #SBATCH --mem 20G   
 #SBATCH -o ./slurmOutput/%x_%j.out    
-#SBATCH -p bluemoon  
+#SBATCH -p general  
 
 #--------------------------------------------------------------------------------
 
@@ -18,7 +18,7 @@ PICARD=/netfiles/nunezlab/Shared_Resources/Software/picard/build/libs/picard.jar
 #--------------------------------------------------------------------------------
 
 # Set folders and file locations
-ref=/netfiles/thermofly/GENOMES/basisetae/D.basisetae_nanopore.fasta.masked.fa
+ref=/netfiles/thermofly/GENOMES/basisetae/GCA_035041595.1_ASM3504159v1_genomic.fna.masked.fa
 
 #--------------------------------------------------------------------------------
 

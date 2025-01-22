@@ -48,6 +48,11 @@
 #< /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly/braker/braker_cDNA/braker/braker.gtf \
 #-o myfile.gff
 
+## Re-do conversion in Jan 2025
+##perl /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/00_Genome_short_read/24_gtf_to_gff.pl \
+##< /netfiles/pespenilab_share/Nucella/processed/Base_Genome/annotation/braker/braker_cDNA/braker/braker.gtf \
+##-o N.can.gff
+
 # Move gff and rename
 #scp myfile.gff /netfiles/pespenilab_share/Nucella/processed/N.can_genome_Dec2024/
 #mv myfile.gff N.can.gff
