@@ -34,17 +34,8 @@ JAVAMEM=18G # Java memory
 
 # Create output folders
 cd $working_folder
-mkdir bams_qualimap
 mkdir bams_qualimap_multi
 mkdir bams_qualimap_multi_reduced
-
-#--------------------------------------------------------------------------------
-
-# Do QC on cleaned bams
-$qualimap bamqc \
--bam $working_folder/bams_clean/${SAMP_NAME}.srt.rmdp.bam \
--outdir $working_folder/bams_qualimap/Qualimap_${SAMP_NAME} \
---java-mem-size=$JAVAMEM
 
 #--------------------------------------------------------------------------------
 
@@ -54,7 +45,7 @@ $qualimap multi-bamqc \
 -outdir $working_folder/bams_qualimap_multi \
 --java-mem-size=$JAVAMEM
 
-# Assess quality of bam files
+# Assess quality of bam files (for reduced list)
 $qualimap multi-bamqc \
 -d $guide_file_reduced \
 -outdir $working_folder/bams_qualimap_multi_reduced \
