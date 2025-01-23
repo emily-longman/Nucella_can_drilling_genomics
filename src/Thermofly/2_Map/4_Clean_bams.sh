@@ -19,7 +19,6 @@
 module load gcc/13.3.0-xp3epyt
 module load samtools/1.19.2-pfmpoam
 PICARD=/netfiles/nunezlab/Shared_Resources/Software/picard/build/libs/picard.jar
-qualimap=/netfiles/nunezlab/Shared_Resources/Software/qualimap_v2.2.1/qualimap
 
 #--------------------------------------------------------------------------------
 
@@ -49,7 +48,6 @@ JAVAMEM=18G # Java memory
 # Create output folders
 cd $working_folder
 mkdir bams_clean
-mkdir bams_qualimap
 
 #--------------------------------------------------------------------------------
 
@@ -80,12 +78,6 @@ VALIDATION_STRINGENCY=SILENT REMOVE_DUPLICATES=true
 
 # Index with samtools
 samtools index $working_folder/bams_clean/${SAMP_NAME}.srt.rmdp.bam
-
-# Do QC on cleaned bams
-$qualimap bamqc \
--bam $working_folder/bams_clean/${SAMP_NAME}.srt.rmdp.bam \
--outdir $working_folder/bams_qualimap/Qualimap_${SAMP_NAME} \
---java-mem-size=$JAVAMEM
 
 #--------------------------------------------------------------------------------
 

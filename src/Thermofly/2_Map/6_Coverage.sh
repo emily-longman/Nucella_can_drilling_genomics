@@ -15,6 +15,7 @@
 # Calculate coverage
 
 # Load software 
+module load openjdk/1.8.0
 qualimap=/netfiles/nunezlab/Shared_Resources/Software/qualimap_v2.2.1/qualimap
 
 #--------------------------------------------------------------------------------
@@ -33,8 +34,17 @@ JAVAMEM=18G # Java memory
 
 # Create output folders
 cd $working_folder
+mkdir bams_qualimap
 mkdir bams_qualimap_multi
 mkdir bams_qualimap_multi_reduced
+
+#--------------------------------------------------------------------------------
+
+# Do QC on cleaned bams
+$qualimap bamqc \
+-bam $working_folder/bams_clean/${SAMP_NAME}.srt.rmdp.bam \
+-outdir $working_folder/bams_qualimap/Qualimap_${SAMP_NAME} \
+--java-mem-size=$JAVAMEM
 
 #--------------------------------------------------------------------------------
 
