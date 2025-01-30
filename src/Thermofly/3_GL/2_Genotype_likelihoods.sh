@@ -6,7 +6,7 @@
 #SBATCH -t 8:00:00   
 #SBATCH --mem 40G   
 #SBATCH --output=./slurmOutput/%x_%j.out 
-#SBATCH -p bluemoon  
+#SBATCH -p general  
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=emily.longman@uvm.edu 
 
@@ -15,7 +15,8 @@
 # Calculate genotype likelihoods
 
 # Load software  
-spack load angsd@0.933
+module load gcc/13.3.0-xp3epyt
+module load angsd/0.935-4asngpy
 
 #--------------------------------------------------------------------------------
 
