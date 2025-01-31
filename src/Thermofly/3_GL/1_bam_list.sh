@@ -37,6 +37,8 @@ ls -d "$PWD/"*B_O*.bam > $working_folder/info/Olaa_bam.list
 
 #--------------------------------------------------------------------------------
 
+# Note: prior to running below, make sure that the bams in the directory bams_clean_reduced does not include the samples with very low coverage
+
 # Change working directory
 cd $working_folder/bams_clean_reduced
 
