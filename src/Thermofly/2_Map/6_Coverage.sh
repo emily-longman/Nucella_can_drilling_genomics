@@ -13,6 +13,9 @@
 #--------------------------------------------------------------------------------
 
 # Calculate coverage
+# After looking at coverage, remove samples with very low coverage. 
+# For means of this script, copy the bam files into a dir called (bams_clean_reduced) and remove the 4 samples with low coverage. 
+# Then make a bam file list for both the full list of bams and the reduced bam list.
 
 # Load software 
 module load openjdk/1.8.0
@@ -44,6 +47,8 @@ $qualimap multi-bamqc \
 -d $guide_file \
 -outdir $working_folder/bams_qualimap_multi \
 --java-mem-size=$JAVAMEM
+
+#--------------------------------------------------------------------------------
 
 # Assess quality of bam files (for reduced list)
 $qualimap multi-bamqc \

@@ -29,6 +29,7 @@ source $venv_name/bin/activate
 working_folder=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/Thermofly
 ref=/netfiles/thermofly/GENOMES/basisetae/GCA_035041595.1_ASM3504159v1_genomic.fna.masked.fa
 script_folder=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/src/Thermofly
+#bam_list=$working_folder/info/bam_filelist.list
 bam_list=$working_folder/info/bam_filelist_reduced.list
 
 #--------------------------------------------------------------------------------
