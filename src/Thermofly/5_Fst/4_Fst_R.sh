@@ -6,7 +6,7 @@
 #SBATCH -t 8:00:00   
 #SBATCH --mem 40G   
 #SBATCH --output=./slurmOutput/%x_%j.out 
-#SBATCH -p bluemoon 
+#SBATCH -p general 
 #SBATCH --array=0-99%10
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=emily.longman@uvm.edu 
@@ -16,7 +16,7 @@
 # Calculate Fst between groups
 
 # Load software  
-module load R/4.4.0
+module load R/4.4.1
 
 #--------------------------------------------------------------------------------
 
