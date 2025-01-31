@@ -6,7 +6,7 @@
 #SBATCH -t 8:00:00   
 #SBATCH --mem 40G   
 #SBATCH --output=./slurmOutput/%x_%j.out 
-#SBATCH -p bluemoon 
+#SBATCH -p general 
 # Submit job array
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=emily.longman@uvm.edu 
@@ -16,14 +16,15 @@
 # Calculate genotype likelihoods per group
 
 # Load software  
-spack load angsd@0.933
+module load gcc/13.3.0-xp3epyt
+module load angsd/0.935-4asngpy
 
 #--------------------------------------------------------------------------------
 
 # Set folders and file locations
 working_folder=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/Thermofly
-meta=$working_folder/METADATA/Thermofly_metadata.tsv
-ref=/netfiles/thermofly/GENOMES/basisetae/D.basisetae_nanopore.fasta.masked.fa
+meta=$working_folder/METADATA/Thermofly_metadata.vNov11.2024.tsv
+ref=/netfiles/thermofly/GENOMES/basisetae/GCA_035041595.1_ASM3504159v1_genomic.fna.masked.fa
 
 #--------------------------------------------------------------------------------
 
@@ -49,8 +50,6 @@ angsd \
 -out $working_folder/SFS_sites/Tom/Thermofly_Tom_reduced \
 -P $CPU \
 -doMaf 1 -doSaf 1 -GL 2 -doMajorMinor 3 -doCounts 1 \
--sites $working_folder/sites/sites_maf \
--rf $working_folder/sites/regions_maf \
 -remove_bads 1 -skipTriallelic 1 -uniqueOnly 1 -only_proper_pairs 1 -minMapQ 30 -minQ 20 -C 50 \
 -minInd 6 -setMinDepthInd 6
 
