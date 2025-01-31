@@ -11,10 +11,6 @@ library(ggpubr)
 # Note: Make sure metadata order matches the bamlist used to produce the covariance matrix!
 meta_data<-fread("Thermofly_D.basisetae.tsv", header=T)
 
-# Extract just metadata for D. basisetae
-meta_data_bas <- meta_data[which(meta_data$species_name == "drosophila_basisetae"),]
-meta_data_bas_reduced <- meta_data_bas[-c(16,19,20,22),]
-
 # Load cov matrix
 cov_mat <- as.matrix(read.table("Thermofly_SNPs_reduced_minInd_17_depth_6_minMaf_0.1.cov")) 
 pca<-eigen(cov_mat)
@@ -28,7 +24,7 @@ for (i in 1 : nPC) {col_PC[i]<-paste0("PC",i)}
 colnames(pca.mat)<-c(col_PC)
 
 # Add rownames
-rownames(pca.mat)<-meta_data_bas$sampleId
+rownames(pca.mat)<-meta_data$sampleId
 
 # Two ways to calculate variance
 # Calculate varsum(eigen_mats$values[eigen_mats$values>=0]
@@ -48,11 +44,7 @@ kmeans_res<-kmeans(as.matrix(pca.mat[,1]), c(min(pca.mat[,1]), median(pca.mat[,1
 k_ss<-round(kmeans_res$betweenss/kmeans_res$totss,2)
 
 # Combine metadata and PCs
-data <- cbind(meta_data_bas, pca.mat[,1:4])
-colnames(data)[colnames(data) == 'V1'] <- "PC1"
-colnames(data)[colnames(data) == 'V2'] <- "PC2"
-colnames(data)[colnames(data) == 'V3'] <- "PC3"
-colnames(data)[colnames(data) == 'V4'] <- "PC4"
+data <- cbind(meta_data, pca.mat[,1:4])
 write.table(data, "Thermofly_basisetae_PCs.csv", col.names = T, row.names = F, quote = F, sep = "\t")
 
 
