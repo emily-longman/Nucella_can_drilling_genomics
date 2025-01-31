@@ -5,6 +5,8 @@ library(data.table)
 library(ggplot2)
 library(ggpubr)
 
+# Prior to running script, move metadata (in the format of the bam list used) and the cov matrix to script dir
+
 # Load metadata
 # Note: Make sure metadata order matches the bamlist used to produce the covariance matrix!
 meta_data<-fread("Thermofly_D.basisetae.tsv", header=T)
