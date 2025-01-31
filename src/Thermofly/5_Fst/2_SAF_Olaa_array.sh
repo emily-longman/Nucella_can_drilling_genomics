@@ -58,7 +58,7 @@ angsd \
 -ref ${ref} -anc ${ref} \
 -out $working_folder/SFS_sites/Olaa/Thermofly_Olaa_reduced_subset_${i} \
 -P $CPU \
--doMaf 1 -doSaf 1 -GL 2 -doMajorMinor 3 -doCounts 1 \
+-doMaf 1 -doSaf 1 -GL 2 -doMajorMinor 1 \
 -remove_bads 1 -skipTriallelic 1 -uniqueOnly 1 -only_proper_pairs 1 -minMapQ 30 -minQ 20 -C 50 \
 -minInd 6 -setMinDepthInd 6
 
