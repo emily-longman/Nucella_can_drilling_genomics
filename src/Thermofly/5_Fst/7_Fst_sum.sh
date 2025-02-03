@@ -6,7 +6,7 @@
 #SBATCH -t 1:00:00   
 #SBATCH --mem 10G   
 #SBATCH --output=./slurmOutput/%x_%j.out 
-#SBATCH -p bluemoon 
+#SBATCH -p general 
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=emily.longman@uvm.edu 
 
@@ -15,7 +15,7 @@
 # Make summary fst document
 
 # Load software  
-module load R/4.4.0
+module load R/4.4.1
 
 #--------------------------------------------------------------------------------
 
