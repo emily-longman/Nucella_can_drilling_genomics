@@ -1,12 +1,14 @@
 library(tidyverse)
+library(GWASTools)
 
-# Read in arguments and set working directory
-args <- commandArgs(trailingOnly = TRUE)
-k <- args[1]
-setwd(k)
 
 # Load gene positions
-gene_positions <- read_tsv("/gpfs1/home/d/s/dsadler1/scratch/SeaUrchinEnvPop/GDS/gene_positions.txt", col_names = c("chr", "start", "end", "gene_id"))
+SNPs <- read.csv("/Users/emilylongman/Documents/GitHub/Nucella_can_drilling_genomics/src/Thermofly/6_Annotation/SNPs_of_interst.unq.txt", 
+                           sep="\t")
+
+vcf <- read.csv()
+
+
 
 # Adjust gene positions to include +/- 1kb window
 gene_positions <- gene_positions %>%
