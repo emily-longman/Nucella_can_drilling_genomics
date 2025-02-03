@@ -13,7 +13,7 @@
 
 #--------------------------------------------------------------------------------
 
-# Generate SnpEff annotation
+# Generate SnpEff database
 
 # Load software  
 module load snpeff/5.2c
