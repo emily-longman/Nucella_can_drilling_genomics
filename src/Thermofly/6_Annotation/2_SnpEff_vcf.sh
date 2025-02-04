@@ -7,7 +7,6 @@
 #SBATCH --mem 40G   
 #SBATCH --output=./slurmOutput/%x_%j.out 
 #SBATCH -p general 
-#SBATCH --array=0-99%10
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=emily.longman@uvm.edu 
 
@@ -21,7 +20,8 @@ module load snpeff/5.2c
 #--------------------------------------------------------------------------------
 
 # Set folders and file locations
-vcf=
+working_folder=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/Thermofly
+vcf=/netfiles/thermofly/ANALYSES/Dbas_paper/D.basisetae.GATK.pipe.vcf.gz
 datdir=/netfiles/thermofly/GENOMES/basisetae
 param=/netfiles/thermofly/GENOMES/basisetae/D.basisetae_SnpEff/snpEff.config
 
