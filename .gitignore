@@ -16,3 +16,4 @@ slurmOutput/*
 # Specific files extensions to ignore
 *.out
 *.sif
+*.vcf
