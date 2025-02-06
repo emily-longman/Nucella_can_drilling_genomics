@@ -12,7 +12,7 @@ library(ggpubr)
 meta_data<-fread("Thermofly_D.basisetae.tsv", header=T)
 
 # Load cov matrix
-cov_mat <- as.matrix(read.table("Thermofly_SNPs_reduced_minInd_17_depth_6_minMaf_0.1.cov")) 
+cov_mat <- as.matrix(read.table("Thermofly_SNPs_reduced_minInd_17_depth_4_minMaf_0.1.cov")) 
 pca<-eigen(cov_mat)
 
 pca.mat<-as.matrix(pca$vectors %*% (diag(pca$values))^0.5)

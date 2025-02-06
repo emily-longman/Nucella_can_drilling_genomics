@@ -51,7 +51,7 @@ angsd \
 -P $CPU \
 -doMaf 1 -doSaf 1 -GL 2 -doMajorMinor 1 \
 -remove_bads 1 -skipTriallelic 1 -uniqueOnly 1 -only_proper_pairs 1 -minMapQ 30 -minQ 20 -C 50 \
--minInd 6 -setMinDepthInd 6
+-minInd 6 -setMinDepthInd 4
 
 # Since  we use output for SFS to calculate FSTs/thetas then we don't want min MAF nor p-value filters
 # -doMajorMinor 3 means use major and minor from a txt file
