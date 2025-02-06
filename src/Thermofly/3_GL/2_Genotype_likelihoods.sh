@@ -49,7 +49,7 @@ angsd \
 -P $CPU \
 -doMaf 1 -doSaf 1 -GL 2 -doGlf 2 -doMajorMinor 1 -doCounts 1 \
 -remove_bads 1 -baq 1 -skipTriallelic 1 -uniqueOnly 1 -only_proper_pairs 1 -minMapQ 30 -minQ 20 -C 50 \
--minInd 17 -setMinDepthInd 6 -minMaf 0.1 -setMaxDepth 360 \
+-minInd 17 -setMinDepthInd 4 -minMaf 0.1 -setMaxDepth 360 \
 -SNP_pval 1e-6
 
 #Note: with previous reference genome, used -rf $region_file to specify a region file with the 8 largest contigs

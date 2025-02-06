@@ -1,5 +1,7 @@
 # This script will annotate SNPs of interest
 
+#--------------------------------------------------------------------------------
+
 # Load packages
 install.packages(c('data.table', 'tidyverse'))
 library(data.table)
@@ -11,70 +13,102 @@ if (!require("BiocManager", quietly = TRUE))
   install.packages("BiocManager")
 BiocManager::install(version = "3.20")
 BiocManager::install("SeqArray")
+library(SeqArray)
+
+#--------------------------------------------------------------------------------
 
 # Set working directory
 setwd("/Users/emilylongman/Documents/GitHub/Nucella_can_drilling_genomics/src/Thermofly/6_Annotation")
 
+#--------------------------------------------------------------------------------
+
 # Load gene positions
 SNPs <- read.csv("SNPs_of_interst.unq.txt", sep="\t")
 
+#--------------------------------------------------------------------------------
+
+# Convert VCF to GDS
+
+# Load the VCF file
+vcf.fn <- "/Users/emilylongman/Documents/GitHub/Nucella_can_drilling_genomics/src/Thermofly/6_Annotation/D.bas_SNPs.annotate.vcf"
+# Parse the header
+seqVCF_Header(vcf.fn)
+# Convert VCF to GDS
+seqVCF2GDS(vcf.fn, "D.bas_SNPs.annotate.gds")
+
+#--------------------------------------------------------------------------------
+
 # Load GDS file
-gds.fn <- seqExampleFileName("D.basisetae.GATK.pipe.gds")
-genofile.path <- "/Users/emilylongman/Documents/GitHub/Nucella_can_drilling_genomics/src/Thermofly/6_Annotation/
-genofile <- seqOpen(genofile.path)
+gds.fn <- seqExampleFileName("gds")
+# Open the GDS file
+geno.file <- seqOpen(gds.fn)
+# Display the contents of the GDS file
+geno.file
 
-###my GDS looks like:
+# Structure of GDS file:
 # +    [  ] *
-#   |--+ description   [  ] *
-#   |--+ sample.id   { Str8 137 ZIP_ra(7.14%), 982B } *
-#   |--+ variant.id   { Int32 10167176 ZIP_ra(34.6%), 13.4M } *
-#   |--+ position   { Int32 10167176 ZIP_ra(40.7%), 15.8M } *
-#   |--+ chromosome   { Str8 10167176 ZIP_ra(0.19%), 289.3K } *
-#   |--+ allele   { Str8 10167176 ZIP_ra(16.4%), 6.4M } *
-#   |--+ genotype   [  ] *
-#   |  |--+ data   { Bit2 2x137x10167176 ZIP_ra(34.9%), 232.0M } *
-#   |  |--+ extra.index   { Int32 3x0 ZIP_ra, 16B } *
-#   |  \--+ extra   { Int16 0 ZIP_ra, 16B }
-# |--+ phase   [  ]
-# |  |--+ data   { Bit1 137x10167176 ZIP_ra(0.10%), 165.4K } *
-#   |  |--+ extra.index   { Int32 3x0 ZIP_ra, 16B } *
-#   |  \--+ extra   { Bit1 0 ZIP_ra, 16B }
-# |--+ annotation   [  ]
-# |  |--+ id   { Str8 10167176 ZIP_ra(0.10%), 9.7K } *
-#   |  |--+ qual   { Float32 10167176 ZIP_ra(11.9%), 4.6M } *
-#   |  |--+ filter   { Int32,factor 10167176 ZIP_ra(0.10%), 38.6K } *
-#   |  |--+ info   [  ]
-# |  |  |--+ INDEL   { Bit1 10167176 ZIP_ra(0.11%), 1.5K } *
-#   |  |  |--+ IDV   { Int32 10167176 ZIP_ra(0.10%), 38.8K } *
-#   |  |  |--+ IMF   { Float32 10167176 ZIP_ra(0.10%), 38.8K } *
-#   |  |  |--+ DP   { Int32 10167176 ZIP_ra(41.5%), 16.1M } *
-#   |  |  |--+ VDB   { Float32 10167176 ZIP_ra(93.5%), 36.3M } *
-#   |  |  |--+ RPB   { Float32 10167176 ZIP_ra(91.2%), 35.4M } *
-#   |  |  |--+ MQB   { Float32 10167176 ZIP_ra(73.7%), 28.6M } *
-#   |  |  |--+ BQB   { Float32 10167176 ZIP_ra(86.7%), 33.6M } *
-#   |  |  |--+ MQSB   { Float32 10167176 ZIP_ra(72.2%), 28.0M } *
-#   |  |  |--+ SGB   { Float32 10167176 ZIP_ra(91.7%), 35.5M } *
-#   |  |  |--+ MQ0F   { Float32 10167176 ZIP_ra(26.7%), 10.3M } *
-#   |  |  |--+ ICB   { Float32 10167176 ZIP_ra(65.7%), 25.5M } *
-#   |  |  |--+ HOB   { Float32 10167176 ZIP_ra(62.8%), 24.4M } *
-#   |  |  |--+ AC   { Int32 10167176 ZIP_ra(34.7%), 13.4M } *
-#   |  |  |--+ AN   { Int32 10167176 ZIP_ra(13.8%), 5.4M } *
-#   |  |  |--+ DP4   { Int32 4x10167176 ZIP_ra(41.3%), 64.1M } *
-#   |  |  |--+ MQ   { Int32 10167176 ZIP_ra(8.57%), 3.3M } *
-#   |  |  |--+ ANN   { Str8 21554892 ZIP_ra(5.71%), 143.6M } *
-#   |  |  |--+ LOF   { Str8 2667 ZIP_ra(19.6%), 16.2K } *
-#   |  |  \--+ NMD   { Str8 1327 ZIP_ra(20.0%), 8.2K } *
-#   |  \--+ format   [  ]
-# |     \--+ PL   [  ] *
-#   |        \--+ data   { VL_Int 137x30501528 ZIP_ra(55.9%), 2.9G } *
-#   \--+ sample.annotation   [  ]
+#|--+ description   [  ] *
+#  |--+ sample.id   { Str8 90 LZMA_ra(34.7%), 257B } *
+#  |--+ variant.id   { Int32 1348 LZMA_ra(16.7%), 905B } *
+#  |--+ position   { Int32 1348 LZMA_ra(64.4%), 3.4K } *
+#  |--+ chromosome   { Str8 1348 LZMA_ra(4.39%), 157B } *
+#  |--+ allele   { Str8 1348 LZMA_ra(16.6%), 901B } *
+#  |--+ genotype   [  ] *
+#  |  |--+ data   { Bit2 2x90x1348 LZMA_ra(26.3%), 15.6K } *
+#  |  |--+ ~data   { Bit2 2x1348x90 LZMA_ra(29.2%), 17.3K } *
+#  |  |--+ extra.index   { Int32 3x0 LZMA_ra, 18B } *
+#  |  \--+ extra   { Int16 0 LZMA_ra, 18B }
+#|--+ phase   [  ]
+#|  |--+ data   { Bit1 90x1348 LZMA_ra(0.86%), 137B } *
+#  |  |--+ ~data   { Bit1 1348x90 LZMA_ra(0.86%), 137B } *
+#  |  |--+ extra.index   { Int32 3x0 LZMA_ra, 18B } *
+#  |  \--+ extra   { Bit1 0 LZMA_ra, 18B }
+#|--+ annotation   [  ]
+#|  |--+ id   { Str8 1348 LZMA_ra(38.3%), 5.5K } *
+#  |  |--+ qual   { Float32 1348 LZMA_ra(2.11%), 121B } *
+#  |  |--+ filter   { Int32,factor 1348 LZMA_ra(2.11%), 121B } *
+#  |  |--+ info   [  ]
+#|  |  |--+ AA   { Str8 1328 LZMA_ra(22.1%), 593B } *
+#  |  |  |--+ AC   { Int32 1348 LZMA_ra(24.1%), 1.3K } *
+#  |  |  |--+ AN   { Int32 1348 LZMA_ra(19.6%), 1.0K } *
+#  |  |  |--+ DP   { Int32 1348 LZMA_ra(47.7%), 2.5K } *
+#  |  |  |--+ HM2   { Bit1 1348 LZMA_ra(145.6%), 253B } *
+#  |  |  |--+ HM3   { Bit1 1348 LZMA_ra(145.6%), 253B } *
+#  |  |  |--+ OR   { Str8 1348 LZMA_ra(19.6%), 341B } *
+#  |  |  |--+ GP   { Str8 1348 LZMA_ra(24.3%), 3.8K } *
+#  |  |  \--+ BN   { Int32 1348 LZMA_ra(20.7%), 1.1K } *
+#  |  \--+ format   [  ]
+#|     \--+ DP   [  ] *
+#  |        |--+ data   { VL_Int 90x1348 LZMA_ra(70.8%), 115.2K } *
+#  |        \--+ ~data   { VL_Int 1348x90 LZMA_ra(65.1%), 105.9K } *
+#  \--+ sample.annotation   [  ]
+#\--+ family   { Str8 90 LZMA_ra(55.0%), 221B } *
 
-variant_ids <- seqGetData(genofile, "variant.id")
-positions <- seqGetData(genofile, "position")
-chromosomes <- seqGetData(genofile, "chromosome")
 
-# Convert extracted data to a data frame
-variant_info <- data.frame(variant_id = variant_ids, pos = positions, chr = chromosomes)
+#--------------------------------------------------------------------------------
+
+# Extract data from GDS
+variant_ids <- seqGetData(geno.file, "variant.id")
+positions <- seqGetData(geno.file, "position")
+chromosomes <- seqGetData(geno.file, "chromosome")
+annot <- 
+  
+  seqGetData(geno.file, "annotation/DP/data")
+
+message("Annotations")
+tmp <- seqGetData(geno.file, "annotation/info/ANN")
+
+
+
+# Close the GDS file
+#seqClose(geno.file)
+
+#--------------------------------------------------------------------------------
+
+
+VCF.R
+vcf@info$ANN
+
 
 # Flatten and convert ann_list into a data frame
 ann_df <- do.call(rbind, lapply(ann_list, function(x) {
