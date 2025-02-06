@@ -45,8 +45,8 @@ cp $bam_list $working_folder/pcangsd
 
 # Generate covariance matrix with pcangsd
 pcangsd \
--b $working_folder/genotype_likelihoods/Thermofly_GL_reduced_minInd_17_depth_6_minMaf_0.1.beagle.gz \
--o $working_folder/pcangsd/Thermofly_SNPs_reduced_minInd_17_depth_6_minMaf_0.1 \
+-b $working_folder/genotype_likelihoods/Thermofly_GL_reduced_minInd_17_depth_4_minMaf_0.1.beagle.gz \
+-o $working_folder/pcangsd/Thermofly_SNPs_reduced_minInd_17_depth_4_minMaf_0.1 \
 -t 5 
 
 #--------------------------------------------------------------------------------
