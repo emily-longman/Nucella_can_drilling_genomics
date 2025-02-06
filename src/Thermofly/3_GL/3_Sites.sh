@@ -34,14 +34,14 @@ mkdir sites
 #--------------------------------------------------------------------------------
 
 # Unzip maf file 
-#gunzip $working_folder/genotype_likelihoods/Thermofly_GL_reduced_minInd_17_depth_6_minMaf_0.1.mafs.gz
+#gunzip $working_folder/genotype_likelihoods/Thermofly_GL_reduced_minInd_17_depth_4_minMaf_0.1.mafs.gz
 
 # Change script permissions 
 chmod 777 $script_folder/3_GL/3_Sites_list.R
 
 #--------------------------------------------------------------------------------
 
-infile=$working_folder/genotype_likelihoods/Thermofly_GL_reduced_minInd_17_depth_6_minMaf_0.1.mafs
+infile=$working_folder/genotype_likelihoods/Thermofly_GL_reduced_minInd_17_depth_4_minMaf_0.1.mafs
 outfile_sites=$working_folder/sites/sites_maf
 outfile_regions=$working_folder/sites/regions_maf
 

@@ -130,8 +130,6 @@ geno.file
 snps <- read.csv("SNPs_of_interst.unq.txt", sep="\t")
 str(snps)
 
-colnames(snps)[colnames(snps) == 'pos.id'] <- 'id'
-#snps$chr.pos <-  paste(snps$chr, ".", snps$pos)
 
 #--------------------------------------------------------------------------------
 
@@ -141,20 +139,25 @@ snp.dt <- data.table(chr=seqGetData(geno.file, "chromosome"),
                         nAlleles=seqGetData(geno.file, "$num_allele"),
                         id=seqGetData(geno.file, "variant.id"))
 
+
 # Create id that combines chromosome and position
-#snp.dt$SNP_id <- paste0(snp.dt$chr, "_", snp.dt$pos)
+snp.dt$SNP_id <- paste0(snp.dt$chr, "_", snp.dt$pos)
 
 #--------------------------------------------------------------------------------
 
 # Extract annotation data for each SNP of interest
 
+test <- snps[1:5,]
+
 annotation = 
-foreach(i=1:dim(snps)[1], .combine = "rbind")%do%{
+foreach(i=1:dim(test)[1], .combine = "rbind")%do%{
 seqResetFilter(geno.file)
 
-myvar = snp.dt %>% filter(chr == CHR & pos == POS)$id
+chr.tmp = test$chr[i]
+pos.tmp = test$pos[i]
+#myvar = test %>% filter(chr == chr & pos == pos)[i]
 
-seqSetFilter(geno.file, variant.id= myvar )
+seqSetFilter(geno.file, chromosome = chr.tmp, position = pos.tmp, intersect = T)
 ann_data <- seqGetData(geno.file, "annotation/info/ANN")$data
 
 L = length(ann_data)
@@ -164,7 +167,7 @@ foreach(k=1:L, .combine = "rbind")%do%{
   
 
   data.frame(
-    id=i,
+    chr.pos=i,
     annotation.id=k,
     Allele = tmp2[[1]][1],
     Annotation = tmp2[[1]][2],

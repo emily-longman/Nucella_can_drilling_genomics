@@ -45,7 +45,7 @@ mkdir genotype_likelihoods
 angsd \
 -b $bam_list \
 -ref ${ref} -anc ${ref} \
--out $working_folder/genotype_likelihoods/Thermofly_GL_reduced_minInd_17_depth_6_minMaf_0.1 \
+-out $working_folder/genotype_likelihoods/Thermofly_GL_reduced_minInd_17_depth_4_minMaf_0.1 \
 -P $CPU \
 -doMaf 1 -doSaf 1 -GL 2 -doGlf 2 -doMajorMinor 1 -doCounts 1 \
 -remove_bads 1 -baq 1 -skipTriallelic 1 -uniqueOnly 1 -only_proper_pairs 1 -minMapQ 30 -minQ 20 -C 50 \
