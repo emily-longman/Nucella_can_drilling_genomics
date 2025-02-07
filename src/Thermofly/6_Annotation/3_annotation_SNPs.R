@@ -102,7 +102,7 @@ geno.file
 #--------------------------------------------------------------------------------
 
 # Load SNPs of interest
-snps <- read.csv("SNPs_of_interst.unq.txt", sep="\t")
+snps <- read.csv("FSTGLM_SNPS.outlier.Feb7.V2.txt", sep="\t")
 str(snps)
 
 #--------------------------------------------------------------------------------

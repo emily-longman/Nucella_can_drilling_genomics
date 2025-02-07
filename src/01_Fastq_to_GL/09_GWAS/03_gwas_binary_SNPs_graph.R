@@ -264,7 +264,19 @@ ggplot(data.binary.SNP.filt.rn[which(data.binary.SNP.filt.rn$Chromosome=="ntLink
   geom_line() + theme_classic() + 
   geom_hline(yintercept=-log10(0.01), color="red", linetype="dashed")
 
+# ================================================================================== #
 
+# Create SNP list 
+SNPs.Interest <- foreach(i=1:dim(win.out.sig)[1], .combine = "rbind")%do%{
+  tmp.snps <- data.binary.SNP.filt %>%
+  filter(Chromosome == win.out.sig[i,]$Chromosome) %>%
+  filter(Position >= win.out.sig[i,]$pos_min & Position <= win.out.sig[i,]$pos_max)
+}
+
+# ================================================================================== #
+
+# Write file of outlier SNPs
+write.csv(SNPs.Interest, "Nucella_GWAS_outlier_SNPs.csv")
 
 
 
