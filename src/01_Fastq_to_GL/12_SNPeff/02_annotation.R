@@ -127,25 +127,35 @@ snp.dt <- data.table(Chromosome=seqGetData(genofile, "chromosome"),
 
 #--------------------------------------------------------------------------------
 
+
 # Extract annotation data for each SNP of interest
-snps = snps[1:30,]
 
 annotation = 
 foreach(i=1:dim(snps)[1], 
-.combine = "rbind")%do%{
+.combine = "rbind",
+.errorhandling = "remove")%do%{
 
+message(i)
 seqResetFilter(genofile)
 
 tmp.i = snps[i,]$SNP_id
 
 pos.tmp = snp.dt %>% filter(SNP_id %in% tmp.i) %>% .$id
 
+#if (identical(pos.tmp, integer(0))) {print("NA")
+
+#} else {
+
 seqSetFilter(genofile, variant.id = pos.tmp)
 
 ann_data <- seqGetData(genofile, "annotation/info/ANN")$data
 
 L = length(ann_data)
-foreach(k=1:L, .combine = "rbind")%do%{
+
+annotate.list =
+foreach(k=1:L, 
+.combine = "rbind")%do%{
+
   tmp = ann_data[k] 
   tmp2= str_split(tmp, "\\|")
   
@@ -170,18 +180,22 @@ foreach(k=1:L, .combine = "rbind")%do%{
     Distance = tmp2[[1]][15]
 
   )
+}
 
+return(annotate.list)
+#}
 }
-}
+
+
 
 #--------------------------------------------------------------------------------
 
 # Join annotation and SNP information
-D.basisetae_annotated_SNPs <- left_join(annotation, snp.dt, by = join_by(id))
+N.canaliculata_annotated_SNPs <- left_join(annotation, snp.dt, by = join_by(SNP_id))
 
 # Write output
-write.csv(D.basisetae_annotated_SNPs, "/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/Thermofly/annotation/D.basisetae_annotated_SNPs.txt")
-write.csv(D.basisetae_annotated_SNPs, "/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/Thermofly/annotation/D.basisetae_annotated_SNPs.csv")
+write.csv(N.canaliculata_annotated_SNPs, "/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL/SNPeff/N.canaliculata_SNPs_annotated.txt")
+write.csv(N.canaliculata_annotated_SNPs, "/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/fastq_to_GL/SNPeff/N.canaliculata_SNPs_annotated.csv")
 
 
 
@@ -193,5 +207,5 @@ write.csv(D.basisetae_annotated_SNPs, "/gpfs2/scratch/elongman/Nucella_can_drill
 
 #####
 
-#example from D. bas
+#example from D. bas to search genome for specific nucleotide sequences.
 samtools faidx GCA_035041595.1_ASM3504159v1_genomic.fna.masked.fa "JAWNLB010000001.1":5-6

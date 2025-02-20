@@ -165,10 +165,10 @@ foreach(k=1:L, .combine = "rbind")%do%{
 
 #--------------------------------------------------------------------------------
 
-# Join annotation and SNP information
+# Join annotation and SNP information (can join by "id" or "SNP_ic")
 D.basisetae_annotated_SNPs <- left_join(annotation, snp.dt, by = join_by(id))
+
 
 # Write output
 write.csv(D.basisetae_annotated_SNPs, "/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/Thermofly/annotation/D.basisetae_annotated_SNPs.txt")
 write.csv(D.basisetae_annotated_SNPs, "/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/Thermofly/annotation/D.basisetae_annotated_SNPs.csv")
-
