@@ -29,7 +29,7 @@
 
 #--------------------------------------------------------------------------------
 
-# This script will run SNPeff on a vcf
+# This script will run blast the protein sequences
 
 #Load modules
 ncbi=/gpfs1/home/e/l/elongman/software/ncbi-blast-2.16.0+/bin
@@ -57,11 +57,6 @@ fi
 
 cd $WORKING_FOLDER/Gene_ontology
 
-if [ -d "N_canaliculata" ]
-then echo "Working N_canaliculata folder exist"; echo "Let's move on."; date
-else echo "Working N_canaliculata folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/Gene_ontology/N_canaliculata; date
-fi
-
 if [ -d "uniprot" ]
 then echo "Working uniprot folder exist"; echo "Let's move on."; date
 else echo "Working uniprot folder doesnt exist. Let's fix that."; mkdir $WORKING_FOLDER/Gene_ontology/uniprot; date
@@ -69,18 +64,8 @@ fi
 
 #--------------------------------------------------------------------------------
 
-# Change directory
-cd $WORKING_FOLDER/Gene_ontology/N_canaliculata
-
-# Move a copy of the protein file over to this directory
-#scp /netfiles/pespenilab_share/Nucella/processed/N.can_genome_Dec2024/protein.fa .
-
-#--------------------------------------------------------------------------------
-
-# Format N. canaliculata database
-#$ncbi/makeblastdb -in protein.fa -dbtype prot
-
-#--------------------------------------------------------------------------------
+# Prepare the Uniprot database
+# Note: UniRef90 clusters are generated from the UniRef100 seed sequences with a 90% sequence identity threshold using the MMseqs2 algorithm.
 
 # Change directory
 cd $WORKING_FOLDER/Gene_ontology/uniprot
@@ -88,6 +73,17 @@ cd $WORKING_FOLDER/Gene_ontology/uniprot
 # Download and unzip uniprot database in $WORKING_FOLDER/Gene_ontology directory
 wget ftp://ftp.uniprot.org/pub/databases/uniprot/uniref/uniref90/uniref90.fasta.gz 
 gunzip -v uniref90.fasta.gz                                                         
+
+# The uniref90.fasta file contains all UniRef90 entries in FASTA format.
+# The format is as follows: UniqueIdentifier ClusterName n=Members Tax=Taxon RepID=RepresentativeMember where:
+## UniqueIdentifier is the primary accession number of the UniRef cluster.
+## ClusterName is the name of the UniRef cluster.
+## Members is the number of UniRef cluster members.
+## Taxon is the scientific name of the lowest common taxon shared by all UniRef cluster members.
+## RepresentativeMember is the entry name of the representative member of the UniRef cluster.
+
+# Format uniprot database
+$ncbi/makeblastdb -in uniref90.fasta -dbtype prot -out uniref90_db 
 
 #--------------------------------------------------------------------------------
 
@@ -97,6 +93,13 @@ gunzip -v uniref90.fasta.gz
 # You can enter 'blastp --help' for a list of the parameters.
 # We choose the tab-delimited output format (6) and to only help the top hit (-max_target_seqs)
 # and only if it has a minimum evalue of 0.00001.
+
+$ncbi/blastp -query /data/project_data/assembly/08-11-35-36_cl20_longest_orfs_gene.cds \
+-db $WORKING_FOLDER/Gene_ontology/uniprot/uniref90.fasta \
+-out $WORKING_FOLDER/Gene_ontology/blastp_vs_uniref90.outfmt6 \
+-outfmt 6 \
+-evalue 1e-5 \
+-max_target_seqs 1
 
 #blastp -query /data/project_data/assembly/08-11-35-36_cl20_longest_orfs_gene.cds \
 #       -db /data/archive/databases/uniref90/uniprot_uniref90.trinotate.pep \
