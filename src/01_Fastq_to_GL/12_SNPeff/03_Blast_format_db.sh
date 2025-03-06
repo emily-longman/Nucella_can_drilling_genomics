@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=Blast
+#SBATCH --job-name=Blast_format_db
 
 # Specify partition
 #SBATCH --partition=general
@@ -29,7 +29,7 @@
 
 #--------------------------------------------------------------------------------
 
-# This script will run blast the protein sequences
+# This script will format the blast uniprot database
 
 #Load modules
 ncbi=/gpfs1/home/e/l/elongman/software/ncbi-blast-2.16.0+/bin
@@ -85,29 +85,3 @@ $ncbi/makeblastdb -in uniref90.fasta -dbtype prot -out uniref90 -title uniref90
 ## Taxon is the scientific name of the lowest common taxon shared by all UniRef cluster members.
 ## RepresentativeMember is the entry name of the representative member of the UniRef cluster.
 
-#--------------------------------------------------------------------------------
-
-# Change directory
-cd $WORKING_FOLDER/Gene_ontology
-
-# Use the blastp command to compare the Nucella protein file with the uniprot database
-
-$ncbi/blastp -query /netfiles/pespenilab_share/Nucella/processed/N.can_genome_Dec2024/protein.fa \
--db $WORKING_FOLDER/Gene_ontology/uniprot/uniref90 \
--out $WORKING_FOLDER/Gene_ontology/blastp_vs_uniref90.outfmt6 \
--outfmt 6 \
--evalue 1e-5 \
--max_target_seqs 5
-
-# query <File_In>: Input file name
-# db: BLAST database name
-# outfmt 6: alignment view options: Tabular
-# evalue: Expectation value (E) threshold for saving hits. Default = 10 
-# max_target_seqs: Maximum number of aligned sequences to keep 
-
-#blastp -query /data/project_data/assembly/08-11-35-36_cl20_longest_orfs_gene.cds \
-#       -db /data/archive/databases/uniref90/uniprot_uniref90.trinotate.pep \
-#       -out /data/project_data/assembly/blast/blastp_vs_uniref90.outfmt6 \
-#       -outfmt 6 \
-#       -evalue 1e-5 \
-#       -max_target_seqs 1
