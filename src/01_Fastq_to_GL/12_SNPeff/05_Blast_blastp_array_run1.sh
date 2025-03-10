@@ -5,7 +5,7 @@
 # Request cluster resources ----------------------------------------------------
 
 # Name this job
-#SBATCH --job-name=Blast_blastp_array
+#SBATCH --job-name=Blast_blastp_array_run1
 
 # Specify partition
 #SBATCH --partition=general
@@ -17,10 +17,10 @@
 #SBATCH --time=30:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
-#SBATCH --mem=5G
+#SBATCH --mem=20G
 
 # Submit job array
-#SBATCH --array=1-800%30
+#SBATCH --array=1-1000%40
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/%x.%A_%a.out  # Standard output
@@ -76,15 +76,16 @@ fi
 #--------------------------------------------------------------------------------
 
 ## Import master partition file 
-guide_file=$WORKING_FOLDER/Gene_ontology/guide_files/protein_file_names_array.txt
+guide_file=$WORKING_FOLDER/Gene_ontology/guide_files/protein_file_names_array_run_1.txt
+# Note each guide file has dimensions:  35000, 5 (1000 partitions, with 35 protein names in each)
 
-#Example: -- the headers are just for descriptive purposes. The actual file has no headers. (dimensions: 204693, 5; 3722 partitions)
+#Example: -- the headers are just for descriptive purposes. The actual file has no headers. 
 # Protein header                                   # Partition
 # >g97099.t1 gene=g97099 seq_id=ntLink_0 type=cds         1
 # >g97100.t1 gene=g97100 seq_id=ntLink_0 type=cds         1
 # ...
-# >g59457.t1 gene=g59457 seq_id=Backbone_27921 type=cds 3722
-# >g59458.t1 gene=g59458 seq_id=Backbone_27921 type=cds 3722
+# >g59457.t1 gene=g59457 seq_id=Backbone_27921 type=cds 1000
+# >g59458.t1 gene=g59458 seq_id=Backbone_27921 type=cds 1000
 
 #--------------------------------------------------------------------------------
 
