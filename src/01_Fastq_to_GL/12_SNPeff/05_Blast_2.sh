@@ -17,10 +17,10 @@
 #SBATCH --time=30:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
-#SBATCH --mem=5G
+#SBATCH --mem=20G
 
 # Submit job array
-#SBATCH --array=801-1600%30
+#SBATCH --array=1-1000%40
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/%x.%A_%a.out  # Standard output
@@ -76,15 +76,16 @@ fi
 #--------------------------------------------------------------------------------
 
 ## Import master partition file 
-guide_file=$WORKING_FOLDER/Gene_ontology/guide_files/protein_file_names_array.txt
+guide_file=$WORKING_FOLDER/Gene_ontology/guide_files/protein_file_names_array_run_2.txt
+# Note each guide file has dimensions:  35000, 5 (1000 partitions, with 35 protein names in each)
 
-#Example: -- the headers are just for descriptive purposes. The actual file has no headers. (dimensions: 204693, 5; 910 partitions)
+#Example: -- the headers are just for descriptive purposes. The actual file has no headers. 
 # Protein header                                   # Partition
 # >g97099.t1 gene=g97099 seq_id=ntLink_0 type=cds         1
 # >g97100.t1 gene=g97100 seq_id=ntLink_0 type=cds         1
 # ...
-# >g59457.t1 gene=g59457 seq_id=Backbone_27921 type=cds 910
-# >g59458.t1 gene=g59458 seq_id=Backbone_27921 type=cds 910
+# >g59457.t1 gene=g59457 seq_id=Backbone_27921 type=cds 1000
+# >g59458.t1 gene=g59458 seq_id=Backbone_27921 type=cds 1000
 
 #--------------------------------------------------------------------------------
 
@@ -118,7 +119,7 @@ echo ${i}
 grep -EA 1 "${protein}" ${PROTEIN_FILE} > $WORKING_FOLDER/Gene_ontology/blastp_array/Run_2/Partition_${SLURM_ARRAY_TASK_ID}/protein.${i}.partition.${SLURM_ARRAY_TASK_ID}.fa
 
 # Use the blastp command to compare the Nucella protein file with the uniprot database
-$ncbi/blastp -query $WORKING_FOLDER/Gene_ontology/blastp_array/Run_1/Partition_${SLURM_ARRAY_TASK_ID}/protein.${i}.partition.${SLURM_ARRAY_TASK_ID}.fa \
+$ncbi/blastp -query $WORKING_FOLDER/Gene_ontology/blastp_array/Run_2/Partition_${SLURM_ARRAY_TASK_ID}/protein.${i}.partition.${SLURM_ARRAY_TASK_ID}.fa \
 -db $WORKING_FOLDER/Gene_ontology/uniprot/uniref90 \
 -out $WORKING_FOLDER/Gene_ontology/blastp_array/Run_2/Partition_${SLURM_ARRAY_TASK_ID}/blastp_vs_uniref90.outfmt6_protein.${i} \
 -outfmt 6 \
