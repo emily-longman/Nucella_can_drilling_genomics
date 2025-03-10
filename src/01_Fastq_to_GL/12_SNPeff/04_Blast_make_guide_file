@@ -1,0 +1,62 @@
+#### Create guide file for array
+
+#--------------------------------------------------------------------------------
+
+# Define important file locations
+
+# Working folder is core folder where this pipeline is being run.
+WORKING_FOLDER=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics
+
+# Protein file is the N. canaliculata protein file that will be broken into chunks
+PROTEIN_FILE=/netfiles/pespenilab_share/Nucella/processed/N.can_genome_Dec2024/protein.fa
+
+#--------------------------------------------------------------------------------
+# Currently the protein file is interleaven (i.e., the DNA sequence is in chunks of 80bps a line).
+# For easy of running a loop and array, make it not interleaven
+
+# Load modules 
+seqtk=/gpfs1/home/e/l/elongman/software/seqtk/seqtk
+
+
+# Use seqtk to make protein file not interleaven
+$seqtk seq $PROTEIN_FILE > $WORKING_FOLDER/Gene_ontology/Nucella_canaliculata_protein.fa
+
+#--------------------------------------------------------------------------------
+
+# Get list of protein names
+ 
+# Change directory
+cd $WORKING_FOLDER/Gene_ontology
+
+# Make guide files directory
+mkdir guide_files
+
+# Change directory
+cd $WORKING_FOLDER/Gene_ontology/guide_files
+
+# Get all of the scaffold/contig names 
+grep ">" $WORKING_FOLDER/Gene_ontology/Nucella_canaliculata_protein.fa > protein_file_names.txt
+
+#--------------------------------------------------------------------------------
+
+# Modify in R
+module load R/4.4.1  
+R
+
+install.packages(c('data.table', 'tidyverse', 'groupdata2'))
+
+library(data.table)
+library(tidyverse)
+library(groupdata2)
+
+#--------------------------------------------------------------------------------
+
+data <- fread("protein_file_names.txt", header = F)
+
+group(data, n=225, method = "greedy") -> protein_file_names_array
+
+write.table(protein_file_names_array, "protein_file_names_array.txt", col.names = F, row.names = F, quote = F)
+
+# Note guide_file_array has dimensions:  204693, 5 (910 partitions)
+
+q()
