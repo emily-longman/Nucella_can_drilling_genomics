@@ -51,11 +51,31 @@ library(groupdata2)
 #--------------------------------------------------------------------------------
 
 data <- fread("protein_file_names.txt", header = F)
+dim(data) # 204693, 5 
 
-group(data, n=55, method = "greedy") -> protein_file_names_array
+# Break up the data into 6 runs - will run a bash script for each run
+data_run1 <- data[1:35000,]
+data_run2 <- data[35001:70000,]
+data_run3 <- data[70001:105000,]
+data_run4 <- data[105001:140000,]
+data_run5 <- data[140001:175000,]
+data_run6 <- data[175001:204693,]
 
-write.table(protein_file_names_array, "protein_file_names_array.txt", col.names = F, row.names = F, quote = F)
+group(data_run1, n=35, method = "greedy") -> protein_file_names_run_1
+group(data_run2, n=35, method = "greedy") -> protein_file_names_run_2
+group(data_run3, n=35, method = "greedy") -> protein_file_names_run_3
+group(data_run4, n=35, method = "greedy") -> protein_file_names_run_4
+group(data_run5, n=35, method = "greedy") -> protein_file_names_run_5
+group(data_run6, n=35, method = "greedy") -> protein_file_names_run_6
 
-# Note guide_file_array has dimensions:  204693, 5 (3722 partitions)
+
+write.table(protein_file_names_run_1, "protein_file_names_array_run_1.txt", col.names = F, row.names = F, quote = F)
+write.table(protein_file_names_run_2, "protein_file_names_array_run_2.txt", col.names = F, row.names = F, quote = F)
+write.table(protein_file_names_run_3, "protein_file_names_array_run_3.txt", col.names = F, row.names = F, quote = F)
+write.table(protein_file_names_run_4, "protein_file_names_array_run_4.txt", col.names = F, row.names = F, quote = F)
+write.table(protein_file_names_run_5, "protein_file_names_array_run_5.txt", col.names = F, row.names = F, quote = F)
+write.table(protein_file_names_run_6, "protein_file_names_array_run_6.txt", col.names = F, row.names = F, quote = F)
+
+# Note each guide file has dimensions:  35000, 5 (1000 partitions, with 35 protein names in each)
 
 q()
