@@ -63,7 +63,8 @@ fi
 #--------------------------------------------------------------------------------
 
 # Define Parameters
-SPECIES=Nucella_canaliculata
+# Note: AUGUSTUS has currently been trained on species specific training sets to predict genes in the following species.
+SPECIES=fly
 PROJECT=Ncanaliculata
 
 #--------------------------------------------------------------------------------
@@ -80,6 +81,6 @@ apptainer run \
 $AUGUSTUS augustus \
 --strand=both \
 --gff3=on \
---species=$SPECIES \
-$target > \
-$PROJECT.genepred.softmask.gff3
+--species=${SPECIES} \
+${REFERENCE} > \
+${PROJECT}.genepred.softmask.gff3
