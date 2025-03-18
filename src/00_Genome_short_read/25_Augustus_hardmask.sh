@@ -73,7 +73,7 @@ PROJECT=Ncanaliculata
 cd $HOME/Augustus
 
 # Move copy of Reference to Augustus directory
-#cp $REFERENCE_FULL_ADDRESS $HOME/Augustus
+cp $REFERENCE_FULL_ADDRESS $HOME/Augustus
 
 # Run Augustus on genome using apptainer
 apptainer run \
