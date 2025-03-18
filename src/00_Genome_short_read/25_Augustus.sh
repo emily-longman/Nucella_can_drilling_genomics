@@ -7,8 +7,6 @@
 # Name this job
 #SBATCH --job-name=Augustus_softmask
 
-#SBATCH --account=pi-jcnunez
-
 # Specify partition
 #SBATCH --partition=week
 
