@@ -17,7 +17,7 @@
 #SBATCH --time=4-00:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
-#SBATCH --mem=60G
+#SBATCH --mem=40G
 
 # Request CPU
 #SBATCH --cpus-per-task=10
@@ -73,7 +73,7 @@ PROJECT=Ncanaliculata
 cd $HOME/Augustus
 
 # Move copy of Reference to Augustus directory
-cp $REFERENCE_FULL_ADDRESS $HOME/Augustus
+#cp $REFERENCE_FULL_ADDRESS $HOME/Augustus
 
 # Run Augustus on genome using apptainer
 apptainer run \
@@ -83,4 +83,4 @@ $AUGUSTUS augustus \
 --gff3=on \
 --species=${SPECIES} \
 ${REFERENCE} > \
-${PROJECT}.genepred.v2.hardmask.gff3
+${PROJECT}.genepred.v3.hardmask.gff3
