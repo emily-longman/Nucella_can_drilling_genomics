@@ -65,7 +65,7 @@ fi
 # Define Parameters
 # Note: AUGUSTUS has currently been trained on species specific training sets to predict genes in the following species.
 SPECIES=fly
-PROJECT=Ncanaliculata
+PROJECT=N.canaliculata
 
 #--------------------------------------------------------------------------------
 
