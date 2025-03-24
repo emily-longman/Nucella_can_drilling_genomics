@@ -17,10 +17,10 @@
 #SBATCH --time=4-00:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
-#SBATCH --mem=40G
+#SBATCH --mem=30G
 
 # Request CPU
-#SBATCH --cpus-per-task=10
+#SBATCH --cpus-per-task=5
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/%x.%j.out  # Standard output
@@ -83,4 +83,4 @@ $AUGUSTUS augustus \
 --gff3=on \
 --species=${SPECIES} \
 ${REFERENCE} > \
-${PROJECT}.genepred.v3.hardmask.gff3
+${PROJECT}.genepred.v4.hardmask.gff3
