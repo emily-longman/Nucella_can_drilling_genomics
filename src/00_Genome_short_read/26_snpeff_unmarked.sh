@@ -8,17 +8,17 @@
 #SBATCH --job-name=SNPeff
 
 # Specify partition
-#SBATCH --partition=general
+#SBATCH --partition=bluemoon
 
 # Request nodes
 #SBATCH --nodes=1 
 #SBATCH --ntasks-per-node=1
 
 # Reserve walltime -- hh:mm:ss --7 day limit 
-#SBATCH --time=30:00:00 
+#SBATCH --time=20:00:00 
 
 # Request memory for the entire job -- you can request --mem OR --mem-per-cpu
-#SBATCH --mem=20G
+#SBATCH --mem=10G
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH --output=./slurmOutput/%x_%j.out # Standard output
