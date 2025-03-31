@@ -83,4 +83,4 @@ $AUGUSTUS augustus \
 --gff3=on \
 --species=${SPECIES} \
 ${REFERENCE} > \
-${PROJECT}.genepred.v5.hardmask.gff3
+${PROJECT}.genepred.hardmask.gff3
