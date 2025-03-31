@@ -98,7 +98,7 @@ agat_sp_extract_sequences.pl --gff /netfiles/pespenilab_share/Nucella/processed/
 cd $NETFILES_DIR/N.canaliculata_snpeff_March_2025
 
 # Define important file locations
-DATA_DIR=$NETFILES_DIR/N.canaliculata_snpeff_March_2025
+DATA_DIR=$NETFILES_DIR
 PARAM=$NETFILES_DIR/N.canaliculata_snpeff_March_2025/snpEff.config
 
 snpeff build -dataDir $DATA_DIR -c $PARAM -gff3 -noCheckCds -v N.canaliculata_snpeff_March_2025
