@@ -59,7 +59,6 @@ cons_info=$WORKING_FOLDER_SCRATCH/DBG2OLC/DBG2OLC_KmC_2_MinOv_100_Adth_0.01/DBG2
 #--------------------------------------------------------------------------------
 
 # Import master partition file
-# The previous R script created this file in /gpfs2/scratch/elongman/Nucella_can_drilling_genomics/results/tables but I moved it into the working short read assembly directory 
 guide=/gpfs2/scratch/elongman/Nucella_can_drilling_genomics/data/processed/short_read_assembly/consensus/dat.win.partitions.txt
 
 echo ${SLURM_ARRAY_TASK_ID}
