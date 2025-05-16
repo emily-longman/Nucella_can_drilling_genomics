@@ -21,7 +21,7 @@
 #SBATCH --mem=50G
 
 # Submit job array
-#SBATCH --array=1-560
+#SBATCH --array=1-560%20
 
 # Name output of this job using %x=job-name and %j=job-id
 #SBATCH -o ./slurmOutput/partition_genome.%A_%a.out # Standard output
